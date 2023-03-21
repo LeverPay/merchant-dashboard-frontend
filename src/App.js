@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import OverView from "./Pages/overview";
+import PaymentMethod from "./Pages/paymentMethod";
+import Portfolio from "./Pages/portfolio";
+import Profile from "./Pages/profile";
+import Security from "./Pages/security";
+import Transacrion from "./Pages/transaction";
+import SidebarNav from "./Components/General/SidebarNav";
+import Header from "./Components/General/header";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Header />
+      <SidebarNav />
+      <Routes>
+        <Route index element={<OverView />} />
+        <Route path="payment-method" index element={<PaymentMethod />} />
+        <Route path="portfolio" element={<Portfolio />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="security" index element={<Security />} />
+        <Route path="transactions" element={<Transacrion />} />
+      </Routes>
+    </Router>
   );
 }
 
