@@ -11,18 +11,22 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <SidebarNav />
-      <Routes>
-        <Route index element={<OverView />} />
-        <Route path="payment-method" index element={<PaymentMethod />} />
-        <Route path="portfolio" element={<Portfolio />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="security" index element={<Security />} />
-        <Route path="transactions" element={<Transacrion />} />
-      </Routes>
-    </Router>
+    <div className="general-container">
+      <Router>
+        <Header />
+        <div className="contents-container">
+          <SidebarNav />
+          <Routes>
+            <Route index element={<OverView />} />
+            <Route path="payment-method" index element={<PaymentMethod />} />
+            <Route path="portfolio" element={<Portfolio />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="security" index element={<Security />} />
+            <Route path="transactions" element={<Transacrion />} />
+          </Routes>
+        </div>
+      </Router>
+    </div>
   );
 }
 
