@@ -27,6 +27,29 @@ general-container {
     width: 40%;
 }
 
+.header-image-container {
+    width: 40%;
+}
+
+.header-profile-container {
+    width: 20%;
+}
+
+.header-profile-img {
+    width: 20%;
+    height: 50%;
+    border-radius: 50%;
+}
+
+.header-profile-img img {
+    width: 100%;
+    height: 100%;
+}
+
+.header-profile-img img:hover, .header-profile-dropdown:hover, .header-notification-container:hover {
+    cursor: pointer;
+}
+
 /* Larger screen sizes */
 @media screen and (min-width: 1024px) {
     .contents-container {
@@ -36,10 +59,20 @@ general-container {
 }
 
 /* medium screen sizes */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1023px) {
     .contents-container {
         width: 100%;
         display: flex;
+    }
+
+    .header-profile-container {
+        width: 20%;
+    }
+
+    .header-profile-img {
+        width: 40%;
+        height: 60%;
+        border-radius: 50%;
     }
 }
 
@@ -52,5 +85,15 @@ general-container {
     .contents-container {
         width: 100%;
         flex-direction: column;
+    }
+
+    .header-profile-container {
+        width: 40%;
+    }
+
+    .header-profile-img {
+        width: 40%;
+        height: 60%;
+        border-radius: 50%;
     }
 }
