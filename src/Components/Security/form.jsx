@@ -1,8 +1,43 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Button from '../General/Button component/Button'
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Button from "../General/Button component/Button";
 
 export default function Form() {
+  const [Input, setInput] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setInput((prev) => {
+      return { ...prev, [name]: value };
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (
+      Input.currentPassword !== "" &&
+      Input.newPassword !== "" &&
+      Input.newPassword.length >= 5 &&
+      Input.confirmPassword === Input.newPassword &&
+      Input.newPassword !== Input.currentPassword
+    ) {
+      console.log(Input.currentPassword, Input.newPassword);
+    }
+  };
+
+  const discardChanges = (e) => {
+    e.preventDefault();
+
+    Input.currentPassword = "";
+    Input.newPassword = "";
+    Input.confirmPassword = "";
+  };
+
   return (
     <form action="">
       <div className="mt-2 py-2 d-flex flex-column">
@@ -13,6 +48,8 @@ export default function Form() {
             className="rounded-1 text-input"
             type="password"
             name="currentPassword"
+            value={Input.currentPassword}
+            onChange={handleChange}
           />
         </div>
       </div>
@@ -25,6 +62,8 @@ export default function Form() {
             className="rounded-1 text-input"
             type="password"
             name="newPassword"
+            value={Input.newPassword}
+            onChange={handleChange}
           />
         </div>
       </div>
@@ -37,6 +76,8 @@ export default function Form() {
             className="rounded-1 text-input"
             type="password"
             name="confirmPassword"
+            value={Input.confirmPassword}
+            onChange={handleChange}
           />
         </div>
       </div>
@@ -47,14 +88,18 @@ export default function Form() {
       <div className="d-flex mt-5 justify-content-center align-items-center">
         <Button
           style={{ backgroundColor: "#ebebeb", color: "#ffffff" }}
+          click={discardChanges}
         >
           Discard Changes
         </Button>
 
-        <Button style={{ backgroundColor: "#2962f2", color: "#000" }}>
+        <Button
+          style={{ backgroundColor: "#2962f2", color: "#000" }}
+          click={handleSubmit}
+        >
           Save Changes
         </Button>
       </div>
     </form>
-  )
+  );
 }
