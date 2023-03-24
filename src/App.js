@@ -1,33 +1,32 @@
 import React from "react";
-import OverView from "./Pages/overview";
-import PaymentMethod from "./Pages/paymentMethod";
-import Portfolio from "./Pages/portfolio";
-import Profile from "./Pages/profile";
-import Security from "./Pages/security";
-import Transacrion from "./Pages/transaction";
+import OverView from "./Pages/Overview";
+import PaymentMethod from "./Pages/PaymentMethod";
+import Portfolio from "./Pages/Portfolio";
+import Profile from "./Pages/Profile";
+import Security from "./Pages/Security";
+import Transaction from "./Pages/Transaction";
 import SidebarNav from "./Components/General/SidebarNav";
-import Header from "./Components/General/header";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./Components/General/Header";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 
 function App() {
-  return (
-    <div className="general-container">
-      <Router>
-        <Header />
-        <div className="contents-container">
-          <SidebarNav />
-          <Routes>
-            <Route index element={<OverView />} />
-            <Route path="payment-method" index element={<PaymentMethod />} />
-            <Route path="portfolio" element={<Portfolio />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="security" index element={<Security />} />
-            <Route path="transactions" element={<Transacrion />} />
-          </Routes>
-        </div>
-      </Router>
-    </div>
-  );
+	return (
+		<div id="merchant-dashboard" className="general-container">
+			<Router>
+				<Header/>
+				<div className="contents-container">
+					<Routes>
+						<Route index element={<OverView/>}/>
+						<Route path="payment_method" index element={<PaymentMethod/>}/>
+						<Route path="portfolio" element={<Portfolio/>}/>
+						<Route path="profile" element={<Profile/>}/>
+						<Route path="security" index element={<Security/>}/>
+						<Route path="transactions" element={<Transaction/>}/>
+					</Routes>
+				</div>
+			</Router>
+		</div>
+	);
 }
 
 export default App;
