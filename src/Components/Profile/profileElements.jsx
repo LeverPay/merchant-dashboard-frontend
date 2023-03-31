@@ -1,7 +1,7 @@
 import React from "react";
 import "./style.css";
 import Form from "./form";
-import ProfileEditSection from "./profileEditSection";
+// import ProfileEditSection from "./profileEditSection";
 
 export default function ProfileElements() {
   return (
@@ -17,10 +17,6 @@ export default function ProfileElements() {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad vel
             facere sit
           </p>
-
-          <section className="profile-edit d-flex justify-content-around align-items-center">
-            <ProfileEditSection />
-          </section>
 
           <section className="form-container mt-4">
             <Form />
