@@ -60,6 +60,10 @@
   background-color: #ebebeb;
 }
 
+.cursor {
+  cursor: pointer;
+}
+
 @media screen and (min-width: 1024px) {
   .profile-container {
     width: 70vw;

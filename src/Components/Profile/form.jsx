@@ -12,12 +12,7 @@ export default function Form() {
     image: "",
   });
 
-  const [File, setFile] = useState(null);
-
-  const fileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    setFile(selectedFile);
-  };
+  const [Image, setImage] = useState(null);
 
   const [ReadOnly, setReadOnly] = useState(true);
 
@@ -60,6 +55,10 @@ export default function Form() {
       console.log(Input.country);
     }
 
+    if (Image) {
+      console.log(Image);
+    }
+
     setReadOnly(true);
   };
 
@@ -74,30 +73,36 @@ export default function Form() {
     Input.phoneNo = "";
   };
 
+  const handleDivClick = () => {
+    if (!ReadOnly) {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.style.zIndex = "5";
+      input.accept = "image/x-png,image/jpeg,/image/jpg";
+      input.onchange = changeImage;
+      input.click();
+    }
+  };
+
+  const changeImage = (e) => {
+    const file = e.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      setImage(fileReader.result);
+    };
+  };
+
   return (
     <>
       <section className="profile-edit d-flex justify-content-around align-items-center">
-        <div className="profile-img rounded-circle">
+        <div className="profile-img rounded-circle" onClick={handleDivClick}>
           <img
-            className="rounded-circle"
-            src={
-              !File
-                ? require("../../Assets/user's image.png")
-                : URL.createObjectURL(File)
-            }
+            className={`rounded-circle ${!ReadOnly ? `opacity-75 cursor` : ``}`}
+            src={!Image ? require("../../Assets/user's image.png") : Image}
             alt=""
           />
         </div>
-
-        {!ReadOnly && (
-          <input
-            type="file"
-            accept="image/x-png,image/jpeg,/image/jpg"
-            ref={ref7}
-            onChange={fileChange}
-            // onClick={(e) => console.dir(e.target)}
-          />
-        )}
 
         {/* Allows user to change information on the database  */}
         <Button
