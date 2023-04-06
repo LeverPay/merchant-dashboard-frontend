@@ -1,99 +1,113 @@
 * {
-    box-sizing: border-box;
-    font-size: 20px;
+  box-sizing: border-box;
+  font-size: 20px;
 }
 
-body, html {
-    margin: 0;
-    padding: 0;
-    max-width: 100vw;
-    overflow-x: hidden;
+body,
+html {
+  margin: 0;
+  padding: 0;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 .general-container {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .contents-container {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
 .sidebar-nav {
-    width: 30%;
+  width: 30%;
 }
 
 .header-image-container {
-    width: 40%;
+  width: 40%;
 }
 
 .header-profile-container {
-    width: 20%;
+  width: 20%;
 }
 
 .header-profile-img {
-    width: 20%;
-    height: 50%;
-    border-radius: 50%;
+  width: 20%;
+  height: 50%;
+  border-radius: 50%;
 }
 
 .header-profile-img img {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
-.header-profile-img img:hover, .header-profile-dropdown:hover, .header-notification-container:hover {
-    cursor: pointer;
+.header-profile-img img:hover,
+.header-profile-dropdown:hover,
+.header-notification-container:hover {
+  cursor: pointer;
 }
 
 /* Larger screen sizes */
 @media screen and (min-width: 1024px) {
-    .contents-container {
-        width: 100%;
-        display: flex;
-    }
+  .contents-container {
+    width: 100%;
+    display: flex;
+  }
 }
 
 /* medium screen sizes */
 @media screen and (max-width: 1023px) {
-    .contents-container {
-        width: 100%;
-        display: flex;
-    }
+  .contents-container {
+    width: 100%;
+    display: flex;
+  }
 
-    .header-profile-container {
-        width: 20%;
-    }
+  .header-profile-container {
+    width: 20%;
+  }
 
-    .header-profile-img {
-        width: 40%;
-        height: 60%;
-        border-radius: 50%;
-    }
+  .header-profile-img {
+    width: 40%;
+    height: 60%;
+    border-radius: 50%;
+  }
 }
 
 /* small screen sizes */
 @media screen and (max-width: 767px) {
-    .sidebar-nav {
-        width: 40%;
-    }
+  .sidebar-nav {
+    width: 40%;
+  }
 
-    .contents-container {
-        width: 100%;
-        flex-direction: column;
-    }
+  .contents-container {
+    width: 100%;
+    flex-direction: column;
+  }
 
-    .header-profile-container {
-        width: 40%;
-    }
+  .header-profile-container {
+    width: 40%;
+  }
 
-    .header-profile-img {
-        width: 40%;
-        height: 60%;
-        border-radius: 50%;
-    }
+  .header-profile-img {
+    width: 40%;
+    height: 60%;
+    border-radius: 50%;
+  }
+}
+
+@media screen and (min-width: 620px) {
+  .flexy {
+    display: flex;
+  }
+}
+@media screen and (max-width: 620px) {
+  .flexyM {
+    display: flex;
+  }
 }

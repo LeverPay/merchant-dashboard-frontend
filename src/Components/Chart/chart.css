@@ -1,0 +1,13 @@
+.chart-container .canvasjs-chart-canvas {
+  width: 250px !important;
+  height: 200px !important;
+}
+.canvasjs-chart-toolbar button {
+  background: transparent !important;
+}
+.canvasjs-chart-credit {
+  display: none !important;
+}
+.canvasjs-chart-container {
+  /* border-radius: 20px !important; */
+}
