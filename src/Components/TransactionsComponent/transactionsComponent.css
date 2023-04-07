@@ -2,23 +2,30 @@
 }
 .transactions-tab .tabs {
   display: flex;
+  border: solid 1px rgb(205, 200, 200);
+  margin-top: 30px;
+  border-radius: 10px;
+  font-family: AgrandirBold;
+
+  padding-left: 10px;
+  box-shadow: 0 0 3px 3px rgb(205, 200, 200);
 }
 @media screen and (max-width: 620px) {
   .tabs {
-    display: grid;
+    /* display: grid; */
   }
 }
 .transactions-tab .tab {
   justify-content: center;
   align-items: center;
   width: 100%;
-  /* padding: 1em 0; */
-  border: none;
+
+  /* border: none; */
   color: grey;
   background: #fff;
 }
 .transactions-tab .tabs button {
-  border-bottom: solid 1px grey;
+  /* border-bottom: solid 1px grey; */
   /* margin-right: 20px;
   margin-left: 20px; */
 }

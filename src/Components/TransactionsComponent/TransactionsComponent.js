@@ -9,7 +9,7 @@ import {
 } from "../../TestData/TransactionsData";
 import SearchBar from "../SearchBar/SearchBar";
 import TransactionTable from "../TransactionTable/TransactionTable";
-
+import "./transactionsComponent.css";
 function TransactionsComponent() {
   const [activeIndex, setActiveIndex] = useState(1);
   const handleClick = (index) => setActiveIndex(index);
