@@ -8,7 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import OverviewPage from "./Pages/OverviewPage/OverviewPage";
 import "./App.css";
 import PortfolioPage from "./Pages/PortfolioPage/PortfolioPage";
-import { TransactionsPage } from "./Pages/TransactionsPage/TransactionsPage";
+import TransactionsPage from "./Pages/TransactionsPage/TransactionsPage";
 function App(props) {
   return (
     <div id="merchant-dashboard" className="general-container">
