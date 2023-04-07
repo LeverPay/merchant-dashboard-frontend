@@ -22,7 +22,6 @@ export default function Form() {
   const ref4 = useRef();
   const ref5 = useRef();
   const ref6 = useRef();
-  const ref7 = useRef();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
