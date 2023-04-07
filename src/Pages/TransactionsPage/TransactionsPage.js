@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
+// import Invoice from "./Invoice/Invoice";
 import TransactionsComponent from "../../Components/TransactionsComponent/TransactionsComponent";
 import UserSelectComponent from "../../Components/UserSelectComponent/UserSelectComponent";
 import "./transactions-page.css";
+import { Link, NavLink } from "react-router-dom";
+import Invoice from "../../Components/Invoice/Invoice";
+import Carousel from "react-bootstrap/Carousel";
+
 export const TransactionsPage = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <>
       <div className="col-md-12 transactions-page-container">
@@ -14,6 +26,51 @@ export const TransactionsPage = () => {
         </div>
         <TransactionsComponent />
       </div>
+      {/* <center>
+        <Link to={"/invoice"} className="invoice-link">
+          Go to Invoices
+        </Link>
+      </center> */}
+
+      <center>
+        {" "}
+        <Button
+          variant="primary"
+          onClick={handleShow}
+          style={{ fontFamily: "AgrandirBold" }}
+        >
+          View all invoices
+        </Button>
+      </center>
+
+      <Modal show={show} onHide={handleClose}>
+        {/* <Modal.Header closeButton>
+          <Modal.Title>Transaction Invoice</Modal.Title>
+        </Modal.Header> */}
+        <Modal.Body>
+          {/* <Invoice className="className" /> */}
+
+          <Carousel variant="dark" interval={3000}>
+            <Carousel.Item>
+              <Invoice className="className" />
+            </Carousel.Item>
+            <Carousel.Item>
+              <Invoice className="className" />
+            </Carousel.Item>
+            <Carousel.Item>
+              <Invoice className="className" />
+            </Carousel.Item>
+          </Carousel>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

@@ -1,0 +1,123 @@
+#invoice {
+  background-color: #fff;
+  border-radius: 10px;
+  color: black;
+  /* margin-bottom: 4rem; */
+  /* margin-top: 8rem; */
+}
+.className {
+  width: 100%;
+}
+#id {
+  font-family: AgrandirBold;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 26px;
+  text-align: center;
+}
+.price_checkout {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+.price_checkout span {
+  border: 1px solid #d9d9d9;
+  padding: 15px 10px;
+  font-family: Agrandir;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 26px;
+}
+.price_checkout :nth-child(1) {
+  border-left: none;
+}
+.price_checkout :nth-child(3) {
+  border-right: none;
+}
+.Invoice_details {
+  text-align: start;
+  margin: 2rem;
+  margin-top: 3rem;
+}
+.Invoice_details h3 {
+  font-family: Agrandir;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 26px;
+  margin-bottom: 20px;
+  color: #1861ff;
+}
+.h5 {
+  font-family: Agrandir;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21px;
+}
+.row_details {
+  font-family: Agrandir;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21px;
+  opacity: 0.4;
+  margin-top: 3px;
+}
+.row_details_information {
+  font-family: Agrandir;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 21px;
+  margin-top: 3px;
+}
+.Buyer_details {
+  text-align: start;
+  margin: 0.5rem 2rem;
+
+  font-family: Agrandir;
+  font-size: 16px;
+  font-weight: 700;
+}
+.Buyer_details h3 {
+  font-family: Agrandir;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 26px;
+}
+.Buyer_details h5 {
+  color: #f40909;
+}
+.Buyer_details p {
+  opacity: 0.4;
+}
+hr {
+  width: 90%;
+  margin: auto;
+}
+.Payment_received {
+  text-align: start;
+  margin: 1rem 2rem;
+}
+.Payment_received p {
+  margin-bottom: 0rem;
+  font-family: Agrandir;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21px;
+}
+.Payment_received span {
+  color: #f49b09;
+}
+.Payment_received main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-top: 0.5rem;
+}
+.Payment_received main h6 {
+  /* color: #f49b09; */
+}
+/* .qrcodeCon{
+  background-color: transparent;
+} */
+.blue-color {
+  color: #1861ff;
+}
