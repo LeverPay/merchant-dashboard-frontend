@@ -5,11 +5,11 @@ import { BsSearch } from "react-icons/bs";
 function SearchBar() {
   return (
     <>
-      <div class="search-box">
-        <button class="btn-search">
+      <div className="search-box">
+        <button className="btn-search">
           <BsSearch />
         </button>
-        <input type="text" class="input-search" placeholder=" Search..." />
+        <input type="text" className="input-search" placeholder=" Search..." />
       </div>
     </>
   );

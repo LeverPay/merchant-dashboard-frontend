@@ -24,7 +24,7 @@ const TransactionTable = (props) => {
             <tr>
               {props.data.headers.map((item) => (
                 <th>{item}</th>
-              ))}{" "}
+              ))}
             </tr>
           </thead>
           <tbody>
@@ -33,12 +33,11 @@ const TransactionTable = (props) => {
                 <td style={{ fontWeight: "bold" }}>{item.name}</td>
                 <td>{item.date}</td>
                 <td style={{ color: item.color || "black" }}>
-                  {" "}
                   <img
                     src={item.status.icon}
                     alt="smiley"
                     className="col-md-"
-                  />{" "}
+                  />
                   {item.status.statusName}
                 </td>
                 <td>{item.amount}</td>

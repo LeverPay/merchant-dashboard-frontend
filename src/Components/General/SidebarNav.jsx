@@ -87,7 +87,7 @@ export default function SidebarNav(props) {
                 to={item.link}
                 key={idx}
                 className="d-flex align-items-center link-light"
-                activeClassName="active"
+                // activeClassName="active"
               >
                 <span className="link-icon">{item.icon}</span>
                 <span>{item.title}</span>
