@@ -5,6 +5,7 @@ import { chartData, doughnutChartData } from "../../TestData/ChartData";
 import Bitcoin from "../../Assets/bitcoin.png";
 import Etheruem from "../../Assets/ethereum.png";
 import Binance from "../../Assets/binance.png";
+import Coin from "../../Assets/coin-flip.png";
 import UserSelectComponent from "../../Components/UserSelectComponent/UserSelectComponent";
 import TransactionsComponent from "../../Components/TransactionsComponent/TransactionsComponent.js";
 
@@ -64,7 +65,13 @@ export const OverviewPage = () => {
               </div>
               <div className="col-md-4">
                 <div className="col-md-11 trending-coin">
-                  <span className="empty"></span>
+                  <div className="coin-flip">
+                    {" "}
+                    <center>
+                      {" "}
+                      <img src={Coin} alt="smiley" className="col-md-9" />
+                    </center>
+                  </div>
                   <ul className="list-unstyled">
                     <li>
                       <span>
