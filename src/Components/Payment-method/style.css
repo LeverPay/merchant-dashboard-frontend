@@ -1,10 +1,10 @@
 .payment-method {
   width: 70vw;
-  background: url(../../Assets/Group\ 300.png) no-repeat center;
 }
 .payment-method .form-container {
   width: 90%;
   box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+  background: url(../../Assets/Group\ 300.png) no-repeat center;
 }
 .payment-method .form-container .form {
   width: 100%;
@@ -25,6 +25,10 @@
 }
 .select-options select:focus {
   outline: none;
+}
+
+.checkbox:checked {
+  accent-color: #fff;
 }
 
 @media screen and (max-width: 1023px) {
