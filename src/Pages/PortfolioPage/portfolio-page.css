@@ -1,0 +1,42 @@
+.portfolio-top {
+  display: flex;
+  border-top: solid 2px rgb(212, 208, 208);
+  padding-top: 5px;
+  border-bottom: solid 2px rgb(212, 208, 208);
+  margin-left: -5%;
+}
+.add-coin-button {
+  flex-grow: 1;
+}
+.add-coin-button button {
+  border: none;
+  padding: 7px 16px;
+  border-radius: 15px;
+}
+.add-coin-button img {
+  margin-right: 10px;
+}
+.converter-container {
+  display: flex;
+  text-align: center;
+  padding-left: 40%;
+  padding-top: 30px;
+}
+@media screen and (max-width: 620px) {
+  .converter-container {
+    padding-left: 30%;
+  }
+}
+.converter-container h3 {
+  margin-top: 40px;
+  margin-left: -70px;
+  color: #0051ff;
+  font-family: AgrandirBold;
+}
+.coins {
+  margin-top: 120px;
+}
+.coins img {
+  height: 30px;
+  width: 30px;
+}
