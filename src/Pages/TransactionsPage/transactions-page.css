@@ -1,0 +1,14 @@
+.transactionPage-heading {
+  display: flex;
+  margin-bottom: 60px;
+}
+.transactionPage-heading h3 {
+  flex-grow: 1;
+  color: #fb0000;
+  font-family: AgrandirBold;
+}
+.transaction-select {
+  border: solid 4px rgb(215, 212, 212);
+  border-style: outset;
+  border-radius: 15px;
+}

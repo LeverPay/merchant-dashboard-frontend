@@ -6,8 +6,9 @@
 }
 .transactions-table-container td {
   font-family: KB-sans-Regular;
-  padding: 12px 0 12px 40px !important;
+  padding: 15px 0 15px 40px !important;
   color: black;
+  font-size: 18px;
   position: relative;
 }
 /* .transactions-table-container table {

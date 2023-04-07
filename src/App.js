@@ -2,13 +2,13 @@ import React from "react";
 import PaymentMethod from "./Pages/PaymentMethod";
 import Profile from "./Pages/Profile";
 import Security from "./Pages/Security";
-import Transaction from "./Pages/Transaction";
 import SidebarNav from "./Components/General/SidebarNav";
 import Header from "./Components/General/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import OverviewPage from "./Pages/OverviewPage/OverviewPage";
 import "./App.css";
 import PortfolioPage from "./Pages/PortfolioPage/PortfolioPage";
+import { TransactionsPage } from "./Pages/TransactionsPage/TransactionsPage";
 function App() {
   return (
     <div id="merchant-dashboard" className="general-container">
@@ -21,7 +21,7 @@ function App() {
             <Route path="portfolio" element={<PortfolioPage />} />
             <Route path="profile" element={<Profile />} />
             <Route path="security" index element={<Security />} />
-            <Route path="transactions" element={<Transaction />} />
+            <Route path="transactions" element={<TransactionsPage />} />
           </Routes>
         </div>
       </Router>
