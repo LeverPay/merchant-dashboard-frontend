@@ -74,3 +74,5 @@ export const TransactionsPage = () => {
     </>
   );
 };
+
+export default TransactionsPage;
