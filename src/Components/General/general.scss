@@ -24,6 +24,7 @@
       a {
         padding: 0.5rem 0.8rem 0.5rem 0.5rem;
         text-decoration: none;
+        color: #fff;
 
         &:first-of-type {
           padding-top: 0.5rem;
@@ -77,5 +78,5 @@
   }
 }
 .active {
-  color: red !important;
+  font-weight: bold;
 }

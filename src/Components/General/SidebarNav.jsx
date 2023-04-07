@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import "./general.css";
 import Logo from "./Header-components/Logo";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
@@ -63,6 +63,12 @@ export default function SidebarNav(props) {
     },
   ];
 
+  //Active Nav functionality
+  const [active, setActive] = useState(false);
+  const handleNavClick = (idx) => {
+    setActive(idx);
+  };
+
   return (
     <aside className="sidebar-nav text-white " style={{ width: "20%" }}>
       <section
@@ -86,8 +92,10 @@ export default function SidebarNav(props) {
               <NavLink
                 to={item.link}
                 key={idx}
-                className="d-flex align-items-center link-light"
-                // activeClassName="active"
+                className={`d-flex align-items-center${
+                  active ? `active` : ``
+                }`}
+                onClick={() => handleNavClick(idx)}
               >
                 <span className="link-icon">{item.icon}</span>
                 <span>{item.title}</span>

@@ -2,27 +2,20 @@
 #merchant-dashboard .top-nav {
   /** Top-Nav **/
   margin-left: 0;
-  width: 80%;
 }
 @media (min-width: 992px) {
   #merchant-dashboard .top-nav {
-    margin-left: 20%;
+    margin-left: 24.999%;
   }
 }
 #merchant-dashboard .sidebar-nav {
   /** Sidebar **/
-  border-top-right-radius: 20px;
   top: 0;
-  width: 20%;
+  width: 0;
   bottom: 0;
   display: none;
   position: fixed;
-  background: rgb(13, 23, 75);
-  background: linear-gradient(
-    0deg,
-    rgba(13, 23, 75, 1) 15%,
-    rgba(22, 86, 229, 1) 71%
-  ); /* background: linear-gradient(to bottom, rgb(74, 118, 251), rgb(21, 5, 81)); */
+  background: linear-gradient(to bottom, rgb(74, 118, 251), rgb(21, 5, 81));
 }
 #merchant-dashboard .sidebar-nav .contents {
   overflow-y: auto;
@@ -30,6 +23,7 @@
 #merchant-dashboard .sidebar-nav .contents a {
   padding: 0.5rem 0.8rem 0.5rem 0.5rem;
   text-decoration: none;
+  color: #fff;
 }
 #merchant-dashboard .sidebar-nav .contents a:first-of-type {
   padding-top: 0.5rem;
@@ -48,7 +42,7 @@
   padding-top: 0.1rem;
   padding-bottom: 0.1rem;
   margin-bottom: 1rem;
-  background-color: #0d2368;
+  background-color: rgba(21, 5, 71, 0.5);
 }
 #merchant-dashboard .sidebar-nav .contents .sidebar-links-bottom > a:hover {
   background-color: rgba(21, 5, 71, 0.8);
@@ -69,4 +63,8 @@
   #merchant-dashboard .contents-container {
     margin-left: 24.999%;
   }
-} /*# sourceMappingURL=general.css.map */
+}
+
+.active {
+  font-weight: bold;
+}/*# sourceMappingURL=general.css.map */
