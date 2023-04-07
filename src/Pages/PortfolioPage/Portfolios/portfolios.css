@@ -1,0 +1,34 @@
+.portfolio-container {
+  height: 200px;
+  border-radius: 20px;
+  box-shadow: 0 02px 2px grey;
+  padding-top: 5px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.coin-digits {
+  margin-top: 40px;
+  margin-left: 70px;
+}
+@media screen and (max-width: 620px) {
+  .coin-digits {
+    margin-left: 0;
+    text-align: center;
+  }
+}
+.coin-digits h4,
+h6,
+h5 {
+  font-family: AgrandirBold;
+}
+@media screen and (max-width: 620px) {
+  .coin-digits h4,
+  h5,
+  h6 {
+    font-size: 20px !important;
+  }
+}
+.portfolio-container img {
+  height: 40px;
+  width: 40px;
+}
