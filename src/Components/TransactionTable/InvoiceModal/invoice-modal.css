@@ -1,0 +1,27 @@
+.modal {
+  width: 100% !important;
+  margin-top: 50px !important;
+  margin: 0 !important;
+  margin-top: 0px !important;
+}
+.modal-body {
+  padding: 0 !important;
+  background: transparent !important;
+  width: 100% !important;
+}
+.modal-content {
+  width: 100% !important;
+  margin-left: 45% !important;
+  height: 500px !important;
+}
+@media screen and (max-width: 620px) {
+  .modal-content {
+    width: 100% !important;
+    margin-left: 0% !important;
+  }
+}
+.modal-content i {
+  color: #fff;
+  font-size: 45px;
+  float: right !important;
+}

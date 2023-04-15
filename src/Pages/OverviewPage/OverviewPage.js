@@ -6,6 +6,11 @@ import Bitcoin from "../../Assets/bitcoin.png";
 import Etheruem from "../../Assets/ethereum.png";
 import Binance from "../../Assets/binance.png";
 import Coin from "../../Assets/coin-flip.png";
+import USDT from "../../Assets/usdt2.png";
+import USDC from "../../Assets/usdc2.png";
+import BUSD from "../../Assets/busd2.png";
+import FIAT from "../../Assets/fiat2.png";
+import NAIRA from "../../Assets/naira2.png";
 import UserSelectComponent from "../../Components/UserSelectComponent/UserSelectComponent";
 import TransactionsComponent from "../../Components/TransactionsComponent/TransactionsComponent.js";
 
@@ -72,29 +77,47 @@ export const OverviewPage = () => {
                       <img src={Coin} alt="smiley" className="col-md-9" />
                     </center>
                   </div>
-                  <ul className="list-unstyled">
-                    <li>
-                      <span>
-                        {" "}
-                        <img src={Bitcoin} alt="smiley" className="col-md-9" />
-                      </span>
-                      Bitcoin
-                    </li>
-                    <li>
-                      <span>
-                        {" "}
-                        <img src={Etheruem} alt="smiley" className="col-md-9" />
-                      </span>
-                      Etheruem
-                    </li>
-                    <li>
-                      <span>
-                        {" "}
-                        <img src={Binance} alt="smiley" className="col-md-9" />
-                      </span>
-                      Binance
-                    </li>
-                  </ul>
+                  <div className="flexy flexyM">
+                    <ul className="list-unstyled first-coins">
+                      <li>
+                        <span>
+                          {" "}
+                          <img src={USDT} alt="smiley" className="col-md-9" />
+                        </span>
+                        USDT
+                      </li>
+                      <li>
+                        <span>
+                          {" "}
+                          <img src={NAIRA} alt="smiley" className="col-md-9" />
+                        </span>
+                        NAIRA
+                      </li>
+                      <li>
+                        <span>
+                          {" "}
+                          <img src={BUSD} alt="smiley" className="col-md-9" />
+                        </span>
+                        BUSD
+                      </li>
+                    </ul>{" "}
+                    <ul className="list-unstyled">
+                      <li>
+                        <span>
+                          {" "}
+                          <img src={FIAT} alt="smiley" className="col-md-9" />
+                        </span>
+                        FIAT
+                      </li>
+                      <li>
+                        <span>
+                          {" "}
+                          <img src={USDC} alt="smiley" className="col-md-9" />
+                        </span>
+                        USDC
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
