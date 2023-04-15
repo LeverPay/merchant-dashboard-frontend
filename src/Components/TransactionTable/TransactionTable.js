@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./transaction-table.css";
 import Table from "react-bootstrap/Table";
+import Invoice from "../Invoice/Invoice";
+import InvoiceModal from "./InvoiceModal/InvoiceModal";
 // import { allTransactions } from "../../../TestData";
 
 const TransactionTable = (props) => {
@@ -11,7 +13,7 @@ const TransactionTable = (props) => {
   };
   useEffect(() => {
     if (showInvoice !== null) {
-      localStorage.setItem("currentInvoice", showInvoice);
+      localStorage.setItem("currentInvoice", JSON.stringify(showInvoice));
     } else {
       localStorage.setItem("currentInvoice", undefined);
     }
@@ -41,11 +43,20 @@ const TransactionTable = (props) => {
                   {item.status.statusName}
                 </td>
                 <td>{item.amount}</td>
+                <td
+                  onClick={() => {
+                    displayInvoice(item);
+                  }}
+                  className="invoice-td"
+                >
+                  {item.invoice}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      {showInvoice !== null && <InvoiceModal displayInvoice={displayInvoice} />}
     </>
   );
 };

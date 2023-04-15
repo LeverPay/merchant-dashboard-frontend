@@ -61,3 +61,8 @@
     display: flex;
   }
 }
+@media screen and (max-width: 620px) {
+  .flexyM {
+    display: flex;
+  }
+}
