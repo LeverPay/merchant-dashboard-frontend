@@ -6,10 +6,6 @@ import Form from "./form";
 export default function SecurityElements() {
   return (
     <section className="security-container d-flex flex-column">
-      <div className="security-header d-flex justify-content-start px-4">
-        <h2 className="fs-3">Security</h2>
-      </div>
-
       <section className="security-contents-container mt-2 d-flex flex-column justify-content-center align-items-center">
         <div className="security-contents mt-4 px-2">
           <h2 className="fs-2 fw-normal">Two Factor Authentication</h2>

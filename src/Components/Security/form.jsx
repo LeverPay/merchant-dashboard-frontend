@@ -40,7 +40,7 @@ export default function Form() {
 
   return (
     <form action="">
-      <div className="mt-2 py-2 d-flex flex-column">
+      <div className="py-2 d-flex flex-column">
         <label htmlFor="current-password">Current password</label>
 
         <div className="">
@@ -81,20 +81,17 @@ export default function Form() {
           />
         </div>
       </div>
-      <Link to="/" className="mt-4">
-        Forgot password?
-      </Link>
 
       <div className="d-flex mt-5 justify-content-center align-items-center">
         <Button
-          style={{ backgroundColor: "#ebebeb", color: "#ffffff" }}
+          style={{ backgroundColor: "#ebebeb", color: "#2962f2" }}
           click={discardChanges}
         >
           Discard Changes
         </Button>
 
         <Button
-          style={{ backgroundColor: "#2962f2", color: "#000" }}
+          style={{ backgroundColor: "#2962f2", color: "#ffffff" }}
           click={handleSubmit}
         >
           Save Changes
