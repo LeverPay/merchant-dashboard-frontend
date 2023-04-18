@@ -240,7 +240,7 @@ export default function Form() {
           {/* Discard changes, fetch information from database and make forms on page readOnly */}
 
           <Button
-            style={{ backgroundColor: "#ebebeb", color: "#ffffff" }}
+            style={{ backgroundColor: "#ebebeb", color: "#2962f2" }}
             click={discardChanges}
           >
             Discard Changes
@@ -248,7 +248,7 @@ export default function Form() {
 
           {/* performs a post and get request on the database to update database and render information on the client */}
           <Button
-            style={{ backgroundColor: "#2962f2", color: "#000" }}
+            style={{ backgroundColor: "#2962f2", color: "#ffffff" }}
             click={handleSubmit}
           >
             Save Changes
