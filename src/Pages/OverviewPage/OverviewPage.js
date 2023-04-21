@@ -9,7 +9,7 @@ import Coin from "../../Assets/coin-flip.png";
 import USDT from "../../Assets/usdt2.png";
 import USDC from "../../Assets/usdc2.png";
 import BUSD from "../../Assets/busd2.png";
-import FIAT from "../../Assets/fiat2.png";
+import FIAT from "../../Assets/fiat3.png";
 import NAIRA from "../../Assets/naira2.png";
 import UserSelectComponent from "../../Components/UserSelectComponent/UserSelectComponent";
 import TransactionsComponent from "../../Components/TransactionsComponent/TransactionsComponent.js";
