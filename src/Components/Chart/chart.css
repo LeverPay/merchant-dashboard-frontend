@@ -1,6 +1,8 @@
 .chart-container .canvasjs-chart-canvas {
   width: 250px !important;
   height: 200px !important;
+  position: relative !important;
+  z-index: 1 !important;
 }
 .canvasjs-chart-toolbar button {
   background: transparent !important;
