@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 // import Invoice from "./Invoice/Invoice";
@@ -8,12 +8,14 @@ import "./transactions-page.css";
 import { Link, NavLink } from "react-router-dom";
 import Invoice from "../../Components/Invoice/Invoice";
 import Carousel from "react-bootstrap/Carousel";
+// import PrintInvoice from "../../Components/TransactionTable/InvoiceModal/PrintInvoice";
 
 export const TransactionsPage = () => {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  // let componentRef = useRef();
 
   return (
     <>
@@ -66,9 +68,9 @@ export const TransactionsPage = () => {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
+          {/* <div style={{ display: "none" }}>
+            <PrintInvoice ref={(el) => (componentRef = el)} />
+          </div> */}
         </Modal.Footer>
       </Modal>
     </>
