@@ -22,10 +22,12 @@
 }
 .transactions-table-container th {
   font-family: KB-sans-Bold;
-  color: black !important;
+  color: #190c57 !important;
   font-weight: bold;
-  padding: 20px 0 20px 40px;
+  padding: 25px 0 25px 40px;
   text-align: left !important;
+  font-size: 20px;
+  border-top: solid 2px rgb(198, 196, 196);
 }
 
 @media screen and (max-width: 620px) {
