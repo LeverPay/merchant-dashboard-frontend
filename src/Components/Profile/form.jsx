@@ -1,14 +1,21 @@
 import React, { useState, useRef } from "react";
 import Button from "../General/Button component/Button";
+import PhoneInput, {
+  isValidPhoneNumber,
+  isPossiblePhoneNumber,
+} from "react-phone-number-input";
+import "react-phone-number-input/style.css";
+import { countries } from "countries-list";
+import Select from "react-select";
 
 export default function Form() {
+  const [phone, setPhone] = useState("");
+  const [country, setCountry] = useState(null);
   const [Input, setInput] = useState({
     firstName: "",
     lastName: "",
     businuessName: "",
-    country: "",
-    countryCode: "",
-    phoneNo: "",
+    country: null,
     image: "",
   });
 
@@ -30,6 +37,15 @@ export default function Form() {
     });
   };
 
+  const countryOptions = Object.keys(countries).map((code) => ({
+    value: code,
+    label: countries[code].name,
+  }));
+
+  const handleCountryChange = (value) => {
+    setCountry(value);
+  };
+
   const editInfo = () => {
     setReadOnly(false);
     console.log(ref1);
@@ -46,12 +62,12 @@ export default function Form() {
       console.log(Input.businuessName);
     }
 
-    if (Input.countryCode !== "" && Input.phoneNo !== "") {
-      console.log(Input.countryCode, Input.phoneNo);
+    if (country !== "") {
+      console.log(country.label);
     }
 
-    if (Input.country !== "") {
-      console.log(Input.country);
+    if (isValidPhoneNumber(phone) && isPossiblePhoneNumber(phone)) {
+      console.log(phone);
     }
 
     if (Image) {
@@ -175,63 +191,34 @@ export default function Form() {
           </div>
         </div>
 
-        <div className="mt-1 py-2 d-flex flex-column label">
+        <div className="mt-1 py-2 d-flex flex-column" id="options">
           <label htmlFor="Country" className="rounded-1">
             Country
           </label>
 
           <div className="items">
-            <select
-              name="country"
-              className="rounded-1 select-btn"
-              id="Country"
-              value={Input.country}
-              onChange={handleChange}
-              ref={ref4}
-              disabled={ReadOnly}
-            >
-              <option value="">Country</option>
-              <option value="Nigeria">Nigeria</option>
-              <option value="Canada">Canada</option>
-              <option value="Portugal">Portugal</option>
-              <option value="Usa">United states</option>
-              <option value="London">London</option>
-              <option value="Germany">Germany</option>
-              <option value="Tokyo">Tokyo</option>
-              <option value="China">China</option>
-            </select>
+            <Select
+              options={countryOptions}
+              className="select-btn rounded-1"
+              value={country}
+              onChange={handleCountryChange}
+              isDisabled={ReadOnly}
+            />
           </div>
         </div>
 
-        <div className="mt-1 py-2 d-flex" id="options">
-          <label htmlFor="countryCode" id="text-input-width-1">
-            <select
-              name="countryCode"
-              id="countryCode"
-              className="select-btn rounded-1"
-              value={Input.countryCode}
-              onChange={handleChange}
-              ref={ref5}
-              disabled={ReadOnly}
-            >
-              <option value="">Short Code</option>
-              <option value="+234">+234</option>
-              <option value="+31">+31</option>
-              <option value="+041">+041</option>
-              <option value="+011">+011</option>
-            </select>
+        <div className="mt-1 py-2 d-flex flex-column" id="options">
+          <label htmlFor="Country" className="rounded-1">
+            Phone Number
           </label>
 
-          <div className="px-2" id="text-input-width">
-            <input
-              className="rounded-1 text-input"
-              id=""
-              type="text"
-              name="phoneNo"
-              value={Input.phoneNo}
-              onChange={handleChange}
-              ref={ref6}
-              readOnly={ReadOnly}
+          <div className="items">
+            <PhoneInput
+              international
+              value={phone}
+              onChange={(val) => setPhone(val)}
+              className="select-btn rounded-1"
+              disabled={ReadOnly}
             />
           </div>
         </div>
