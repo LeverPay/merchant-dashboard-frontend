@@ -64,6 +64,22 @@
   cursor: pointer;
 }
 
+.PhoneInputInput {
+  border-radius: 0.2rem;
+  outline: none;
+  border: none;
+}
+.PhoneInputInput:focus {
+  outline: none;
+  border: none;
+}
+
+.react-select__control {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
 @media screen and (min-width: 1024px) {
   .profile-container {
     width: 70vw;

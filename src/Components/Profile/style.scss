@@ -65,8 +65,24 @@
   background-color: #ebebeb;
 }
 
-.cursor{
+.cursor {
   cursor: pointer;
+}
+
+.PhoneInputInput {
+  border-radius: 0.2rem;
+  outline: none;
+  border: none;
+  &:focus {
+    outline: none;
+    border: none;
+  }
+}
+
+.react-select__control {
+  border: none !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 @media screen and (min-width: 1024px) {
@@ -95,7 +111,7 @@
   .profile-container {
     width: 70vw;
 
-    .profile-header{
+    .profile-header {
       height: 8vh;
     }
     .profile-contents-container {
