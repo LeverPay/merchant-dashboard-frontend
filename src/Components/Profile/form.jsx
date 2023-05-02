@@ -108,6 +108,10 @@ export default function Form() {
     };
   };
 
+  const removeImage = () => {
+    setImage(null);
+  };
+
   return (
     <>
       <section className="profile-edit d-flex justify-content-around align-items-center">
@@ -132,7 +136,10 @@ export default function Form() {
           />
         </Button>
 
-        <Button style={{ backgroundColor: "#ebebeb", color: "#2962f2" }}>
+        <Button
+          style={{ backgroundColor: "#ebebeb", color: "#2962f2" }}
+          click={removeImage}
+        >
           Remove
           <img
             className="mx-2"
