@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Chart from "../../Components/Chart/Chart";
 import "./overview-page.css";
 import { chartData, doughnutChartData } from "../../TestData/ChartData";
@@ -19,6 +19,15 @@ export const OverviewPage = () => {
   const handleClick = (index) => setActiveIndex(index);
   const checkActive = (index, className) =>
     activeIndex === index ? className : "";
+
+  // const formContainer = useRef();
+  // const [form, setForm] = useState(true);
+
+  // const close = () => {
+  //   // formContainer.current.classList.add("close-container");
+  //   setForm(false);
+  // };
+
   return (
     <>
       <div className="col-md-12 chart-tab">
