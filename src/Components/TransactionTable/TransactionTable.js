@@ -5,6 +5,8 @@ import Invoice from "../Invoice/Invoice";
 import InvoiceModal from "./InvoiceModal/InvoiceModal";
 import Form from "../../Components/contact-support/form";
 // import { allTransactions } from "../../../TestData";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const TransactionTable = (props) => {
   const [showInvoice, setShowInvoice] = useState(null);
@@ -15,8 +17,15 @@ const TransactionTable = (props) => {
     // console.log(showInvoice, showInvoice === null);
   };
 
-  const showForm = () => {
+  // console.log(props.data.data[0].id);
+
+  //Problem Here
+  const showForm = (e) => {
     setDisplayForm(true);
+    const data = props.data.data;
+    const id = data.map((el, i) => el.id);
+    let result = Object.values(id).forEach((el) => console.log(el === e));
+    console.log(result, id, data);
   };
 
   useEffect(() => {
@@ -29,6 +38,7 @@ const TransactionTable = (props) => {
   return (
     <>
       <div className="transactions-table-container">
+        <ToastContainer />
         <table className="col-md-12 col-12">
           <thead>
             <tr>
