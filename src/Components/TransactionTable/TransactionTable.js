@@ -5,18 +5,21 @@ import Invoice from "../Invoice/Invoice";
 import InvoiceModal from "./InvoiceModal/InvoiceModal";
 import Form from "../../Components/contact-support/form";
 // import { allTransactions } from "../../../TestData";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const TransactionTable = (props) => {
   const [showInvoice, setShowInvoice] = useState(null);
   const [displayForm, setDisplayForm] = useState(false);
+  const [transactionId, setTransactionId] = useState();
   const helpRef = useRef();
   const displayInvoice = (item) => {
     setShowInvoice(item);
-    // console.log(showInvoice, showInvoice === null);
   };
 
-  const showForm = () => {
+  const showForm = (item) => {
     setDisplayForm(true);
+    setTransactionId(item.name);
   };
 
   useEffect(() => {
@@ -29,17 +32,18 @@ const TransactionTable = (props) => {
   return (
     <>
       <div className="transactions-table-container">
+        <ToastContainer />
         <table className="col-md-12 col-12">
           <thead>
             <tr>
-              {props.data.headers.map((item) => (
-                <th>{item}</th>
+              {props.data.headers.map((item, i) => (
+                <th key={i}>{item}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {props.data.data.map((item, index) => (
-              <tr>
+              <tr key={index}>
                 <td style={{ fontWeight: "bold" }}>{item.name}</td>
                 <td>{item.date}</td>
                 <td style={{ color: item.color || "black" }}>
@@ -59,7 +63,11 @@ const TransactionTable = (props) => {
                 >
                   {item.invoice}
                 </td>
-                <td ref={helpRef} className={`help-td`} onClick={showForm}>
+                <td
+                  ref={helpRef}
+                  className={`help-td`}
+                  onClick={() => showForm(item)}
+                >
                   {item.help}
                 </td>
               </tr>
@@ -68,7 +76,9 @@ const TransactionTable = (props) => {
         </table>
       </div>
       {showInvoice !== null && <InvoiceModal displayInvoice={displayInvoice} />}
-      {displayForm && <Form setDisplayForm={setDisplayForm} />}
+      {displayForm && (
+        <Form setDisplayForm={setDisplayForm} transactionId={transactionId} />
+      )}
     </>
   );
 };

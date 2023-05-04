@@ -180,13 +180,34 @@
 }
 
 .contact-support {
-  width: 50%;
+  width: 70%;
   height: auto;
   z-index: 20;
-  top: 10%;
-  left: 35%;
+  top: 2%;
+  left: 25%;
   position: fixed;
+  background: linear-gradient(177.42deg, #0051FF -2.29%, #0B0230 113.02%);
+}
+
+.border-color {
+  border: 1px solid #fb0000 !important;
+}
+
+.important-msg {
+  color: #fb0000;
+}
+
+.contact-support .second-container {
+  color: #fff;
+}
+
+.input-field-background {
   background-color: #fff;
+}
+
+.white {
+  color: #fff;
+  text-decoration: none;
 }
 
 .contact-support .input-field {
@@ -197,31 +218,37 @@
   border: none;
 }
 
-.contact-support .close {
+.close {
   position: absolute;
-  left: 0;
+  right: 0;
   top: 0;
   width: 100%;
   z-index: 50;
   cursor: pointer;
 }
 
-.close-container {
-  display: none !important;
-}
-
 @media screen and (max-width: 1023px) {
   .contact-support {
-    width: 60%;
-    left: 25%;
-    top: 40%;
+    width: 80%;
+    left: 18%;
+    top: 2%;
   }
 }
 
 @media screen and (max-width: 767px) {
   .contact-support {
-    width: 80%;
-    top: 40%;
-    left: 10%;
+    width: 90%;
+    top: 5%;
+    left: 5%;
+    flex-direction: column !important;
+  }
+
+  .next {
+    width: 10px;
+    height: 10px;
+  }
+
+  .name-input {
+    flex-direction: column;
   }
 }
