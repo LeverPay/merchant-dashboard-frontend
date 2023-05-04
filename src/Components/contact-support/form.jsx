@@ -9,7 +9,7 @@ import Button from "../../Components/General/Button component/Button.jsx";
 import { AiOutlineClose } from "react-icons/ai";
 import { toast } from "react-toastify";
 
-export default function Form({ setDisplayForm }) {
+export default function Form({ setDisplayForm, transactionId }) {
   const [error, setError] = useState(false);
   const [phone, setPhone] = useState("");
   const [input, setInput] = useState({
@@ -17,6 +17,7 @@ export default function Form({ setDisplayForm }) {
     lastname: "User Lastname",
     email: "User@Mail",
     message: "",
+    transactId: transactionId,
   });
   const contactSupport = useRef();
   const textArea = useRef();
@@ -30,6 +31,7 @@ export default function Form({ setDisplayForm }) {
     toast.success("Message Sent", {
       position: "top-center",
       hideProgressBar: true,
+      autoClose: false
     });
   };
 

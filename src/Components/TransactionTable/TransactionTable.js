@@ -11,21 +11,15 @@ import "react-toastify/dist/ReactToastify.css";
 const TransactionTable = (props) => {
   const [showInvoice, setShowInvoice] = useState(null);
   const [displayForm, setDisplayForm] = useState(false);
+  const [transactionId, setTransactionId] = useState();
   const helpRef = useRef();
   const displayInvoice = (item) => {
     setShowInvoice(item);
-    // console.log(showInvoice, showInvoice === null);
   };
 
-  // console.log(props.data.data[0].id);
-
-  //Problem Here
-  const showForm = (e) => {
+  const showForm = (item) => {
     setDisplayForm(true);
-    const data = props.data.data;
-    const id = data.map((el, i) => el.id);
-    let result = Object.values(id).forEach((el) => console.log(el === e));
-    console.log(result, id, data);
+    setTransactionId(item.name);
   };
 
   useEffect(() => {
@@ -42,14 +36,14 @@ const TransactionTable = (props) => {
         <table className="col-md-12 col-12">
           <thead>
             <tr>
-              {props.data.headers.map((item) => (
-                <th>{item}</th>
+              {props.data.headers.map((item, i) => (
+                <th key={i}>{item}</th>
               ))}
             </tr>
           </thead>
           <tbody>
             {props.data.data.map((item, index) => (
-              <tr>
+              <tr key={index}>
                 <td style={{ fontWeight: "bold" }}>{item.name}</td>
                 <td>{item.date}</td>
                 <td style={{ color: item.color || "black" }}>
@@ -69,7 +63,11 @@ const TransactionTable = (props) => {
                 >
                   {item.invoice}
                 </td>
-                <td ref={helpRef} className={`help-td`} onClick={showForm}>
+                <td
+                  ref={helpRef}
+                  className={`help-td`}
+                  onClick={() => showForm(item)}
+                >
                   {item.help}
                 </td>
               </tr>
@@ -78,7 +76,9 @@ const TransactionTable = (props) => {
         </table>
       </div>
       {showInvoice !== null && <InvoiceModal displayInvoice={displayInvoice} />}
-      {displayForm && <Form setDisplayForm={setDisplayForm} />}
+      {displayForm && (
+        <Form setDisplayForm={setDisplayForm} transactionId={transactionId} />
+      )}
     </>
   );
 };
