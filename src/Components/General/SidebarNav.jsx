@@ -94,7 +94,7 @@ export default function SidebarNav(props) {
     },
     {
       iconStart: <QuizOutlinedIcon htmlColor="white" />,
-      link: "./",
+      link: "Help&support",
       title: "Help & Support",
       iconEnd: <OpenInNewOutlinedIcon htmlColor="white" />,
     },

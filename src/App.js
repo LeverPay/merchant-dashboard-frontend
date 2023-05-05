@@ -9,6 +9,8 @@ import OverviewPage from "./Pages/OverviewPage/OverviewPage";
 import "./App.css";
 import PortfolioPage from "./Pages/PortfolioPage/PortfolioPage";
 import TransactionsPage from "./Pages/TransactionsPage/TransactionsPage";
+import Help from "./Pages/Help & Support/help";
+
 function App(props) {
   return (
     <div id="merchant-dashboard" className="general-container">
@@ -22,6 +24,7 @@ function App(props) {
             <Route path="profile" element={<Profile />} />
             <Route path="security" index element={<Security />} />
             <Route path="transactions" element={<TransactionsPage />} />
+            <Route path="Help&support" element={<Help />} />
           </Routes>
         </div>
       </Router>

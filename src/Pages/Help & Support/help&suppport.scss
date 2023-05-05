@@ -1,0 +1,80 @@
+.bottom-line {
+  border-bottom: 1px solid #dee2e6;
+}
+
+@mixin input-focus-reset {
+  &:focus {
+    outline: none;
+    border: none;
+  }
+}
+
+.faq_container {
+  width: 50%;
+}
+
+.arrow {
+  cursor: pointer;
+}
+
+.color {
+  color: #fff;
+}
+
+.more {
+  cursor: pointer;
+  background: linear-gradient(177.42deg, #0051ff -2.29%, #0b0230 113.02%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.message-form {
+  width: 60%;
+  background: linear-gradient(177.42deg, #0051ff -2.29%, #0b0230 113.02%);
+  position: fixed;
+  top: 10%;
+  left: 30%;
+
+  .message-form-content {
+    width: 60%;
+    margin: auto;
+
+    .form-field {
+      background-color: #fff;
+    }
+
+    .input {
+      outline: none;
+      border: none;
+      border-bottom: 2px solid #d9d9d9;
+      @include input-focus-reset;
+      // &:last-child {
+      //   border-bottom: none;
+      // }
+    }
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .message-form {
+    top: 30%;
+    left: 20%;
+
+    .message-form-content {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .message-form {
+    width: 80%;
+    left: 10%;
+    top: 40%;
+
+    .message-form-content {
+      width: 100%;
+    }
+  }
+}
