@@ -20,14 +20,6 @@ export const OverviewPage = () => {
   const checkActive = (index, className) =>
     activeIndex === index ? className : "";
 
-  // const formContainer = useRef();
-  // const [form, setForm] = useState(true);
-
-  // const close = () => {
-  //   // formContainer.current.classList.add("close-container");
-  //   setForm(false);
-  // };
-
   return (
     <>
       <div className="col-md-12 chart-tab">
