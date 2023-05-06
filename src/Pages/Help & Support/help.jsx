@@ -35,7 +35,8 @@ export default function Help() {
       {data.map((item, index) => {
         return (
           <div
-            className="bottom-line d-flex justify-content-around"
+            className="bottom-line d-flex justify-content-around cursor"
+            onClick={() => displayAnswer(index)}
             key={item.id}
           >
             <div className="faq_container flex-wrap d-flex flex-column mt-5">
@@ -44,10 +45,7 @@ export default function Help() {
                 <p className="fs-4 mt-4">{item.answer}</p>
               )}
             </div>
-            <span
-              className="d-flex justify-content-center mt-5 arrow"
-              onClick={() => displayAnswer(index)}
-            >
+            <span className="d-flex justify-content-center mt-5 arrow">
               {!renderAnswer[index] ? (
                 <IoIosArrowDropleftCircle size="50px" />
               ) : (
@@ -69,7 +67,7 @@ export default function Help() {
 
       {renderForm && (
         <div ref={formContainer}>
-          <Form />
+          <Form setRenderForm={setRenderForm} />
         </div>
       )}
     </div>

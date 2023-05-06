@@ -65,7 +65,7 @@ const TransactionTable = (props) => {
                 </td>
                 <td
                   ref={helpRef}
-                  className={`help-td`}
+                  className={`help-td fs-5`}
                   onClick={() => showForm(item)}
                 >
                   {item.help}
