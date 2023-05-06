@@ -4,6 +4,7 @@
   padding-bottom: 60px;
   overflow-x: auto;
 }
+
 .transactions-table-container td {
   font-family: KB-sans-Regular;
   padding: 15px 0 15px 40px !important;
@@ -11,6 +12,7 @@
   font-size: 18px;
   position: relative;
 }
+
 /* .transactions-table-container table {
   width: 300px !important;
 } */
@@ -20,6 +22,7 @@
   background-color: #c2c1c6;
   font-weight: bold;
 }
+
 .transactions-table-container th {
   font-family: KB-sans-Bold;
   color: #190c57 !important;
@@ -34,26 +37,28 @@
   .transactions-table-container h5 {
     margin-right: 100px;
   }
+
   .table-title {
     padding-right: 0px !important;
   }
 }
+
 .table-title {
   display: flex;
   padding-right: 230px;
 }
+
 .transactions-table-container tr {
   border-bottom: solid 1px rgb(198, 196, 196);
   box-shadow: 0 0 1px 1px rgb(198, 196, 196);
 }
-.transaction-table-container {
-  /* margin-left: 33px; */
-}
+
 @media screen and (max-width: 620px) {
   .transaction-table-container {
     margin-left: 0 !important;
   }
 }
+
 .invoice-td {
   cursor: pointer;
   color: #0eb500 !important;
@@ -63,8 +68,4 @@
 .help-td {
   cursor: pointer;
   font-weight: bold;
-}
-
-.readOnly {
-  cursor: not-allowed;
 }
