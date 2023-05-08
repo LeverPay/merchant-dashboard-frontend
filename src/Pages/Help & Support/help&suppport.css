@@ -87,4 +87,7 @@
   .name-input {
     flex-direction: column;
   }
+}
+.hidden {
+  display: none;
 }/*# sourceMappingURL=help&suppport.css.map */
