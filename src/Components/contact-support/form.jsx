@@ -7,6 +7,7 @@ import "react-phone-number-input/style.css";
 import { countries } from "countries-list";
 import Button from "../../Components/General/Button component/Button.jsx";
 import { toast } from "react-toastify";
+import { AiOutlineClose } from "react-icons/ai";
 
 export default function Form({ setDisplayForm, transactionId }) {
   const [error, setError] = useState(false);
@@ -35,9 +36,14 @@ export default function Form({ setDisplayForm, transactionId }) {
     setInput((prev) => ({ ...prev, [name]: value }));
   };
 
+  const userCloseForm = () => {
+    setDisplayForm(false);
+  };
+
   useEffect(() => {
     const close = (e) => {
       if (!contactSupport.current.contains(e.target)) {
+        e.stopPropagation();
         setDisplayForm(false);
       }
     };
@@ -70,6 +76,9 @@ export default function Form({ setDisplayForm, transactionId }) {
         className="message-form d-flex flex-column px-5 py-5 color"
         ref={contactSupport}
       >
+        <span className="close" onClick={userCloseForm}>
+          <AiOutlineClose size="25px" />
+        </span>
         <div className="message-form-content">
           <h1>Help!</h1>
           <p className="fst-italic">
@@ -101,7 +110,7 @@ export default function Form({ setDisplayForm, transactionId }) {
               />
             </div>
 
-            <div className="rounded-2 d-flex align-items-center px-2">
+            <div className="rounded-2 d-flex align-items-center px-2 mt-4">
               <label htmlFor="">
                 <img
                   src={require("../../Assets/Envelope Dots.png")}
@@ -121,28 +130,7 @@ export default function Form({ setDisplayForm, transactionId }) {
               />
             </div>
 
-            <div className="rounded-2 d-flex align-items-center px-2">
-              <label htmlFor="">
-                <img
-                  src={require("../../Assets/discuss-issue.png")}
-                  width="20px"
-                  height="20px"
-                  alt=""
-                />
-              </label>
-              <select
-                name=""
-                id=""
-                className="container mt-2 px-2 py-1 mx-4 input"
-              >
-                <option value="">Find Your Issue</option>
-                <option value="issue 1">Issue 1</option>
-                <option value="issue 2">Issue 2</option>
-                <option value="issue 3">Issue 3</option>
-              </select>
-            </div>
-
-            <div className="rounded-2">
+            <div className="rounded-2 mt-4">
               <textarea
                 ref={textArea}
                 name="message"
@@ -157,7 +145,7 @@ export default function Form({ setDisplayForm, transactionId }) {
               )}
             </div>
 
-            <div className="container d-flex justify-content-end">
+            <div className="container d-flex justify-content-end mt-4">
               <Button
                 style={{
                   backgroundImage:
@@ -176,7 +164,7 @@ export default function Form({ setDisplayForm, transactionId }) {
           <div className="d-flex justify-content-center align-items-center">
             <div className="d-flex justify-content-around mt-3">
               <span className="mx-1 fst-italic">Call/Chat US</span>{" "}
-              <a href="" className="mx-2 color">
+              <a href="" className="mx-2 color" target="_blank">
                 <img
                   src={require("../../Assets/call.png")}
                   alt=""
@@ -185,7 +173,11 @@ export default function Form({ setDisplayForm, transactionId }) {
                 />
                 +234 7068936384
               </a>
-              <a href="" className="mx-2 color">
+              <a
+                href="https://wa.link/m6j550"
+                className="mx-2 color"
+                target="_blank"
+              >
                 <img
                   src={require("../../Assets/whatsapp.png")}
                   alt=""
