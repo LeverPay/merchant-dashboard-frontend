@@ -1,13 +1,9 @@
 import React, { useState, useRef } from "react";
 import Button from "../../Components/General/Button component/Button";
 import { AiOutlineClose } from "react-icons/ai";
-import PhoneInput, {
-  isValidPhoneNumber,
-  isPossiblePhoneNumber,
-} from "react-phone-number-input";
-import { Input } from "@mui/material";
+import PhoneInput from "react-phone-number-input";
 
-export default function Form({ setRenderForm }) {
+export default function Form({ setRenderForm, notify, success }) {
   const [error, setError] = useState(false);
   const [phone, setPhone] = useState("");
   const [input, setInput] = useState({
@@ -22,7 +18,11 @@ export default function Form({ setRenderForm }) {
     errMsg2 = useRef(),
     errMsg3 = useRef(),
     selectField = useRef(),
-    textArea = useRef();
+    textArea = useRef(),
+    lastName = useRef(),
+    firstName = useRef(),
+    mail = useRef(),
+    errMsg6 = useRef();
 
   const closebtnAction = () => {
     setRenderForm(false);
@@ -34,24 +34,102 @@ export default function Form({ setRenderForm }) {
     setInput((prev) => ({ ...prev, [name]: value }));
   };
 
-  const validate = () => {
-    const err = {};
+  //Removes error while user changes input
+  const toggleErr1 = () => {
+    if (input.firstname !== "") {
+      if (!errMsg1.current.classList.contains("hidden")) {
+        errMsg1.current.classList.add("hidden");
+      }
+    } else {
+      if (input.firstname === "") errMsg1.current.classList.remove("hidden");
+    }
+  };
 
+  //Removes error while user changes input
+  const togggleErr2 = () => {
+    if (input.lastname !== "") {
+      if (!errMsg2.current.classList.contains("hidden")) {
+        errMsg2.current.classList.add("hidden");
+      }
+    } else {
+      if (input.lastname === "") errMsg2.current.classList.remove("hidden");
+    }
+  };
+
+  //Removes error while user changes input
+  const toggleErr3 = () => {
+    if (input.email !== "") {
+      if (!errMsg3.current.classList.contains("hidden")) {
+        errMsg3.current.classList.add("hidden");
+      }
+    } else {
+      if (input.email === "") errMsg3.current.classList.remove("hidden");
+    }
+
+    if (!input.email.match(mailRegex)) {
+      if (errMsg3.current.classList.contains("hidden")) {
+        errMsg3.current.classList.remove("hidden");
+      }
+    } else {
+      errMsg3.current.classList.add("hidden");
+    }
+  };
+
+  //Removes error while user changes input
+  const toggleErr4 = () => {
+    if (input.message !== "") {
+      if (textArea.current.classList.contains("border-color")) {
+        textArea.current.classList.remove("border-color");
+        selectField.current.classList.remove("border-color");
+      }
+    } else {
+      if (input.message === "") {
+        textArea.current.classList.add("border-color");
+        selectField.current.classList.add("border-color");
+      }
+    }
+  };
+
+  //Removes error while user changes input
+  const toggleErr5 = () => {
+    if (input.issue !== "") {
+      if (selectField.current.classList.contains("border-color")) {
+        textArea.current.classList.remove("border-color");
+        selectField.current.classList.remove("border-color");
+      }
+    } else {
+      if (input.issue === "") {
+        if (!selectField.current.classList.contains("border-color")) {
+          selectField.current.classList.add("border-color");
+        }
+      }
+    }
+  };
+
+  const handlePhone = (val) => {
+    setPhone(val);
+    if (!val || !val.startsWith("+")) {
+      errMsg6.current.classList.remove("hidden");
+    } else {
+      if (!errMsg6.current.classList.contains("hidden")) {
+        errMsg6.current.classList.add("hidden");
+      }
+    }
+  };
+
+  const validate = () => {
     //validate Firstname input field
     if (input.firstname === "") {
-      err.firstname = true;
       errMsg1.current.classList.remove("hidden");
     } else {
       if (!errMsg1.current.classList.contains("hidden")) {
         errMsg1.current.classList.add("hidden");
-        err.firstname = false;
       }
     }
 
     //Validate lastname input field
     if (input.lastname === "") {
       errMsg2.current.classList.remove("hidden");
-      err.lastname = false;
     } else {
       if (!errMsg2.current.classList.contains("hidden")) {
         errMsg2.current.classList.add("hidden");
@@ -60,24 +138,45 @@ export default function Form({ setRenderForm }) {
 
     //validate E-mail input field
     if (!input.email.match(mailRegex)) {
-      err.email = true;
       errMsg3.current.classList.remove("hidden");
     } else {
       if (!errMsg3.current.classList.contains("hidden")) {
         errMsg3.current.classList.add("hidden");
-        err.email = false;
       }
     }
 
     //Validate message & select fields
-    if (input.message === "" || selectField === "") {
+    if (input.message === "") {
       textArea.current.classList.add("border-color");
+
+      if (input.issue !== "") {
+        if (textArea.current.classList.contains("border-color")) {
+          textArea.current.classList.remove("border-color");
+        } else {
+          textArea.current.classList.add("border-color");
+        }
+      }
+    } else {
+      if (input.message !== "") {
+        textArea.current.classList.remove("border-color");
+      }
+    }
+
+    if (input.issue === "") {
       selectField.current.classList.add("border-color");
-      err.msg = true;
-    } else { //bug here
-      err.msg = false;
-      textArea.current.classList.remove("border-color");
-      selectField.current.classList.remove("border-color");
+
+      if (input.message !== "") {
+        if (selectField.current.classList.contains("border-color")) {
+          selectField.current.classList.remove("border-color");
+        } else {
+          selectField.current.classList.add("border-color");
+        }
+      }
+    } else {
+      //bug here
+      if (input.issue !== "") {
+        selectField.current.classList.remove("border-color");
+      }
     }
   };
 
@@ -94,7 +193,10 @@ export default function Form({ setRenderForm }) {
       input.email !== "" &&
       oneSelected
     ) {
-      console.log(input, input.issue);
+      console.log(input, input.issue, phone);
+      success();
+    } else {
+      notify();
     }
   };
 
@@ -117,6 +219,8 @@ export default function Form({ setRenderForm }) {
                   value={input.firstname}
                   onChange={handleChange}
                   className="px-1 py-2 input-field"
+                  ref={firstName}
+                  onInput={toggleErr1}
                 />
                 <small className="important-msg hidden" ref={errMsg1}>
                   This field is required
@@ -133,6 +237,8 @@ export default function Form({ setRenderForm }) {
                   value={input.lastname}
                   onChange={handleChange}
                   className="px-1 py-2 input-field"
+                  ref={lastName}
+                  onInput={togggleErr2}
                 />
                 <small className="important-msg hidden" ref={errMsg2}>
                   This field is required
@@ -147,10 +253,14 @@ export default function Form({ setRenderForm }) {
             </label>
             <PhoneInput
               international
+              name="phone"
               value={phone}
-              onChange={(val) => setPhone(val)}
+              onChange={handlePhone}
               className="px-1 py-2 input-field"
             />
+            <small className="important-msg hidden" ref={errMsg6}>
+              start with country code e.g (+234 8xxx12xx)
+            </small>
           </div>
 
           <div className="mt-4 d-flex flex-column container">
@@ -163,6 +273,8 @@ export default function Form({ setRenderForm }) {
               value={input.email}
               onChange={handleChange}
               className="px-1 py-2 input-field"
+              ref={mail}
+              onInput={toggleErr3}
             />
             <small className="important-msg hidden" ref={errMsg3}>
               This field is required (e.g: user@mail.com)
@@ -178,6 +290,7 @@ export default function Form({ setRenderForm }) {
               onChange={handleChange}
               className="container mt-4 px-2 px-1 py-2 input-field"
               ref={selectField}
+              onInput={toggleErr5}
             >
               <option value="">Find Your Issue</option>
               <option value="issue 1">Issue 1</option>
@@ -196,6 +309,7 @@ export default function Form({ setRenderForm }) {
               value={input.message}
               onChange={handleChange}
               ref={textArea}
+              onInput={toggleErr4}
             ></textarea>
           </div>
 
@@ -235,7 +349,8 @@ export default function Form({ setRenderForm }) {
             />
             <p>+234 7068936389</p>
           </a>
-          <a className="d-flex color">
+
+          <a href="" className="d-flex color">
             <img
               src={require("../../Assets/whatsapp.png")}
               width="25px"
@@ -255,7 +370,7 @@ export default function Form({ setRenderForm }) {
           </a>
         </div>
 
-        <a href="" className="d-flex mt-5 white">
+        <a href="" className="d-flex mt-5 color">
           {" "}
           <img
             src={require("../../Assets/next.png")}

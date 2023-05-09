@@ -5,13 +5,32 @@ import { IoIosArrowDropdownCircle } from "react-icons/io";
 import { IoIosArrowDropleftCircle } from "react-icons/io";
 import Form from "./form";
 import { useEffect } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Help() {
   const [renderForm, setRenderForm] = useState(false);
   const [renderAnswer, setRenderAnswer] = useState(
     Array(data.length).fill(false)
   );
-  const formContainer = useRef();
+  const formContainer = useRef(),
+    notificationContainer = useRef();
+
+  const notifyError = () => {
+    toast.error("Please fill the message box or select your related problem", {
+      position: "top-center",
+      autoClose: false,
+      hideProgressBar: true,
+    });
+  };
+
+  const notifySuccess = () => {
+    toast.success("Message Sent", {
+      position: "top-center",
+      autoClose: false,
+      hideProgressBar: true,
+    });
+  };
 
   const displayAnswer = (item) => {
     setRenderAnswer((prev) => prev.map((el, i) => (i === item ? !el : false)));
@@ -19,9 +38,14 @@ export default function Help() {
 
   useEffect(() => {
     const closeForm = (e) => {
+      e.stopPropagation();
+      console.log(e.target);
       if (renderForm) {
         if (!formContainer.current.contains(e.target)) {
           setRenderForm(false);
+        }
+        if (notificationContainer.current.contains(e.target)) {
+          setRenderForm(true);
         }
       }
     };
@@ -57,6 +81,9 @@ export default function Help() {
       })}
 
       <div className="container d-flex justify-content-center align-items-center">
+        <div ref={notificationContainer}>
+          <ToastContainer />
+        </div>
         <p
           className="mt-5 fw-bold fs-5 more"
           onClick={() => setRenderForm(true)}
@@ -67,7 +94,11 @@ export default function Help() {
 
       {renderForm && (
         <div ref={formContainer}>
-          <Form setRenderForm={setRenderForm} />
+          <Form
+            setRenderForm={setRenderForm}
+            notify={notifyError}
+            success={notifySuccess}
+          />
         </div>
       )}
     </div>

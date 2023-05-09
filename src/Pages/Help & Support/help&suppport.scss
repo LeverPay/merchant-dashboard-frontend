@@ -20,6 +20,9 @@
 .color {
   color: #fff;
   text-decoration: none !important;
+  &:hover{
+    color: #dee2e6 !important;
+  }
 }
 
 .more {
