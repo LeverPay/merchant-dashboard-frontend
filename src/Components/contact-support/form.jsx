@@ -67,6 +67,7 @@ export default function Form({ setDisplayForm, transactionId }) {
       console.log(input);
       setDisplayForm(false);
       notify();
+      setTimeout(() => location.reload(), 1000);
     }
   };
 

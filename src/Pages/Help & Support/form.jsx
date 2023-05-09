@@ -1,10 +1,7 @@
 import React, { useState, useRef } from "react";
 import Button from "../../Components/General/Button component/Button";
 import { AiOutlineClose } from "react-icons/ai";
-import PhoneInput, {
-  isValidPhoneNumber,
-  isPossiblePhoneNumber,
-} from "react-phone-number-input";
+import PhoneInput from "react-phone-number-input";
 
 export default function Form({ setRenderForm, notify, success }) {
   const [error, setError] = useState(false);
@@ -24,7 +21,8 @@ export default function Form({ setRenderForm, notify, success }) {
     textArea = useRef(),
     lastName = useRef(),
     firstName = useRef(),
-    mail = useRef();
+    mail = useRef(),
+    errMsg6 = useRef();
 
   const closebtnAction = () => {
     setRenderForm(false);
@@ -108,6 +106,17 @@ export default function Form({ setRenderForm, notify, success }) {
     }
   };
 
+  const handlePhone = (val) => {
+    setPhone(val);
+    if (!val || !val.startsWith("+")) {
+      errMsg6.current.classList.remove("hidden");
+    } else {
+      if (!errMsg6.current.classList.contains("hidden")) {
+        errMsg6.current.classList.add("hidden");
+      }
+    }
+  };
+
   const validate = () => {
     //validate Firstname input field
     if (input.firstname === "") {
@@ -184,7 +193,7 @@ export default function Form({ setRenderForm, notify, success }) {
       input.email !== "" &&
       oneSelected
     ) {
-      console.log(input, input.issue);
+      console.log(input, input.issue, phone);
       success();
     } else {
       notify();
@@ -244,10 +253,14 @@ export default function Form({ setRenderForm, notify, success }) {
             </label>
             <PhoneInput
               international
+              name="phone"
               value={phone}
-              onChange={(val) => setPhone(val)}
+              onChange={handlePhone}
               className="px-1 py-2 input-field"
             />
+            <small className="important-msg hidden" ref={errMsg6}>
+              start with country code e.g (+234 8xxx12xx)
+            </small>
           </div>
 
           <div className="mt-4 d-flex flex-column container">
@@ -336,7 +349,8 @@ export default function Form({ setRenderForm, notify, success }) {
             />
             <p>+234 7068936389</p>
           </a>
-          <a className="d-flex color">
+
+          <a href="" className="d-flex color">
             <img
               src={require("../../Assets/whatsapp.png")}
               width="25px"
@@ -356,7 +370,7 @@ export default function Form({ setRenderForm, notify, success }) {
           </a>
         </div>
 
-        <a href="" className="d-flex mt-5 white">
+        <a href="" className="d-flex mt-5 color">
           {" "}
           <img
             src={require("../../Assets/next.png")}
