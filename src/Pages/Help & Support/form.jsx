@@ -2,9 +2,11 @@ import React, { useState, useRef } from "react";
 import Button from "../../Components/General/Button component/Button";
 import { AiOutlineClose } from "react-icons/ai";
 import PhoneInput from "react-phone-number-input";
+import { AiOutlineCamera } from "react-icons/ai";
 
 export default function Form({ setRenderForm, notify, success }) {
-  const [error, setError] = useState(false);
+  const [file, setFile] = useState();
+  const [description, setDescription] = useState();
   const [phone, setPhone] = useState("");
   const [input, setInput] = useState({
     firstname: "",
@@ -117,6 +119,25 @@ export default function Form({ setRenderForm, notify, success }) {
     }
   };
 
+  const _image = (e) => {
+    const img = e.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(img);
+    fileReader.onload = () => {
+      setFile(fileReader.result);
+      setDescription(img.name)
+      console.log(fileReader.result);
+    };
+  };
+
+  const getImage = () => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/x-png,image/jpeg,/image/jpg";
+    input.onchange = _image;
+    input.click();
+  };
+
   const validate = () => {
     //validate Firstname input field
     if (input.firstname === "") {
@@ -193,7 +214,7 @@ export default function Form({ setRenderForm, notify, success }) {
       input.email !== "" &&
       oneSelected
     ) {
-      console.log(input, input.issue, phone);
+      console.log(input, input.issue, phone, file);
       success();
     } else {
       notify();
@@ -311,6 +332,16 @@ export default function Form({ setRenderForm, notify, success }) {
               ref={textArea}
               onInput={toggleErr4}
             ></textarea>
+            <div className="mt-2">
+              <span className="screenshot" onClick={getImage}>
+                <AiOutlineCamera size="30px" color="black" />
+              </span>
+              <span className="mx-2">
+                {!file
+                  ? "Kindly send us a Screenshot to help understand your issue"
+                  : description}
+              </span>
+            </div>
           </div>
 
           <div className="d-flex align-items-center justify-content-center mt-2">
