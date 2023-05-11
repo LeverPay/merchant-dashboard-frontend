@@ -39,7 +39,6 @@ export default function Help() {
   useEffect(() => {
     const closeForm = (e) => {
       e.stopPropagation();
-      console.log(e.target);
       if (renderForm) {
         if (!formContainer.current.contains(e.target)) {
           setRenderForm(false);

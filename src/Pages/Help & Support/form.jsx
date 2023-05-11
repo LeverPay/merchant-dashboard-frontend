@@ -7,6 +7,7 @@ import { AiOutlineCamera } from "react-icons/ai";
 export default function Form({ setRenderForm, notify, success }) {
   const [file, setFile] = useState();
   const [description, setDescription] = useState();
+  const [wordsLeft, setWordsLeft] = useState(2000);
   const [phone, setPhone] = useState("");
   const [input, setInput] = useState({
     firstname: "",
@@ -34,6 +35,10 @@ export default function Form({ setRenderForm, notify, success }) {
   const handleChange = (e) => {
     const { value, name } = e.target;
     setInput((prev) => ({ ...prev, [name]: value }));
+
+    const wordCount = input.message.trim().split(/\s+/).length;
+    const newWordsLeft = 2000 - wordCount;
+    setWordsLeft(newWordsLeft);
   };
 
   //Removes error while user changes input
@@ -125,7 +130,7 @@ export default function Form({ setRenderForm, notify, success }) {
     fileReader.readAsDataURL(img);
     fileReader.onload = () => {
       setFile(fileReader.result);
-      setDescription(img.name)
+      setDescription(img.name);
       console.log(fileReader.result);
     };
   };
@@ -212,7 +217,10 @@ export default function Form({ setRenderForm, notify, success }) {
       input.firstname !== "" &&
       input.lastname !== "" &&
       input.email !== "" &&
-      oneSelected
+      oneSelected &&
+      wordsLeft >= 1 &&
+      wordsLeft <= 2000 &&
+      !wordsLeft <= 0
     ) {
       console.log(input, input.issue, phone, file);
       success();
@@ -332,7 +340,12 @@ export default function Form({ setRenderForm, notify, success }) {
               ref={textArea}
               onInput={toggleErr4}
             ></textarea>
-            <div className="mt-2">
+            {wordsLeft >= 1 && wordsLeft <= 2000 ? (
+              <p className="">{wordsLeft} words left</p>
+            ) : (
+              <p className="important-msg">Too many words</p>
+            )}
+            <div className="mt-1">
               <span className="screenshot" onClick={getImage}>
                 <AiOutlineCamera size="30px" color="black" />
               </span>

@@ -11,6 +11,7 @@ import { AiOutlineClose } from "react-icons/ai";
 
 export default function Form({ setDisplayForm, transactionId }) {
   const [error, setError] = useState(false);
+  const [wordsLeft, setWordsLeft] = useState(2000);
   const [phone, setPhone] = useState("");
   const [input, setInput] = useState({
     firstname: "User Firstname",
@@ -34,6 +35,10 @@ export default function Form({ setDisplayForm, transactionId }) {
   const handleChange = (e) => {
     const { value, name } = e.target;
     setInput((prev) => ({ ...prev, [name]: value }));
+
+    const wordCount = input.message.trim().split(/\s+/).length;
+    const newWordsLeft = 2000 - wordCount;
+    setWordsLeft(newWordsLeft);
   };
 
   const userCloseForm = () => {
@@ -63,7 +68,14 @@ export default function Form({ setDisplayForm, transactionId }) {
       textArea.current.classList.remove("border-color");
     }
 
-    if (input.firstname !== "" && input.email !== "" && input.message !== "") {
+    if (
+      input.firstname !== "" &&
+      input.email !== "" &&
+      input.message !== "" &&
+      wordsLeft >= 0 &&
+      wordsLeft <= 2000 &&
+      !wordsLeft <= 0
+    ) {
       console.log(input);
       setDisplayForm(false);
       notify();
@@ -143,6 +155,11 @@ export default function Form({ setDisplayForm, transactionId }) {
               ></textarea>
               {error && (
                 <small className="important-msg">This field is required</small>
+              )}
+              {wordsLeft >= 1 && wordsLeft <= 2000 ? (
+                <p style={{ color: "black" }}>{wordsLeft} Words Left</p>
+              ) : (
+                <p style={{ color: "red" }}>Too many words</p>
               )}
             </div>
 
