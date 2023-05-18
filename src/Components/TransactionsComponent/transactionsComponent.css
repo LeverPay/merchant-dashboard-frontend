@@ -47,3 +47,14 @@
 .transactions-tab .panel.active2 {
   display: block;
 }
+
+.new-invoice{
+  color: rgb(20, 74, 200);
+  cursor: pointer;
+  width: 100%;
+  text-align: right;
+}
+
+.new-invoice:hover{
+  color:  #190c57;
+}

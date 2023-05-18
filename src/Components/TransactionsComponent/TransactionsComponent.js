@@ -10,6 +10,7 @@ import {
 import SearchBar from "../SearchBar/SearchBar";
 import TransactionTable from "../TransactionTable/TransactionTable";
 import "./transactionsComponent.css";
+import { AiFillPlusCircle } from "react-icons/ai";
 function TransactionsComponent() {
   const [activeIndex, setActiveIndex] = useState(1);
   const handleClick = (index) => setActiveIndex(index);
@@ -17,6 +18,12 @@ function TransactionsComponent() {
     activeIndex === index ? className : "";
   return (
     <>
+      <p className="fs-5 new-invoice">
+        Generate Invoice{" "}
+        <span>
+          <AiFillPlusCircle />
+        </span>{" "}
+      </p>
       <div className="col-md-12 transactions-tab">
         <div className="tabs">
           <button
