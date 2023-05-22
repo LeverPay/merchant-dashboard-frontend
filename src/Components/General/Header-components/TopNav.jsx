@@ -5,8 +5,6 @@ import "./header.css";
 import message from "../../Notification-messages/Data";
 import { BsDot } from "react-icons/bs";
 import GenerateInvoice from "../../new Invoice/GenerateInvoice";
-import { AiFillPlusCircle } from "react-icons/ai";
-import Button from "../Button component/Button";
 
 export default function TopNav() {
   const [notification, setNotification] = useState(message);
@@ -27,8 +25,9 @@ export default function TopNav() {
       notificationref.current.removeEventListener("click", showNotification);
   }, [closenotification]);
 
-  const click = () => {
-    setGenerateInvoice(!generateInvoice);
+  const click = (item) => {
+    setGenerateInvoice(true);
+    markRead(item);
   };
 
   const markRead = (item) => {
@@ -67,7 +66,9 @@ export default function TopNav() {
                 <li
                   className="items fs-5 mt-2 fw-bold"
                   onClick={
-                    el.message.includes("New") ? click : () => markRead(index)
+                    el.message.includes("New")
+                      ? () => click(index)
+                      : () => markRead(index)
                   }
                 >
                   {el.message}
@@ -81,17 +82,9 @@ export default function TopNav() {
           )}
         </div>
       )}
-      {/* <div className="fs-5 new-invoice mt-4">
-        <button ref={btn} className="hovered-btn bg-primary rounded">
-          Generate Invoice
-          <span>
-            <AiFillPlusCircle />
-          </span>
-        </button>
-      </div> */}
       {generateInvoice && (
         <div>
-          <GenerateInvoice />
+          <GenerateInvoice setGenerateInvoice={setGenerateInvoice} />
         </div>
       )}
     </section>

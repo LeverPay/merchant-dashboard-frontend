@@ -1,3 +1,47 @@
-.div {
-  color: red;
+.invoice {
+  position: fixed;
+  top: 5%;
+  left: 35%;
+  z-index: 8;
+  background-color: #fff;
+  width: 50%;
+}
+
+.f-con {
+  width: 100% !important;
+  outline: none;
+  border: none;
+  border-bottom: 2px solid #d9d9d9;
+}
+.f-con:focus {
+  outline: none;
+  border: none;
+}
+
+.btn-send {
+  width: 60%;
+}
+
+.btn-cancel {
+  width: 30%;
+}
+
+@media screen and (min-width: 1024px) {
+  .invoice {
+    top: 2%;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .invoice {
+    width: 65%;
+    left: 20%;
+    top: 10%;
+  }
+}
+@media screen and (max-width: 767px) {
+  .invoice {
+    width: 90%;
+    left: 5%;
+    top: 10%;
+  }
 }/*# sourceMappingURL=style.css.map */
