@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   allTransactions,
   canceledTransactions,
@@ -10,20 +10,23 @@ import {
 import SearchBar from "../SearchBar/SearchBar";
 import TransactionTable from "../TransactionTable/TransactionTable";
 import "./transactionsComponent.css";
-import { AiFillPlusCircle } from "react-icons/ai";
 function TransactionsComponent() {
   const [activeIndex, setActiveIndex] = useState(1);
+  const [generateInvoice, setGenerateInvoice] = useState(false);
+  const btn = useRef();
   const handleClick = (index) => setActiveIndex(index);
   const checkActive = (index, className) =>
     activeIndex === index ? className : "";
+
+  // useEffect(() => {
+  //   const open = () => setGenerateInvoice(!generateInvoice);
+  //   const close = () => setGenerateInvoice(false);
+  //   btn.current.addEventListener("click", open);
+
+  //   // return () => btn.current.removeEventListener("click", open);
+  // }, [generateInvoice]);
   return (
     <>
-      <p className="fs-5 new-invoice">
-        Generate Invoice{" "}
-        <span>
-          <AiFillPlusCircle />
-        </span>{" "}
-      </p>
       <div className="col-md-12 transactions-tab">
         <div className="tabs">
           <button

@@ -1,1 +1,17 @@
-/*# sourceMappingURL=header.css.map */
+.notify {
+  cursor: pointer;
+}
+
+.messages {
+  width: auto;
+  position: fixed;
+  top: 8%;
+  z-index: 4;
+  background-color: #fff;
+  border: 2px solid rgba(217, 217, 217, 0.54);
+  box-shadow: 0px 4px 10px rgba(255, 251, 251, 0.25);
+}
+.messages .items {
+  list-style: none;
+  cursor: pointer;
+}/*# sourceMappingURL=header.css.map */
