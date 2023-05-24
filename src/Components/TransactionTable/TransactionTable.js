@@ -7,11 +7,14 @@ import Form from "../../Components/contact-support/form";
 // import { allTransactions } from "../../../TestData";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AiFillEye } from "react-icons/ai";
+import { RiEyeCloseLine } from "react-icons/ri";
 
 const TransactionTable = (props) => {
   const [showInvoice, setShowInvoice] = useState(null);
   const [displayForm, setDisplayForm] = useState(false);
   const [transactionId, setTransactionId] = useState();
+  const [hidebalance, setHidebalance] = useState(false);
   const helpRef = useRef();
   const displayInvoice = (item) => {
     setShowInvoice(item);
@@ -20,6 +23,10 @@ const TransactionTable = (props) => {
   const showForm = (item) => {
     setDisplayForm(true);
     setTransactionId(item.name);
+  };
+
+  const hideTransactBal = () => {
+    setHidebalance(!hidebalance);
   };
 
   useEffect(() => {
@@ -32,6 +39,13 @@ const TransactionTable = (props) => {
   return (
     <>
       <div className="transactions-table-container">
+        <span className="eye mt-4" onClick={hideTransactBal}>
+          {hidebalance ? (
+            <RiEyeCloseLine size="30px" />
+          ) : (
+            <AiFillEye size="30px" />
+          )}
+        </span>
         <ToastContainer />
         <table className="col-md-12 col-12">
           <thead>
@@ -54,7 +68,7 @@ const TransactionTable = (props) => {
                   />
                   {item.status.statusName}
                 </td>
-                <td>{item.amount}</td>
+                <td>{!hidebalance ? "---" : item.amount}</td>
                 <td
                   onClick={() => {
                     displayInvoice(item);
