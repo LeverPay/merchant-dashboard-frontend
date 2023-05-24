@@ -10,7 +10,6 @@ export default function TopNav() {
   const [notification, setNotification] = useState(message);
   const [generateInvoice, setGenerateInvoice] = useState(false);
   const [closenotification, setcloseNotification] = useState(false);
-  console.log(notification);
   const notificationref = useRef(),
     btn = useRef();
 
@@ -84,7 +83,12 @@ export default function TopNav() {
       )}
       {generateInvoice && (
         <div>
-          <GenerateInvoice setGenerateInvoice={setGenerateInvoice} />
+          <GenerateInvoice
+            setGenerateInvoice={setGenerateInvoice}
+            notification={notification}
+            setNotification={setNotification}
+            // itemIndex={}
+          />
         </div>
       )}
     </section>

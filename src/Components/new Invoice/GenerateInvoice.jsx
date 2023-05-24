@@ -4,11 +4,17 @@ import Button from "../General/Button component/Button";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
 
-export default function GenerateInvoice({ setGenerateInvoice }) {
+export default function GenerateInvoice({
+  setGenerateInvoice,
+  notification,
+  setNotification,
+}) {
   const hideForm = (e) => {
     e.preventDefault();
     setGenerateInvoice(false);
   };
+
+  console.log(notification);
 
   return (
     <section className="invoice p-2 px-4">

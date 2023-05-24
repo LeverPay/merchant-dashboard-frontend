@@ -12,6 +12,7 @@ import TransactionsPage from "./Pages/TransactionsPage/TransactionsPage";
 import Help from "./Pages/Help & Support/help";
 
 function App(props) {
+  // 'X-CSRF-TOKEN: lKQ8Pdl6IhJpV9HuIek6EfCi1nIq1dvrPhk4X2Ye'
   return (
     <div id="merchant-dashboard" className="general-container">
       <Router>
