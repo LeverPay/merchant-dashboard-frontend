@@ -48,13 +48,13 @@ export default function SidebarNav(props) {
     handleResize();
 
     // Remove event listener when component unmounts
-    return () => window.removeEventListener("resize", handleResize);
+    // return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const sidebarItemsTop = [
     {
       icon: <DashboardRoundedIcon htmlColor="white" />,
-      link: "./",
+      link: "./dashboard",
       title: "Dashboard",
     },
     // {icon: <SyncAltRoundedIcon htmlColor="white"/>, link: 'payment_method', title: 'Overview'},
