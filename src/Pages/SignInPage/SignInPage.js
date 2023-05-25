@@ -20,7 +20,7 @@ function SignInPage() {
             <input type="text" />
             <h6>PASSWORD</h6>
             <input type="text" />
-            <Link to={"/view"}>
+            <Link to={"/dashboard"}>
               {" "}
               <button>Sign In</button>
             </Link>
@@ -30,7 +30,7 @@ function SignInPage() {
             <center>
               <p>
                 Don’t have an Account?{" "}
-                <Link to={"/sign-up"} className="form-links">
+                <Link to={"/welcome"} className="form-links">
                   <span>Sign Up</span>
                 </Link>
               </p>
