@@ -166,6 +166,7 @@ export default function GenerateInvoice({
       const newPrice = price.current.textContent;
       input.price = newPrice;
       console.log(input);
+      setGenerateInvoice(false);
     }
   };
 
