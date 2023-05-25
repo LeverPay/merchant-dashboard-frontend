@@ -30,8 +30,8 @@ export default function TopNav() {
     notificationref.current.addEventListener("click", showNotification);
 
     return () => {
-      notificationref.current.removeEventListener("click", showNotification);
-      btn.current?.removeEventListener("click", showInvoiceField);
+      // notificationref.current.removeEventListener("click", showNotification);
+      // btn.current?.removeEventListener("click", showInvoiceField);
     };
   }, [closenotification, displayOrderedItems]);
 

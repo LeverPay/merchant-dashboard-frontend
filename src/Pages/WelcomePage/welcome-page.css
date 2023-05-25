@@ -1,0 +1,32 @@
+.welcome-page-container {
+  margin-top: 0px;
+}
+.welcome-paragraph h1,
+h2 {
+  color: #082e88;
+  font-family: AgrandirBold;
+}
+.welcome-paragraph h1 {
+  font-size: 70px;
+}
+.welcome-paragraph,
+p {
+  color: #2962f2;
+  font-size: 25px;
+  margin-top: 20px;
+  font-family: AgrandirRegular;
+}
+.welcome-paragraph {
+  padding: 100px 20px 0px 20px;
+}
+.wallet-container {
+  margin-top: -140px;
+}
+@media screen and (max-width: 620px) {
+  .wallet-container {
+    margin-top: 10px;
+  }
+}
+.welcome-account-type {
+  background: #d9d9d9;
+}

@@ -11,25 +11,28 @@ import Help from "./Help & Support/help";
 import SignInPage from "./SignInPage/SignInPage";
 import Header from "../Components/General/Header";
 import App from "../App";
+import WelcomePage from "./WelcomePage/WelcomePage";
 
 function View(props) {
   return (
-    <div id="merchant-dashboard" className="general-container">
-      <Header />
-      <div className="contents-container">
-        <Routes>
-          <Route index element={<OverviewPage />} />
-          <Route path="payment_method" index element={<PaymentMethod />} />
-          <Route path="portfolio" element={<PortfolioPage />} />
-          <Route path="profile" element={<Profile />} />
-          <Route path="security" index element={<Security />} />
-          <Route path="transactions" element={<TransactionsPage />} />
-          <Route path="Help&support" element={<Help />} />
-          <Route path="sign-in" element={<SignInPage />} />
-          <Route path="app" element={<App />} />
-        </Routes>
-      </div>
-    </div>
+    <></>
+    // <div id="merchant-dashboard" className="general-container">
+    //   <Header />
+    //   <div className="contents-container">
+    //     {/* <Routes>
+    //       <Route index element={<OverviewPage />} />
+    //       <Route path="payment_method" index element={<PaymentMethod />} />
+    //       <Route path="portfolio" element={<PortfolioPage />} />
+    //       <Route path="profile" element={<Profile />} />
+    //       <Route path="security" index element={<Security />} />
+    //       <Route path="view/transactions" element={<TransactionsPage />} />
+    //       <Route path="Help&support" element={<Help />} />
+    //       <Route path="sign-in" element={<SignInPage />} />
+    //       <Route path="app" element={<App />} />
+    //       <Route path="welcome" element={<WelcomePage />} />
+    //     </Routes> */}
+    //   </div>
+    // </div>
   );
 }
 
