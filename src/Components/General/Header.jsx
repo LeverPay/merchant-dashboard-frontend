@@ -10,7 +10,7 @@ export default function Header() {
   let name = location.pathname;
   let firstchar = name.replace(/^./, "").slice(0, 1).toUpperCase();
   let pageName = firstchar.concat(name.replace(/^./, "").slice(1));
-  let symbol = pageName.indexOf("_") + 1;
+  let symbol = pageName.indexOf("-") + 1;
   const replace = pageName.charAt(symbol).toUpperCase();
   // console.log(pageName.split("").splice(symbol, 0, replace));
   const arr = pageName.split("");
@@ -31,15 +31,15 @@ export default function Header() {
               pageName === `Profile` ||
               pageName === `Transactions` ||
               pageName === `Security` ||
-              (pageName === `Payment_method` && symbol !== -1)
+              (pageName === `Payment-method` && symbol !== -1)
                 ? `text-left`
                 : `text-center`
             }`}
           >
             {pageName === ""
               ? (pageName = "Overview")
-              : pageName.includes("_")
-              ? replaced.replace("_", " ")
+              : pageName.includes("-")
+              ? replaced.replace("-", " ")
               : pageName}
           </div>
         </div>

@@ -65,7 +65,7 @@ export default function SidebarNav(props) {
     },
     {
       icon: <CreditCardRoundedIcon htmlColor="white" />,
-      link: "payment_method",
+      link: "payment-method",
       title: "Payment Method",
     },
     {
@@ -94,7 +94,7 @@ export default function SidebarNav(props) {
     },
     {
       iconStart: <QuizOutlinedIcon htmlColor="white" />,
-      link: "Help&support",
+      link: "Help",
       title: "Help & Support",
       iconEnd: <OpenInNewOutlinedIcon htmlColor="white" />,
     },

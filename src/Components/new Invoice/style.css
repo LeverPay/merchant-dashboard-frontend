@@ -5,6 +5,12 @@
   z-index: 8;
   background-color: #fff;
   width: 50%;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+.invoice .form {
+  max-height: 100%;
+  overflow-y: auto;
 }
 
 .f-con {

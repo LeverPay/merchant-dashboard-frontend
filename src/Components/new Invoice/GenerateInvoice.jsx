@@ -33,15 +33,72 @@ export default function GenerateInvoice({
     setGenerateInvoice(false);
   };
 
-  const addVatToPrice = (e) => {
+  const toggleErr1 = () => {
+    if (input.productName !== "") {
+      if (!warningMsg1.current.classList.contains("hidden")) {
+        warningMsg1.current.classList.add("hidden");
+      }
+    } else {
+      warningMsg1.current.classList.remove("hidden");
+    }
+  };
+
+  const toggleErr2 = () => {
+    if (input.qty !== "") {
+      if (!warningMsg2.current.classList.contains("hidden")) {
+        warningMsg2.current.classList.add("hidden");
+      }
+    } else {
+      warningMsg2.current.classList.remove("hidden");
+    }
+  };
+
+  const toggleErr3 = () => {
     if (input.price !== "") {
+      if (!warningMsg3.current.classList.contains("hidden")) {
+        warningMsg3.current.classList.add("hidden");
+      }
+    } else {
+      warningMsg3.current.classList.remove("hidden");
+    }
+  };
+
+  const toggleErr4 = () => {
+    if (input.description !== "") {
+      if (!warningMsg4.current.classList.contains("hidden")) {
+        warningMsg4.current.classList.add("hidden");
+      }
+    } else {
+      warningMsg4.current.classList.remove("hidden");
+    }
+  };
+
+  const toggleErr5 = () => {
+    if (input.customerId !== "") {
+      if (!warningMsg5.current.classList.contains("hidden")) {
+        warningMsg5.current.classList.add("hidden");
+      }
+    } else {
+      warningMsg5.current.classList.remove("hidden");
+    }
+  };
+
+  const addVatToPrice = (e) => {
+    const vat = 0.075;
+    let discount = parseFloat(input.discount / 100);
+    let final;
+    if (input.price !== "" && input.discount === "") {
       if (total.current.classList.contains("hidden")) {
         total.current?.classList.remove("hidden");
       }
-      const vat = 0.075;
       const currentPrice = parseFloat(input.price);
       const vatPrice = currentPrice * vat;
-      const final = currentPrice + vatPrice;
+      final = currentPrice + vatPrice;
+      return final;
+    } else if (input.price !== "" && input.discount !== "") {
+      const discountPrice = parseFloat(input.price * discount);
+      const vatPrice = parseFloat(input.price * vat);
+      final = vatPrice - discountPrice;
       return final;
     } else {
       total.current?.classList.add("hidden");
@@ -111,7 +168,7 @@ export default function GenerateInvoice({
         <AiFillPlusCircle size="25px" className="text-primary" />{" "}
         <span className="mx-2 fw-light">Generate Invoice</span>
       </div>
-      <form className="container mx-4" action="" onSubmit={handleSubmit}>
+      <form className="form container mx-4" action="" onSubmit={handleSubmit}>
         <div className="container mt-5">
           <input
             type="text"
@@ -120,6 +177,7 @@ export default function GenerateInvoice({
             name="productName"
             value={input.productName}
             onChange={handleChange}
+            onInput={toggleErr1}
           />
           <small ref={warningMsg1} className="warning hidden">
             This field is required
@@ -134,6 +192,7 @@ export default function GenerateInvoice({
             name="qty"
             value={input.qty}
             onChange={handleChange}
+            onInput={toggleErr2}
           />
           <small ref={warningMsg2} className="warning hidden">
             This field is required
@@ -162,6 +221,7 @@ export default function GenerateInvoice({
             name="price"
             value={input.price}
             onChange={handleChange}
+            onInput={toggleErr3}
           />
           <small ref={warningMsg3} className="warning hidden">
             This field is required
@@ -181,6 +241,7 @@ export default function GenerateInvoice({
             placeholder="Product(s) Description"
             value={input.description}
             onChange={handleChange}
+            onInput={toggleErr4}
           ></textarea>
           <small ref={warningMsg4} className="warning hidden">
             This field is required
@@ -195,6 +256,7 @@ export default function GenerateInvoice({
             name="customerId"
             value={input.customerId}
             onChange={handleChange}
+            onInput={toggleErr5}
           />
           <small ref={warningMsg5} className="warning hidden">
             This field is required
