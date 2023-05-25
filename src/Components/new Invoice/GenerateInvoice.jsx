@@ -85,20 +85,17 @@ export default function GenerateInvoice({
 
   const addVatToPrice = (e) => {
     const vat = 0.075;
-    let discount = parseFloat(input.discount / 100);
+    let discount = input.discount === "" ? 0 : parseFloat(input.discount / 100);
     let final;
-    if (input.price !== "" && input.discount === "") {
+    if (input.price !== "") {
       if (total.current.classList.contains("hidden")) {
         total.current?.classList.remove("hidden");
       }
       const currentPrice = parseFloat(input.price);
       const vatPrice = currentPrice * vat;
-      final = currentPrice + vatPrice;
-      return final;
-    } else if (input.price !== "" && input.discount !== "") {
-      const discountPrice = parseFloat(input.price * discount);
-      const vatPrice = parseFloat(input.price * vat);
-      final = vatPrice - discountPrice;
+      let finalVatPrice = currentPrice + vatPrice;
+      const discountPrice = parseFloat(finalVatPrice * discount);
+      final = finalVatPrice - discountPrice;
       return final;
     } else {
       total.current?.classList.add("hidden");
