@@ -42,7 +42,7 @@ export const allTransactions = {
     {
       id: 4,
 
-      name: "Order3",
+      name: "Order4",
       amount: "$420.84",
       color: "red",
       status: { icon: Failed, statusName: "Canceled" },

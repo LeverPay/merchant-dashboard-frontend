@@ -27,10 +27,10 @@ export default function TopNav() {
     };
     btn.current?.addEventListener("click", showInvoiceField);
 
-    notificationref.current.addEventListener("click", showNotification);
+    notificationref.current?.addEventListener("click", showNotification);
 
     return () => {
-      notificationref.current.removeEventListener("click", showNotification);
+      notificationref.current?.removeEventListener("click", showNotification);
       btn.current?.removeEventListener("click", showInvoiceField);
     };
   }, [closenotification, displayOrderedItems]);

@@ -26,6 +26,14 @@
   width: 30%;
 }
 
+.warning{
+  color:  #fb0000;
+}
+
+.hidden{
+  display: none;
+}
+
 @media screen and (min-width: 1024px) {
   .invoice{
     top: 2%;
