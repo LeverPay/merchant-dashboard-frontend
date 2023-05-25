@@ -47,9 +47,9 @@ function App(props) {
           <Route path="profile" element={<Profile />} />
           <Route path="security" element={<Security />} />
           <Route path="transactions" element={<TransactionsPage />} />
-          <Route path="Help&support" element={<Help />} />
+          <Route path="Help" element={<Help />} />
           <Route path="sign-in" element={<SignInPage />} />
-          <Route path="payment_method" element={<PaymentMethod />} />
+          <Route path="payment-method" element={<PaymentMethod />} />
           <Route path="welcome" element={<WelcomePage />} />
         </Routes>
       </div>

@@ -5,6 +5,12 @@
   z-index: 8;
   background-color: #fff;
   width: 50%;
+  max-height: 100vh;
+  overflow-y: auto;
+}
+.invoice .form {
+  max-height: 100%;
+  overflow-y: auto;
 }
 
 .f-con {
@@ -24,6 +30,14 @@
 
 .btn-cancel {
   width: 30%;
+}
+
+.warning {
+  color: #fb0000;
+}
+
+.hidden {
+  display: none;
 }
 
 @media screen and (min-width: 1024px) {
