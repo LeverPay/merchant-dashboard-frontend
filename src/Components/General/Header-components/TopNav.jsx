@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import NotificationAddIcon from "@mui/icons-material/NotificationAdd";
 import "./header.css";
 import message from "../../Notification-messages/Data";
 import { BsDot } from "react-icons/bs";
@@ -9,12 +10,14 @@ import { AiOutlineDown } from "react-icons/ai";
 import Button from "../Button component/Button";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { NotificationAdd } from "@mui/icons-material";
 
 export default function TopNav() {
   const [notification, setNotification] = useState(message);
   const [generateInvoice, setGenerateInvoice] = useState(false);
   const [closenotification, setcloseNotification] = useState(false);
   const [displayOrderedItems, setDisplayOrderedItems] = useState(false);
+  const [rotationAngle, setRotationAngle] = useState(0);
   const notificationref = useRef(),
     displayItems = useRef(),
     btn = useRef();
@@ -33,9 +36,22 @@ export default function TopNav() {
 
     notificationref.current?.addEventListener("click", showNotification);
 
+    //Notification animation login
+    const interval = setInterval(() => {
+      if (notification.length > 0) {
+        notification.map((el) => {
+          if (!el.read) {
+            const randomAngle = Math.floor(Math.random() * 50) - 10; // Generate a random number between -10 and 10
+            setRotationAngle(randomAngle);
+          }
+        });
+      }
+    }, 1000);
+
     return () => {
       notificationref.current?.removeEventListener("click", showNotification);
       btn.current?.removeEventListener("click", showInvoiceField);
+      clearInterval(interval);
     };
   }, [closenotification, displayOrderedItems]);
 
@@ -55,15 +71,36 @@ export default function TopNav() {
     setNotification(updateData);
   };
 
+  const unReadNotification = notification.map((el) => el.read);
+
   return (
     <section className="d-flex flex-column justify-content-end align-items-end">
       <div className="d-flex justify-content-end align-items-center">
-        <a ref={notificationref} className="notify me-3">
-          <NotificationsIcon
-            className="header-notification-icon"
-            htmlColor={"grey"}
-          />
-        </a>
+        <motion.a
+          ref={notificationref}
+          className="notify me-3"
+          animate={{
+            rotateZ: [0, rotationAngle, -rotationAngle, 0], // Animation values for rotation
+          }}
+          transition={{
+            duration: 0.3,
+            loop: Infinity,
+          }}
+        >
+          {notification.length > 0 && unReadNotification.includes(false) ? (
+            <motion.span>
+              <NotificationAdd
+                className="header-notification-icon"
+                htmlColor={"grey"}
+              />
+            </motion.span>
+          ) : (
+            <NotificationsIcon
+              className="header-notification-icon"
+              htmlColor={"grey"}
+            />
+          )}
+        </motion.a>
         <a href="">
           <img
             className="img-fluid rounded-circle"
