@@ -1,4 +1,3 @@
-
 .transactions-tab .tabs {
   display: flex;
   border: solid 1px rgb(205, 200, 200);
@@ -18,12 +17,6 @@
   /* border: none; */
   color: grey;
   background: #fff;
-}
-
-.transactions-tab .tabs button {
-  /* border-bottom: solid 1px grey; */
-  /* margin-right: 20px;
-  margin-left: 20px; */
 }
 
 .transactions-tab .tab.active2 {

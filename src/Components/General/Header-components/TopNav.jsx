@@ -88,12 +88,12 @@ export default function TopNav() {
           }}
         >
           {notification.length > 0 && unReadNotification.includes(false) ? (
-            <motion.span>
+            <span>
               <NotificationAdd
                 className="header-notification-icon"
                 htmlColor={"grey"}
               />
-            </motion.span>
+            </span>
           ) : (
             <NotificationsIcon
               className="header-notification-icon"
@@ -117,6 +117,7 @@ export default function TopNav() {
             className="messages p-2 py-4 mt-2 d-flex flex-column text-start"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.5 }}
             transition={{
               duration: 0.8,
               delay: 0.1,

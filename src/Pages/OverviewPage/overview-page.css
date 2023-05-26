@@ -188,8 +188,19 @@
   width: 60%;
   background: linear-gradient(177.42deg, #0051ff -2.29%, #0b0230 113.02%);
   position: fixed;
-  top: 10%;
+  top: 0%;
   left: 30%;
+  max-height: 100vh;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.white {
+  color: #fff;
+}
+
+.hidden {
+  display: none;
 }
 
 .message-form .message-form-content {
@@ -226,7 +237,7 @@
   .message-form {
     width: 100%;
     left: 0%;
-    top: 40%;
+    top: 15%;
   }
 
   .message-form .message-form-content {
