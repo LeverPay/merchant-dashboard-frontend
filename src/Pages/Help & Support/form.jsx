@@ -7,7 +7,7 @@ import { AiOutlineCamera } from "react-icons/ai";
 export default function Form({ setRenderForm, notify, success }) {
   const [file, setFile] = useState();
   const [description, setDescription] = useState();
-  const [wordsLeft, setWordsLeft] = useState(2000);
+  const [wordsLeft, setWordsLeft] = useState(200);
   const [phone, setPhone] = useState("");
   const [input, setInput] = useState({
     firstname: "",
@@ -37,7 +37,7 @@ export default function Form({ setRenderForm, notify, success }) {
     setInput((prev) => ({ ...prev, [name]: value }));
 
     const wordCount = input.message.trim().split(/\s+/).length;
-    const newWordsLeft = 2000 - wordCount;
+    const newWordsLeft = 200 - wordCount;
     setWordsLeft(newWordsLeft);
   };
 
@@ -219,7 +219,7 @@ export default function Form({ setRenderForm, notify, success }) {
       input.email !== "" &&
       oneSelected &&
       wordsLeft >= 1 &&
-      wordsLeft <= 2000 &&
+      wordsLeft <= 200 &&
       !wordsLeft <= 0
     ) {
       console.log(input, input.issue, phone, file);
@@ -340,12 +340,12 @@ export default function Form({ setRenderForm, notify, success }) {
               ref={textArea}
               onInput={toggleErr4}
             ></textarea>
-            {wordsLeft >= 1 && wordsLeft <= 2000 ? (
-              <p className="">{wordsLeft} words left</p>
+            {wordsLeft >= 1 && wordsLeft <= 200 ? (
+              <p className="fs-6">{wordsLeft} words left</p>
             ) : (
-              <p className="important-msg">Too many words</p>
+              <p className="important-msg fs-6">Too many words</p>
             )}
-            <div className="mt-1">
+            <div className="mt-1 fs-6">
               <span className="screenshot" onClick={getImage}>
                 <AiOutlineCamera size="30px" color="black" />
               </span>
@@ -372,10 +372,10 @@ export default function Form({ setRenderForm, notify, success }) {
         </form>
       </div>
 
-      <div className="second-container d-flex flex-column align-items-center">
-        <div className="mt-5">
-          <h2>Contact Support</h2>
-          <p>
+      <div className="second-container d-flex flex-column align-items-center mx-4 mt-4">
+        <div className="">
+          <h2 className="white">Contact Support</h2>
+          <p className="white">
             We're available around the clock. <br />
             Let us know how we can help
           </p>
@@ -383,38 +383,50 @@ export default function Form({ setRenderForm, notify, success }) {
 
         <div className="mt-5">
           <h5>Need a quick answer?</h5>
-          <p className="mt-4">Call/Chat us</p>
-          <a href="" className="d-flex color">
+          <p className="white fs-5">Call/Chat us</p>
+          <a
+            href=""
+            className="d-flex justtify-content-center align-items-center color"
+          >
             <img
               src={require("../../Assets/call.png")}
               width="25px"
               height="25px"
               alt=""
             />
-            <p>+234 7068936389</p>
+            <p className="fs-6 mx-4 color">+234 7068936389</p>
           </a>
 
-          <a href="" className="d-flex color">
+          <a
+            href=""
+            className="d-flex justtify-content-center align-items-center color"
+          >
             <img
               src={require("../../Assets/whatsapp.png")}
               width="25px"
               height="25px"
               alt=""
             />
-            <p>+234 7068936389</p>
+            <p className="fs-6 mx-4 color">+234 7068936389</p>
           </a>
-          <a href="" className="d-flex color">
+          <a
+            href=""
+            className="d-flex justtify-content-center align-items-center color"
+          >
             <img
               src={require("../../Assets/telegram.png")}
               width="25px"
               height="25px"
               alt=""
             />
-            +234 7068936389
+            <p className="fs-6 mx-4 color">+234 7068936389</p>
           </a>
         </div>
 
-        <a href="" className="d-flex mt-5 color">
+        <a
+          href=""
+          className="d-flex justtify-content-center align-items-center mt-4 color"
+        >
           {" "}
           <img
             src={require("../../Assets/next.png")}
