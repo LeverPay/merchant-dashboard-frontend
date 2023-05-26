@@ -7,6 +7,7 @@ import { BsDot } from "react-icons/bs";
 import GenerateInvoice from "../../new Invoice/GenerateInvoice";
 import { AiOutlineDown } from "react-icons/ai";
 import Button from "../Button component/Button";
+import { FaRegTrashAlt } from "react-icons/fa";
 
 export default function TopNav() {
   const [notification, setNotification] = useState(message);
@@ -16,6 +17,8 @@ export default function TopNav() {
   const notificationref = useRef(),
     displayItems = useRef(),
     btn = useRef();
+
+  console.log(notification.length);
 
   useEffect(() => {
     const showNotification = () => {
@@ -38,6 +41,10 @@ export default function TopNav() {
   const click = (item) => {
     setDisplayOrderedItems(!displayOrderedItems);
     markRead(item);
+  };
+
+  const deletNotifications = () => {
+    setNotification([]);
   };
 
   const markRead = (item) => {
@@ -65,66 +72,90 @@ export default function TopNav() {
           <KeyboardArrowDownIcon htmlColor="black" />
         </a>
       </div>
-      {closenotification && (
-        <div className="messages p-2 py-4 mt-2 d-flex flex-column text-start">
-          {notification.map((el, index) => (
-            <span className="d-flex px-4 py-2">
-              {!el.read && (
-                <span className="d-flex align-items-center">
-                  <BsDot size="25px" color="red" />
-                </span>
-              )}
-              <li
-                className={`items fs-5 mt-2 ${!el.read ? `fw-bold` : ``}`}
-                onClick={
-                  !el.message.includes("New")
-                    ? () => markRead(index)
-                    : () => click(index)
-                }
-              >
-                {el.message.includes("New") ? (
-                  <>
-                    <span className="d-flex flex-column">
-                      <span className="d-flex" ref={displayItems}>
-                        {el.message}
-                        <span className="mx-2">
-                          <AiOutlineDown />
-                        </span>
-                      </span>
-                      {displayOrderedItems && (
-                        <span className="d-flex flex-column">
-                          {el.items.map((el) => {
-                            return (
-                              <span className="d-flex flex-column fs-6 fw-lighter mx-4 py-2">
-                                <li>Name:{el.name}</li>
-                                <li>Qty:{el.qty}</li>
-                                <li>Price:{el.price}</li>
-                                <li>Description:{el.description}</li>
-                                <span className="my-4" ref={btn}>
-                                  <Button
-                                    style={{
-                                      color: "#fff",
-                                      backgroundColor: "#0051FF",
-                                    }}
-                                  >
-                                    Generate Invoice
-                                  </Button>
-                                </span>
-                              </span>
-                            );
-                          })}
-                        </span>
-                      )}
-                    </span>
-                  </>
-                ) : (
-                  el.message
+      {closenotification &&
+        (notification.length > 0 ? (
+          <div className="messages p-2 py-4 mt-2 d-flex flex-column text-start">
+            {notification.map((el, index) => (
+              <span className="d-flex px-4 py-2" key={el.id}>
+                {!el.read && (
+                  <span className="d-flex align-items-center">
+                    <BsDot size="25px" color="red" />
+                  </span>
                 )}
-              </li>
-            </span>
-          ))}
-        </div>
-      )}
+                <span
+                  className={`items fs-5 mt-2 ${!el.read ? `fw-bold` : ``}`}
+                  onClick={
+                    !el.message.includes("New")
+                      ? () => markRead(index)
+                      : () => click(index)
+                  }
+                >
+                  {el.message.includes("New") ? (
+                    <>
+                      <span className="d-flex flex-column">
+                        <span className="d-flex" ref={displayItems}>
+                          {el.message}
+                          <span className="mx-4">
+                            <AiOutlineDown size="20px" color="#0051FF" />
+                          </span>
+                        </span>
+                        {displayOrderedItems && (
+                          <span className="d-flex flex-column">
+                            {el.items.map((el) => {
+                              return (
+                                <span
+                                  className="d-flex flex-column fs-6 fw-lighter mx-4 py-2"
+                                  key={el.id}
+                                >
+                                  <li>Name:{el.name}</li>
+                                  <li>Qty:{el.qty}</li>
+                                  <li>Price:{el.price}</li>
+                                  <li>Description:{el.description}</li>
+                                  <span className="my-4" ref={btn}>
+                                    <Button
+                                      style={{
+                                        color: "#fff",
+                                        backgroundColor: "#0051FF",
+                                      }}
+                                    >
+                                      Generate Invoice
+                                    </Button>
+                                  </span>
+                                </span>
+                              );
+                            })}
+                          </span>
+                        )}
+                      </span>
+                    </>
+                  ) : (
+                    el.message
+                  )}
+                </span>
+              </span>
+            ))}
+
+            <div className="mt-4 d-flex align-items-center justify-content-center">
+              <Button
+                style={{
+                  width: "40%",
+                  backgroundColor: "#FF0505",
+                  color: "#fff",
+                }}
+                click={deletNotifications}
+              >
+                Clear All
+                <span className="mx-4">
+                  <FaRegTrashAlt size="15px" />
+                </span>
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <div className="messages p-2 py-4 mt-2 d-flex flex-column text-start">
+            No message to display
+          </div>
+        ))}
       {generateInvoice && (
         <div>
           <GenerateInvoice
