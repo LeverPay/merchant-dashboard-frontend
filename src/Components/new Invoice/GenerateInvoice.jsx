@@ -153,6 +153,19 @@ export default function GenerateInvoice({
     }
   };
 
+  const newNotification = () => {
+    const id = notification.length + 1;
+    const message = `Invoice sent to ${input.customerId}`;
+    const read = false;
+    const newItem = {
+      id,
+      message,
+      read,
+    };
+
+    setNotification((prev) => [...prev, newItem]);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     validate();
@@ -167,6 +180,7 @@ export default function GenerateInvoice({
       input.price = newPrice;
       console.log(input);
       setGenerateInvoice(false);
+      newNotification();
     }
   };
 
