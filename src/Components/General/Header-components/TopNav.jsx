@@ -8,6 +8,7 @@ import GenerateInvoice from "../../new Invoice/GenerateInvoice";
 import { AiOutlineDown } from "react-icons/ai";
 import Button from "../Button component/Button";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 export default function TopNav() {
   const [notification, setNotification] = useState(message);
@@ -45,6 +46,7 @@ export default function TopNav() {
 
   const deletNotifications = () => {
     setNotification([]);
+    setcloseNotification(false);
   };
 
   const markRead = (item) => {
@@ -74,7 +76,16 @@ export default function TopNav() {
       </div>
       {closenotification &&
         (notification.length > 0 ? (
-          <div className="messages p-2 py-4 mt-2 d-flex flex-column text-start">
+          <motion.div
+            className="messages p-2 py-4 mt-2 d-flex flex-column text-start"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 0.8,
+              delay: 0.1,
+              ease: [0, 0.71, 0.2, 1.01],
+            }}
+          >
             {notification.map((el, index) => (
               <span className="d-flex px-4 py-2" key={el.id}>
                 {!el.read && (
@@ -150,11 +161,20 @@ export default function TopNav() {
                 </span>
               </Button>
             </div>
-          </div>
+          </motion.div>
         ) : (
-          <div className="messages p-2 py-4 mt-2 d-flex flex-column text-start">
+          <motion.div
+            className="messages p-2 py-4 mt-2 d-flex flex-column text-start"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 0.8,
+              delay: 0.1,
+              ease: [0, 0.71, 0.2, 1.01],
+            }}
+          >
             No message to display
-          </div>
+          </motion.div>
         ))}
       {generateInvoice && (
         <div>
