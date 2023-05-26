@@ -375,7 +375,7 @@ export default function Form({ setRenderForm, notify, success }) {
       <div className="second-container d-flex flex-column align-items-center mx-4 mt-4">
         <div className="">
           <h2 className="white">Contact Support</h2>
-          <p className="white">
+          <p className="white fs-6 mt-0">
             We're available around the clock. <br />
             Let us know how we can help
           </p>

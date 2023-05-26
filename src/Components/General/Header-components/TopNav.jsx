@@ -9,7 +9,7 @@ import GenerateInvoice from "../../new Invoice/GenerateInvoice";
 import { AiOutlineDown } from "react-icons/ai";
 import Button from "../Button component/Button";
 import { FaRegTrashAlt } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { NotificationAdd } from "@mui/icons-material";
 
 export default function TopNav() {
@@ -111,109 +111,111 @@ export default function TopNav() {
           <KeyboardArrowDownIcon htmlColor="black" />
         </a>
       </div>
-      {closenotification &&
-        (notification.length > 0 ? (
-          <motion.div
-            className="messages p-2 py-4 mt-2 d-flex flex-column text-start"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.5 }}
-            transition={{
-              duration: 0.8,
-              delay: 0.1,
-              ease: [0, 0.71, 0.2, 1.01],
-            }}
-          >
-            {notification.map((el, index) => (
-              <span className="d-flex px-4 py-2" key={el.id}>
-                {!el.read && (
-                  <span className="d-flex align-items-center">
-                    <BsDot size="25px" color="red" />
-                  </span>
-                )}
-                <span
-                  className={`items fs-5 mt-2 ${!el.read ? `fw-bold` : ``}`}
-                  onClick={
-                    !el.message.includes("New")
-                      ? () => markRead(index)
-                      : () => click(index)
-                  }
-                >
-                  {el.message.includes("New") ? (
-                    <>
-                      <span className="d-flex flex-column">
-                        <span className="d-flex" ref={displayItems}>
-                          {el.message}
-                          <span className="mx-4">
-                            <AiOutlineDown size="20px" color="#0051FF" />
-                          </span>
-                        </span>
-                        {displayOrderedItems && (
-                          <span className="d-flex flex-column">
-                            {el.items.map((el) => {
-                              return (
-                                <span
-                                  className="d-flex flex-column fs-6 fw-lighter mx-4 py-2"
-                                  key={el.id}
-                                >
-                                  <li>Name:{el.name}</li>
-                                  <li>Qty:{el.qty}</li>
-                                  <li>Price:{el.price}</li>
-                                  <li>Description:{el.description}</li>
-                                  <span className="my-4" ref={btn}>
-                                    <Button
-                                      style={{
-                                        color: "#fff",
-                                        backgroundColor: "#0051FF",
-                                      }}
-                                    >
-                                      Generate Invoice
-                                    </Button>
-                                  </span>
-                                </span>
-                              );
-                            })}
-                          </span>
-                        )}
-                      </span>
-                    </>
-                  ) : (
-                    el.message
+      <AnimatePresence>
+        {closenotification &&
+          (notification.length > 0 ? (
+            <motion.div
+              className="messages p-2 py-4 mt-2 d-flex flex-column text-start"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.5 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.1,
+                ease: [0, 0.71, 0.2, 1.01],
+              }}
+            >
+              {notification.map((el, index) => (
+                <span className="d-flex px-4 py-2" key={el.id}>
+                  {!el.read && (
+                    <span className="d-flex align-items-center">
+                      <BsDot size="25px" color="red" />
+                    </span>
                   )}
+                  <span
+                    className={`items fs-5 mt-2 ${!el.read ? `fw-bold` : ``}`}
+                    onClick={
+                      !el.message.includes("New")
+                        ? () => markRead(index)
+                        : () => click(index)
+                    }
+                  >
+                    {el.message.includes("New") ? (
+                      <>
+                        <span className="d-flex flex-column">
+                          <span className="d-flex" ref={displayItems}>
+                            {el.message}
+                            <span className="mx-4">
+                              <AiOutlineDown size="20px" color="#0051FF" />
+                            </span>
+                          </span>
+                          {displayOrderedItems && (
+                            <span className="d-flex flex-column">
+                              {el.items.map((el) => {
+                                return (
+                                  <span
+                                    className="d-flex flex-column fs-6 fw-lighter mx-4 py-2"
+                                    key={el.id}
+                                  >
+                                    <li>Name:{el.name}</li>
+                                    <li>Qty:{el.qty}</li>
+                                    <li>Price:{el.price}</li>
+                                    <li>Description:{el.description}</li>
+                                    <span className="my-4" ref={btn}>
+                                      <Button
+                                        style={{
+                                          color: "#fff",
+                                          backgroundColor: "#0051FF",
+                                        }}
+                                      >
+                                        Generate Invoice
+                                      </Button>
+                                    </span>
+                                  </span>
+                                );
+                              })}
+                            </span>
+                          )}
+                        </span>
+                      </>
+                    ) : (
+                      el.message
+                    )}
+                  </span>
                 </span>
-              </span>
-            ))}
+              ))}
 
-            <div className="mt-4 d-flex align-items-center justify-content-center">
-              <Button
-                style={{
-                  width: "40%",
-                  backgroundColor: "#FF0505",
-                  color: "#fff",
-                }}
-                click={deletNotifications}
-              >
-                Clear All
-                <span className="mx-4">
-                  <FaRegTrashAlt size="15px" />
-                </span>
-              </Button>
-            </div>
-          </motion.div>
-        ) : (
-          <motion.div
-            className="messages p-2 py-4 mt-2 d-flex flex-column text-start"
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: 0.8,
-              delay: 0.1,
-              ease: [0, 0.71, 0.2, 1.01],
-            }}
-          >
-            No message to display
-          </motion.div>
-        ))}
+              <div className="mt-4 d-flex align-items-center justify-content-center">
+                <Button
+                  style={{
+                    width: "40%",
+                    backgroundColor: "#FF0505",
+                    color: "#fff",
+                  }}
+                  click={deletNotifications}
+                >
+                  Clear All
+                  <span className="mx-4">
+                    <FaRegTrashAlt size="15px" />
+                  </span>
+                </Button>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              className="messages p-2 py-4 mt-2 d-flex flex-column text-start"
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                duration: 0.8,
+                delay: 0.1,
+                ease: [0, 0.71, 0.2, 1.01],
+              }}
+            >
+              No message to display
+            </motion.div>
+          ))}
+      </AnimatePresence>
       {generateInvoice && (
         <div>
           <GenerateInvoice
