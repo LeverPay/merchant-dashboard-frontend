@@ -11,7 +11,6 @@ export default function GenerateInvoice({
   notification,
   setNotification,
 }) {
-  const [price, setPrice] = useState("");
   const [input, setInput] = useState({
     productName: "",
     qty: "",
@@ -26,7 +25,8 @@ export default function GenerateInvoice({
     warningMsg3 = useRef(),
     warningMsg4 = useRef(),
     warningMsg5 = useRef(),
-    total = useRef();
+    total = useRef(),
+    price = useRef();
 
   const hideForm = (e) => {
     e.preventDefault();
@@ -153,10 +153,35 @@ export default function GenerateInvoice({
     }
   };
 
+  const newNotification = () => {
+    const id = notification.length + 1;
+    const message = `Invoice sent to ${input.customerId}`;
+    const read = false;
+    const newItem = {
+      id,
+      message,
+      read,
+    };
+
+    setNotification((prev) => [...prev, newItem]);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     validate();
-    console.log(input);
+    if (
+      input.productName !== "" &&
+      input.qty !== "" &&
+      input.price !== "" &&
+      input.description !== "" &&
+      input.customerId !== ""
+    ) {
+      const newPrice = price.current.textContent;
+      input.price = newPrice;
+      console.log(input);
+      setGenerateInvoice(false);
+      newNotification();
+    }
   };
 
   return (
@@ -224,7 +249,8 @@ export default function GenerateInvoice({
             This field is required
           </small>
           <p ref={total} className="text-success fs-6 hidden">
-            Total price is: {addVatToPrice()}
+            Total price is: <span ref={price}>{addVatToPrice()}</span> (This
+            price is will be shown on invoice)
           </p>
         </div>
 

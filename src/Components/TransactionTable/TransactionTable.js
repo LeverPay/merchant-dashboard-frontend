@@ -20,9 +20,9 @@ const TransactionTable = (props) => {
     setShowInvoice(item);
   };
 
-  const showForm = (item) => {
+  const showForm = () => {
     setDisplayForm(true);
-    setTransactionId(item.name);
+    // setTransactionId(item.name);
   };
 
   const hideTransactBal = () => {
@@ -39,12 +39,16 @@ const TransactionTable = (props) => {
   return (
     <>
       <div className="transactions-table-container">
-        <span className="eye mt-4" onClick={hideTransactBal}>
+        <span
+          className="eye mt-4 d-flex justify-content-between"
+          onClick={hideTransactBal}
+        >
           {hidebalance ? (
             <RiEyeCloseLine size="30px" />
           ) : (
             <AiFillEye size="30px" />
           )}
+          <a onClick={showForm} className="fw-bold">Need Help?</a>
         </span>
         <ToastContainer />
         <table className="col-md-12 col-12">
@@ -77,13 +81,13 @@ const TransactionTable = (props) => {
                 >
                   {item.invoice}
                 </td>
-                <td
+                {/* <td
                   ref={helpRef}
                   className={`help-td fs-5`}
                   onClick={() => showForm(item)}
                 >
                   {item.help}
-                </td>
+                </td> */}
               </tr>
             ))}
           </tbody>

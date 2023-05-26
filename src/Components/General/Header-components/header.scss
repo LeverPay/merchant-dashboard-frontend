@@ -1,15 +1,18 @@
 .notify {
   cursor: pointer;
+  font-family: AgrandirRegular;
 }
 
 .messages {
   width: auto;
   position: fixed;
-  top: 8%;
+  top: 6%;
+  right: 6%;
   z-index: 4;
   background-color: #fff;
   border: 2px solid rgba(217, 217, 217, 0.54);
   box-shadow: 0px 4px 10px rgba(255, 251, 251, 0.25);
+  border-radius: 10px;
   .items {
     list-style: none;
     cursor: pointer;

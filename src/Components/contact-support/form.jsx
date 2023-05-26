@@ -10,17 +10,18 @@ import { toast } from "react-toastify";
 import { AiOutlineClose } from "react-icons/ai";
 
 export default function Form({ setDisplayForm, transactionId }) {
-  const [error, setError] = useState(false);
-  const [wordsLeft, setWordsLeft] = useState(2000);
+  const [wordsLeft, setWordsLeft] = useState(200);
   const [phone, setPhone] = useState("");
   const [input, setInput] = useState({
     firstname: "User Firstname",
     email: "User Email",
     message: "",
-    transactId: transactionId,
+    transactId: "",
   });
 
-  const textArea = useRef();
+  const textArea = useRef(),
+    transactEmpty = useRef(),
+    textAreaWarning = useRef();
 
   const contactSupport = useRef();
 
@@ -37,7 +38,7 @@ export default function Form({ setDisplayForm, transactionId }) {
     setInput((prev) => ({ ...prev, [name]: value }));
 
     const wordCount = input.message.trim().split(/\s+/).length;
-    const newWordsLeft = 2000 - wordCount;
+    const newWordsLeft = 200 - wordCount;
     setWordsLeft(newWordsLeft);
   };
 
@@ -57,23 +58,60 @@ export default function Form({ setDisplayForm, transactionId }) {
     return () => document.removeEventListener("mousedown", close);
   }, []);
 
+  const toggleErr1 = () => {
+    if (input.transactId !== "") {
+      if (!transactEmpty.current.classList.contains("hidden")) {
+        transactEmpty.current.classList.add("hidden");
+      }
+    } else {
+      transactEmpty.current.classList.remove("hidden");
+    }
+  };
+
+  const toggleErr2 = () => {
+    if (input.message === "") {
+      textArea.current.classList.add("border-color");
+      if (textAreaWarning.current.classList.contains("hidden")) {
+        textAreaWarning.current.classList.remove("hidden");
+      }
+    } else {
+      textArea.current.classList.remove("border-color");
+      if (!textAreaWarning.current.classList.contains("hidden")) {
+        textAreaWarning.current.classList.add("hidden");
+      }
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (input.message === "") {
-      setError(true);
       textArea.current.classList.add("border-color");
+      if (textAreaWarning.current.classList.contains("hidden")) {
+        textAreaWarning.current.classList.remove("hidden");
+      }
     } else {
-      setError(false);
       textArea.current.classList.remove("border-color");
+      if (!textAreaWarning.current.classList.contains("hidden")) {
+        textAreaWarning.current.classList.add("hidden");
+      }
+    }
+
+    if (input.transactId !== "") {
+      if (!transactEmpty.current.classList.contains("hidden")) {
+        transactEmpty.current.classList.add("hidden");
+      }
+    } else {
+      transactEmpty.current.classList.remove("hidden");
     }
 
     if (
       input.firstname !== "" &&
       input.email !== "" &&
       input.message !== "" &&
+      input.transactId !== "" &&
       wordsLeft >= 0 &&
-      wordsLeft <= 2000 &&
+      wordsLeft <= 200 &&
       !wordsLeft <= 0
     ) {
       console.log(input);
@@ -93,8 +131,8 @@ export default function Form({ setDisplayForm, transactionId }) {
           <AiOutlineClose size="25px" />
         </span>
         <div className="message-form-content">
-          <h1>Help!</h1>
-          <p className="fst-italic">
+          <h1 className="white">Help!</h1>
+          <p className="fst-italic white">
             Should you have any issue, feel free to contact us, we will
             <br /> get to you as soon as we can
           </p>
@@ -143,6 +181,27 @@ export default function Form({ setDisplayForm, transactionId }) {
               />
             </div>
 
+            <div className="rounded-2 d-flex flex-column align-items-center px-2">
+              <span className="container">
+                <label htmlFor=""></label>
+                <input
+                  type="text"
+                  placeholder="Order Id"
+                  name="transactId"
+                  value={input.transactId}
+                  onChange={handleChange}
+                  onInput={toggleErr1}
+                  className="container mt-5 px-2 py-1 input"
+                />
+                <small
+                  ref={transactEmpty}
+                  className="important-msg mx-4 hidden"
+                >
+                  This field is required
+                </small>
+              </span>
+            </div>
+
             <div className="rounded-2 mt-4">
               <textarea
                 ref={textArea}
@@ -150,12 +209,13 @@ export default function Form({ setDisplayForm, transactionId }) {
                 id=""
                 value={input.message}
                 onChange={handleChange}
+                onInput={toggleErr2}
                 placeholder="Message"
                 className="mt-2 input px-2 py-1 container"
               ></textarea>
-              {error && (
-                <small className="important-msg">This field is required</small>
-              )}
+              <small className="important-msg hidden" ref={textAreaWarning}>
+                This field is required
+              </small>
               {wordsLeft >= 1 && wordsLeft <= 2000 ? (
                 <p style={{ color: "black" }}>{wordsLeft} Words Left</p>
               ) : (

@@ -1,5 +1,3 @@
-.transactions-tab {}
-
 .transactions-tab .tabs {
   display: flex;
   border: solid 1px rgb(205, 200, 200);
@@ -11,12 +9,6 @@
   box-shadow: 0 0 3px 3px rgb(205, 200, 200);
 }
 
-@media screen and (max-width: 620px) {
-  .tabs {
-    /* display: grid; */
-  }
-}
-
 .transactions-tab .tab {
   justify-content: center;
   align-items: center;
@@ -25,12 +17,6 @@
   /* border: none; */
   color: grey;
   background: #fff;
-}
-
-.transactions-tab .tabs button {
-  /* border-bottom: solid 1px grey; */
-  /* margin-right: 20px;
-  margin-left: 20px; */
 }
 
 .transactions-tab .tab.active2 {
@@ -58,7 +44,7 @@
 .new-invoice {
   width: 100%;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .hovered-btn:hover {

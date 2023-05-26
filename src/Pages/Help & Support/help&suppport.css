@@ -18,6 +18,10 @@
   color: #dee2e6 !important;
 }
 
+.white {
+  color: #fff;
+}
+
 .more {
   cursor: pointer;
   background: linear-gradient(177.42deg, #0051ff -2.29%, #0b0230 113.02%);
@@ -30,10 +34,12 @@
   width: 70%;
   height: auto;
   z-index: 20;
-  top: 2%;
+  top: 0%;
   left: 25%;
   position: fixed;
-  background: linear-gradient(177.42deg, #0051FF -2.29%, #0B0230 113.02%);
+  background: linear-gradient(177.42deg, #0051ff -2.29%, #0b0230 113.02%);
+  max-height: 100vh;
+  overflow-y: auto;
 }
 
 .contact-support .input-field {
@@ -59,6 +65,7 @@
 
 .input-field-background {
   background-color: #fff;
+  height: 100%;
 }
 
 .screenshot {
@@ -86,6 +93,8 @@
     top: 5%;
     left: 0%;
     flex-direction: column !important;
+    max-height: 100vh;
+    overflow-y: auto;
   }
   .next {
     width: 10px;

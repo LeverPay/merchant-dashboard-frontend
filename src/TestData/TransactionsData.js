@@ -4,7 +4,7 @@ import Refund from "../Assets/refund.png";
 import Failed from "../Assets/failed.png";
 
 export const allTransactions = {
-  headers: ["OrderID", "Date", "Status", "Amount", "INVOICE", "Support"],
+  headers: ["OrderID", "Date", "Status", "Amount", "INVOICE"],
   data: [
     {
       id: 1,
@@ -14,7 +14,7 @@ export const allTransactions = {
       color: "green",
       status: { icon: Success, statusName: "Successful" },
       invoice: "View",
-      help: "Need help with this transaction?",
+      // help: "Need help with this transaction?",
     },
 
     {
@@ -26,7 +26,7 @@ export const allTransactions = {
       status: { icon: Pending, statusName: "Pending" },
       date: "21 Mar 2023",
       invoice: "View",
-      help: "Need help with this transaction?",
+      // help: "Need help with this transaction?",
     },
     {
       id: 3,
@@ -37,7 +37,7 @@ export const allTransactions = {
       status: { icon: Refund, statusName: "Refund" },
       date: "12 Apr 2023",
       invoice: "View",
-      help: "Need help with this transaction?",
+      // help: "Need help with this transaction?",
     },
     {
       id: 4,
@@ -48,7 +48,7 @@ export const allTransactions = {
       status: { icon: Failed, statusName: "Canceled" },
       date: "12 Apr 2023",
       invoice: "View",
-      help: "Need help with this transaction?",
+      // help: "Need help with this transaction?",
     },
   ],
 };
@@ -59,7 +59,7 @@ export const paidTransactions = {
     "Status",
     "Amount",
     "INVOICE",
-    "Need help with this transaction?",
+    // "Need help with this transaction?",
   ],
   data: [
     {
@@ -70,7 +70,7 @@ export const paidTransactions = {
       color: "green",
       status: { icon: Success, statusName: "Successful" },
       invoice: "View",
-      help: "Need help with this transaction?",
+      // help: "Need help with this transaction?",
     },
   ],
 };
@@ -81,7 +81,7 @@ export const pendingTransactions = {
     "Status",
     "Amount",
     "INVOICE",
-    "Need help with this transaction?",
+    // "Need help with this transaction?",
   ],
   data: [
     {
@@ -92,7 +92,7 @@ export const pendingTransactions = {
       color: "blue",
       status: { icon: Pending, statusName: "Pending" },
       invoice: "View",
-      help: "Need help with this transaction?",
+      // help: "Need help with this transaction?",
     },
   ],
 };
@@ -114,7 +114,7 @@ export const refundTransactions = {
       color: "orange",
       status: { icon: Refund, statusName: "Refund" },
       invoice: "View",
-      help: "Need help with this transaction?",
+      // help: "Need help with this transaction?",
     },
   ],
 };
@@ -136,7 +136,7 @@ export const failedTransactions = {
       color: "red",
       status: { icon: Failed, statusName: "Failed" },
       invoice: "View",
-      help: "Need help with this transaction?",
+      // help: "Need help with this transaction?",
     },
   ],
 };
@@ -147,7 +147,7 @@ export const canceledTransactions = {
     "Status",
     "Amount",
     "INVOICE",
-    "Need help with this transaction?",
+    // "Need help with this transaction?",
   ],
   data: [
     {
@@ -158,7 +158,7 @@ export const canceledTransactions = {
       color: "red",
       status: { icon: Failed, statusName: "Canceled" },
       invoice: "View",
-      help: "Need help with this transaction?",
+      // help: "Need help with this transaction?",
     },
   ],
 };
