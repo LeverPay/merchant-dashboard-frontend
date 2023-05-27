@@ -39,17 +39,20 @@ const TransactionTable = (props) => {
   return (
     <>
       <div className="transactions-table-container">
-        <span
-          className="eye mt-4 d-flex justify-content-between"
-          onClick={hideTransactBal}
-        >
-          {hidebalance ? (
-            <RiEyeCloseLine size="30px" />
-          ) : (
-            <AiFillEye size="30px" />
-          )}
-          <a onClick={showForm} className="fw-bold">Need Help?</a>
-        </span>
+        <div className="d-flex justify-content-between">
+          <span className="eye mt-4" onClick={hideTransactBal}>
+            {hidebalance ? (
+              <RiEyeCloseLine size="30px" />
+            ) : (
+              <AiFillEye size="30px" />
+            )}
+          </span>
+          <span className="show-btn mt-4">
+            <a onClick={showForm} className="fw-bold">
+              Need Help?
+            </a>
+          </span>
+        </div>
         <ToastContainer />
         <table className="col-md-12 col-12">
           <thead>

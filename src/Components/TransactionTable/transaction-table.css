@@ -73,3 +73,8 @@
 .eye{
   cursor: pointer;
 }
+
+.show-btn{
+  z-index: 10;
+  cursor: pointer;
+}
