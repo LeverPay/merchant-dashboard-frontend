@@ -1,16 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./style.css";
 import Button from "../General/Button component/Button";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
 import { useState } from "react";
 import { useRef } from "react";
+import NotificationContext from "../General/NotificationContext";
 
-export default function GenerateInvoice({
-  setGenerateInvoice,
-  notification,
-  setNotification,
-}) {
+export default function GenerateInvoice({ setGenerateInvoice }) {
+  const { notification, setNotification } = useContext(NotificationContext);
+
   const [input, setInput] = useState({
     productName: "",
     qty: "",

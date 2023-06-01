@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import NotificationAddIcon from "@mui/icons-material/NotificationAdd";
@@ -11,9 +11,11 @@ import Button from "../Button component/Button";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { NotificationAdd } from "@mui/icons-material";
+import NotificationContext from "../NotificationContext";
 
 export default function TopNav() {
-  const [notification, setNotification] = useState(message);
+  const { notification, deletNotifications, markRead } =
+    useContext(NotificationContext);
   const [generateInvoice, setGenerateInvoice] = useState(false);
   const [closenotification, setcloseNotification] = useState(false);
   const [displayOrderedItems, setDisplayOrderedItems] = useState(false);
@@ -58,17 +60,6 @@ export default function TopNav() {
   const click = (item) => {
     setDisplayOrderedItems(!displayOrderedItems);
     markRead(item);
-  };
-
-  const deletNotifications = () => {
-    setNotification([]);
-    setcloseNotification(false);
-  };
-
-  const markRead = (item) => {
-    const updateData = [...notification];
-    updateData[item].read = true;
-    setNotification(updateData);
   };
 
   const unReadNotification = notification.map((el) => el.read);
@@ -218,12 +209,7 @@ export default function TopNav() {
       </AnimatePresence>
       {generateInvoice && (
         <div>
-          <GenerateInvoice
-            setGenerateInvoice={setGenerateInvoice}
-            notification={notification}
-            setNotification={setNotification}
-            // itemIndex={}
-          />
+          <GenerateInvoice setGenerateInvoice={setGenerateInvoice} />
         </div>
       )}
     </section>
