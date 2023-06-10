@@ -14,31 +14,19 @@ export default function CreateAccountForm({ accType, countryList }) {
   const [BusinessName, setBusinessName] = useState("");
   const [password, setPassword] = useState(""); // useState to store Password
   const [selectedCountryId, setSelectedCountryId] = useState("");
-  const [selectedStateId, setSelectedStateId] = useState("");
   // const [inputText, setInputText] = useState("");
   // const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
   const [slideShow, setSlideShow] = useState(false);
   const [value, setValue] = useState("");
   const [statesData, setStatesData] = useState({});
-  const [citiesData, setCitiesData] = useState({});
 
   const fetchData = async (country_id) => {
     try {
-      const response = await axios.post(baseUrl + states, {
-        country_id: country_id,
-      }); // Replace with your API endpoint
+      const response = await axios.get(
+        baseUrl + states + "?country_id=" + country_id
+      ); // Replace with your API endpoint
       setStatesData(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const fetchDataState = async (state_id) => {
-    try {
-      const response = await axios.post(baseUrl + cities, {
-        state_id: state_id,
-      }); // Replace with your API endpoint
-      setCitiesData(response.data);
     } catch (error) {
       console.error(error);
     }
@@ -49,12 +37,6 @@ export default function CreateAccountForm({ accType, countryList }) {
       fetchData(selectedCountryId);
     }
   }, [selectedCountryId]);
-
-  useEffect(() => {
-    if (selectedStateId !== "") {
-      fetchDataState(selectedStateId);
-    }
-  }, [selectedStateId]);
 
   const handleChecked = (event) => {
     setIsChecked(event.target.checked);
@@ -173,11 +155,6 @@ export default function CreateAccountForm({ accType, countryList }) {
     // }
   }
 
-  function setStateCallBack(state_id) {
-    console.log("called back with state id  " + state_id + "");
-    setSelectedStateId(state_id);
-  }
-
   return (
     <>
       <form className="acc-form">
@@ -207,38 +184,16 @@ export default function CreateAccountForm({ accType, countryList }) {
           onChange={(e) => setBusinessName(e.target.value)}
         />
         <h6>Select Country</h6>
-        <CountrySelect
-          countyList={countryList}
-          callback={setCountry}
-          selector="country_name"
+        <CountrySelect countyList={countryList} callback={setCountry} />
+        <CountrySelect countyList={countryList} />/
+        {/* <CountrySelect countyList={countryList} /> */}
+        <h6>Phone Number</h6>
+        <PhoneInput
+          value={value}
+          onChange={setValue}
+          placeholder="Mobile number"
+          required
         />
-        {selectedCountryId != "" ? (
-          <>
-            <h6>Select State</h6>
-            <CountrySelect
-              countyList={statesData}
-              callback={setStateCallBack}
-              selector="state_name"
-            />
-          </>
-        ) : (
-          ""
-        )}
-        {selectedStateId != "" ? (
-          <>
-            <h6>Select City</h6>
-            <CountrySelect countyList={citiesData} selector="city_name" />
-            <h6>Phone Number</h6>
-            <PhoneInput
-              value={value}
-              onChange={setValue}
-              placeholder="Mobile number"
-              required
-            />
-          </>
-        ) : (
-          ""
-        )}
         <h6>Email address</h6>
         <input
           required
