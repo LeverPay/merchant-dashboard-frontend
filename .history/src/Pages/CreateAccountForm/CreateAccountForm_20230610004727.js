@@ -4,8 +4,6 @@ import { Link, NavLink } from "react-router-dom";
 import { CountrySelect } from "../../Components/CountrySelect";
 // import TransactionReport from "../TransactionMessages/Transaction-report";
 import PhoneInput from "react-phone-number-input";
-import { fetchInfo, states, cities, baseUrl } from "../../Components/Endpoints";
-import axios from "axios";
 
 export default function CreateAccountForm({ accType, countryList }) {
   const [firstName, setFirstName] = useState(""); // useState to store First Name
@@ -14,47 +12,11 @@ export default function CreateAccountForm({ accType, countryList }) {
   const [BusinessName, setBusinessName] = useState("");
   const [password, setPassword] = useState(""); // useState to store Password
   const [selectedCountryId, setSelectedCountryId] = useState("");
-  const [selectedStateId, setSelectedStateId] = useState("");
   // const [inputText, setInputText] = useState("");
   // const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
   const [slideShow, setSlideShow] = useState(false);
   const [value, setValue] = useState("");
-  const [statesData, setStatesData] = useState({});
-  const [citiesData, setCitiesData] = useState({});
-
-  const fetchData = async (country_id) => {
-    try {
-      const response = await axios.post(baseUrl + states, {
-        country_id: country_id,
-      }); // Replace with your API endpoint
-      setStatesData(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const fetchDataState = async (state_id) => {
-    try {
-      const response = await axios.post(baseUrl + cities, {
-        state_id: state_id,
-      }); // Replace with your API endpoint
-      setCitiesData(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    if (selectedCountryId !== "") {
-      fetchData(selectedCountryId);
-    }
-  }, [selectedCountryId]);
-
-  useEffect(() => {
-    if (selectedStateId !== "") {
-      fetchDataState(selectedStateId);
-    }
-  }, [selectedStateId]);
 
   const handleChecked = (event) => {
     setIsChecked(event.target.checked);
@@ -168,14 +130,8 @@ export default function CreateAccountForm({ accType, countryList }) {
   }
   function setCountry(country_id) {
     console.log("called back with " + country_id + "");
-    // if (country_id !== "") {
-    setSelectedCountryId(country_id);
-    // }
-  }
-
-  function setStateCallBack(state_id) {
-    console.log("called back with state id  " + state_id + "");
-    setSelectedStateId(state_id);
+    if (country_id !== "") {
+    }
   }
 
   return (
@@ -207,31 +163,9 @@ export default function CreateAccountForm({ accType, countryList }) {
           onChange={(e) => setBusinessName(e.target.value)}
         />
         <h6>Select Country</h6>
-        <CountrySelect
-          countyList={countryList}
-          callback={setCountry}
-          selector="country_name"
-        />
-        {selectedCountryId != "" ? (
-          <>
-            <h6>Select State</h6>
-            <CountrySelect
-              countyList={statesData}
-              callback={setStateCallBack}
-              selector="state_name"
-            />
-          </>
-        ) : (
-          ""
-        )}
-        {selectedStateId != "" ? (
-          <>
-            <h6>Select City</h6>
-            <CountrySelect countyList={citiesData} selector="city_name" />
-          </>
-        ) : (
-          ""
-        )}
+        <CountrySelect countyList={countryList} callback={setCountry} />
+        {/* <CountrySelect countyList={countryList} />/ */}
+        {/* <CountrySelect countyList={countryList} /> */}
         <h6>Phone Number</h6>
         <PhoneInput
           value={value}

@@ -228,17 +228,17 @@ export default function CreateAccountForm({ accType, countryList }) {
           <>
             <h6>Select City</h6>
             <CountrySelect countyList={citiesData} selector="city_name" />
+            <h6>Phone Number</h6>
+            <PhoneInput
+              value={value}
+              onChange={setValue}
+              placeholder="Mobile number"
+              required
+            />
           </>
         ) : (
           ""
         )}
-        <h6>Phone Number</h6>
-        <PhoneInput
-          value={value}
-          onChange={setValue}
-          placeholder="Mobile number"
-          required
-        />
         <h6>Email address</h6>
         <input
           required

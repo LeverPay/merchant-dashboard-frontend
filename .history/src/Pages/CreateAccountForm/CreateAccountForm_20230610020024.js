@@ -212,7 +212,7 @@ export default function CreateAccountForm({ accType, countryList }) {
           callback={setCountry}
           selector="country_name"
         />
-        {selectedCountryId != "" ? (
+        {selectedCountry != "" ? (
           <>
             <h6>Select State</h6>
             <CountrySelect
@@ -224,14 +224,8 @@ export default function CreateAccountForm({ accType, countryList }) {
         ) : (
           ""
         )}
-        {selectedStateId != "" ? (
-          <>
-            <h6>Select City</h6>
-            <CountrySelect countyList={citiesData} selector="city_name" />
-          </>
-        ) : (
-          ""
-        )}
+        <h6>Select City</h6>
+        <CountrySelect countyList={citiesData} selector="city_name" />
         <h6>Phone Number</h6>
         <PhoneInput
           value={value}

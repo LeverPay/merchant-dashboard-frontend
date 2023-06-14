@@ -47,12 +47,7 @@ function SignInPage() {
       alert("Invalid password !");
       return;
     }
-    let lg = document.getElementById("signin-button");
-    lg.innerHTML = "Logging in...";
-    setTimeout(() => {
-      lg.innerHTML = "Sign in";
-      navigate("/dashboard");
-    }, 3000);
+    navigate("/dashboard");
   }
 
   return (
@@ -102,7 +97,6 @@ function SignInPage() {
             onClick={() => {
               validateForm();
             }}
-            id="signin-button"
           >
             Sign In
           </button>
