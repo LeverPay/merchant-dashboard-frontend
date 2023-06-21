@@ -32,15 +32,15 @@ function SignInPage() {
       setSubmitButtonDisabled(true);
     }
   };
-  const handleConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
 
     // setPassword(password);
-    console.log(confirmPassword);
-    if (confirmPassword.value === password) {
-      setSubmitButtonDisabled(true);
-    } else {
+    console.log(password);
+    if (password.length >= maxLength) {
       setSubmitButtonDisabled(false);
+    } else {
+      setSubmitButtonDisabled(true);
     }
   };
 

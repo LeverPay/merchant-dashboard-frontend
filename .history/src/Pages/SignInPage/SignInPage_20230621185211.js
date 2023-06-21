@@ -10,7 +10,6 @@ function SignInPage() {
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
@@ -30,17 +29,6 @@ function SignInPage() {
       setSubmitButtonDisabled(false);
     } else {
       setSubmitButtonDisabled(true);
-    }
-  };
-  const handleConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
-
-    // setPassword(password);
-    console.log(confirmPassword);
-    if (confirmPassword.value === password) {
-      setSubmitButtonDisabled(true);
-    } else {
-      setSubmitButtonDisabled(false);
     }
   };
 
