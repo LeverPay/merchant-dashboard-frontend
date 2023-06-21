@@ -10,7 +10,6 @@ function SignInPage() {
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
@@ -30,17 +29,6 @@ function SignInPage() {
       setSubmitButtonDisabled(false);
     } else {
       setSubmitButtonDisabled(true);
-    }
-  };
-  const handleConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
-
-    // setPassword(password);
-    console.log(confirmPassword);
-    if (confirmPassword.value === password) {
-      setSubmitButtonDisabled(true);
-    } else {
-      setSubmitButtonDisabled(false);
     }
   };
 
@@ -110,9 +98,9 @@ function SignInPage() {
           <h6>CONFIRM PASSWORD</h6>
           <input
             type={showPassword ? "text" : "password"}
-            value={confirmPassword}
-            onChange={handleConfirmPassword}
-            placeholder="Password should be exact"
+            value={password}
+            onChange={handlePasswordChange}
+            placeholder="Password should be at least 10 characters"
             autocomplete="new-password"
           />
           <span onClick={toggleShowPassword}>

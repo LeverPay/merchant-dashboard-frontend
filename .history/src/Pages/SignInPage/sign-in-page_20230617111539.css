@@ -3,7 +3,7 @@
   box-shadow: 0 0 5px 5px rgb(206, 206, 206);
   margin-top: 70px;
   border-radius: 20px;
-  padding: 30px 0;
+  padding: 0px 0;
   margin-bottom: 50px;
 }
 .form-heading {
@@ -21,7 +21,7 @@
   height: 50px;
   width: 100%;
   border-radius: 10px;
-  /* margin-top: -10px; */
+  margin-top: -10px;
   border: solid 3px rgb(202, 197, 197);
   padding-left: 40px;
 }
@@ -31,7 +31,7 @@
   font-size: 12px;
 }
 .sign-form-body {
-  padding: 30px 25px 10px 25px;
+  padding: 70px 25px 0px 25px;
 }
 .sign-form-body h6 {
   margin-top: 35px;

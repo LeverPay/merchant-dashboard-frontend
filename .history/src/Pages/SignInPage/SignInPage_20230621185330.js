@@ -33,14 +33,14 @@ function SignInPage() {
     }
   };
   const handleConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
+    setPassword(e.target.value);
 
     // setPassword(password);
-    console.log(confirmPassword);
-    if (confirmPassword.value === password) {
-      setSubmitButtonDisabled(true);
-    } else {
+    console.log(password);
+    if (password.length >= maxLength) {
       setSubmitButtonDisabled(false);
+    } else {
+      setSubmitButtonDisabled(true);
     }
   };
 
@@ -110,7 +110,7 @@ function SignInPage() {
           <h6>CONFIRM PASSWORD</h6>
           <input
             type={showPassword ? "text" : "password"}
-            value={confirmPassword}
+            value={password}
             onChange={handleConfirmPassword}
             placeholder="Password should be exact"
             autocomplete="new-password"
