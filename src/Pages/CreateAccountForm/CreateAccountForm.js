@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import { CountrySelect } from "../../Components/CountrySelect";
 // import TransactionReport from "../TransactionMessages/Transaction-report";
 import PhoneInput from "react-phone-number-input";
+import Button from "../../Components/General/Button component/Button";
 import {
   fetchInfo,
   states,
@@ -12,6 +13,7 @@ import {
   signup,
 } from "../../Components/Endpoints";
 import axios from "axios";
+import "./VerifyEmail.css";
 
 export default function CreateAccountForm({ accType, countryList }) {
   const [firstName, setFirstName] = useState(""); // useState to store First Name
@@ -385,7 +387,60 @@ export default function CreateAccountForm({ accType, countryList }) {
           </p>
         </form>
       ) : (
-        <form></form>
+        <form className="p-5">
+          <center>
+            <p>Please Verify Your Account</p>
+            <div>
+              <h5>A code has beeen sent to your mail</h5>
+            </div>
+          </center>
+
+          <div className="d-flex">
+            <input
+              type=""
+              name=""
+              value=""
+              className="mt-5 mx-2 verify-input"
+            />
+            <input
+              type=""
+              name=""
+              value=""
+              className="mt-5 mx-2 verify-input"
+            />
+            <input
+              type=""
+              name=""
+              value=""
+              className="mt-5 mx-2 verify-input"
+            />
+            <input
+              type=""
+              name=""
+              value=""
+              className="mt-5 mx-2 verify-input"
+            />
+          </div>
+
+          <div>
+            <small className="fs-5 d-flex justify-content-center">
+              Didn't get code? <Link>Click to resend?</Link>
+            </small>
+          </div>
+
+          <div className="mt-5 d-flex justify-content-center">
+            <Button
+              style={{
+                backgroundColor: "#2962F2",
+                width: "80%",
+                color: "#fff",
+                fontSize: "1.5rem",
+              }}
+            >
+              Verify Account
+            </Button>
+          </div>
+        </form>
       )}
     </>
   );
