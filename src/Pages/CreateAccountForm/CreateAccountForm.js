@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./create-account-form.css";
 import { Link, NavLink } from "react-router-dom";
 import { CountrySelect } from "../../Components/CountrySelect";
@@ -34,6 +34,49 @@ export default function CreateAccountForm({ accType, countryList }) {
   const [city, setCity] = useState();
   const [Address, setAddress] = useState("");
   const [renderForm, setRenderForm] = useState(true);
+
+  // Generates an array for for inputs
+  const inputs = Array(4).fill(0);
+  // adds useRefs to inputs
+  const inputRefs = inputs.map(() => useRef());
+
+  const handleChange = (e, index) => {
+    const { value } = e.target;
+
+    //Tests if values is number
+    if (/^\d*$/.test(value)) {
+      if (value.length === 1) {
+        if (index < inputs.length - 1) {
+          // Focus on the next input if value is a number
+          inputRefs[index + 1].current.focus();
+        }
+      }
+    }
+  };
+
+
+  // Populate data automatically on all input fields
+  const handlePaste = (e) => {
+    e.preventDefault();
+    // Get copied data
+    const pastedData = e.clipboardData.getData("text/plain").trim();
+    // Check if data is a number and length is == 4
+    if (/^\d{4}$/.test(pastedData)) {
+      inputs.forEach((_, i) => {
+        inputRefs[i].current.value = pastedData[i];
+        inputRefs[i].current.dispatchEvent(
+          new Event("input", { bubbles: true })
+        );
+      });
+    }
+  };
+
+  const verifyMail = (e) => {
+    e.preventDefault();
+    const _inputValues = inputRefs.map((el) => el.current.value);
+    const value_As_String = _inputValues.toString().replace(/,/g, "");
+    console.log(value_As_String);
+  };
 
   const fetchData = async (country_id) => {
     try {
@@ -396,30 +439,18 @@ export default function CreateAccountForm({ accType, countryList }) {
           </center>
 
           <div className="d-flex">
-            <input
-              type=""
-              name=""
-              value=""
-              className="mt-5 mx-2 verify-input"
-            />
-            <input
-              type=""
-              name=""
-              value=""
-              className="mt-5 mx-2 verify-input"
-            />
-            <input
-              type=""
-              name=""
-              value=""
-              className="mt-5 mx-2 verify-input"
-            />
-            <input
-              type=""
-              name=""
-              value=""
-              className="mt-5 mx-2 verify-input"
-            />
+            {inputs.map((_, index) => {
+              return (
+                <input
+                  type="text"
+                  ref={inputRefs[index]}
+                  maxLength={1}
+                  className="mt-5 mx-2 verify-input fs-1 text-center"
+                  onChange={(e) => handleChange(e, index)}
+                  onPaste={handlePaste}
+                />
+              );
+            })}
           </div>
 
           <div>
@@ -436,6 +467,7 @@ export default function CreateAccountForm({ accType, countryList }) {
                 color: "#fff",
                 fontSize: "1.5rem",
               }}
+              click={verifyMail}
             >
               Verify Account
             </Button>
