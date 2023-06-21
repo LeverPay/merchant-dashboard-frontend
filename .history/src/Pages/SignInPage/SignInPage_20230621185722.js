@@ -109,7 +109,7 @@ function SignInPage() {
           </span>{" "}
           <h6>CONFIRM PASSWORD</h6>
           <input
-            type={showPassword ? "text" : "password"}
+            // type={showPassword ? "text" : "password"}
             value={password}
             onChange={handleConfirmPassword}
             placeholder="Password should be exact"
