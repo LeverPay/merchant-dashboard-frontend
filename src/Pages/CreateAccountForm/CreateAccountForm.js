@@ -12,6 +12,7 @@ import {
   baseUrl,
   signup,
   verify_Mail,
+  resendVerification_Token,
 } from "../../Components/Endpoints";
 import axios from "axios";
 import "./VerifyEmail.css";
@@ -93,8 +94,9 @@ export default function CreateAccountForm({
       } else {
         notify("Something went wrong :(");
       }
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
+      notify(err.response.data.message)
     }
   };
 
@@ -326,14 +328,32 @@ export default function CreateAccountForm({
       if (err.response.status === 422) {
         notify("This user already exist");
       } else {
-        notify("Somethin went wrong :(");
+        notify(err.response.data.message);
       }
     }
   }
 
-  // const handleVerify = async () => {
-
-  // };
+  const resend_Verification_Token = async (e) => {
+    e.preventDefault();
+    try {
+      const request = await axios.post(baseUrl + resendVerification_Token, {
+        email: v_email,
+      });
+      console.log(request);
+      if (request.status === 200) {
+        success(`New token has been sent to ${v_email}`);
+      } else {
+        notify("Something went wrong :(");
+      }
+    } catch (err) {
+      console.log(err);
+      if (err.response.status === 400) {
+        notify(err.response.data.message);
+      } else {
+        notify("Something went wrong :(");
+      }
+    }
+  };
 
   return (
     <>
@@ -497,7 +517,8 @@ export default function CreateAccountForm({
 
           <div>
             <small className="fs-5 d-flex justify-content-center">
-              Didn't get code? <Link>Click to resend?</Link>
+              Didn't get code?{" "}
+              <Link onClick={resend_Verification_Token}>Click to resend</Link>
             </small>
           </div>
 

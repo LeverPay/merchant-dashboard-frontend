@@ -11,3 +11,4 @@ export const states = "/api/v1/get-states";
 export const cities = "/api/v1/get-cities";
 export const signup = "/api/v1/merchant/signup";
 export const verify_Mail = "/api/v1/verify-email";
+export const resendVerification_Token = "/api/v1/resend-verification-email";
