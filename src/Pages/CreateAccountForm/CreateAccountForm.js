@@ -11,11 +11,17 @@ import {
   cities,
   baseUrl,
   signup,
+  verify_Mail,
 } from "../../Components/Endpoints";
 import axios from "axios";
 import "./VerifyEmail.css";
 
-export default function CreateAccountForm({ accType, countryList }) {
+export default function CreateAccountForm({
+  accType,
+  countryList,
+  notify,
+  success,
+}) {
   const [firstName, setFirstName] = useState(""); // useState to store First Name
   const [lastName, setLastName] = useState(""); // useState to store Last Name
   const [email, setEmail] = useState("");
@@ -33,7 +39,8 @@ export default function CreateAccountForm({ accType, countryList }) {
   const [cities_id, setCities_id] = useState();
   const [city, setCity] = useState();
   const [Address, setAddress] = useState("");
-  const [renderForm, setRenderForm] = useState(true);
+  const [renderForm, setRenderForm] = useState(false);
+  const [v_email, setV_email] = useState();
 
   // Generates an array for for inputs
   const inputs = Array(4).fill(0);
@@ -54,7 +61,6 @@ export default function CreateAccountForm({ accType, countryList }) {
     }
   };
 
-
   // Populate data automatically on all input fields
   const handlePaste = (e) => {
     e.preventDefault();
@@ -71,11 +77,25 @@ export default function CreateAccountForm({ accType, countryList }) {
     }
   };
 
-  const verifyMail = (e) => {
+  const verifyMail = async (e) => {
     e.preventDefault();
     const _inputValues = inputRefs.map((el) => el.current.value);
     const value_As_String = _inputValues.toString().replace(/,/g, "");
-    console.log(value_As_String);
+    console.log(value_As_String, v_email);
+
+    try {
+      const request = await axios.post(baseUrl + verify_Mail, {
+        email: v_email,
+        token: value_As_String,
+      });
+      if (request.status === 200) {
+        success(request.data.message);
+      } else {
+        notify("Something went wrong :(");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const fetchData = async (country_id) => {
@@ -137,28 +157,28 @@ export default function CreateAccountForm({ accType, countryList }) {
     // Check if the First Name is an Empty string or not.
 
     if (firstName.length == 0) {
-      alert("Invalid Form, First Name can not be empty");
+      notify("Invalid Form, First Name can not be empty");
       return;
     }
 
     // Check if the Email is an Empty string or not.
 
     if (email.length == 0) {
-      alert("Invalid Form, Email Address can not be empty");
+      notify("Invalid Form, Email Address can not be empty");
       return;
     }
 
     //Check if address length is an Empty string or not
 
     if (Address.length == 0) {
-      alert("Invalid Form, Address cannot be empty");
+      notify("Invalid Form, Address cannot be empty");
       return;
     }
 
     // Check if BusinuessName is an Empty string
 
     if (BusinessName.length == 0) {
-      alert("Invalid Form, Business name cannot be empty");
+      notify("Invalid Form, Business name cannot be empty");
       return;
     }
 
@@ -167,9 +187,14 @@ export default function CreateAccountForm({ accType, countryList }) {
     // if password length is less than 8 characters, alert invalid form.
 
     if (password.length < 8) {
-      alert(
+      notify(
         "Invalid Form, Password must contain greater than or equal to 8 characters."
       );
+      return;
+    }
+
+    if (!isChecked) {
+      notify("Accept Terms of Services to continue");
       return;
     }
 
@@ -228,31 +253,32 @@ export default function CreateAccountForm({ accType, countryList }) {
 
     if (countLowerCase == 0) {
       // invalid form, 0 lowercase characters
-      alert("Invalid Form, 0 lower case characters in password");
+      notify("Invalid Form, 0 lower case characters in password");
       return;
     }
 
     if (countUpperCase == 0) {
       // invalid form, 0 upper case characters
-      alert("Invalid Form, 0 upper case characters in password");
+      notify("Invalid Form, 0 upper case characters in password");
       return;
     }
 
     if (countDigit == 0) {
       // invalid form, 0 digit characters
-      alert("Invalid Form, 0 digit characters in password");
+      notify("Invalid Form, 0 digit characters in password");
       return;
     }
 
     if (countSpecialCharacters == 0) {
       // invalid form, 0 special characters characters
-      alert("Invalid Form, 0 special characters in password");
+      notify("Invalid Form, 0 special characters in password");
       return;
     }
 
     // if all the conditions are valid, this means that the form is valid
 
-    alert("Form is valid");
+    // alert("Form is valid");
+    console.log(isChecked);
     handleSubmit();
   }
   function setCountry(country_id) {
@@ -287,11 +313,27 @@ export default function CreateAccountForm({ accType, countryList }) {
         state_id: selectedStateId,
         city_id: city,
       });
-      console.log(register.data.data.merchant);
+      if (register.status === 200) {
+        console.log(register);
+        success("Signup Success ✔");
+        setRenderForm(true);
+        setV_email(register.data.data.email);
+      } else {
+        notify("Something went wrong :(");
+      }
     } catch (err) {
       console.log(err);
+      if (err.response.status === 422) {
+        notify("This user already exist");
+      } else {
+        notify("Somethin went wrong :(");
+      }
     }
   }
+
+  // const handleVerify = async () => {
+
+  // };
 
   return (
     <>
@@ -369,7 +411,7 @@ export default function CreateAccountForm({ accType, countryList }) {
           <h6>Email address</h6>
           <input
             required
-            type="text"
+            type="email"
             className="form-control"
             onChange={(e) => setEmail(e.target.value)}
           />{" "}
@@ -434,7 +476,7 @@ export default function CreateAccountForm({ accType, countryList }) {
           <center>
             <p>Please Verify Your Account</p>
             <div>
-              <h5>A code has beeen sent to your mail</h5>
+              <h5>A code has beeen sent to {v_email}</h5>
             </div>
           </center>
 

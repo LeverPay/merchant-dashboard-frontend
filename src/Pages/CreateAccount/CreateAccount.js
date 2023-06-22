@@ -10,6 +10,9 @@ import { fetchInfo, countries, baseUrl } from "../../Components/Endpoints";
 
 import CreateAccountForm from "../CreateAccountForm/CreateAccountForm";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 export default function CreateAccount(props) {
   const [slideShow, setSlideShow] = useState(false);
   const [countriesData, setCountries] = useState({});
@@ -18,6 +21,27 @@ export default function CreateAccount(props) {
     event.currentTarget.disabled = true;
     console.log("button clicked");
   };
+
+  const notify = (message) => {
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      theme: "light",
+    });
+  };
+
+  const success = (message) => {
+    toast.success(message, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      theme: "light",
+    });
+  };
+
   const fetchData = async () => {
     try {
       const response = await axios.get(baseUrl + countries); // Replace with your API endpoint
@@ -34,10 +58,21 @@ export default function CreateAccount(props) {
     return (
       <>
         <div className="slider-container">
+          <ToastContainer
+            position="top-center"
+            autoClose={false}
+            hideProgressBar={true}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            theme="light"
+          />
           <div className="sliderBody">
             <CreateAccountForm
               accType={props.accType}
               countryList={countriesData}
+              notify={notify}
+              success={success}
             />
           </div>
           <div className="sliderFooter">
