@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./create-account-form.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { CountrySelect } from "../../Components/CountrySelect";
 // import TransactionReport from "../TransactionMessages/Transaction-report";
 import PhoneInput from "react-phone-number-input";
@@ -78,6 +78,8 @@ export default function CreateAccountForm({
     }
   };
 
+  const navigate = useNavigate();
+
   const verifyMail = async (e) => {
     e.preventDefault();
     const _inputValues = inputRefs.map((el) => el.current.value);
@@ -91,12 +93,16 @@ export default function CreateAccountForm({
       });
       if (request.status === 200) {
         success(request.data.message);
+        setTimeout(() => {
+          // Route to signin page
+          navigate("/");
+        }, 3000);
       } else {
         notify("Something went wrong :(");
       }
     } catch (err) {
       console.log(err);
-      notify(err.response.data.message)
+      notify(err.response.data.message);
     }
   };
 
@@ -326,7 +332,7 @@ export default function CreateAccountForm({
     } catch (err) {
       console.log(err);
       if (err.response.status === 422) {
-        notify("This user already exist");
+        notify("Mail or phone already taken");
       } else {
         notify(err.response.data.message);
       }
@@ -342,6 +348,10 @@ export default function CreateAccountForm({
       console.log(request);
       if (request.status === 200) {
         success(`New token has been sent to ${v_email}`);
+        setTimeout(() => {
+          // Route to signin page
+          navigate("/");
+        }, 3000);
       } else {
         notify("Something went wrong :(");
       }
