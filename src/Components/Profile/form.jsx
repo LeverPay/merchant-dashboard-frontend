@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext, useLayoutEffect } from "react";
 import Button from "../General/Button component/Button";
 import PhoneInput, {
   isValidPhoneNumber,
@@ -7,8 +7,12 @@ import PhoneInput, {
 import "react-phone-number-input/style.css";
 import { countries } from "countries-list";
 import Select from "react-select";
+import TokenContext from "../User-Token/TokenContext";
+import { get_Merchant_Profile, baseUrl } from "../Endpoints";
+import axios from "axios";
 
 export default function Form() {
+  const { userToken, userData, setUserData } = useContext(TokenContext);
   const [phone, setPhone] = useState("");
   const [country, setCountry] = useState(null);
   const [Input, setInput] = useState({
@@ -29,6 +33,37 @@ export default function Form() {
   const ref4 = useRef();
   const ref5 = useRef();
   const ref6 = useRef();
+
+  const getProfile = async () => {
+    try {
+      const request = await axios.get(baseUrl + get_Merchant_Profile, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      console.log(request);
+      if (request.status === 200) {
+        const data = request.data.data;
+        setUserData(data);
+        setInput((prev) => {
+          return {
+            ...prev,
+            firstName: userData.first_name,
+            lastName: userData.last_name,
+          };
+        });
+        setPhone(userData.phone);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useLayoutEffect(() => {
+    getProfile();
+  }, []);
+
+  console.log(userData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -111,6 +146,8 @@ export default function Form() {
   const removeImage = () => {
     setImage(null);
   };
+
+  console.log(userToken);
 
   return (
     <>

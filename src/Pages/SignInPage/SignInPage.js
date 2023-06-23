@@ -109,7 +109,7 @@ function SignInPage() {
         const name = request.data.data.user.first_name;
         setUserToken(uniqueId);
         // console.log(userToken);
-        window.sessionStorage.setItem("Name", name);
+        window.sessionStorage.setItem("Name", uniqueId);
         const cookie = window.sessionStorage.getItem("Name");
         if (cookie) {
           let lg = document.getElementById("signin-button");
