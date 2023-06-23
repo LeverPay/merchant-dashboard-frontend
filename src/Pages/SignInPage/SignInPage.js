@@ -118,6 +118,8 @@ function SignInPage() {
             lg.innerHTML = "Sign in";
             navigate("/dashboard");
           }, 3000);
+        } else {
+          navigate("/");
         }
       }
     } catch (err) {

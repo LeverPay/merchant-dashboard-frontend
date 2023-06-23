@@ -10,9 +10,11 @@ import Select from "react-select";
 import TokenContext from "../User-Token/TokenContext";
 import { get_Merchant_Profile, baseUrl } from "../Endpoints";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export default function Form() {
-  const { userToken, userData, setUserData } = useContext(TokenContext);
+  const { userToken, userData, setUserData, notify } = useContext(TokenContext);
   const [phone, setPhone] = useState("");
   const [country, setCountry] = useState(null);
   const [Input, setInput] = useState({
@@ -34,6 +36,7 @@ export default function Form() {
   const ref5 = useRef();
   const ref6 = useRef();
 
+  // Get profile request on server
   const getProfile = async () => {
     try {
       const request = await axios.get(baseUrl + get_Merchant_Profile, {
@@ -44,26 +47,29 @@ export default function Form() {
       console.log(request);
       if (request.status === 200) {
         const data = request.data.data;
+        //save user data for use somewhere else
         setUserData(data);
+        console.log(userData);
         setInput((prev) => {
           return {
             ...prev,
-            firstName: userData.first_name,
-            lastName: userData.last_name,
+            firstName: data.first_name,
+            lastName: data.last_name,
           };
         });
-        setPhone(userData.phone);
+        setPhone(data.phone);
+        setImage(data.passport);
       }
     } catch (err) {
       console.log(err);
+      notify("something went wrong, can't get your data at this time :(");
     }
   };
 
+  // Make request run once on page load
   useLayoutEffect(() => {
     getProfile();
   }, []);
-
-  console.log(userData);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -146,8 +152,6 @@ export default function Form() {
   const removeImage = () => {
     setImage(null);
   };
-
-  console.log(userToken);
 
   return (
     <>
