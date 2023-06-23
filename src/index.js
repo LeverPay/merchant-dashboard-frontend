@@ -5,12 +5,15 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter } from "react-router-dom";
 import { NotificationContext } from "./Components/General/NotificationContext";
+import { TokenContext } from "./Components/User-Token/TokenContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
-    <NotificationContext>
-      <App />
-    </NotificationContext>
+    <TokenContext>
+      <NotificationContext>
+        <App />
+      </NotificationContext>
+    </TokenContext>
   </BrowserRouter>
 );

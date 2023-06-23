@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import "./sign-in-page.css";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../Components/General/Header-components/Logo";
@@ -7,6 +7,10 @@ import EyeClose from "../../Assets/eye-close.jpg";
 import EyeOpen from "../../Assets/eye-open.svg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { login, baseUrl } from "../../Components/Endpoints";
+import axios from "axios";
+import TokenContext from "../../Components/User-Token/TokenContext";
+
 function SignInPage() {
   const [inputText, setInputText] = useState("");
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
@@ -15,6 +19,7 @@ function SignInPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const { userToken, setUserToken } = useContext(TokenContext);
 
   const maxLength = 9;
   function handleInputChange(event) {
@@ -78,20 +83,48 @@ function SignInPage() {
     // Check if the Email matches the user
 
     if (!emailRegex.test(inputText)) {
-      notify("Invalid mail format!");
+      notify("Invalid mail format");
       return;
     }
     if (!passwordRegex.test(password)) {
-      notify("Invalid password");
+      notify("Invalid password format");
       return;
     }
-    let lg = document.getElementById("signin-button");
-    lg.innerHTML = "Logging in...";
-    setTimeout(() => {
-      lg.innerHTML = "Sign in";
-      navigate("/dashboard");
-    }, 3000);
+
+    if (emailRegex.test(inputText) && passwordRegex.test(password)) {
+      handleLogin();
+    }
   }
+
+  const handleLogin = async () => {
+    try {
+      const request = await axios.post(baseUrl + login, {
+        email: inputText,
+        password: password,
+      });
+      console.log(request);
+      if (request.status === 200) {
+        success("Successful");
+        const uniqueId = request.data.data.token;
+        const name = request.data.data.user.first_name;
+        setUserToken(uniqueId);
+        // console.log(userToken);
+        window.sessionStorage.setItem("Name", name);
+        const cookie = window.sessionStorage.getItem("Name");
+        if (cookie) {
+          let lg = document.getElementById("signin-button");
+          lg.innerHTML = "Logging in...";
+          setTimeout(() => {
+            lg.innerHTML = "Sign in";
+            navigate("/dashboard");
+          }, 3000);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      notify(err.response.data.message);
+    }
+  };
 
   return (
     <div className="col-md-12">
