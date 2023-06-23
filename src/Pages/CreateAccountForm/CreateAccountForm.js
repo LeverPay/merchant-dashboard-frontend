@@ -5,6 +5,8 @@ import { CountrySelect } from "../../Components/CountrySelect";
 // import TransactionReport from "../TransactionMessages/Transaction-report";
 import PhoneInput from "react-phone-number-input";
 import Button from "../../Components/General/Button component/Button";
+import EyeClose from "../../Assets/eye-close.jpg";
+import EyeOpen from "../../Assets/eye-open.svg";
 import {
   fetchInfo,
   states,
@@ -28,6 +30,7 @@ export default function CreateAccountForm({
   const [email, setEmail] = useState("");
   const [BusinessName, setBusinessName] = useState("");
   const [password, setPassword] = useState(""); // useState to store Password
+  const [confirmPassword, setConfirmPassword] = useState(""); // useState to store Password
   const [selectedCountryId, setSelectedCountryId] = useState("");
   const [selectedStateId, setSelectedStateId] = useState("");
   // const [inputText, setInputText] = useState("");
@@ -41,6 +44,7 @@ export default function CreateAccountForm({
   const [city, setCity] = useState();
   const [Address, setAddress] = useState("");
   const [renderForm, setRenderForm] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [v_email, setV_email] = useState();
 
   // Generates an array for for inputs
@@ -160,6 +164,14 @@ export default function CreateAccountForm({
     setIsChecked(event.target.checked);
   };
 
+  const toggleShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordRegex =
+    /^(?=.*[!@#$%^&*()\-_=+{};:,<.>?])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*()\-_=+{};:,<.>?]{10,}$/;
+
   function validateForm(e) {
     e.preventDefault();
     // Check if the First Name is an Empty string or not.
@@ -174,6 +186,9 @@ export default function CreateAccountForm({
     if (email.length == 0) {
       notify("Invalid Form, Email Address can not be empty");
       return;
+    } else if (!emailRegex.test(email)) {
+      notify("Invalid mail format");
+    } else {
     }
 
     //Check if address length is an Empty string or not
@@ -194,11 +209,17 @@ export default function CreateAccountForm({
 
     // if password length is less than 8 characters, alert invalid form.
 
-    if (password.length < 8) {
+    if (password.length < 10) {
       notify(
-        "Invalid Form, Password must contain greater than or equal to 8 characters."
+        "Invalid Form, Password must contain more than or equal to 10 characters."
       );
-      return;
+    } else if (!passwordRegex.test(password)) {
+      notify(
+        "password must be 10characters long, must contain at least a special character and a number"
+      );
+    } else if (password !== confirmPassword) {
+      notify("password mismatch");
+    } else {
     }
 
     if (!isChecked) {
@@ -206,88 +227,20 @@ export default function CreateAccountForm({
       return;
     }
 
-    // variable to count upper case characters in the password.
-    let countUpperCase = 0;
-    // variable to count lowercase characters in the password.
-    let countLowerCase = 0;
-    // variable to count digit characters in the password.
-    let countDigit = 0;
-    // variable to count special characters in the password.
-    let countSpecialCharacters = 0;
-
-    for (let i = 0; i < password.length; i++) {
-      const specialChars = [
-        "!",
-        "@",
-        "#",
-        "$",
-        "%",
-        "^",
-        "&",
-        "*",
-        "(",
-        ")",
-        "_",
-        "-",
-        "+",
-        "=",
-        "[",
-        "{",
-        "]",
-        "}",
-        ":",
-        ";",
-        "<",
-        ">",
-      ];
-
-      if (specialChars.includes(password[i])) {
-        // this means that the character is special, so increment countSpecialCharacters
-        countSpecialCharacters++;
-      } else if (!isNaN(password[i] * 1)) {
-        // this means that the character is a digit, so increment countDigit
-        countDigit++;
-      } else {
-        if (password[i] == password[i].toUpperCase()) {
-          // this means that the character is an upper case character, so increment countUpperCase
-          countUpperCase++;
-        }
-        if (password[i] == password[i].toLowerCase()) {
-          // this means that the character is lowercase, so increment countUpperCase
-          countLowerCase++;
-        }
-      }
+    if (
+      isChecked &&
+      password === confirmPassword &&
+      email.length > 0 &&
+      emailRegex.test(email) &&
+      passwordRegex.test(password) &&
+      Address.length > 0 &&
+      BusinessName.length > 0 &&
+      selectedCountryId !== "" &&
+      selectedStateId !== "" &&
+      city !== ""
+    ) {
+      handleSubmit();
     }
-
-    if (countLowerCase == 0) {
-      // invalid form, 0 lowercase characters
-      notify("Invalid Form, 0 lower case characters in password");
-      return;
-    }
-
-    if (countUpperCase == 0) {
-      // invalid form, 0 upper case characters
-      notify("Invalid Form, 0 upper case characters in password");
-      return;
-    }
-
-    if (countDigit == 0) {
-      // invalid form, 0 digit characters
-      notify("Invalid Form, 0 digit characters in password");
-      return;
-    }
-
-    if (countSpecialCharacters == 0) {
-      // invalid form, 0 special characters characters
-      notify("Invalid Form, 0 special characters in password");
-      return;
-    }
-
-    // if all the conditions are valid, this means that the form is valid
-
-    // alert("Form is valid");
-    console.log(isChecked);
-    handleSubmit();
   }
   function setCountry(country_id) {
     console.log("called back with " + country_id + "");
@@ -448,10 +401,45 @@ export default function CreateAccountForm({
           <h6>Password</h6>
           <input
             required
-            type="text"
+            type={showPassword ? "text" : "password"}
             className="form-control"
+            placeholder="Password should be 10 characters long and must contain at least one special character a number"
             onChange={(e) => setPassword(e.target.value)}
           />{" "}
+          <span onClick={toggleShowPassword}>
+            {showPassword ? (
+              <img className="" src={EyeClose} alt="Scholar" width="5%" />
+            ) : (
+              <img
+                className=""
+                src={EyeOpen}
+                alt="Scholar"
+                width="5%"
+                height="5%"
+              />
+            )}
+          </span>
+          <h6>Confirm Password</h6>
+          <input
+            required
+            type={showPassword ? "text" : "password"}
+            className="form-control"
+            placeholder="Must be same as password"
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+          <span onClick={toggleShowPassword}>
+            {showPassword ? (
+              <img className="" src={EyeClose} alt="Scholar" width="5%" />
+            ) : (
+              <img
+                className=""
+                src={EyeOpen}
+                alt="Scholar"
+                width="5%"
+                height="5%"
+              />
+            )}
+          </span>
           <div className="flexy flexyM">
             <input
               required

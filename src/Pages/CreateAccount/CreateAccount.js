@@ -25,7 +25,7 @@ export default function CreateAccount(props) {
   const notify = (message) => {
     toast.error(message, {
       position: "top-center",
-      autoClose: 5000,
+      autoClose: false,
       hideProgressBar: false,
       closeOnClick: true,
       theme: "light",

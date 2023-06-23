@@ -5,6 +5,8 @@ import Logo from "../../Components/General/Header-components/Logo";
 import { Password } from "./Password";
 import EyeClose from "../../Assets/eye-close.jpg";
 import EyeOpen from "../../Assets/eye-open.svg";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 function SignInPage() {
   const [inputText, setInputText] = useState("");
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
@@ -21,28 +23,52 @@ function SignInPage() {
     setInputText(inputValue);
   }
 
+  const notify = (message) => {
+    toast.error(message, {
+      position: "top-center",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      theme: "light",
+    });
+  };
+
+  const success = (message) => {
+    toast.success(message, {
+      position: "top-center",
+      autoClose: false,
+      hideProgressBar: true,
+      closeOnClick: true,
+      theme: "light",
+    });
+  };
+
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordRegex =
+    /^(?=.*[!@#$%^&*()\-_=+{};:,<.>?])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*()\-_=+{};:,<.>?]{10,}$/;
+
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
 
     // setPassword(password);
     console.log(password);
-    if (password.length >= maxLength) {
+    if (passwordRegex.test(password)) {
       setSubmitButtonDisabled(false);
     } else {
       setSubmitButtonDisabled(true);
     }
   };
-  const handleConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
+  // const handleConfirmPassword = (e) => {
+  //   setConfirmPassword(e.target.value);
 
-    // setPassword(password);
-    console.log(confirmPassword);
-    if (confirmPassword.value === password) {
-      setSubmitButtonDisabled(true);
-    } else {
-      setSubmitButtonDisabled(false);
-    }
-  };
+  //   // setPassword(password);
+  //   console.log(confirmPassword);
+  //   if (confirmPassword === password) {
+  //     setSubmitButtonDisabled(true);
+  //   } else {
+  //     setSubmitButtonDisabled(false);
+  //   }
+  // };
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -51,12 +77,12 @@ function SignInPage() {
   function validateForm() {
     // Check if the Email matches the user
 
-    if (inputText !== "merchanttesting@gmail.com") {
-      alert("Invalid username!");
+    if (!emailRegex.test(inputText)) {
+      notify("Invalid mail format!");
       return;
     }
-    if (password !== "Merchant6694") {
-      alert("Invalid password !");
+    if (!passwordRegex.test(password)) {
+      notify("Invalid password");
       return;
     }
     let lg = document.getElementById("signin-button");
@@ -69,6 +95,15 @@ function SignInPage() {
 
   return (
     <div className="col-md-12">
+      <ToastContainer
+        position="top-center"
+        autoClose={false}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        theme="light"
+      />
       <div className="col-md-4 form-container offset-md-4">
         {/* <form> */}
         <div className="col-md-12 form-heading">
@@ -79,9 +114,9 @@ function SignInPage() {
           <h4>Sign In</h4>
         </div>
         <div className="col-md-12 sign-form-body">
-          <h6>USERNAME</h6>
+          <h6>Email</h6>
           <input
-            type="text"
+            type="email"
             required
             value={inputText}
             onChange={handleInputChange}
@@ -107,7 +142,7 @@ function SignInPage() {
               />
             )}
           </span>{" "}
-          <h6>CONFIRM PASSWORD</h6>
+          {/* <h6>CONFIRM PASSWORD</h6>
           <input
             type={showPassword ? "text" : "password"}
             value={confirmPassword}
@@ -127,7 +162,7 @@ function SignInPage() {
                 height="5%"
               />
             )}
-          </span>
+          </span> */}
           {/* <Link to={"/dashboard"}> */}{" "}
           <button
             disabled={submitButtonDisabled}
