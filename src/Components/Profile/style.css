@@ -96,7 +96,7 @@
     width: 85%;
   }
   .profile-container .profile-contents-container .profile-edit {
-    width: 60%;
+    width: 100%;
   }
 }
 @media screen and (max-width: 1023px) {

@@ -277,7 +277,12 @@ export default function CreateAccountForm({
       if (register.status === 200) {
         console.log(register);
         success("Signup Success ✔");
-        setRenderForm(true);
+        localStorage.setItem("registered", "true");
+        const cookie = localStorage.getItem("registered");
+        // Continue process
+        if (cookie) {
+          setRenderForm(true);
+        }
         setV_email(register.data.data.email);
       } else {
         notify("Something went wrong :(");
@@ -301,10 +306,6 @@ export default function CreateAccountForm({
       console.log(request);
       if (request.status === 200) {
         success(`New token has been sent to ${v_email}`);
-        setTimeout(() => {
-          // Route to signin page
-          navigate("/");
-        }, 3000);
       } else {
         notify("Something went wrong :(");
       }

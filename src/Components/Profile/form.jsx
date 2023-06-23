@@ -103,7 +103,7 @@ export default function Form() {
       console.log(Input.businuessName);
     }
 
-    if (country !== "") {
+    if (country !== null) {
       console.log(country.label);
     }
 
