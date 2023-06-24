@@ -130,15 +130,6 @@ function SignInPage() {
 
   return (
     <div className="col-md-12">
-      <ToastContainer
-        position="top-center"
-        autoClose={false}
-        hideProgressBar={true}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        theme="light"
-      />
       <div className="col-md-4 form-container offset-md-4">
         {/* <form> */}
         <div className="col-md-12 form-heading">

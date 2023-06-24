@@ -11,7 +11,6 @@ import { fetchInfo, countries, baseUrl } from "../../Components/Endpoints";
 import CreateAccountForm from "../CreateAccountForm/CreateAccountForm";
 
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 export default function CreateAccount(props) {
   const [slideShow, setSlideShow] = useState(false);
@@ -58,15 +57,6 @@ export default function CreateAccount(props) {
     return (
       <>
         <div className="slider-container">
-          <ToastContainer
-            position="top-center"
-            autoClose={false}
-            hideProgressBar={true}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            theme="light"
-          />
           <div className="sliderBody">
             <CreateAccountForm
               accType={props.accType}
