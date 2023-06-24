@@ -74,7 +74,7 @@ function SignInPage() {
             value={inputText}
             onChange={handleInputChange}
           />
-          <h6>PASSWORD</h6>
+          <h6>Password</h6>
           <input
             type={showPassword ? "text" : "password"}
             value={password}
@@ -95,6 +95,27 @@ function SignInPage() {
               />
             )}
           </span>{" "}
+          <h6>Confirm Password</h6>
+          <input
+            type={showPassword ? "text" : "password"}
+            value={password}
+            onChange={handlePasswordChange}
+            placeholder="Password should be at least 10 characters"
+            autocomplete="new-password"
+          />
+          <span onClick={toggleShowPassword}>
+            {showPassword ? (
+              <img className="" src={EyeClose} alt="Scholar" width="5%" />
+            ) : (
+              <img
+                className=""
+                src={EyeOpen}
+                alt="Scholar"
+                width="5%"
+                height="5%"
+              />
+            )}
+          </span>
           {/* <Link to={"/dashboard"}> */}{" "}
           <button
             disabled={submitButtonDisabled}

@@ -33,7 +33,6 @@
   width: 100%;
   border-radius: 10px;
   /* margin-top: -5px; */
-  padding-left: 10px;
 }
 .acc-form h6 {
   margin-top: 15px;
@@ -43,7 +42,4 @@
   margin-left: -35px;
   border-right: solid 1px rgb(226, 220, 220) !important;
   border-radius: 7px;
-}
-.acc-form {
-  padding: 10px;
 }

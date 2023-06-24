@@ -14,7 +14,6 @@ export default function CreateAccountForm({ accType, countryList }) {
   const [email, setEmail] = useState("");
   const [BusinessName, setBusinessName] = useState("");
   const [password, setPassword] = useState(""); // useState to store Password
-  const [confirmPassword, setConfirmPassword] = useState(""); // useState to store Password
   const [selectedCountryId, setSelectedCountryId] = useState("");
   const [selectedStateId, setSelectedStateId] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -42,23 +41,11 @@ export default function CreateAccountForm({ accType, countryList }) {
 
     // setPassword(password);
     console.log(password);
-    // if (password.length >= maxLength) {
-    //   setSubmitButtonDisabled(false);
-    // } else {
-    //   setSubmitButtonDisabled(true);
-    // }
-  };
-  const handleConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
-
-    // setPassword(password);
-    console.log(confirmPassword);
-    if (confirmPassword.lvalue == password) {
-      setSubmitButtonDisabled(true);
-    } else {
+    if (password.length >= maxLength) {
       setSubmitButtonDisabled(false);
+    } else {
+      setSubmitButtonDisabled(true);
     }
-    // window.alert("confirm password is wrong!");
   };
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -304,12 +291,12 @@ export default function CreateAccountForm({ accType, countryList }) {
             />
           )}
         </span>
-        <h6>Confirm Password</h6>
+        <h6>Password</h6>
         <input
           type={showPassword ? "text" : "password"}
-          value={confirmPassword}
-          onChange={handleConfirmPassword}
-          placeholder="Confirm password must be exact to password"
+          value={password}
+          onChange={handlePasswordChange}
+          placeholder="Password should be at least 10 characters"
           autocomplete="new-password"
         />
         <span onClick={toggleShowPassword}>

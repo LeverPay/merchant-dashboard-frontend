@@ -52,13 +52,13 @@ export default function CreateAccountForm({ accType, countryList }) {
     setConfirmPassword(e.target.value);
 
     // setPassword(password);
-    console.log(confirmPassword);
-    if (confirmPassword.lvalue == password) {
+    console.log(ConfirmPassword);
+    if (ConfirmPassword.lvalue == password) {
       setSubmitButtonDisabled(true);
     } else {
       setSubmitButtonDisabled(false);
     }
-    // window.alert("confirm password is wrong!");
+    window.alert("confirm password is wrong!");
   };
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -309,7 +309,7 @@ export default function CreateAccountForm({ accType, countryList }) {
           type={showPassword ? "text" : "password"}
           value={confirmPassword}
           onChange={handleConfirmPassword}
-          placeholder="Confirm password must be exact to password"
+          placeholder="Confirm password should be exact to password"
           autocomplete="new-password"
         />
         <span onClick={toggleShowPassword}>

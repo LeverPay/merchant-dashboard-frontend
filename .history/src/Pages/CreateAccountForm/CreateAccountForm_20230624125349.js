@@ -6,19 +6,15 @@ import { CountrySelect } from "../../Components/CountrySelect";
 import PhoneInput from "react-phone-number-input";
 import { fetchInfo, states, cities, baseUrl } from "../../Components/Endpoints";
 import axios from "axios";
-import EyeClose from "../../Assets/eye-close.jpg";
-import EyeOpen from "../../Assets/eye-open.svg";
+
 export default function CreateAccountForm({ accType, countryList }) {
   const [firstName, setFirstName] = useState(""); // useState to store First Name
   const [lastName, setLastName] = useState(""); // useState to store Last Name
   const [email, setEmail] = useState("");
   const [BusinessName, setBusinessName] = useState("");
   const [password, setPassword] = useState(""); // useState to store Password
-  const [confirmPassword, setConfirmPassword] = useState(""); // useState to store Password
   const [selectedCountryId, setSelectedCountryId] = useState("");
   const [selectedStateId, setSelectedStateId] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   // const [inputText, setInputText] = useState("");
   // const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const [isChecked, setIsChecked] = useState(false);
@@ -26,7 +22,7 @@ export default function CreateAccountForm({ accType, countryList }) {
   const [value, setValue] = useState("");
   const [statesData, setStatesData] = useState({});
   const [citiesData, setCitiesData] = useState({});
-  const maxLength = 9;
+
   const fetchData = async (country_id) => {
     try {
       const response = await axios.post(baseUrl + states, {
@@ -36,32 +32,6 @@ export default function CreateAccountForm({ accType, countryList }) {
     } catch (error) {
       console.error(error);
     }
-  };
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-
-    // setPassword(password);
-    console.log(password);
-    // if (password.length >= maxLength) {
-    //   setSubmitButtonDisabled(false);
-    // } else {
-    //   setSubmitButtonDisabled(true);
-    // }
-  };
-  const handleConfirmPassword = (e) => {
-    setConfirmPassword(e.target.value);
-
-    // setPassword(password);
-    console.log(confirmPassword);
-    if (confirmPassword.lvalue == password) {
-      setSubmitButtonDisabled(true);
-    } else {
-      setSubmitButtonDisabled(false);
-    }
-    // window.alert("confirm password is wrong!");
-  };
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
   };
   const fetchDataState = async (state_id) => {
     try {
@@ -276,55 +246,20 @@ export default function CreateAccountForm({ accType, countryList }) {
           className="form-control"
           onChange={(e) => setEmail(e.target.value)}
         />{" "}
-        {/* <h6>Password</h6>
+        <h6>Password</h6>
         <input
           required
           type="text"
           className="form-control"
           onChange={(e) => setPassword(e.target.value)}
-        />{" "} */}
-        <h6>Password</h6>
-        <input
-          type={showPassword ? "text" : "password"}
-          value={password}
-          onChange={handlePasswordChange}
-          placeholder="Password should be at least 10 characters"
-          autocomplete="new-password"
-        />
-        <span onClick={toggleShowPassword}>
-          {showPassword ? (
-            <img className="" src={EyeClose} alt="Scholar" width="5%" />
-          ) : (
-            <img
-              className=""
-              src={EyeOpen}
-              alt="Scholar"
-              width="5%"
-              height="5%"
-            />
-          )}
-        </span>
+        />{" "}
         <h6>Confirm Password</h6>
         <input
-          type={showPassword ? "text" : "password"}
-          value={confirmPassword}
-          onChange={handleConfirmPassword}
-          placeholder="Confirm password must be exact to password"
-          autocomplete="new-password"
-        />
-        <span onClick={toggleShowPassword}>
-          {showPassword ? (
-            <img className="" src={EyeClose} alt="Scholar" width="5%" />
-          ) : (
-            <img
-              className=""
-              src={EyeOpen}
-              alt="Scholar"
-              width="5%"
-              height="5%"
-            />
-          )}
-        </span>
+          required
+          type="text"
+          className="form-control"
+          onChange={(e) => setPassword(e.target.value)}
+        />{" "}
         <div className="flexy flexyM">
           <input
             required

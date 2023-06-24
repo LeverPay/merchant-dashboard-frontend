@@ -309,7 +309,7 @@ export default function CreateAccountForm({ accType, countryList }) {
           type={showPassword ? "text" : "password"}
           value={confirmPassword}
           onChange={handleConfirmPassword}
-          placeholder="Confirm password must be exact to password"
+          placeholder="Confirm password should be exact to password"
           autocomplete="new-password"
         />
         <span onClick={toggleShowPassword}>
