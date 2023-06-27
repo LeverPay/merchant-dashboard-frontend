@@ -12,6 +12,7 @@ import { get_Merchant_Profile, baseUrl } from "../Endpoints";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { CountrySelect } from "../CountrySelect";
 
 export default function Form() {
   const { userToken, userData, setUserData, notify } = useContext(TokenContext);
@@ -20,10 +21,17 @@ export default function Form() {
   const [Input, setInput] = useState({
     firstName: "",
     lastName: "",
-    businuessName: "",
+    businuessName: null,
     country: null,
     image: "",
+    address: "",
+    password: "",
+    email: "",
   });
+  const [countryData, setCountryData] = useState([]);
+  const [countryValue, setCountryValue] = useState();
+  const [selectCountry, setSelectCountry] = useState("");
+  const [countryString, setCountryString] = useState();
 
   const [Image, setImage] = useState(null);
 
@@ -59,6 +67,7 @@ export default function Form() {
         });
         setPhone(data.phone);
         setImage(data.passport);
+        setCountry(data.country_id);
       }
     } catch (err) {
       console.log(err);
@@ -66,10 +75,61 @@ export default function Form() {
     }
   };
 
+  // Call country APi
+  const _country = "/api/v1/get-countries";
+  const getCountry = async (country_id) => {
+    const request = await axios.get(baseUrl + _country);
+    if (request.status === 200) {
+      setCountryData(request.data);
+    }
+
+    // Logic to display country name on select placeholder
+    if (countryData !== undefined) {
+      const list = countryData.data;
+      const country_Value = list?.filter((el, i) => country === el.id);
+      setCountryValue(country_Value);
+      console.log(country_Value, list);
+    }
+  };
+
+  useEffect(() => {
+    if (selectCountry !== "") {
+      getCountry(selectCountry);
+    }
+  }, [selectCountry]);
+
+  const formCountry = (country_id) => {
+    if (countryData !== undefined) {
+      setSelectCountry(country_id);
+      console.log(`id: ${country_id}`);
+    }
+  };
   // Make request run once on page load
   useLayoutEffect(() => {
     getProfile();
   }, []);
+
+  useEffect(() => {
+    getCountry();
+  }, [Input]);
+
+  // Get name value for Id returned on api request
+  useEffect(() => {
+    if (countryValue !== undefined) {
+      const countryName = countryValue.map((el) => el.country_name).toString();
+      console.log(countryName);
+      setCountryString(countryName);
+    }
+  }, [countryValue]);
+
+  // useEffect(() => {
+  //   if (countryData !== undefined) {
+  //     const country_Value = countryData.filter((el, i) => country === el.id);
+  //     setCountryValue(country_Value);
+  //     console.log(country_Value);
+  //   }
+  //   console.log(countryValue);
+  // });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -78,14 +138,14 @@ export default function Form() {
     });
   };
 
-  const countryOptions = Object.keys(countries).map((code) => ({
-    value: code,
-    label: countries[code].name,
-  }));
+  // const countryOptions = Object.keys(countries).map((code) => ({
+  //   value: code,
+  //   label: countries[code].name,
+  // }));
 
-  const handleCountryChange = (value) => {
-    setCountry(value);
-  };
+  // const handleCountryChange = (value) => {
+  //   setCountry(value);
+  // };
 
   const editInfo = () => {
     setReadOnly(false);
@@ -99,15 +159,24 @@ export default function Form() {
       console.log(Input.firstName, Input.lastName);
     }
 
-    if (Input.businuessName !== "") {
+    if (Input.businuessName !== "" || Input.businuessName !== null) {
       console.log(Input.businuessName);
     }
 
-    if (country !== null) {
-      console.log(country.label);
+    // if (country !== null) {
+    //   console.log(country.label);
+    // }
+    if (selectCountry === "") {
+      console.log(country);
+    } else {
+      console.log(selectCountry);
     }
 
-    if (isValidPhoneNumber(phone) && isPossiblePhoneNumber(phone)) {
+    if (
+      isValidPhoneNumber(phone) &&
+      isPossiblePhoneNumber(phone) &&
+      phone !== ""
+    ) {
       console.log(phone);
     }
 
@@ -121,12 +190,7 @@ export default function Form() {
   const discardChanges = (e) => {
     e.preventDefault();
 
-    Input.firstName = "";
-    Input.lastName = "";
-    Input.businuessName = "";
-    Input.country = "";
-    Input.countryCode = "";
-    Input.phoneNo = "";
+    window.location.reload();
   };
 
   const handleDivClick = () => {
@@ -239,18 +303,120 @@ export default function Form() {
           </div>
         </div>
 
+        <div className="mt-1 py-2 d-flex flex-column">
+          <label htmlFor="address">Address</label>
+
+          <div className="">
+            <input
+              className="rounded-1 text-input"
+              type="text"
+              name="address"
+              value={Input.address}
+              onChange={handleChange}
+              ref={ref3}
+              readOnly={ReadOnly}
+            />
+          </div>
+        </div>
+
+        <div className="mt-1 py-2 d-flex flex-column">
+          <label htmlFor="email">E-mail</label>
+
+          <div className="">
+            <input
+              className="rounded-1 text-input"
+              type="email"
+              name="email"
+              value={Input.email}
+              onChange={handleChange}
+              ref={ref3}
+              readOnly={ReadOnly}
+            />
+          </div>
+        </div>
+
+        <div className="mt-1 py-2 d-flex flex-column">
+          <label htmlFor="password">password</label>
+
+          <div className="">
+            <input
+              className="rounded-1 text-input"
+              type="password"
+              name="password"
+              value={Input.password}
+              onChange={handleChange}
+              ref={ref3}
+              readOnly={ReadOnly}
+            />
+          </div>
+        </div>
+
         <div className="mt-1 py-2 d-flex flex-column" id="options">
           <label htmlFor="Country" className="rounded-1">
             Country
           </label>
 
-          <div className="items">
-            <Select
+          <div className="items text-input rounded-1">
+            <CountrySelect
+              countyList={countryData}
+              selector="country_name"
+              callback={formCountry}
+              value={
+                selectCountry === ""
+                  ? null
+                  : { label: selectCountry, value: selectCountry }
+              }
+              placeholder={countryString ? countryString : "Choose an option"}
+              disabled={ReadOnly}
+            />
+            {/* <Select
               options={countryOptions}
               className="select-btn rounded-1"
               value={country}
               onChange={handleCountryChange}
               isDisabled={ReadOnly}
+            /> */}
+          </div>
+        </div>
+
+        <div className="mt-1 py-2 d-flex flex-column" id="options">
+          <label htmlFor="State" className="rounded-1">
+            State
+          </label>
+
+          <div className="items text-input rounded-1">
+            <CountrySelect
+              countyList={countryData}
+              selector="country_name"
+              callback={formCountry}
+              value={
+                selectCountry === ""
+                  ? null
+                  : { label: selectCountry, value: selectCountry }
+              }
+              placeholder={countryString ? countryString : "Choose an option"}
+              disabled={ReadOnly}
+            />
+          </div>
+        </div>
+
+        <div className="mt-1 py-2 d-flex flex-column" id="options">
+          <label htmlFor="city" className="rounded-1">
+            City
+          </label>
+
+          <div className="items text-input rounded-1">
+            <CountrySelect
+              countyList={countryData}
+              selector="country_name"
+              callback={formCountry}
+              value={
+                selectCountry === ""
+                  ? null
+                  : { label: selectCountry, value: selectCountry }
+              }
+              placeholder={countryString ? countryString : "Choose an option"}
+              disabled={ReadOnly}
             />
           </div>
         </div>

@@ -22,7 +22,7 @@ export default function ProfileElements() {
           <h2 className="fs-2">Basic Information</h2>
           <p>Welcome to your profile {name}</p>
 
-          <section className="form-container mt-4">
+          <section className="form-container mt-4 px-5">
             <Form />
           </section>
         </div>
