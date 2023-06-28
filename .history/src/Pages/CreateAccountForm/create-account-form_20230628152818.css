@@ -37,10 +37,9 @@
 .acc-form h6 {
   margin-top: 15px;
   margin-bottom: 0px;
-  font-size: 12px;
 }
 .acc-form img {
-  margin-top: -30px;
-  margin-right: 10px;
-  float: right;
+  /* margin-left: -45px; */
+  border-right: solid 1px rgb(226, 220, 220) !important;
+  border-radius: 7px;
 }

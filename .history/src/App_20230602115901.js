@@ -14,7 +14,6 @@ import SignInPage from "./Pages/SignInPage/SignInPage";
 import View from "./Pages/View";
 import WelcomePage from "./Pages/WelcomePage/WelcomePage";
 import { useLocation } from "react-router-dom";
-import ForgetPassword from "./Pages/SignInPage/ForgotPassword/ForgetPassword";
 
 function App(props) {
   const [showNav, setShowNav] = useState(true);
@@ -26,7 +25,6 @@ function App(props) {
       switch (currentUrl) {
         case "/":
         case "/welcome":
-        case "/forget-password":
           setShowNav(false);
           break;
         default:
@@ -53,7 +51,6 @@ function App(props) {
           <Route path="sign-in" element={<SignInPage />} />
           <Route path="payment-method" element={<PaymentMethod />} />
           <Route path="welcome" element={<WelcomePage />} />
-          <Route path="forget-password" element={<ForgetPassword />} />
         </Routes>
       </div>
     </div>
