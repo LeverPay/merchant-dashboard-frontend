@@ -1,6 +1,6 @@
 .sliderBody {
-  background: #fff;
-  /* height: 200px !important; */
+  background: redf;
+  height: 200px !important;
   display: block !important;
 }
 
@@ -32,11 +32,10 @@
   font-family: AgrandirRegular;
 }
 .slider-container {
-  margin-top: 20px !important;
+  margin-top: 40px !important;
   padding: 0px 30px;
   /* right: 0% !important; */
   /* background: red; */
-  font-family: AgrandirRegular;
 }
 .sliderContainer {
   background: #fff !important;
