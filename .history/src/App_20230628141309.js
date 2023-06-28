@@ -14,7 +14,7 @@ import SignInPage from "./Pages/SignInPage/SignInPage";
 import View from "./Pages/View";
 import WelcomePage from "./Pages/WelcomePage/WelcomePage";
 import { useLocation } from "react-router-dom";
-import ForgetPassword from "./Pages/SignInPage/ForgotPassword/ForgetPassword";
+import ForgetPassword from "./Pages/SignInPage/ForgetPassword";
 
 function App(props) {
   const [showNav, setShowNav] = useState(true);
@@ -26,7 +26,6 @@ function App(props) {
       switch (currentUrl) {
         case "/":
         case "/welcome":
-        case "/forget-password":
           setShowNav(false);
           break;
         default:
