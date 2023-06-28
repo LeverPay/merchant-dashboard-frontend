@@ -50,7 +50,7 @@ export const CountrySelect = ({
       value={
         selected_id
           ? {
-              label: options.find((option) => option.value === selected_id)
+              label: options && options.find((option) => option.value === selected_id)
                 ?.label,
               value: selected_id,
             }

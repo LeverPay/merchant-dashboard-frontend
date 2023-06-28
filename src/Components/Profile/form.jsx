@@ -8,7 +8,7 @@ import "react-phone-number-input/style.css";
 import { countries } from "countries-list";
 import Select from "react-select";
 import TokenContext from "../User-Token/TokenContext";
-import { get_Merchant_Profile, baseUrl } from "../Endpoints";
+import { get_Merchant_Profile, baseUrl, states, cities } from "../Endpoints";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -29,8 +29,19 @@ export default function Form() {
     email: "",
   });
   const [countryData, setCountryData] = useState([]);
+  const [stateData, setStateData] = useState([]);
+  const [cityData, setCityData] = useState([]);
+  const [city_id, setCity_id] = useState();
+  const [stateString, setStateString] = useState();
   const [countryValue, setCountryValue] = useState();
-  const [selectCountry, setSelectCountry] = useState("");
+  // const [selectLocation, setSelectLocation] = useState({
+  //   __Country: "",
+  //   state: "",
+  //   city: "",
+  // });
+  const [selectCountry, setSelectCountry] = useState();
+  const [selectState, setSelectState] = useState();
+  const [selectCity, setSelectCity] = useState();
   const [countryString, setCountryString] = useState();
 
   const [Image, setImage] = useState(null);
@@ -63,11 +74,15 @@ export default function Form() {
             ...prev,
             firstName: data.first_name,
             lastName: data.last_name,
+            address: data.address,
+            email: data.email,
           };
         });
         setPhone(data.phone);
         setImage(data.passport);
         setCountry(data.country_id);
+        setSelectState(data.state_id);
+        setSelectCity(data.city_id);
       }
     } catch (err) {
       console.log(err);
@@ -78,31 +93,79 @@ export default function Form() {
   // Call country APi
   const _country = "/api/v1/get-countries";
   const getCountry = async (country_id) => {
-    const request = await axios.get(baseUrl + _country);
-    if (request.status === 200) {
-      setCountryData(request.data);
-    }
+    try {
+      const request = await axios.get(baseUrl + _country);
+      if (request.status === 200) {
+        setCountryData(request.data);
+      }
 
-    // Logic to display country name on select placeholder
-    if (countryData !== undefined) {
-      const list = countryData.data;
-      const country_Value = list?.filter((el, i) => country === el.id);
-      setCountryValue(country_Value);
-      console.log(country_Value, list);
+      // Logic to display country name on select placeholder
+      if (countryData !== undefined) {
+        const list = countryData.data;
+        const country_Value = list?.filter((el, i) => country === el.id);
+        setCountryValue(country_Value);
+        console.log(country_Value, list);
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
+  const getState = async (country_id) => {
+    try {
+      const request = await axios.post(baseUrl + states, {
+        country_id: country_id,
+      });
+      console.log(request);
+      if (request.status === 200) {
+        setStateData(request.data);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getCity = async (states_id) => {
+    // states_id === "" || undefined || null ? (states_id = country) : states_id;
+    try {
+      const request = await axios.post(baseUrl + cities, {
+        state_id: states_id,
+      });
+      console.log(request);
+      if (request.status === 200) {
+        setCityData(request.data);
+        // setCity_id(states_id);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // Country callback
   useEffect(() => {
     if (selectCountry !== "") {
       getCountry(selectCountry);
     }
   }, [selectCountry]);
 
+  // Callback for country
   const formCountry = (country_id) => {
     if (countryData !== undefined) {
       setSelectCountry(country_id);
       console.log(`id: ${country_id}`);
     }
+  };
+
+  // Callback for state
+  const formState = (state_id) => {
+    setSelectState(state_id);
+    console.log(`State id: ${state_id}`);
+  };
+
+  // Callback for city
+  const formCity = (city_id) => {
+    setSelectCity(city_id);
+    console.log(`City id: ${city_id}`);
   };
   // Make request run once on page load
   useLayoutEffect(() => {
@@ -111,7 +174,20 @@ export default function Form() {
 
   useEffect(() => {
     getCountry();
-  }, [Input]);
+    getState(country);
+  }, [Input, selectState]);
+
+  useEffect(() => {
+    if (selectCountry !== "") {
+      getState(selectCountry);
+    }
+  }, [selectCountry]);
+
+  useEffect(() => {
+    if (selectState !== "") {
+      getCity(selectState);
+    }
+  }, [selectState]);
 
   // Get name value for Id returned on api request
   useEffect(() => {
@@ -122,30 +198,12 @@ export default function Form() {
     }
   }, [countryValue]);
 
-  // useEffect(() => {
-  //   if (countryData !== undefined) {
-  //     const country_Value = countryData.filter((el, i) => country === el.id);
-  //     setCountryValue(country_Value);
-  //     console.log(country_Value);
-  //   }
-  //   console.log(countryValue);
-  // });
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setInput((prev) => {
       return { ...prev, [name]: value };
     });
   };
-
-  // const countryOptions = Object.keys(countries).map((code) => ({
-  //   value: code,
-  //   label: countries[code].name,
-  // }));
-
-  // const handleCountryChange = (value) => {
-  //   setCountry(value);
-  // };
 
   const editInfo = () => {
     setReadOnly(false);
@@ -163,13 +221,41 @@ export default function Form() {
       console.log(Input.businuessName);
     }
 
+    if (Input.password !== "") {
+      console.log(Input.password);
+    }
+
+    if (Input.email !== "") {
+      console.log(Input.email);
+    }
+
+    if (Input.address !== "") {
+      console.log(Input.address);
+    }
+
     // if (country !== null) {
     //   console.log(country.label);
     // }
-    if (selectCountry === "") {
+    if (
+      selectCountry === "" ||
+      selectCountry === undefined ||
+      selectCountry === null
+    ) {
       console.log(country);
     } else {
       console.log(selectCountry);
+    }
+
+    if (
+      selectState !== "" ||
+      selectState !== undefined ||
+      selectState !== null
+    ) {
+      console.log(selectState);
+    }
+
+    if (selectCity !== "" || selectCity !== undefined || selectCity !== null) {
+      console.log(selectCity);
     }
 
     if (
@@ -178,6 +264,8 @@ export default function Form() {
       phone !== ""
     ) {
       console.log(phone);
+    } else {
+      notify("Number is invalid");
     }
 
     if (Image) {
@@ -364,7 +452,10 @@ export default function Form() {
               value={
                 selectCountry === ""
                   ? null
-                  : { label: selectCountry, value: selectCountry }
+                  : {
+                      label: selectCountry,
+                      value: selectCountry,
+                    }
               }
               placeholder={countryString ? countryString : "Choose an option"}
               disabled={ReadOnly}
@@ -386,15 +477,18 @@ export default function Form() {
 
           <div className="items text-input rounded-1">
             <CountrySelect
-              countyList={countryData}
-              selector="country_name"
-              callback={formCountry}
+              countyList={stateData}
+              selector="state_name"
+              callback={formState}
               value={
-                selectCountry === ""
+                selectState === ""
                   ? null
-                  : { label: selectCountry, value: selectCountry }
+                  : {
+                      label: selectState,
+                      value: selectState,
+                    }
               }
-              placeholder={countryString ? countryString : "Choose an option"}
+              placeholder={countryString ? stateString : "Choose an option"}
               disabled={ReadOnly}
             />
           </div>
@@ -407,13 +501,16 @@ export default function Form() {
 
           <div className="items text-input rounded-1">
             <CountrySelect
-              countyList={countryData}
-              selector="country_name"
-              callback={formCountry}
+              countyList={cityData}
+              selector="city_name"
+              callback={formCity}
               value={
-                selectCountry === ""
+                selectCity === ""
                   ? null
-                  : { label: selectCountry, value: selectCountry }
+                  : {
+                      label: selectCity,
+                      value: selectCity,
+                    }
               }
               placeholder={countryString ? countryString : "Choose an option"}
               disabled={ReadOnly}
