@@ -8,7 +8,13 @@ import "react-phone-number-input/style.css";
 import { countries } from "countries-list";
 import Select from "react-select";
 import TokenContext from "../User-Token/TokenContext";
-import { get_Merchant_Profile, baseUrl, states, cities } from "../Endpoints";
+import {
+  get_Merchant_Profile,
+  baseUrl,
+  states,
+  cities,
+  update_Merchant_Profile,
+} from "../Endpoints";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
@@ -83,6 +89,7 @@ export default function Form() {
         setCountry(data.country_id);
         setSelectState(data.state_id);
         setSelectCity(data.city_id);
+        data.passport && data.passport !== null ? setImage(data.passport) : "";
       }
     } catch (err) {
       console.log(err);
@@ -273,6 +280,7 @@ export default function Form() {
     }
 
     setReadOnly(true);
+    updateProfileData();
   };
 
   const discardChanges = (e) => {
@@ -303,6 +311,45 @@ export default function Form() {
 
   const removeImage = () => {
     setImage(null);
+  };
+
+  const updateProfileData = async () => {
+    try {
+      const request = await axios.post(
+        baseUrl + update_Merchant_Profile,
+        {
+          first_name: Input.firstName,
+          last_name: Input.lastName,
+          email: Input.email,
+          address: Input.address !== "" ? Input.address : null,
+          business_name:
+            Input.businuessName !== "" ? Input.businuessName : null,
+          phone: phone !== "" ? phone : null,
+          password: Input.password !== "" ? Input.password : null,
+          country_id:
+            selectCountry === undefined ||
+            selectCountry === null ||
+            selectCountry === ""
+              ? country
+              : selectCountry,
+          state_id: selectState,
+          city_id: selectCity,
+          passport:
+            Image !== null || Image !== undefined || Image !== ""
+              ? Image
+              : null,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+          },
+        }
+      );
+      console.log(request);
+    } catch (err) {
+      console.log(err);
+      notify(`Action failed, ${err.message}`);
+    }
   };
 
   return (
