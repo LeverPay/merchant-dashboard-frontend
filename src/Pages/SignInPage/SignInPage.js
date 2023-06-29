@@ -124,7 +124,11 @@ function SignInPage() {
       }
     } catch (err) {
       console.log(err);
-      notify(err.response.data.message);
+      if (err.response !== undefined) {
+        notify(err.response.data.message);
+      } else {
+        notify("Something went wrong :(");
+      }
     }
   };
 
