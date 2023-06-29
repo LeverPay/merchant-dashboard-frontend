@@ -292,7 +292,11 @@ export default function CreateAccountForm({
       if (err.response.status === 422) {
         notify("Mail or phone already taken");
       } else {
-        notify(err.response.data.message);
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
       }
     }
   }
@@ -314,7 +318,11 @@ export default function CreateAccountForm({
       if (err.response.status === 400) {
         notify(err.response.data.message);
       } else {
-        notify("Something went wrong :(");
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
       }
     }
   };

@@ -13,4 +13,6 @@ export const signup = "/api/v1/merchant/signup";
 export const verify_Mail = "/api/v1/verify-email";
 export const resendVerification_Token = "/api/v1/resend-verification-email";
 export const login = "/api/v1/login";
-export const get_Merchant_Profile = "/api/v1/merchant/get-merchant-profile"
+export const get_Merchant_Profile = "/api/v1/merchant/get-merchant-profile";
+export const update_Merchant_Profile =
+  "/api/v1/merchant/update-merchant-profile";
