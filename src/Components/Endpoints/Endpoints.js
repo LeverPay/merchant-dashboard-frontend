@@ -16,3 +16,4 @@ export const login = "/api/v1/login";
 export const get_Merchant_Profile = "/api/v1/merchant/get-merchant-profile";
 export const update_Merchant_Profile =
   "/api/v1/merchant/update-merchant-profile";
+export const forgot_Password = "/api/v1/forgot-password";

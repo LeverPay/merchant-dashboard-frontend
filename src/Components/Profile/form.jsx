@@ -26,7 +26,8 @@ import { CountrySelect } from "../CountrySelect";
 import ImageContext from "../General/ImageContext";
 
 export default function Form() {
-  const { userToken, userData, setUserData, notify } = useContext(TokenContext);
+  const { userToken, userData, setUserData, notify, success } =
+    useContext(TokenContext);
   const { vectorImage, setVectorImage } = useContext(ImageContext);
   const [phone, setPhone] = useState("");
   const [country, setCountry] = useState(null);
@@ -89,7 +90,20 @@ export default function Form() {
       }
     } catch (err) {
       console.log(err);
-      notify("something went wrong, can't get your data at this time :(");
+      if (
+        err.response.status === 400 ||
+        err.response.status === 401 ||
+        err.response.status === 403 ||
+        err.response.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
     }
   };
 
@@ -111,6 +125,20 @@ export default function Form() {
       }
     } catch (err) {
       console.log(err);
+      if (
+        err.response.status === 400 ||
+        err.response.status === 401 ||
+        err.response.status === 403 ||
+        err.response.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
     }
   };
 
@@ -125,6 +153,20 @@ export default function Form() {
       }
     } catch (err) {
       console.log(err);
+      if (
+        err.response.status === 400 ||
+        err.response.status === 401 ||
+        err.response.status === 403 ||
+        err.response.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
     }
   };
 
@@ -141,6 +183,20 @@ export default function Form() {
       }
     } catch (err) {
       console.log(err);
+      if (
+        err.response.status === 400 ||
+        err.response.status === 401 ||
+        err.response.status === 403 ||
+        err.response.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
     }
   };
 
@@ -286,12 +342,12 @@ export default function Form() {
 
   const handleDivClick = () => {
     // if (!ReadOnly) {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.style.zIndex = "5";
-      input.accept = "image/x-png,image/jpeg,/image/jpg";
-      input.onchange = changeImage;
-      input.click();
+    const input = document.createElement("input");
+    input.type = "file";
+    input.style.zIndex = "5";
+    input.accept = "image/x-png,image/jpeg,/image/jpg";
+    input.onchange = changeImage;
+    input.click();
     // }
   };
 
@@ -330,7 +386,9 @@ export default function Form() {
           state_id: selectState,
           city_id: selectCity,
           passport:
-            vectorImage !== null || vectorImage !== undefined || vectorImage !== ""
+            vectorImage !== null ||
+            vectorImage !== undefined ||
+            vectorImage !== ""
               ? vectorImage
               : null,
         },
@@ -343,7 +401,20 @@ export default function Form() {
       console.log(request);
     } catch (err) {
       console.log(err);
-      notify(`Action failed, ${err.message}`);
+      if (
+        err.response.status === 400 ||
+        err.response.status === 401 ||
+        err.response.status === 403 ||
+        err.response.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
     }
   };
 
