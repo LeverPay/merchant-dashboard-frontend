@@ -1,4 +1,10 @@
-import React, { useState, useRef, useContext, useLayoutEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  useContext,
+  useLayoutEffect,
+  useEffect,
+} from "react";
 import Button from "../General/Button component/Button";
 import PhoneInput, {
   isValidPhoneNumber,
@@ -16,12 +22,13 @@ import {
   update_Merchant_Profile,
 } from "../Endpoints";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import { CountrySelect } from "../CountrySelect";
+import ImageContext from "../General/ImageContext";
 
 export default function Form() {
-  const { userToken, userData, setUserData, notify } = useContext(TokenContext);
+  const { userToken, userData, setUserData, notify, success } =
+    useContext(TokenContext);
+  const { vectorImage, setVectorImage } = useContext(ImageContext);
   const [phone, setPhone] = useState("");
   const [country, setCountry] = useState(null);
   const [Input, setInput] = useState({
@@ -40,26 +47,16 @@ export default function Form() {
   const [city_id, setCity_id] = useState();
   const [stateString, setStateString] = useState();
   const [countryValue, setCountryValue] = useState();
-  // const [selectLocation, setSelectLocation] = useState({
-  //   __Country: "",
-  //   state: "",
-  //   city: "",
-  // });
+
   const [selectCountry, setSelectCountry] = useState();
   const [selectState, setSelectState] = useState();
   const [selectCity, setSelectCity] = useState();
   const [countryString, setCountryString] = useState();
 
-  const [Image, setImage] = useState(null);
+  // const [Image, setImage] = useState(null);
 
   const [ReadOnly, setReadOnly] = useState(true);
-
-  const ref1 = useRef();
-  const ref2 = useRef();
-  const ref3 = useRef();
-  const ref4 = useRef();
-  const ref5 = useRef();
-  const ref6 = useRef();
+  const [disabled] = useState(true);
 
   // Get profile request on server
   const getProfile = async () => {
@@ -85,7 +82,7 @@ export default function Form() {
           };
         });
         setPhone(data.phone);
-        setImage(data.passport);
+        setVectorImage(data.passport);
         setCountry(data.country_id);
         setSelectState(data.state_id);
         setSelectCity(data.city_id);
@@ -93,7 +90,20 @@ export default function Form() {
       }
     } catch (err) {
       console.log(err);
-      notify("something went wrong, can't get your data at this time :(");
+      if (
+        err.response.status === 400 ||
+        err.response.status === 401 ||
+        err.response.status === 403 ||
+        err.response.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
     }
   };
 
@@ -115,6 +125,20 @@ export default function Form() {
       }
     } catch (err) {
       console.log(err);
+      if (
+        err.response.status === 400 ||
+        err.response.status === 401 ||
+        err.response.status === 403 ||
+        err.response.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
     }
   };
 
@@ -129,6 +153,20 @@ export default function Form() {
       }
     } catch (err) {
       console.log(err);
+      if (
+        err.response.status === 400 ||
+        err.response.status === 401 ||
+        err.response.status === 403 ||
+        err.response.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
     }
   };
 
@@ -145,6 +183,20 @@ export default function Form() {
       }
     } catch (err) {
       console.log(err);
+      if (
+        err.response.status === 400 ||
+        err.response.status === 401 ||
+        err.response.status === 403 ||
+        err.response.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
     }
   };
 
@@ -214,7 +266,6 @@ export default function Form() {
 
   const editInfo = () => {
     setReadOnly(false);
-    console.log(ref1);
   };
 
   const handleSubmit = (e) => {
@@ -275,8 +326,8 @@ export default function Form() {
       notify("Number is invalid");
     }
 
-    if (Image) {
-      console.log(Image);
+    if (vectorImage) {
+      console.log(vectorImage);
     }
 
     setReadOnly(true);
@@ -290,14 +341,14 @@ export default function Form() {
   };
 
   const handleDivClick = () => {
-    if (!ReadOnly) {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.style.zIndex = "5";
-      input.accept = "image/x-png,image/jpeg,/image/jpg";
-      input.onchange = changeImage;
-      input.click();
-    }
+    // if (!ReadOnly) {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.style.zIndex = "5";
+    input.accept = "image/x-png,image/jpeg,/image/jpg";
+    input.onchange = changeImage;
+    input.click();
+    // }
   };
 
   const changeImage = (e) => {
@@ -305,12 +356,12 @@ export default function Form() {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
     fileReader.onload = () => {
-      setImage(fileReader.result);
+      setVectorImage(fileReader.result);
     };
   };
 
   const removeImage = () => {
-    setImage(null);
+    setVectorImage(null);
   };
 
   const updateProfileData = async () => {
@@ -335,8 +386,10 @@ export default function Form() {
           state_id: selectState,
           city_id: selectCity,
           passport:
-            Image !== null || Image !== undefined || Image !== ""
-              ? Image
+            vectorImage !== null ||
+            vectorImage !== undefined ||
+            vectorImage !== ""
+              ? vectorImage
               : null,
         },
         {
@@ -348,7 +401,20 @@ export default function Form() {
       console.log(request);
     } catch (err) {
       console.log(err);
-      notify(`Action failed, ${err.message}`);
+      if (
+        err.response.status === 400 ||
+        err.response.status === 401 ||
+        err.response.status === 403 ||
+        err.response.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
     }
   };
 
@@ -358,7 +424,7 @@ export default function Form() {
         <div className="profile-img rounded-circle" onClick={handleDivClick}>
           <img
             className={`rounded-circle ${!ReadOnly ? `opacity-75 cursor` : ``}`}
-            src={!Image ? require("../../Assets/user's image.png") : Image}
+            src={!vectorImage ? require("../../Assets/edit.png") : vectorImage}
             alt=""
           />
         </div>
@@ -400,8 +466,7 @@ export default function Form() {
               name="firstName"
               value={Input.firstName}
               onChange={handleChange}
-              ref={ref1}
-              readOnly={ReadOnly}
+              readOnly={disabled}
             />
           </div>
         </div>
@@ -416,8 +481,7 @@ export default function Form() {
               name="lastName"
               value={Input.lastName}
               onChange={handleChange}
-              ref={ref2}
-              readOnly={ReadOnly}
+              readOnly={disabled}
             />
           </div>
         </div>
@@ -432,7 +496,6 @@ export default function Form() {
               name="businuessName"
               value={Input.businuessName}
               onChange={handleChange}
-              ref={ref3}
               readOnly={ReadOnly}
             />
           </div>
@@ -448,7 +511,6 @@ export default function Form() {
               name="address"
               value={Input.address}
               onChange={handleChange}
-              ref={ref3}
               readOnly={ReadOnly}
             />
           </div>
@@ -464,7 +526,6 @@ export default function Form() {
               name="email"
               value={Input.email}
               onChange={handleChange}
-              ref={ref3}
               readOnly={ReadOnly}
             />
           </div>
@@ -480,7 +541,6 @@ export default function Form() {
               name="password"
               value={Input.password}
               onChange={handleChange}
-              ref={ref3}
               readOnly={ReadOnly}
             />
           </div>
@@ -507,13 +567,6 @@ export default function Form() {
               placeholder={countryString ? countryString : "Choose an option"}
               disabled={ReadOnly}
             />
-            {/* <Select
-              options={countryOptions}
-              className="select-btn rounded-1"
-              value={country}
-              onChange={handleCountryChange}
-              isDisabled={ReadOnly}
-            /> */}
           </div>
         </div>
 

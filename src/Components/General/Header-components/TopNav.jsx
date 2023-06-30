@@ -12,10 +12,12 @@ import { FaRegTrashAlt } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { NotificationAdd } from "@mui/icons-material";
 import NotificationContext from "../NotificationContext";
+import ImageContext from "../ImageContext";
 
 export default function TopNav() {
   const { notification, deletNotifications, markRead } =
     useContext(NotificationContext);
+  const { vectorImage } = useContext(ImageContext);
   const [generateInvoice, setGenerateInvoice] = useState(false);
   const [closenotification, setcloseNotification] = useState(false);
   const [displayOrderedItems, setDisplayOrderedItems] = useState(false);
@@ -92,15 +94,17 @@ export default function TopNav() {
             />
           )}
         </motion.a>
-        <a href="">
+        <span>
           <img
             className="img-fluid rounded-circle"
-            src={require("../../../Assets/Ellipse 2.png")}
+            src={
+              !vectorImage ? require("../../../Assets/edit.png") : vectorImage
+            }
             alt="Profile-Image"
             style={{ width: "32px" }}
           />
           <KeyboardArrowDownIcon htmlColor="black" />
-        </a>
+        </span>
       </div>
       <AnimatePresence>
         {closenotification &&
