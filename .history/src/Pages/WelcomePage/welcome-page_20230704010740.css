@@ -11,7 +11,8 @@ h2 {
 .welcome-paragraph h1 {
   font-size: 70px;
 }
-.welcome-paragraph p {
+.welcome-paragraph,
+p {
   color: #2962f2;
   font-size: 25px;
   margin-top: 20px;

@@ -57,7 +57,7 @@
   margin: 40px 0;
   border: none;
   font-family: AgrandirBold;
-  font-size: 25px;
+  font-size: 30px;
 }
 .account-type-btn img {
   /* background: yellow; */
@@ -84,10 +84,6 @@
   }
   .account-type-btn {
     padding: 20px 60px;
-  }
-  .account-type-btn p {
-    font-size: 20px;
-    margin-top: 20px;
   }
 }
 /* .otp-slide {
