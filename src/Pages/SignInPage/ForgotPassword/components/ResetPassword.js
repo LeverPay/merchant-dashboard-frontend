@@ -14,7 +14,11 @@ export default function ResetPassword() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInput((prev) => ({ ...prev, [name]: value }));
+    const numericValue = value.replace(/[^0-9]/g, "");
+    setInput((prev) => ({
+      ...prev,
+      [name]: name === "token" ? numericValue : value,
+    }));
   };
 
   const handleSubmit = (e) => {
@@ -33,7 +37,7 @@ export default function ResetPassword() {
         console.log(Input);
       } else {
         notify(
-          "Invalid Format: password field must be 10characters long and must include a special character"
+          "Invalid Format: password field must be 10characters long and must include a special character and number"
         );
       }
     } else {
@@ -48,7 +52,7 @@ export default function ResetPassword() {
         <form onSubmit={handleSubmit}>
           <h6>Token</h6>
           <input
-            type="number"
+            type="text"
             onChange={handleChange}
             value={Input.token}
             name="token"

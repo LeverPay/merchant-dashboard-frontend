@@ -3,25 +3,34 @@
 
   margin: 0 !important;
   padding: 250px 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .forget-password-div h1 {
   font-family: AgrandirBold;
   margin-bottom: 40px;
   color: #fff;
 }
+
 .forget-password-div h6 {
   font-family: AgrandirBold;
   float: left;
   font-size: 12px;
   color: grey;
 }
+
 .forget-password-form {
   background: #fff;
-  height: 250px;
   padding: 50px 30px;
   border-radius: 30px;
   margin-bottom: 40px;
+  width: 50%;
 }
+
 .forget-password-form input {
   margin: 0px 0 30px 0;
   width: 100%;
@@ -31,6 +40,7 @@
   border-radius: 8px;
   font-family: AgrandirBold;
 }
+
 .forget-password-form button {
   width: 100%;
   border: none;
@@ -40,8 +50,21 @@
   color: #fff;
   font-family: AgrandirBold;
 }
+
 .fplink {
   color: #fff;
   font-family: AgrandirBold;
   /* text-decoration: none; */
+}
+
+@media screen and (min-width: 1024px) {
+  .forget-password-form {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .forget-password-form {
+    width: 80%;
+  }
 }
