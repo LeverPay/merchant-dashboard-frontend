@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import TokenContext from "../../../../Components/User-Token/TokenContext";
 import { Reset_password, baseUrl } from "../../../../Components/Endpoints";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function ResetPassword() {
   const { notify, success } = useContext(TokenContext);
@@ -33,8 +35,7 @@ export default function ResetPassword() {
         passwordRegex.test(Input.newpassword) &&
         passwordRegex.test(Input.repeatPassword)
       ) {
-        success("valid ✔");
-        console.log(Input);
+        resetPassword();
       } else {
         notify(
           "Invalid Format: password field must be 10characters long and must include a special character and number"
@@ -42,6 +43,39 @@ export default function ResetPassword() {
       }
     } else {
       notify("Invalid or Incomplete fields");
+    }
+  };
+
+  const navigate = useNavigate();
+  const resetPassword = async () => {
+    try {
+      const req = await axios.post(baseUrl + Reset_password, {
+        token: Input.token,
+        new_password: Input.newpassword,
+      });
+      console.log(req);
+      if (req.status === 200) {
+        success(`Action Successful ✔`);
+        setTimeout(() => navigate("/"), 3000);
+      } else {
+        notify("Something went wrong");
+      }
+    } catch (err) {
+      console.log(err);
+      if (
+        err.response.status === 400 ||
+        err.response.status === 401 ||
+        err.response.status === 403 ||
+        err.response.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
     }
   };
 
