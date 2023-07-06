@@ -1,0 +1,83 @@
+.transactions-table-container {
+  background: #fff;
+  margin-top: 50px;
+  padding-bottom: 60px;
+  overflow-x: auto;
+}
+
+.transactions-table-container td {
+  font-family: KB-sans-Regular;
+  padding: 15px 0 15px 40px !important;
+  color: black;
+  font-size: 18px;
+  position: relative;
+}
+
+/* .transactions-table-container table {
+  width: 300px !important;
+} */
+
+.transactions-table-container tr:hover {
+  /* background-color: #282541; */
+  background-color: #c2c1c6;
+  font-weight: bold;
+}
+
+.transactions-table-container th {
+  font-family: KB-sans-Bold;
+  color: #190c57 !important;
+  font-weight: bold;
+  padding: 25px 0 25px 40px;
+  text-align: left !important;
+  font-size: 20px;
+  border-top: solid 2px rgb(198, 196, 196);
+}
+
+@media screen and (max-width: 620px) {
+  .transactions-table-container h5 {
+    margin-right: 100px;
+  }
+
+  .table-title {
+    padding-right: 0px !important;
+  }
+  .transactions-table-container td {
+    padding: 10px 0 !important;
+  }
+}
+
+.table-title {
+  display: flex;
+  padding-right: 230px;
+}
+
+.transactions-table-container tr {
+  border-bottom: solid 1px rgb(198, 196, 196);
+  box-shadow: 0 0 1px 1px rgb(198, 196, 196);
+}
+
+@media screen and (max-width: 620px) {
+  .transaction-table-container {
+    margin-left: 0 !important;
+  }
+}
+
+.invoice-td {
+  cursor: pointer;
+  color: #0eb500 !important;
+  font-weight: bold;
+}
+
+.help-td {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.eye {
+  cursor: pointer;
+}
+
+.show-btn {
+  z-index: 10;
+  cursor: pointer;
+}

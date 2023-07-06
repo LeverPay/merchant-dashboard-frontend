@@ -83,3 +83,8 @@
     margin-right: 10px;
   }
 }
+@media screen and (max-width: 620px) {
+  .forget-password-div {
+    padding: 100px 10px 300px 10px;
+  }
+}

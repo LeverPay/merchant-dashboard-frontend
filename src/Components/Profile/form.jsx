@@ -455,7 +455,7 @@ export default function Form() {
         </Button>
       </section>
 
-      <form action="">
+      <form action="" className="profile-form">
         <div className="mt-2 py-2 d-flex flex-column">
           <label htmlFor="Firstname">First Name</label>
 
@@ -532,7 +532,7 @@ export default function Form() {
         </div>
 
         <div className="mt-1 py-2 d-flex flex-column">
-          <label htmlFor="password">password</label>
+          <label htmlFor="password">Password</label>
 
           <div className="">
             <input
