@@ -57,14 +57,29 @@
   /* text-decoration: none; */
 }
 
+.eye-icon {
+  float: right;
+  margin-top: -60px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
 @media screen and (min-width: 1024px) {
   .forget-password-form {
-    width: 50%;
+    width: 65%;
   }
 }
 
 @media screen and (max-width: 1023px) {
   .forget-password-form {
-    width: 80%;
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .eye-icon {
+    float: right;
+    margin-top: -50px;
+    margin-right: 10px;
   }
 }

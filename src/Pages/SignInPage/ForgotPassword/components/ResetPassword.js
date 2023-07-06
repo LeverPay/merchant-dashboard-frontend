@@ -3,9 +3,15 @@ import TokenContext from "../../../../Components/User-Token/TokenContext";
 import { Reset_password, baseUrl } from "../../../../Components/Endpoints";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import EyeClose from "../../../../Assets/eye-close.jpg";
+import EyeOpen from "../../../../Assets/eye-open.svg";
+import { AiFillEyeInvisible } from "react-icons/ai";
+import { AiFillEye } from "react-icons/ai";
+// import "../forgot-pasword.css"
 
 export default function ResetPassword() {
   const { notify, success } = useContext(TokenContext);
+  const [displayPassword, setDisplayPassword] = useState(false);
   const [Input, setInput] = useState({
     token: "",
     newpassword: "",
@@ -79,6 +85,10 @@ export default function ResetPassword() {
     }
   };
 
+  const showPassword = () => {
+    setDisplayPassword(!displayPassword);
+  };
+
   return (
     <center>
       <h1>Reset Password</h1>
@@ -90,21 +100,31 @@ export default function ResetPassword() {
             onChange={handleChange}
             value={Input.token}
             name="token"
+            className="form-control"
           />
           <h6>New Password</h6>
           <input
-            type="password"
+            type={displayPassword ? "text" : "password"}
             onChange={handleChange}
             value={Input.newpassword}
             name="newpassword"
+            className="form-control"
           />
+          <span onClick={showPassword} className="eye-icon">
+            {displayPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+          </span>
+
           <h6>Confirm Password</h6>
           <input
-            type="password"
+            type={displayPassword ? "text" : "password"}
             onChange={handleChange}
             value={Input.repeatPassword}
             name="repeatPassword"
+            className="form-control"
           />
+          <span onClick={showPassword} className="eye-icon">
+            {displayPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+          </span>
           <button>Reset Password</button>
         </form>
       </div>
