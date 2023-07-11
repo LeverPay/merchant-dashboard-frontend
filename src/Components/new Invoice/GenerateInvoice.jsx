@@ -6,9 +6,16 @@ import { MdClose } from "react-icons/md";
 import { useState } from "react";
 import { useRef } from "react";
 import NotificationContext from "../General/NotificationContext";
+import Confirm from "./confirm";
+import Success from "./Success";
+import TokenContext from "../User-Token/TokenContext";
 
 export default function GenerateInvoice({ setGenerateInvoice }) {
   const { notification, setNotification } = useContext(NotificationContext);
+  const { success: alert } = useContext(TokenContext);
+  const [confirm, setConfirm] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [token, setToken] = useState("");
 
   const [input, setInput] = useState({
     productName: "",
@@ -167,6 +174,21 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (token !== "") {
+      const newPrice = price.current.textContent;
+      input.price = newPrice;
+      setTimeout(() => setGenerateInvoice(false), 3000);
+      setTimeout(() => alert("Invoice Successfully Sent To User"), 4000);
+      setSuccess(true);
+      console.log(input, token);
+      newNotification();
+    } else {
+      console.log("token is empty");
+    }
+  };
+
+  const verifyInvoice = (e) => {
+    e.preventDefault();
     validate();
     if (
       input.productName !== "" &&
@@ -175,11 +197,7 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
       input.description !== "" &&
       input.customerId !== ""
     ) {
-      const newPrice = price.current.textContent;
-      input.price = newPrice;
-      console.log(input);
-      setGenerateInvoice(false);
-      newNotification();
+      setConfirm(true);
     }
   };
 
@@ -189,7 +207,7 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
         <AiFillPlusCircle size="25px" className="text-primary" />{" "}
         <span className="mx-2 fw-light">Generate Invoice</span>
       </div>
-      <form className="form container mx-4" action="" onSubmit={handleSubmit}>
+      <form className="form container mx-4 position-relative" action="">
         <div className="container mt-5">
           <input
             type="text"
@@ -294,6 +312,7 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
                 color: "#fff",
                 Padding: "2%",
               }}
+              click={verifyInvoice}
             >
               Send
             </Button>
@@ -314,6 +333,15 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
             </Button>
           </div>
         </div>
+        {confirm && (
+          <Confirm
+            handleSubmit={handleSubmit}
+            token={token}
+            setToken={setToken}
+            setConfirm={setConfirm}
+          />
+        )}
+        {success && <Success setGenerateInvoice={setGenerateInvoice} />}
       </form>
     </section>
   );
