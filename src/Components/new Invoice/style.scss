@@ -41,7 +41,8 @@
   display: none;
 }
 
-.confirm {
+.confirm,
+.cancel {
   border-radius: 10px;
   background: linear-gradient(154deg, #0051ff 0%, #0b0230 100%);
   h6 {
@@ -54,13 +55,24 @@
       border: 1px solid green;
     }
   }
+  .grp {
+    color: #fff;
+  }
+  textarea {
+    outline: none;
+    border: none;
+    resize: none;
+    &:focus {
+      border: 1px solid green;
+    }
+  }
 }
 
-.success{
+.success {
   background-color: #fff;
 }
 
-.s-close{
+.s-close {
   margin-left: 6rem;
   cursor: pointer;
 }

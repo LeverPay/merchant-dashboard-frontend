@@ -3,19 +3,26 @@ import "./style.css";
 import Button from "../General/Button component/Button";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRef } from "react";
 import NotificationContext from "../General/NotificationContext";
 import Confirm from "./confirm";
 import Success from "./Success";
 import TokenContext from "../User-Token/TokenContext";
+import Cancel from "./cancel";
 
 export default function GenerateInvoice({ setGenerateInvoice }) {
   const { notification, setNotification } = useContext(NotificationContext);
   const { success: alert } = useContext(TokenContext);
   const [confirm, setConfirm] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [cancel, setCancel] = useState(false);
   const [token, setToken] = useState("");
+  const [inputVal, setInputVal] = useState({
+    box1: false,
+    box2: false,
+    other: "",
+  });
 
   const [input, setInput] = useState({
     productName: "",
@@ -36,8 +43,16 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
 
   const hideForm = (e) => {
     e.preventDefault();
-    setGenerateInvoice(false);
+    // setGenerateInvoice(false);
+    setCancel(true);
+    // if (inputVal.box1 && inputVal.box2 && inputVal.other !== "")
+    console.log(inputVal.box1, inputVal.box2, inputVal.other);
   };
+  useEffect(() => {
+    if (cancel) {
+      console.log(inputVal.box1, inputVal.box2, inputVal.other);
+    }
+  }, [cancel, inputVal]);
 
   const toggleErr1 = () => {
     if (input.productName !== "") {
@@ -342,6 +357,13 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
           />
         )}
         {success && <Success setGenerateInvoice={setGenerateInvoice} />}
+        {cancel && (
+          <Cancel
+            inputVal={inputVal}
+            setInputVal={setInputVal}
+            hideForm={hideForm}
+          />
+        )}
       </form>
     </section>
   );
