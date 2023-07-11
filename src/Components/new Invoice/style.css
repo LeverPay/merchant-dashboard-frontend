@@ -40,6 +40,49 @@
   display: none;
 }
 
+.confirm,
+.cancel {
+  border-radius: 10px;
+  background: linear-gradient(154deg, #0051ff 0%, #0b0230 100%);
+}
+.confirm h6,
+.cancel h6 {
+  color: #fff;
+}
+.confirm input,
+.cancel input {
+  outline: none;
+  border: none;
+}
+.confirm input:focus,
+.cancel input:focus {
+  border: 1px solid green;
+}
+.confirm .grp,
+.cancel .grp {
+  color: #fff;
+}
+.confirm textarea,
+.cancel textarea {
+  outline: none;
+  border: none;
+  resize: none;
+}
+.confirm textarea:focus,
+.cancel textarea:focus {
+  border: 1px solid green;
+}
+
+.success {
+  background-color: #fff;
+  z-index: 10;
+}
+
+.s-close {
+  margin-left: 6rem;
+  cursor: pointer;
+}
+
 @media screen and (min-width: 1024px) {
   .invoice {
     top: 2%;

@@ -223,9 +223,9 @@ export default function Form({ setRenderForm, notify, success }) {
       !wordsLeft <= 0
     ) {
       console.log(input, input.issue, phone, file);
-      success();
+      success("Message Sent");
     } else {
-      notify();
+      notify("Please fill the message box or select your related problem");
     }
   };
 

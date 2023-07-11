@@ -3,12 +3,26 @@ import "./style.css";
 import Button from "../General/Button component/Button";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { MdClose } from "react-icons/md";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRef } from "react";
 import NotificationContext from "../General/NotificationContext";
+import Confirm from "./confirm";
+import Success from "./Success";
+import TokenContext from "../User-Token/TokenContext";
+import Cancel from "./cancel";
 
 export default function GenerateInvoice({ setGenerateInvoice }) {
   const { notification, setNotification } = useContext(NotificationContext);
+  const { success: alert } = useContext(TokenContext);
+  const [confirm, setConfirm] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [cancel, setCancel] = useState(false);
+  const [token, setToken] = useState("");
+  const [backBtnClicked, setBackbtnClicked] = useState(false);
+  const [confirmBtnClicked, setConfirmBtnClicked] = useState(false);
+  const [inputVal, setInputVal] = useState({
+    reason: "",
+  });
 
   const [input, setInput] = useState({
     productName: "",
@@ -27,9 +41,30 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
     total = useRef(),
     price = useRef();
 
-  const hideForm = (e) => {
+  const cancelInvoice = (e) => {
     e.preventDefault();
-    setGenerateInvoice(false);
+    setCancel(true);
+    if (inputVal.reason !== "" && !backBtnClicked) {
+      console.log(inputVal.reason);
+      setSuccess(true);
+      setTimeout(() => {
+        setGenerateInvoice(false);
+        alert("Invoce cancellation successful");
+      }, 3000);
+      // setTimeout(() => window.location.reload(), 5000);
+    }
+  };
+
+  const cancelInvoice2 = (e) => {
+    e.preventDefault()
+    setConfirmBtnClicked(true);
+    setBackbtnClicked(false)
+    if (confirmBtnClicked) cancelInvoice(e);
+  };
+
+  const hideForm = () => {
+    setBackbtnClicked(true);
+    setCancel(false);
   };
 
   const toggleErr1 = () => {
@@ -167,6 +202,21 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (token !== "") {
+      const newPrice = price.current.textContent;
+      input.price = newPrice;
+      setTimeout(() => setGenerateInvoice(false), 3000);
+      setTimeout(() => alert("Invoice Successfully Sent To User"), 4000);
+      setSuccess(true);
+      console.log(input, token);
+      newNotification();
+    } else {
+      console.log("token is empty");
+    }
+  };
+
+  const verifyInvoice = (e) => {
+    e.preventDefault();
     validate();
     if (
       input.productName !== "" &&
@@ -175,11 +225,7 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
       input.description !== "" &&
       input.customerId !== ""
     ) {
-      const newPrice = price.current.textContent;
-      input.price = newPrice;
-      console.log(input);
-      setGenerateInvoice(false);
-      newNotification();
+      setConfirm(true);
     }
   };
 
@@ -189,7 +235,7 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
         <AiFillPlusCircle size="25px" className="text-primary" />{" "}
         <span className="mx-2 fw-light">Generate Invoice</span>
       </div>
-      <form className="form container mx-4" action="" onSubmit={handleSubmit}>
+      <form className="form container mx-4 position-relative" action="">
         <div className="container mt-5">
           <input
             type="text"
@@ -294,6 +340,7 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
                 color: "#fff",
                 Padding: "2%",
               }}
+              click={verifyInvoice}
             >
               Send
             </Button>
@@ -307,13 +354,31 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
                 color: "#fff",
                 Padding: "2%",
               }}
-              click={hideForm}
+              click={cancelInvoice2}
             >
               <MdClose size="20px" color="#fff" />
               Cancel
             </Button>
           </div>
         </div>
+        {confirm && (
+          <Confirm
+            handleSubmit={handleSubmit}
+            token={token}
+            setToken={setToken}
+            setConfirm={setConfirm}
+          />
+        )}
+        {success && <Success setGenerateInvoice={setGenerateInvoice} />}
+        {cancel && (
+          <Cancel
+            inputVal={inputVal}
+            setInputVal={setInputVal}
+            cancelInvoice={cancelInvoice}
+            setCancel={setCancel}
+            hideForm={hideForm}
+          />
+        )}
       </form>
     </section>
   );

@@ -41,6 +41,43 @@
   display: none;
 }
 
+.confirm,
+.cancel {
+  border-radius: 10px;
+  background: linear-gradient(154deg, #0051ff 0%, #0b0230 100%);
+  h6 {
+    color: #fff;
+  }
+  input {
+    outline: none;
+    border: none;
+    &:focus {
+      border: 1px solid green;
+    }
+  }
+  .grp {
+    color: #fff;
+  }
+  textarea {
+    outline: none;
+    border: none;
+    resize: none;
+    &:focus {
+      border: 1px solid green;
+    }
+  }
+}
+
+.success {
+  background-color: #fff;
+  z-index: 10;
+}
+
+.s-close {
+  margin-left: 6rem;
+  cursor: pointer;
+}
+
 @media screen and (min-width: 1024px) {
   .invoice {
     top: 2%;
