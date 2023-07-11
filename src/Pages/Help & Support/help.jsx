@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import data from "../../Components/contact-support/questions/answers";
 import "./help&suppport.css";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
@@ -7,30 +7,16 @@ import Form from "./form";
 import { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import TokenContext from "../../Components/User-Token/TokenContext";
 
 export default function Help() {
   const [renderForm, setRenderForm] = useState(false);
+  const { notify, success } = useContext(TokenContext);
   const [renderAnswer, setRenderAnswer] = useState(
     Array(data.length).fill(false)
   );
   const formContainer = useRef(),
     notificationContainer = useRef();
-
-  const notifyError = () => {
-    toast.error("Please fill the message box or select your related problem", {
-      position: "top-center",
-      autoClose: false,
-      hideProgressBar: true,
-    });
-  };
-
-  const notifySuccess = () => {
-    toast.success("Message Sent", {
-      position: "top-center",
-      autoClose: false,
-      hideProgressBar: true,
-    });
-  };
 
   const displayAnswer = (item) => {
     setRenderAnswer((prev) => prev.map((el, i) => (i === item ? !el : false)));
@@ -95,8 +81,8 @@ export default function Help() {
         <div ref={formContainer}>
           <Form
             setRenderForm={setRenderForm}
-            notify={notifyError}
-            success={notifySuccess}
+            notify={notify}
+            success={success}
           />
         </div>
       )}

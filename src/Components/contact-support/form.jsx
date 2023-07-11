@@ -6,11 +6,13 @@ import PhoneInput, {
 import "react-phone-number-input/style.css";
 import { countries } from "countries-list";
 import Button from "../../Components/General/Button component/Button.jsx";
-import { toast } from "react-toastify";
 import { AiOutlineClose } from "react-icons/ai";
+import { useContext } from "react";
+import TokenContext from "../User-Token/TokenContext.jsx";
 
 export default function Form({ setDisplayForm, transactionId }) {
   const [wordsLeft, setWordsLeft] = useState(200);
+  const { success } = useContext(TokenContext);
   const [phone, setPhone] = useState("");
   const [input, setInput] = useState({
     firstname: "User Firstname",
@@ -24,14 +26,6 @@ export default function Form({ setDisplayForm, transactionId }) {
     textAreaWarning = useRef();
 
   const contactSupport = useRef();
-
-  const notify = () => {
-    toast.success("Message Sent", {
-      position: "top-center",
-      hideProgressBar: true,
-      autoClose: false,
-    });
-  };
 
   const handleChange = (e) => {
     const { value, name } = e.target;
@@ -116,7 +110,7 @@ export default function Form({ setDisplayForm, transactionId }) {
     ) {
       console.log(input);
       setDisplayForm(false);
-      notify();
+      success("Message Sent");
       setTimeout(() => location.reload(), 1000);
     }
   };
