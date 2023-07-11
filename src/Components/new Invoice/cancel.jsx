@@ -3,16 +3,22 @@ import { useState } from "react";
 import Button from "../General/Button component/Button";
 import { BiArrowBack } from "react-icons/bi";
 
-export default function Cancel({ hideForm, inputVal, setInputVal }) {
+export default function Cancel({
+  cancelInvoice,
+  inputVal,
+  setInputVal,
+  setCancel,
+  hideForm
+}) {
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    const newValue = type === "checkbox" ? checked : value;
+    const { value } = e.target;
 
     setInputVal((prevInputVal) => ({
       ...prevInputVal,
-      [name]: newValue,
+      reason: value,
     }));
   };
+
   return (
     <div
       className="position-absolute top-50 start-50 translate-middle d-flex flex-column 
@@ -24,11 +30,12 @@ export default function Cancel({ hideForm, inputVal, setInputVal }) {
           Item Sold Out:
         </label>
         <input
-          type="checkbox"
-          name="box1"
+          type="radio"
+          name="reason"
           id="check1"
           onChange={handleChange}
-          checked={inputVal.box1}
+          checked={inputVal.reason === "Item Sold Out"}
+          value="Item Sold Out"
         />
       </div>
       <div className="d-flex grp justify-content-between fs-5 fw-bold my-2">
@@ -36,10 +43,12 @@ export default function Cancel({ hideForm, inputVal, setInputVal }) {
           User violated Agreement:
         </label>
         <input
-          type="checkbox"
-          name="box2"
+          type="radio"
+          name="reason"
           id="check2"
           onChange={handleChange}
+          checked={inputVal.reason === "User Violated Agreement"}
+          value="User Violated Agreement"
         />
       </div>
       <div className="d-flex flex-column grp fs-5 fw-bold my-2">
@@ -47,10 +56,10 @@ export default function Cancel({ hideForm, inputVal, setInputVal }) {
           Other:
         </label>
         <textarea
-          name="other"
+          name="reason"
           id="check3"
           onChange={handleChange}
-          value={inputVal.other}
+          value={inputVal.reason}
           rows="5"
           cols="10"
         ></textarea>
@@ -59,13 +68,16 @@ export default function Cancel({ hideForm, inputVal, setInputVal }) {
         <div className="d-flex justify-content-between">
           <Button
             style={{ backgroundColor: "#2962f2", color: "#ffffff" }}
-            click={hideForm}
+            click={cancelInvoice}
           >
-            Cancel
+            Confirm
           </Button>
         </div>
         <div>
-          <Button style={{ backgroundColor: "#FC0019", color: "#ffffff" }}>
+          <Button
+            style={{ backgroundColor: "#FC0019", color: "#ffffff" }}
+            click={() => hideForm()}
+          >
             Back
             <span className="ms-2">
               <BiArrowBack />

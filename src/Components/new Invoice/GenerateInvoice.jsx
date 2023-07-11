@@ -18,10 +18,10 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
   const [success, setSuccess] = useState(false);
   const [cancel, setCancel] = useState(false);
   const [token, setToken] = useState("");
+  const [backBtnClicked, setBackbtnClicked] = useState(false);
+  const [confirmBtnClicked, setConfirmBtnClicked] = useState(false);
   const [inputVal, setInputVal] = useState({
-    box1: false,
-    box2: false,
-    other: "",
+    reason: "",
   });
 
   const [input, setInput] = useState({
@@ -41,18 +41,31 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
     total = useRef(),
     price = useRef();
 
-  const hideForm = (e) => {
+  const cancelInvoice = (e) => {
     e.preventDefault();
-    // setGenerateInvoice(false);
     setCancel(true);
-    // if (inputVal.box1 && inputVal.box2 && inputVal.other !== "")
-    console.log(inputVal.box1, inputVal.box2, inputVal.other);
-  };
-  useEffect(() => {
-    if (cancel) {
-      console.log(inputVal.box1, inputVal.box2, inputVal.other);
+    if (inputVal.reason !== "" && !backBtnClicked) {
+      console.log(inputVal.reason);
+      setSuccess(true);
+      setTimeout(() => {
+        setGenerateInvoice(false);
+        alert("Invoce cancellation successful");
+      }, 3000);
+      // setTimeout(() => window.location.reload(), 5000);
     }
-  }, [cancel, inputVal]);
+  };
+
+  const cancelInvoice2 = (e) => {
+    e.preventDefault()
+    setConfirmBtnClicked(true);
+    setBackbtnClicked(false)
+    if (confirmBtnClicked) cancelInvoice(e);
+  };
+
+  const hideForm = () => {
+    setBackbtnClicked(true);
+    setCancel(false);
+  };
 
   const toggleErr1 = () => {
     if (input.productName !== "") {
@@ -341,7 +354,7 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
                 color: "#fff",
                 Padding: "2%",
               }}
-              click={hideForm}
+              click={cancelInvoice2}
             >
               <MdClose size="20px" color="#fff" />
               Cancel
@@ -361,6 +374,8 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
           <Cancel
             inputVal={inputVal}
             setInputVal={setInputVal}
+            cancelInvoice={cancelInvoice}
+            setCancel={setCancel}
             hideForm={hideForm}
           />
         )}
