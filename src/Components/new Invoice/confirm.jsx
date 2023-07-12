@@ -12,7 +12,7 @@ export default function Confirm({ handleSubmit, token, setToken, setConfirm }) {
   return (
     <div
       className="position-absolute top-50 start-50 translate-middle d-flex flex-column 
-    justify-content-center px-4 py-2 confirm"
+    justify-content-center px-4 py-3 confirm"
     >
       <h6>Please Check your mail/phone for otp code</h6>
       <input
