@@ -45,6 +45,7 @@
 .cancel {
   border-radius: 10px;
   background: linear-gradient(154deg, #0051ff 0%, #0b0230 100%);
+  width: 70%;
   h6 {
     color: #fff;
   }
@@ -71,6 +72,7 @@
 .success {
   background-color: #fff;
   z-index: 10;
+  width: 80%;
 }
 
 .s-close {
@@ -89,6 +91,12 @@
     width: 65%;
     left: 20%;
     top: 10%;
+  }
+  .cancel,.confirm{
+    width: 80%;
+    h6{
+      font-size: 1.5rem !important;
+    }
   }
 }
 

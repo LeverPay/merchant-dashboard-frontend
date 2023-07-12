@@ -41,7 +41,7 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
     total = useRef(),
     price = useRef();
 
-  const cancelInvoice = (e) => {
+  const cancelInvoiceAction = (e) => {
     e.preventDefault();
     setCancel(true);
     if (inputVal.reason !== "" && !backBtnClicked) {
@@ -51,15 +51,15 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
         setGenerateInvoice(false);
         alert("Invoce cancellation successful");
       }, 3000);
-      // setTimeout(() => window.location.reload(), 5000);
+      setTimeout(() => window.location.reload(), 5000);
     }
   };
 
-  const cancelInvoice2 = (e) => {
-    e.preventDefault()
+  const cancelInvoice = (e) => {
+    e.preventDefault();
     setConfirmBtnClicked(true);
-    setBackbtnClicked(false)
-    if (confirmBtnClicked) cancelInvoice(e);
+    setBackbtnClicked(false);
+    if (confirmBtnClicked) cancelInvoiceAction(e);
   };
 
   const hideForm = () => {
@@ -205,8 +205,11 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
     if (token !== "") {
       const newPrice = price.current.textContent;
       input.price = newPrice;
-      setTimeout(() => setGenerateInvoice(false), 3000);
-      setTimeout(() => alert("Invoice Successfully Sent To User"), 4000);
+      setTimeout(() => {
+        setGenerateInvoice(false);
+        alert("Invoice Successfully Sent To User");
+      }, 3000);
+      setTimeout(() => window.location.reload(), 5000);
       setSuccess(true);
       console.log(input, token);
       newNotification();
@@ -354,7 +357,7 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
                 color: "#fff",
                 Padding: "2%",
               }}
-              click={cancelInvoice2}
+              click={cancelInvoice}
             >
               <MdClose size="20px" color="#fff" />
               Cancel

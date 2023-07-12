@@ -22,10 +22,10 @@ export default function Cancel({
   return (
     <div
       className="position-absolute top-50 start-50 translate-middle d-flex flex-column 
-  justify-content-center px-4 py-2 cancel"
+  justify-content-center px-4 py-3 cancel"
     >
-      <h6 className="fs-3 fw-bold text-cener">Reasons For This?</h6>
-      <div className="d-flex grp justify-content-between fs-5 fw-bold my-2">
+      <h6 className="fs-3 fw-bold text-center">Reason For This?</h6>
+      <div className="d-flex grp justify-content-between fs-5 my-2">
         <label htmlFor="Reason1" id="check1">
           Item Sold Out:
         </label>
@@ -38,7 +38,7 @@ export default function Cancel({
           value="Item Sold Out"
         />
       </div>
-      <div className="d-flex grp justify-content-between fs-5 fw-bold my-2">
+      <div className="d-flex grp justify-content-between fs-5 my-2">
         <label htmlFor="Reason2" id="check2">
           User violated Agreement:
         </label>
@@ -51,7 +51,7 @@ export default function Cancel({
           value="User Violated Agreement"
         />
       </div>
-      <div className="d-flex flex-column grp fs-5 fw-bold my-2">
+      <div className="d-flex flex-column grp fs-5 my-2">
         <label htmlFor="Reason3" id="check3">
           Other:
         </label>
