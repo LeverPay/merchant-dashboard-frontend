@@ -1,7 +1,7 @@
 .transactions-tab .tabs {
   display: flex;
   border: solid 1px rgb(205, 200, 200);
-  margin-top: 30px;
+  /* margin-top: 30px; */
   border-radius: 10px;
   font-family: AgrandirBold;
 
@@ -29,11 +29,13 @@
   display: none;
   /* padding: 20px; */
   /* color: #fff; */
+  margin-top: -5%;
 }
 
 @media screen and (max-width: 620px) {
   .transactions-tab .panel {
     padding: 0px;
+    margin-top:  -10%;
   }
 }
 

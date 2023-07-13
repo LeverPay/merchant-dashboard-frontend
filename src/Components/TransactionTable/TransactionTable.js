@@ -7,26 +7,19 @@ import Form from "../../Components/contact-support/form";
 // import { allTransactions } from "../../../TestData";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AiFillEye } from "react-icons/ai";
-import { RiEyeCloseLine } from "react-icons/ri";
 
 const TransactionTable = (props) => {
   const [showInvoice, setShowInvoice] = useState(null);
-  const [displayForm, setDisplayForm] = useState(false);
   const [transactionId, setTransactionId] = useState();
-  const [hidebalance, setHidebalance] = useState(false);
+  const [clickedItem, setClickedItem] = useState({});
   const helpRef = useRef();
   const displayInvoice = (item) => {
     setShowInvoice(item);
   };
 
-  const showForm = () => {
-    setDisplayForm(true);
-    // setTransactionId(item.name);
-  };
-
-  const hideTransactBal = () => {
-    setHidebalance(!hidebalance);
+  const click = (item) => {
+    const value = props.data.data.find((el) => el === item);
+    setClickedItem(value);
   };
 
   useEffect(() => {
@@ -39,21 +32,6 @@ const TransactionTable = (props) => {
   return (
     <>
       <div className="transactions-table-container">
-        <div className="d-flex justify-content-between">
-          <span className="eye mt-4" onClick={hideTransactBal}>
-            {hidebalance ? (
-              <RiEyeCloseLine size="30px" />
-            ) : (
-              <AiFillEye size="30px" />
-            )}
-          </span>
-          <span className="show-btn mt-4">
-            <a onClick={showForm} className="fw-bold">
-              Need Help?
-            </a>
-          </span>
-        </div>
-        <ToastContainer />
         <table className="col-md-12 col-12">
           <thead>
             <tr>
@@ -75,10 +53,11 @@ const TransactionTable = (props) => {
                   />
                   {item.status.statusName}
                 </td>
-                <td>{!hidebalance ? "---" : item.amount}</td>
+                <td>{!props.hidebalance ? "---" : item.amount}</td>
                 <td
                   onClick={() => {
                     displayInvoice(item);
+                    click(item);
                   }}
                   className="invoice-td"
                 >
@@ -96,9 +75,8 @@ const TransactionTable = (props) => {
           </tbody>
         </table>
       </div>
-      {showInvoice !== null && <InvoiceModal displayInvoice={displayInvoice} />}
-      {displayForm && (
-        <Form setDisplayForm={setDisplayForm} transactionId={transactionId} />
+      {showInvoice !== null && (
+        <InvoiceModal displayInvoice={displayInvoice} data={clickedItem} />
       )}
     </>
   );

@@ -10,23 +10,44 @@ import {
 import SearchBar from "../SearchBar/SearchBar";
 import TransactionTable from "../TransactionTable/TransactionTable";
 import "./transactionsComponent.css";
+import Form from "../contact-support/form";
+import { AiFillEye } from "react-icons/ai";
+import { RiEyeCloseLine } from "react-icons/ri";
 function TransactionsComponent() {
   const [activeIndex, setActiveIndex] = useState(1);
   const [generateInvoice, setGenerateInvoice] = useState(false);
+  const [hidebalance, setHidebalance] = useState(false);
   const btn = useRef();
   const handleClick = (index) => setActiveIndex(index);
   const checkActive = (index, className) =>
     activeIndex === index ? className : "";
+  const [displayForm, setDisplayForm] = useState(false);
 
-  // useEffect(() => {
-  //   const open = () => setGenerateInvoice(!generateInvoice);
-  //   const close = () => setGenerateInvoice(false);
-  //   btn.current.addEventListener("click", open);
+  const showForm = () => {
+    setDisplayForm(true);
+    // setTransactionId(item.name);
+  };
 
-  //   // return () => btn.current.removeEventListener("click", open);
-  // }, [generateInvoice]);
+  const hideTransactBal = () => {
+    setHidebalance(!hidebalance);
+  };
+
   return (
     <>
+      <div className="d-flex justify-content-between">
+        <span className="eye" onClick={hideTransactBal}>
+          {hidebalance ? (
+            <RiEyeCloseLine size="30px" />
+          ) : (
+            <AiFillEye size="30px" />
+          )}
+        </span>
+        <span className="show-btn">
+          <a onClick={showForm} className="fw-bold">
+            Need Help?
+          </a>
+        </span>
+      </div>
       <div className="col-md-12 transactions-tab">
         <div className="tabs">
           <button
@@ -69,30 +90,49 @@ function TransactionsComponent() {
         </div>{" "}
         <div className="panels">
           <div className={`panel ${checkActive(1, "active2")}`}>
-            <TransactionTable data={allTransactions} />
+            <TransactionTable
+              data={allTransactions}
+              hidebalance={hidebalance}
+            />
           </div>
           <div className={`panel ${checkActive(2, "active2")}`}>
             {" "}
-            <TransactionTable data={paidTransactions} />
+            <TransactionTable
+              data={paidTransactions}
+              hidebalance={hidebalance}
+            />
           </div>
           <div className={`panel ${checkActive(3, "active2")}`}>
             {" "}
-            <TransactionTable data={pendingTransactions} />
+            <TransactionTable
+              data={pendingTransactions}
+              hidebalance={hidebalance}
+            />
           </div>
           <div className={`panel ${checkActive(4, "active2")}`}>
             {" "}
-            <TransactionTable data={refundTransactions} />
+            <TransactionTable
+              data={refundTransactions}
+              hidebalance={hidebalance}
+            />
           </div>
           <div className={`panel ${checkActive(5, "active2")}`}>
             {" "}
-            <TransactionTable data={failedTransactions} />
+            <TransactionTable
+              data={failedTransactions}
+              hidebalance={hidebalance}
+            />
           </div>
           <div className={`panel ${checkActive(6, "active2")}`}>
             {" "}
-            <TransactionTable data={canceledTransactions} />
+            <TransactionTable
+              data={canceledTransactions}
+              hidebalance={hidebalance}
+            />
           </div>
         </div>
       </div>
+      {displayForm && <Form setDisplayForm={setDisplayForm} />}
     </>
   );
 }
