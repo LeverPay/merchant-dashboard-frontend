@@ -10,9 +10,17 @@ import SearchBar from "../../Components/SearchBar/SearchBar";
 import { Portfolios } from "./Portfolios/Portfolios";
 import { AiFillEye } from "react-icons/ai";
 import { RiEyeCloseLine } from "react-icons/ri";
+import Token from "../../Components/User-Token/TokenContext";
+import { baseUrl, get_currencies } from "../../Components/Endpoints/Endpoints";
+import axios from "axios";
+import { useContext } from "react";
+import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 function PortfolioPage() {
   const [displayBalance, setDisplayBalance] = useState(false);
+  const [currencyState, setCurrencyState] = useState([]);
+  const { success, notify } = useContext(Token);
 
   const __bitcoin_Balance = `$15,00000USD`;
   const __Etherum_Balance = `$5,00000USD`;
@@ -24,6 +32,26 @@ function PortfolioPage() {
   const hideBalance = () => {
     setDisplayBalance(!displayBalance);
   };
+
+  useLayoutEffect(() => {
+    const fetchCurrenciesData = async () => {
+      try {
+        const req = await axios.get(baseUrl + get_currencies, {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+          },
+        });
+        if (req.status === 200) {
+          console.log(req);
+          setCurrencyState(req.data.data);
+          console.log(currencyState);
+        }
+      } catch (err) {
+        notify("Can't get data");
+      }
+    };
+    fetchCurrenciesData();
+  }, []);
 
   return (
     <>
@@ -43,7 +71,11 @@ function PortfolioPage() {
         <h3>CREDIT</h3>
       </div>
       <span className="eye" onClick={hideBalance}>
-        {!displayBalance ? <AiFillEye size="25px" /> : <RiEyeCloseLine size="25px" />}
+        {!displayBalance ? (
+          <AiFillEye size="25px" />
+        ) : (
+          <RiEyeCloseLine size="25px" />
+        )}
       </span>
       <div className="col-md-12 flexy">
         <div className="col-md-4">

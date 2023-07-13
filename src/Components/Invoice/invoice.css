@@ -121,3 +121,11 @@ hr {
 .blue-color {
   color: #1861ff;
 }
+
+.button{
+  background-color: #1861ff;
+  color: #fff;
+  border-radius: 0.5rem;
+  padding: 6px 4px;
+  border: none;
+}

@@ -18,3 +18,4 @@ export const update_Merchant_Profile =
   "/api/v1/merchant/update-merchant-profile";
 export const forgot_Password = "/api/v1/forgot-password";
 export const Reset_password = "/api/v1/reset-password";
+export const get_currencies = "/api/v1/merchant/get-merchant-currencies"

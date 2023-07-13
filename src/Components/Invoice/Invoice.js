@@ -6,10 +6,12 @@ import Col from "react-bootstrap/esm/Col";
 import "./invoice.css";
 import { nanoid } from "nanoid";
 import QRCode from "qrcode";
+import { blue } from "@mui/material/colors";
 
-function Invoice({ className }) {
+function Invoice({ className, data }) {
   const [id] = useState(nanoid);
-
+  const [stateData, setStateData] = useState(data);
+  const [value, setValue] = useState();
   const [qrcode, setQrcode] = useState(id);
 
   useEffect(() => {
@@ -27,7 +29,7 @@ function Invoice({ className }) {
         err ? console.log("err") : setQrcode(id);
       }
     );
-  });
+  }, [qrcode]);
 
   const date = new Date();
   const Morning_Afternoon = date.getHours() > 12 ? "pm" : "am";
@@ -35,6 +37,14 @@ function Invoice({ className }) {
     date.getMinutes() < 1 ? `0${date.getMinutes()}` : `${date.getMinutes()}`;
   const timeofDay = date.getHours() + ":" + minutes + " " + Morning_Afternoon;
   const time = date.toDateString() + " " + timeofDay;
+
+  useEffect(() => {
+    if (stateData !== undefined || stateData !== null) {
+      setValue(stateData);
+    }
+  }, [stateData]);
+
+  console.log(value);
 
   return (
     <Container
@@ -52,8 +62,14 @@ function Invoice({ className }) {
           <h5>Total ETH</h5>
         </span>
         <span className="px-md-3">
-          <h5 style={{ color: "#0EB500" }}>$420.89</h5>
-          <h5 style={{ color: "black" }}>Paid(ETH)</h5>
+          <h5 style={{ color: value ? value.color : "#0EB500" }}>
+            {value ? value.amount : "$420.89"}
+          </h5>
+          <h5 style={{ color: "black" }}>
+            {value && value.status.statusName !== "Successful"
+              ? value.status.statusName
+              : "Paid(ETH)"}
+          </h5>
         </span>
       </div>
       <div className="Invoice_details">
@@ -61,15 +77,17 @@ function Invoice({ className }) {
         <Container fluid>
           <Row>
             <Col className="h5">Order ID</Col>
-            <Col className="h5 blue-color">Order1</Col>
+            <Col className="h5 blue-color">
+              {value ? value.name : "Order 1"}
+            </Col>
           </Row>
           <Row>
             <Col className="row_details">Status</Col>
             <Col
               className="row_details_information"
-              style={{ color: "#0EB500" }}
+              style={{ color: value ? value.color : "#0EB500" }}
             >
-              Successful
+              {value ? value.status.statusName : "Successful"}
             </Col>
           </Row>
           <Row>
@@ -123,6 +141,14 @@ function Invoice({ className }) {
             {qrcode && <img alt="" className="qrcodeCon" src={qrcode} />}
           </div> */}
         </main>
+        <button
+        className="button"
+          disabled={
+            value && value.status.statusName !== "Successful" ? true : false
+          }
+        >
+          Refund Customer
+        </button>
       </div>
       <hr />
     </Container>
