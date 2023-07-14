@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import NotificationAddIcon from "@mui/icons-material/NotificationAdd";
@@ -13,10 +14,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { NotificationAdd } from "@mui/icons-material";
 import NotificationContext from "../NotificationContext";
 import ImageContext from "../ImageContext";
+import { AiOutlineLogout } from "react-icons/ai";
+import { baseUrl, logout } from "../../Endpoints/Endpoints";
+import TokenContext from "../../User-Token/TokenContext";
+import axios from "axios";
 
 export default function TopNav() {
   const { notification, deletNotifications, markRead } =
     useContext(NotificationContext);
+  const { notify, success } = useContext(TokenContext);
   const { vectorImage } = useContext(ImageContext);
   const [generateInvoice, setGenerateInvoice] = useState(false);
   const [closenotification, setcloseNotification] = useState(false);
@@ -66,6 +72,42 @@ export default function TopNav() {
 
   const unReadNotification = notification.map((el) => el.read);
 
+  const navigate = useNavigate();
+  const logOut = async () => {
+    try {
+      const req = await axios.get(baseUrl + logout, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      console.log(req);
+      if (req.status === 200) {
+        console.log("loggedOut");
+        window.localStorage.clear();
+        window.sessionStorage.clear();
+        if (!window.sessionStorage.getItem("Name")) {
+          setTimeout(() => navigate("/"), 3000);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      if (
+        err.response?.status === 400 ||
+        err.response?.status === 401 ||
+        err.response?.status === 403 ||
+        err.response?.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
+    }
+  };
+
   return (
     <section className="d-flex flex-column justify-content-end align-items-end">
       <div className="d-flex justify-content-end align-items-center">
@@ -96,14 +138,19 @@ export default function TopNav() {
         </motion.a>
         <span>
           <img
-            className="img-fluid rounded-circle"
+            className="img-fluid rounded-circle mx-4"
             src={
               !vectorImage ? require("../../../Assets/edit.png") : vectorImage
             }
             alt="Profile-Image"
             style={{ width: "32px" }}
           />
-          <KeyboardArrowDownIcon htmlColor="black" />
+          {/* <KeyboardArrowDownIcon htmlColor="black" /> */}
+        </span>
+
+        <span className="mx-2 logout" onClick={logOut}>
+          <AiOutlineLogout size="30px" color="#FC0019" />
+          <span className="word">Logout</span>
         </span>
       </div>
       <AnimatePresence>

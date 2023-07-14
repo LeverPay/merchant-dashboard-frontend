@@ -275,9 +275,9 @@ export default function Form() {
       console.log(Input.firstName, Input.lastName);
     }
 
-    if (Input.businuessName !== "" || Input.businuessName !== null) {
-      console.log(Input.businuessName);
-    }
+    // if (Input.businuessName !== "" || Input.businuessName !== null) {
+    //   console.log(Input.businuessName);
+    // }
 
     if (Input.password !== "") {
       console.log(Input.password);
@@ -373,10 +373,9 @@ export default function Form() {
           last_name: Input.lastName,
           email: Input.email,
           address: Input.address !== "" ? Input.address : null,
-          business_name:
-            Input.businuessName !== "" ? Input.businuessName : null,
+          business_name: Input.businuessName === null,
           phone: phone !== "" ? phone : null,
-          password: Input.password !== "" ? Input.password : null,
+          password: Input.password === null,
           country_id:
             selectCountry === undefined ||
             selectCountry === null ||
@@ -486,7 +485,7 @@ export default function Form() {
           </div>
         </div>
 
-        <div className="mt-1 py-2 d-flex flex-column">
+        {/* <div className="mt-1 py-2 d-flex flex-column">
           <label htmlFor="Businuess-name">Businuess Name</label>
 
           <div className="">
@@ -499,7 +498,7 @@ export default function Form() {
               readOnly={ReadOnly}
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="mt-1 py-2 d-flex flex-column">
           <label htmlFor="address">Address</label>
@@ -531,7 +530,7 @@ export default function Form() {
           </div>
         </div>
 
-        <div className="mt-1 py-2 d-flex flex-column">
+        {/* <div className="mt-1 py-2 d-flex flex-column">
           <label htmlFor="password">Password</label>
 
           <div className="">
@@ -544,7 +543,7 @@ export default function Form() {
               readOnly={ReadOnly}
             />
           </div>
-        </div>
+        </div> */}
 
         <div className="mt-1 py-2 d-flex flex-column" id="options">
           <label htmlFor="Country" className="rounded-1">
