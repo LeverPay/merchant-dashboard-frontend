@@ -83,14 +83,6 @@
   }
 }
 
-.active {
-  font-weight: bold;
-  border: solid 1px #fff;
-  background: #fff;
-  color: #2c379b !important;
-  border-radius: 35px;
-  width: 100%;
-}
 @media screen and (min-width: 620px) {
   .active {
     width: 250px;
@@ -119,13 +111,23 @@
   }
 }
 @media screen and (max-width: 620px) {
-  .sidebar-nav span {
+  .sidebar-nav span, .logout-btn {
     font-size: 20px;
   }
 }
 .sidebar-links-top {
   margin-top: 70px !important;
 }
+
+.sidebar-links-top .mapped-items .active{
+  font-weight: bold;
+  border: solid 1px #fff;
+  background: #fff;
+  color: #2c379b !important;
+  border-radius: 35px;
+  width: 100%;
+}
+
 @media screen and (max-width: 620px) {
   .link-light span {
     font-size: 15px !important;

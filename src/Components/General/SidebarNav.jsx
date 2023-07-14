@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import "./general.css";
 import Logo from "./Header-components/Logo";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
@@ -7,14 +7,19 @@ import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import BusinessCenterRoundedIcon from "@mui/icons-material/BusinessCenterRounded";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
 import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
 import MenuIcon from "../../Assets/menu2.png";
 import CloseIcon from "../../Assets/close2.png";
+import { AiOutlineLogout } from "react-icons/ai";
+import { baseUrl, logout } from "../Endpoints/Endpoints";
+import TokenContext from "../User-Token/TokenContext";
+import axios from "axios";
 
 export default function SidebarNav(props) {
+  const { notify, success } = useContext(TokenContext);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [click, setClick] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -83,6 +88,10 @@ export default function SidebarNav(props) {
       link: "security",
       title: "Setting",
     },
+    // {
+    //   icon: <AiOutlineLogout color="#FC0019" size="25px" />,
+    //   title: "Logout",
+    // },
   ];
 
   const sidebarItemsBottom = [
@@ -104,6 +113,42 @@ export default function SidebarNav(props) {
   const [active, setActive] = useState(false);
   const handleNavClick = (idx) => {
     setActive(idx);
+  };
+
+  const navigate = useNavigate();
+  const logOut = async () => {
+    try {
+      const req = await axios.get(baseUrl + logout, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      console.log(req);
+      if (req.status === 200) {
+        console.log("loggedOut");
+        window.localStorage.clear();
+        window.sessionStorage.clear();
+        if (!window.sessionStorage.getItem("Name")) {
+          setTimeout(() => navigate("/"), 3000);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      if (
+        err.response?.status === 400 ||
+        err.response?.status === 401 ||
+        err.response?.status === 403 ||
+        err.response?.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
+    }
   };
 
   return (
@@ -147,21 +192,32 @@ export default function SidebarNav(props) {
           style={{ height: `calc(100% - ${props.fixedTopHeight}px)` }}
         >
           <div className="d-flex flex-column sidebar-links-top">
-            {sidebarItemsTop.map((item, idx) => {
-              return (
-                <NavLink
-                  to={item.link}
-                  key={idx}
-                  className={`d-flex align-items-center${
-                    active ? `active` : ``
-                  }`}
-                  onClick={() => handleNavClick(idx)}
-                >
-                  <span className="link-icon">{item.icon}</span>
-                  <span onClick={closeMobileMenu}>{item.title}</span>
-                </NavLink>
-              );
-            })}
+            <div className="mapped-items">
+              {sidebarItemsTop.map((item, idx) => {
+                return (
+                  <NavLink
+                    to={item.link}
+                    key={idx}
+                    className={`d-flex align-items-center${
+                      active ? `active` : ``
+                    }`}
+                    onClick={() => handleNavClick(idx)}
+                  >
+                    <span className="link-icon">{item.icon}</span>
+                    <span onClick={closeMobileMenu}>{item.title}</span>
+                  </NavLink>
+                );
+              })}
+            </div>
+            <NavLink
+              className="d-flex align-items-center logout-btn mb-4"
+              onClick={logOut}
+            >
+              <span className="link-icon">
+                <AiOutlineLogout color="white" size="20px" />
+              </span>
+              Logout
+            </NavLink>
           </div>
           <div className="d-flex flex-column sidebar-links-bottom">
             {sidebarItemsBottom.map((item, idx) => {
