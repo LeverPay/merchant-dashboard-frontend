@@ -65,9 +65,6 @@
   text-decoration: none;
   font-family: AgrandirBold;
 }
-.form-links :hover {
-  text-decoration: underline;
-}
 .form-links span {
   font-size: 20px;
 }

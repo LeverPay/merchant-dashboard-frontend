@@ -61,12 +61,9 @@
   font-size: 18px;
 }
 .form-links {
-  color: #0c47db;
+  color: #2962f2;
   text-decoration: none;
   font-family: AgrandirBold;
-}
-.form-links :hover {
-  text-decoration: underline;
 }
 .form-links span {
   font-size: 20px;
