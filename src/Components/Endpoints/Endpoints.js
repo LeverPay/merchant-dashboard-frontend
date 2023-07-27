@@ -20,3 +20,4 @@ export const forgot_Password = "/api/v1/forgot-password";
 export const Reset_password = "/api/v1/reset-password";
 export const get_currencies = "/api/v1/merchant/get-merchant-currencies";
 export const logout = "/api/v1/merchant/logout";
+export const update_payment_Method = "/api/v1/admin/add-payment-option";

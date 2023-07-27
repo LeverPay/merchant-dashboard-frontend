@@ -1,14 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useContext } from "react";
 import Button from "../General/Button component/Button";
 import PaymentImg from "../../Assets/payment-img.png";
+import { baseUrl, update_payment_Method } from "../Endpoints/Endpoints";
+import axios from "axios";
+import Notifications from "../General/NotificationContext";
+import TokenContext from "../User-Token/TokenContext";
 export default function Form() {
+  const { notify, success } = useContext(TokenContext);
   const [Input, setInput] = useState({
     UsdT: false,
     Busd: false,
     UsdC: false,
     Naira: false,
     Fiat: false,
-    duration: "",
+    duration: "Daily",
   });
 
   const [DisabledBtn, setDisabledBtn] = useState(true);
@@ -32,9 +37,12 @@ export default function Form() {
       setDisabledBtn(true);
     }
     setInput((prev) => {
-      return { ...prev, [name]: type === "checkbox" ? checked : value };
+      return { ...prev, [name]: value };
     });
   };
+
+  let value1, value2, value3, value4, value5;
+  let iconName1, iconName2, iconName3, iconName4, iconName5;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -49,21 +57,61 @@ export default function Form() {
     const final = initial.filter((el) => el === true);
     setDisabledBtn(true);
     if (ref1.current.checked) {
-      ref1.current.disabled = true;
+      value1 = ref1.current.value;
+      iconName1 = ref1.current.nextSibling.textContent;
+      if (!ref1.current.disabled) {
+        updatePaymentMethod(iconName1, value1);
+        console.log("input 1 made a request");
+        ref1.current.disabled = true;
+      } else {
+        console.log("no Request made by input 1");
+      }
     }
     if (ref2.current.checked) {
-      ref2.current.disabled = true;
+      value2 = ref2.current.value;
+      iconName2 = ref2.current.nextSibling.textContent;
+      console.log(iconName2, value2);
+      if (!ref2.current.disabled) {
+        updatePaymentMethod(value2, iconName2);
+        console.log("input 2 made a request");
+        ref2.current.disabled = true;
+      } else {
+        console.log("No request made by input 2");
+      }
     }
     if (ref3.current.checked) {
-      ref3.current.disabled = true;
+      value3 = ref3.current.value;
+      iconName3 = ref3.current.nextSibling.textContent;
+      if (!ref3.current.disabled) {
+        updatePaymentMethod(iconName3, value3);
+        console.log("input 3 made a request");
+        ref3.current.disabled = true;
+      } else {
+        console.log("No request made by input 3");
+      }
     }
     if (ref4.current.checked) {
-      ref4.current.disabled = true;
+      value4 = ref4.current.value;
+      iconName4 = ref4.current.nextSibling.textContent;
+      if (!ref4.current.disabled) {
+        updatePaymentMethod(iconName4, value4);
+        console.log("input 4 made a request");
+        ref4.current.disabled = true;
+      } else {
+        console.log("No request made by input 4");
+      }
     }
     if (ref5.current.checked) {
-      ref5.current.disabled = true;
+      value5 = ref5.current.value;
+      iconName5 = ref5.current.nextSibling.textContent;
+      if (!ref5.current.disabled) {
+        updatePaymentMethod(iconName5, value5);
+        console.log("input 5 made a request");
+        ref5.current.disabled = true;
+      } else {
+        console.log("No request made by input 5");
+      }
     }
-    console.log(final);
   };
 
   const cancel = (e) => {
@@ -98,7 +146,29 @@ export default function Form() {
         Input.Fiat = false;
       }
     }
-    console.log(Input);
+  };
+
+  const updatePaymentMethod = async (value1, value2) => {
+    try {
+      const req = await axios.post(
+        baseUrl + update_payment_Method,
+        {
+          name: value1,
+          icon: value2,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+          },
+        }
+      );
+      console.log(req);
+      if (req.status === 201) {
+        success(req.statusText);
+      }
+    } catch (err) {
+      notify(err.message);
+    }
   };
 
   return (
@@ -117,9 +187,10 @@ export default function Form() {
               </p>
               <div className="flex mt-4">
                 <input
-                  type="checkbox"
+                  type="radio"
                   className="checkbox mx-2"
                   name="UsdT"
+                  value="USD₮"
                   checked={Input.UsdT}
                   onChange={handleChange}
                   ref={ref1}
@@ -130,9 +201,10 @@ export default function Form() {
               </div>
               <div className="flex mt-4">
                 <input
-                  type="checkbox"
+                  type="radio"
                   className="checkbox mx-2"
                   name="UsdC"
+                  value="USDC"
                   checked={Input.UsdC}
                   onChange={handleChange}
                   ref={ref2}
@@ -143,9 +215,10 @@ export default function Form() {
               </div>
               <div className="flex mt-4">
                 <input
-                  type="checkbox"
+                  type="radio"
                   className="checkbox mx-2"
                   name="Busd"
+                  value="BUSD"
                   checked={Input.Busd}
                   onChange={handleChange}
                   ref={ref3}
@@ -156,9 +229,10 @@ export default function Form() {
               </div>
               <div className="flex mt-4">
                 <input
-                  type="checkbox"
+                  type="radio"
                   className="checkbox mx-2"
                   name="Naira"
+                  value="₦"
                   checked={Input.Naira}
                   onChange={handleChange}
                   ref={ref4}
@@ -169,9 +243,10 @@ export default function Form() {
               </div>
               <div className="flex mt-4">
                 <input
-                  type="checkbox"
+                  type="radio"
                   className="checkbox mx-2"
                   name="Fiat"
+                  value="FIAT"
                   checked={Input.Fiat}
                   onChange={handleChange}
                   ref={ref5}
