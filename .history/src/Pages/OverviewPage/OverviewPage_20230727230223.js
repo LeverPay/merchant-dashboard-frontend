@@ -19,7 +19,6 @@ import CountUp from "react-countup";
 
 import Expenses from "./Expenses/Expenses";
 import NewExpense from "./NewExpense/NewExpense";
-import ExpensesChart from "./Expenses/ExpensesChart";
 
 const DUMMY_EXPENSES = [
   {
@@ -60,7 +59,7 @@ const DUMMY_EXPENSES = [
     date: new Date(2019, 10, 28),
   },
 ];
-export const OverviewPage = (props) => {
+export const OverviewPage = () => {
   const [expenses, setExpenses] = useState(DUMMY_EXPENSES);
 
   const addExpenseHandler = (expense) => {
@@ -68,10 +67,6 @@ export const OverviewPage = (props) => {
       return [expense, ...prevExpenses];
     });
   };
-
-  // const filteredExpenses = props.items.filter((expense) => {
-  //   return expense.date.getFullYear().toString() === filteredYear;
-  // });
 
   return (
     <>
@@ -206,8 +201,7 @@ export const OverviewPage = (props) => {
                 </h3>
               </div>
               <div className="col-md-5">
-                {/* <Expenses items={expenses} /> */}
-                {/* <ExpensesChart expenses={filteredExpenses} /> */}
+                <Expenses items={expenses} />
               </div>
             </div>
           </div>{" "}
@@ -415,14 +409,11 @@ export const OverviewPage = (props) => {
         </div>
         {/* <NewExpense onAddExpense={addExpenseHandler} /> */}
         <div className="col-md-12 flexy">
-          <div className="col-md-4 ">
+          <div className="col-md-4"></div>
+          <div className="col-md-8">
             {" "}
-            <div className="col-md-11 glass-bg">
-              {" "}
-              <Expenses items={expenses} />
-            </div>
+            <Expenses items={expenses} />
           </div>
-          <div className="col-md-8"> </div>
         </div>
       </div>
     </>

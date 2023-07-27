@@ -355,7 +355,7 @@
   background: #082e88;
   box-shadow: 0px 6.253967761993408px 12.507935523986816px 0px
     rgba(227, 227, 227, 0.5);
-  color: #fff;
+  color: #082e88;
   font-family: AgrandirBold;
   font-size: 12px;
   font-style: normal;
@@ -363,8 +363,8 @@
   line-height: normal;
 }
 .empty-div button:hover {
-  background: #fff;
-  color: #082e88;
+  background: #082e88;
+  color: #fff;
   transition: 0.5s ease;
 }
 .empty-div hr {

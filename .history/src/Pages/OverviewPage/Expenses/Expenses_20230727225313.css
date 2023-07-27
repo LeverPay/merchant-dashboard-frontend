@@ -2,7 +2,6 @@
   padding: 1rem;
   background: transparent;
   margin: 2rem auto;
-
-  width: 100%;
-  border: none;
+  width: 50rem;
+  max-width: 95%;
 }

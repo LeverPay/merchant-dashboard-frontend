@@ -12,9 +12,9 @@ const Expenses = (props) => {
   const filteredExpenses = props.items.filter((expense) => {
     return expense.date.getFullYear().toString() === filteredYear;
   });
-  // useEffect(() => {
-  //   setFilteredYear();
-  // }, []);
+  useEffect(() => {
+    filteredYear();
+  }, []);
   return (
     <Card className="expenses">
       <ExpenseFilter

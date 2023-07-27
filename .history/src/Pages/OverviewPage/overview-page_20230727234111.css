@@ -363,8 +363,8 @@
   line-height: normal;
 }
 .empty-div button:hover {
-  background: #fff;
-  color: #082e88;
+  background: #082e88;
+  color: #fff;
   transition: 0.5s ease;
 }
 .empty-div hr {

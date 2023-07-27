@@ -415,14 +415,11 @@ export const OverviewPage = (props) => {
         </div>
         {/* <NewExpense onAddExpense={addExpenseHandler} /> */}
         <div className="col-md-12 flexy">
-          <div className="col-md-4 ">
+          <div className="col-md-4"></div>
+          <div className="col-md-8">
             {" "}
-            <div className="col-md-11 glass-bg">
-              {" "}
-              <Expenses items={expenses} />
-            </div>
+            <Expenses items={expenses} />
           </div>
-          <div className="col-md-8"> </div>
         </div>
       </div>
     </>
