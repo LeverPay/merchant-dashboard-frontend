@@ -320,7 +320,7 @@ export const OverviewPage = (props) => {
                 </h3>
               </div>
               <div className="col-md-5">
-                <Transactions items={transactions} />
+                <Transactions items={expenses} />
               </div>
             </div>
           </div>{" "}

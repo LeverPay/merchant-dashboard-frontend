@@ -135,7 +135,7 @@ const DUMMY_EXPENSES = [
   },
 ];
 
-const DUMMY_EXPENSES2 = [
+const DUMMY_EXPENSESTwo = [
   {
     id: "e1",
     title: "car insurance",
@@ -183,7 +183,7 @@ export const OverviewPage = (props) => {
   }, []);
   useEffect(() => {
     setTimeout(() => {
-      setTransactions(DUMMY_EXPENSES2);
+      setTransactions(DUMMY_EXPENSESTwo);
     }, 2000);
   }, []);
 

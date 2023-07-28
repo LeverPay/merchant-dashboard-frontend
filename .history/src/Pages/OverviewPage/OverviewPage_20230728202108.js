@@ -62,114 +62,20 @@ const DUMMY_EXPENSES = [
     date: new Date(2023, 0, 28),
   },
   {
-    id: "e7",
+    id: "e6",
     title: "vacation",
     amount: "20053",
     date: new Date(2022, 0, 28),
   },
   {
-    id: "e8",
+    id: "e6",
     title: "vacation",
     amount: "46553",
-    date: new Date(2022, 1, 28),
-  },
-  {
-    id: "e10",
-    title: "vacation",
-    amount: "89553",
-    date: new Date(2022, 2, 28),
-  },
-  {
-    id: "e11",
-    title: "vacation",
-    amount: "19553",
-    date: new Date(2022, 3, 28),
-  },
-  {
-    id: "e12",
-    title: "vacation",
-    amount: "2553",
-    date: new Date(2022, 4, 28),
-  },
-  {
-    id: "e13",
-    title: "vacation",
-    amount: "89553",
-    date: new Date(2022, 5, 28),
-  },
-  {
-    id: "e14",
-    title: "vacation",
-    amount: "89553",
-    date: new Date(2022, 6, 28),
-  },
-  {
-    id: "e15",
-    title: "vacation",
-    amount: "9553",
-    date: new Date(2022, 7, 28),
-  },
-  {
-    id: "e16",
-    title: "vacation",
-    amount: "109553",
-    date: new Date(2022, 8, 28),
-  },
-  {
-    id: "e17",
-    title: "vacation",
-    amount: "3553",
-    date: new Date(2022, 9, 28),
-  },
-  {
-    id: "e18",
-    title: "vacation",
-    amount: "23553",
-    date: new Date(2022, 10, 28),
-  },
-  {
-    id: "e19",
-    title: "vacation",
-    amount: "133553",
-    date: new Date(2022, 11, 28),
-  },
-];
-
-const DUMMY_EXPENSES2 = [
-  {
-    id: "e1",
-    title: "car insurance",
-    amount: "40053",
-    date: new Date(2023, 0, 28),
-  },
-  {
-    id: "e2",
-    title: "car insurance",
-    amount: "140053",
-    date: new Date(2023, 1, 28),
-  },
-  {
-    id: "e3",
-    title: "car insurance",
-    amount: "140053",
-    date: new Date(2023, 2, 28),
-  },
-  {
-    id: "e4",
-    title: "car insurance",
-    amount: "33053",
-    date: new Date(2023, 3, 28),
-  },
-  {
-    id: "e5",
-    title: "car insurance",
-    amount: "98053",
-    date: new Date(2023, 4, 28),
+    date: new Date(2022, 0, 28),
   },
 ];
 export const OverviewPage = (props) => {
   const [expenses, setExpenses] = useState([]);
-  const [transactions, setTransactions] = useState([]);
 
   const addExpenseHandler = (expense) => {
     setExpenses((prevExpenses) => {
@@ -179,11 +85,6 @@ export const OverviewPage = (props) => {
   useEffect(() => {
     setTimeout(() => {
       setExpenses(DUMMY_EXPENSES);
-    }, 2000);
-  }, []);
-  useEffect(() => {
-    setTimeout(() => {
-      setTransactions(DUMMY_EXPENSES2);
     }, 2000);
   }, []);
 
@@ -320,7 +221,7 @@ export const OverviewPage = (props) => {
                 </h3>
               </div>
               <div className="col-md-5">
-                <Transactions items={transactions} />
+                <Transactions items={expenses} />
               </div>
             </div>
           </div>{" "}

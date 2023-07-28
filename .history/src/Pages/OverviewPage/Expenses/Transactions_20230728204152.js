@@ -3,27 +3,24 @@ import ExpenseFilter from "./ExpenseFilter";
 import ExpensesList from "./ExpensesList";
 import "./Expenses.css";
 import Card from "../Ui/Card";
-import ExpensesChart from "./ExpensesChart";
-const Expenses = (props) => {
-  const [filteredYear, setFilteredYear] = useState("2023");
+import TransactionsChart from "./TransactionsChart";
+const Transactions = (props) => {
+  const [filteredYear, setFilteredYear] = useState("2020");
   const filterChangeHandler = (selectedYear) => {
     setFilteredYear(selectedYear);
   };
   const filteredExpenses = props.items.filter((expense) => {
     return expense.date.getFullYear().toString() === filteredYear;
   });
-  // useEffect(() => {
-  //   setFilteredYear();
-  // }, []);
+
   return (
-    <Card className="expenses">
+    <Card className="expenses2 expenses">
       <ExpenseFilter
         selected={filteredYear}
         onChangeFilter={filterChangeHandler}
       />
-      <ExpensesChart expenses={filteredExpenses} />
-      {/* <ExpensesList items={filteredExpenses} /> */}
+      <TransactionsChart expenses={filteredExpenses} />
     </Card>
   );
 };
-export default Expenses;
+export default Transactions;

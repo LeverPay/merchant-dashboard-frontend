@@ -135,41 +135,40 @@ const DUMMY_EXPENSES = [
   },
 ];
 
-const DUMMY_EXPENSES2 = [
+const DUMMY_EXPENSESTwo = [
   {
     id: "e1",
     title: "car insurance",
     amount: "40053",
-    date: new Date(2023, 0, 28),
+    date: new Date(2023, 6, 28),
   },
   {
-    id: "e2",
+    id: "e1",
     title: "car insurance",
-    amount: "140053",
-    date: new Date(2023, 1, 28),
+    amount: "40053",
+    date: new Date(2023, 6, 28),
   },
   {
-    id: "e3",
+    id: "e1",
     title: "car insurance",
-    amount: "140053",
-    date: new Date(2023, 2, 28),
+    amount: "40053",
+    date: new Date(2023, 6, 28),
   },
   {
-    id: "e4",
+    id: "e1",
     title: "car insurance",
-    amount: "33053",
-    date: new Date(2023, 3, 28),
+    amount: "40053",
+    date: new Date(2023, 6, 28),
   },
   {
-    id: "e5",
+    id: "e1",
     title: "car insurance",
-    amount: "98053",
-    date: new Date(2023, 4, 28),
+    amount: "40053",
+    date: new Date(2023, 6, 28),
   },
 ];
 export const OverviewPage = (props) => {
   const [expenses, setExpenses] = useState([]);
-  const [transactions, setTransactions] = useState([]);
 
   const addExpenseHandler = (expense) => {
     setExpenses((prevExpenses) => {
@@ -179,11 +178,6 @@ export const OverviewPage = (props) => {
   useEffect(() => {
     setTimeout(() => {
       setExpenses(DUMMY_EXPENSES);
-    }, 2000);
-  }, []);
-  useEffect(() => {
-    setTimeout(() => {
-      setTransactions(DUMMY_EXPENSES2);
     }, 2000);
   }, []);
 
@@ -320,7 +314,7 @@ export const OverviewPage = (props) => {
                 </h3>
               </div>
               <div className="col-md-5">
-                <Transactions items={transactions} />
+                <Transactions items={expenses} />
               </div>
             </div>
           </div>{" "}
