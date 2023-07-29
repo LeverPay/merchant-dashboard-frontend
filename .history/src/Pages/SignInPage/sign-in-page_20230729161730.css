@@ -71,12 +71,11 @@
   color: #d4af37;
   text-decoration: none;
   font-family: AgrandirBold;
-  font-size: 18px;
+  font-size: 22px;
   text-align: left !important;
 }
 .form-links :hover {
   text-decoration: underline;
-  color: #000 !important;
 }
 .form-links span {
   font-size: 20px;

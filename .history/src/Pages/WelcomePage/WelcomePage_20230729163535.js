@@ -57,8 +57,6 @@ function WelcomePage() {
           accType="Business"
           icon={Icon}
           bg2="#Fdecc4"
-          message="  Sell in local currency and get remittance instantly in your preferred
-          currency"
         />
 
         <CreateAccount
@@ -67,8 +65,6 @@ function WelcomePage() {
           bg="#F49B09EB"
           bg2="transparent"
           icon={Icon2}
-          message="Sign up now
-and get verified in a few button clicks"
         />
 
         {/* <BusinessAccount /> */}

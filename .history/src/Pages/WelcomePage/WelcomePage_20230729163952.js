@@ -67,8 +67,6 @@ function WelcomePage() {
           bg="#F49B09EB"
           bg2="transparent"
           icon={Icon2}
-          message="Sign up now
-and get verified in a few button clicks"
         />
 
         {/* <BusinessAccount /> */}

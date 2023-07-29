@@ -436,12 +436,12 @@ export const OverviewPage = (props) => {
               </center>
               <div className="flexy flexyM">
                 <div className="col-md-6 report-div">
-                  <p>Total users</p>
-                  <h4>450,000</h4>
+                  <p>Last Week Revenue</p>
+                  <h4>+29.7%</h4>
                 </div>
                 <div className="col-md-6 report-div">
-                  <p>Total returned users</p>
-                  <h4>-405,000</h4>
+                  <p>This Week Revenue</p>
+                  <h4>-53.4%</h4>
                 </div>
               </div>
               <hr />
@@ -455,7 +455,7 @@ export const OverviewPage = (props) => {
             </div>
           </div>
           <div className="empty-div col-md-8 remitance-div glass-bg">
-            <h3>Total Revenue</h3>
+            <h3>Remitances</h3>
             <div className="activity-summary row row-cols-1 row-cols-lg-3 g-2 g-lg-3">
               <div className="col">
                 <div className="summary-item bordered-summary">
@@ -466,11 +466,11 @@ export const OverviewPage = (props) => {
                       {" "}
                       <CountUp
                         start={0}
-                        end={10}
+                        end={100000000}
                         duration={4}
                         decimal=""
                         prefix=" "
-                        suffix="+billion"
+                        suffix="+"
                         enableScrollSpy={true}
                       />
                     </h3>
@@ -487,11 +487,11 @@ export const OverviewPage = (props) => {
                       {" "}
                       <CountUp
                         start={0}
-                        end={10}
+                        end={319}
                         duration={4}
                         decimal=""
                         prefix=" "
-                        suffix="billion+"
+                        suffix="+"
                         enableScrollSpy={true}
                       />
                     </h3>
@@ -508,7 +508,7 @@ export const OverviewPage = (props) => {
                       {" "}
                       <CountUp
                         start={0}
-                        end={10000}
+                        end={319}
                         duration={4}
                         decimal=""
                         prefix=" "
@@ -531,46 +531,8 @@ export const OverviewPage = (props) => {
           <div className="col-md-4 ">
             {" "}
             <div className="col-md-11 glass-bg users-container">
-              <h5>Monthly Successful Transactions</h5>
+              <h5>Monthly Active USERS</h5>
               <Expenses items={expenses} />
-            </div>
-            <div className="transa-div col-md-11  glass-bg">
-              <center>
-                <h5>Total Transactions</h5>
-              </center>
-              <div className="flexy flexyM">
-                <div className="col-md-6 report-div">
-                  <p>Successful Transactions </p>
-
-                  <h4>
-                    {" "}
-                    <CountUp
-                      start={0}
-                      end={305000}
-                      duration={4}
-                      decimal=""
-                      prefix=" "
-                      suffix=""
-                      enableScrollSpy={true}
-                    />
-                  </h4>
-                </div>
-                <div className="col-md-6 report-div">
-                  <p>Failed Transactions</p>
-                  <h4>
-                    {" "}
-                    <CountUp
-                      start={0}
-                      end={350}
-                      duration={4}
-                      decimal=""
-                      prefix=" "
-                      suffix=""
-                      enableScrollSpy={true}
-                    />
-                  </h4>
-                </div>
-              </div>
             </div>
           </div>
           <div className="col-md-8 transact-container">

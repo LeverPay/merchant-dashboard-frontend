@@ -541,34 +541,11 @@ export const OverviewPage = (props) => {
               <div className="flexy flexyM">
                 <div className="col-md-6 report-div">
                   <p>Successful Transactions </p>
-
-                  <h4>
-                    {" "}
-                    <CountUp
-                      start={0}
-                      end={305000}
-                      duration={4}
-                      decimal=""
-                      prefix=" "
-                      suffix=""
-                      enableScrollSpy={true}
-                    />
-                  </h4>
+                  <h4>305,000</h4>
                 </div>
                 <div className="col-md-6 report-div">
                   <p>Failed Transactions</p>
-                  <h4>
-                    {" "}
-                    <CountUp
-                      start={0}
-                      end={350}
-                      duration={4}
-                      decimal=""
-                      prefix=" "
-                      suffix=""
-                      enableScrollSpy={true}
-                    />
-                  </h4>
+                  <h4>350</h4>
                 </div>
               </div>
             </div>

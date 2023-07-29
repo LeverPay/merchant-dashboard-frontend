@@ -315,13 +315,14 @@
   margin-top: 60px;
   margin-bottom: 60px;
 }
-.transa-div {
+.-transa-div {
   background-color: #fff;
-  padding: 30px 10px;
+
   border: solid 1px #fff;
   border-radius: 20px;
-  height: fit-content;
-  margin-top: 50px;
+  height: 145px;
+  margin-top: 60px;
+  margin-bottom: 60px;
 }
 .mdiv1 {
   padding: 80px 20px;

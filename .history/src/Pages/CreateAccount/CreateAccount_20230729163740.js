@@ -10,6 +10,8 @@ import { fetchInfo, countries, baseUrl } from "../../Components/Endpoints";
 
 import CreateAccountForm from "../CreateAccountForm/CreateAccountForm";
 
+import { ToastContainer, toast } from "react-toastify";
+
 export default function CreateAccount(props) {
   const [slideShow, setSlideShow] = useState(false);
   const [countriesData, setCountries] = useState({});
@@ -18,6 +20,27 @@ export default function CreateAccount(props) {
     event.currentTarget.disabled = true;
     console.log("button clicked");
   };
+
+  const notify = (message) => {
+    toast.error(message, {
+      position: "top-center",
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: true,
+      theme: "light",
+    });
+  };
+
+  const success = (message) => {
+    toast.success(message, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      theme: "light",
+    });
+  };
+
   const fetchData = async () => {
     try {
       const response = await axios.get(baseUrl + countries); // Replace with your API endpoint
@@ -33,11 +56,13 @@ export default function CreateAccount(props) {
   const htmlData = () => {
     return (
       <>
-        <div className="slider-container">
-          <div className="sliderBody">
+        <div className="slider-container ">
+          <div className="sliderBody ">
             <CreateAccountForm
               accType={props.accType}
               countryList={countriesData}
+              notify={notify}
+              success={success}
             />
           </div>
           <div className="sliderFooter">
@@ -63,9 +88,11 @@ export default function CreateAccount(props) {
       >
         <img src={props.icon} alt="" width="10%" style={{ background: bg2 }} />
         <h6>{props.accType}?</h6>
-        <p>Receive crypto payment and make payment with crypto</p>
-      </button>
-
+        <p>
+          Sell in local currency and get remittance instantly in your preferred
+          currency
+        </p>
+      </button>{" "}
       <Slider
         className="otp-slide"
         id={props.id}

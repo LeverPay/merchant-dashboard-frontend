@@ -534,44 +534,7 @@ export const OverviewPage = (props) => {
               <h5>Monthly Successful Transactions</h5>
               <Expenses items={expenses} />
             </div>
-            <div className="transa-div col-md-11  glass-bg">
-              <center>
-                <h5>Total Transactions</h5>
-              </center>
-              <div className="flexy flexyM">
-                <div className="col-md-6 report-div">
-                  <p>Successful Transactions </p>
-
-                  <h4>
-                    {" "}
-                    <CountUp
-                      start={0}
-                      end={305000}
-                      duration={4}
-                      decimal=""
-                      prefix=" "
-                      suffix=""
-                      enableScrollSpy={true}
-                    />
-                  </h4>
-                </div>
-                <div className="col-md-6 report-div">
-                  <p>Failed Transactions</p>
-                  <h4>
-                    {" "}
-                    <CountUp
-                      start={0}
-                      end={350}
-                      duration={4}
-                      decimal=""
-                      prefix=" "
-                      suffix=""
-                      enableScrollSpy={true}
-                    />
-                  </h4>
-                </div>
-              </div>
-            </div>
+            <div className="empty-div col-md-11  mdiv1 glass-bg"></div>
           </div>
           <div className="col-md-8 transact-container">
             <TransactionsComponent />

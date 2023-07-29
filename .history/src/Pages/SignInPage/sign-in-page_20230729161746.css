@@ -76,7 +76,6 @@
 }
 .form-links :hover {
   text-decoration: underline;
-  color: #000 !important;
 }
 .form-links span {
   font-size: 20px;

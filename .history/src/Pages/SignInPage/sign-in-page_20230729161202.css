@@ -1,7 +1,7 @@
 .signin-div {
   background: url("../../Assets/login-bg.jpg");
   background-size: cover;
-  height: 1000px;
+  height: 100%;
   margin-top: -80px;
   background-position: center;
   padding-top: 100px;
@@ -31,7 +31,6 @@
   color: #fff;
   font-family: AgrandirBold;
   margin-top: 10px;
-  text-align: left !important;
 }
 .sign-form-body input {
   height: 50px;
@@ -54,7 +53,6 @@
   margin-top: 35px;
   font-family: AgrandirBold;
   color: #fff;
-  text-align: left !important;
 }
 .sign-form-body button {
   width: 100%;
@@ -71,23 +69,19 @@
   color: #d4af37;
   text-decoration: none;
   font-family: AgrandirBold;
-  font-size: 18px;
-  text-align: left !important;
+  font-size: 22px;
 }
 .form-links :hover {
   text-decoration: underline;
-  color: #000 !important;
 }
 .form-links span {
   font-size: 20px;
-  text-align: left !important;
 }
 .sign-form-body p {
   color: #fff;
   font-family: AgrandirBold !important;
   margin-top: 45px;
   margin-bottom: 0;
-  text-align: left !important;
 }
 .sign-in:disabled {
   background: #abbce7;
