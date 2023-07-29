@@ -1,0 +1,12 @@
+.expenses-filter_controls {
+  margin-bottom: 30px;
+}
+.expenses-filter_controls label {
+  color: black;
+  font-family: AgrandirRegular;
+  font-size: 8px;
+}
+select {
+  padding: 5px 10px;
+  border-radius: 10px;
+}

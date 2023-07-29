@@ -1,0 +1,58 @@
+.chart-bar {
+  height: 130%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.chart-bar2 {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-bar__inner {
+  height: 100%;
+  width: 100%;
+  /* border: 1px solid #313131; */
+  border-radius: 12px;
+  background-color: #bcc2ed;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.chart-bar__inner2 {
+  height: 100%;
+  width: 80%;
+  /* border: 1px solid #313131; */
+  border-radius: 12px;
+  background-color: #bcc2ed;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.chart-bar__fill {
+  background-color: #082e88;
+  width: 100%;
+  transition: all 0.3s ease-out;
+}
+
+.chart-bar__fill2 {
+  background-color: #082e88;
+  width: 100%;
+  transition: all 0.3s ease-out;
+}
+
+.chart-bar__label {
+  font-weight: bold;
+  font-size: 0.5rem;
+  text-align: center;
+}
+.chart-bar__label2 {
+  color: transparent;
+  font-size: 15px;
+  text-align: center;
+}

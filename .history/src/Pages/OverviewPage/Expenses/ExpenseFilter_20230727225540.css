@@ -1,0 +1,10 @@
+.expenses-filter_controls {
+  margin-bottom: 30px;
+}
+.expenses-filter_controls label {
+  color: black;
+}
+select {
+  padding: 5px10px;
+  border-radius: 10px;
+}
