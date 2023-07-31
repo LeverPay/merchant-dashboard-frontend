@@ -6,7 +6,7 @@ import React, {
   useLayoutEffect,
 } from "react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import NotificationAddIcon from "@mui/icons-material/NotificationAdd";
@@ -242,14 +242,19 @@ export default function TopNav() {
                                         <li>Price:{el.price}</li>
                                         <li>Description:{el.description}</li>
                                         <span className="my-4" ref={btn}>
-                                          <Button
+                                          <Link
                                             style={{
                                               color: "#fff",
                                               backgroundColor: "#0051FF",
+                                              padding: "0.8rem 0.5rem",
+                                              borderRadius: "0.8rem",
+                                              textDecoration: "none",
+                                              fontSize: "1.2rem",
                                             }}
+                                            to="create-invoice"
                                           >
                                             Generate Invoice
-                                          </Button>
+                                          </Link>
                                         </span>
                                       </span>
                                     );

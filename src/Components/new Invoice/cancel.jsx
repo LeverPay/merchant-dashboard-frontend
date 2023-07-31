@@ -8,22 +8,36 @@ export default function Cancel({
   inputVal,
   setInputVal,
   setCancel,
-  hideForm
+  hideForm,
 }) {
   const handleChange = (e) => {
-    const { value } = e.target;
+    const { value, name } = e.target;
 
     setInputVal((prevInputVal) => ({
       ...prevInputVal,
-      reason: value,
+      [name]: value,
     }));
   };
 
+  console.log(inputVal);
+
   return (
-    <div
+    <section
+      action=""
       className="position-absolute top-50 start-50 translate-middle d-flex flex-column 
   justify-content-center px-4 py-3 cancel"
     >
+      <div className="d-flex grp justify-content-between fs-5 my-4">
+        <input
+        className="container"
+          type="text"
+          name="transactionID"
+          id="transactId"
+          placeholder="Enter Transaction ID"
+          onChange={handleChange}
+          value={inputVal.transactionID}
+        />
+      </div>
       <h6 className="fs-3 fw-bold text-center">Reason For This?</h6>
       <div className="d-flex grp justify-content-between fs-5 my-2">
         <label htmlFor="Reason1" id="check1">
@@ -85,6 +99,6 @@ export default function Cancel({
           </Button>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

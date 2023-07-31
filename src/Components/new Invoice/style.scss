@@ -44,6 +44,7 @@
     border-radius: 10px;
     background: linear-gradient(154deg, #0051ff 0%, #0b0230 100%);
     width: 70%;
+    height: auto !important;
     h6 {
       color: #fff;
     }
@@ -102,8 +103,12 @@
 
 @media screen and (max-width: 767px) {
   .invoice {
-    width: 90%;
+    width: 100%;
     left: 5%;
     top: 10%;
+  }
+
+  .cancel, .confirm{
+    width: 100% !important;
   }
 }

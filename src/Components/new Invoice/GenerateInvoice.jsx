@@ -19,9 +19,11 @@ export default function GenerateInvoice() {
   const [cancel, setCancel] = useState(false);
   const [token, setToken] = useState("");
   const [backBtnClicked, setBackbtnClicked] = useState(false);
+  const [cancelBtnClicked, setCancelBtnClicked] = useState(false);
   const [confirmBtnClicked, setConfirmBtnClicked] = useState(false);
   const [inputVal, setInputVal] = useState({
     reason: "",
+    transactionID: "",
   });
 
   const [input, setInput] = useState({
@@ -44,22 +46,35 @@ export default function GenerateInvoice() {
   const cancelInvoiceAction = (e) => {
     e.preventDefault();
     setCancel(true);
-    if (inputVal.reason !== "" && !backBtnClicked) {
-      console.log(inputVal.reason);
-      setSuccess(true);
-      setTimeout(() => {
-        // setGenerateInvoice(false);
-        alert("Invoice cancellation successful");
-      }, 3000);
-      setTimeout(() => window.location.reload(), 5000);
+    setConfirmBtnClicked(true);
+
+    if (confirmBtnClicked && inputVal.reason === "") {
+      notify("No reason given");
+    } else if (confirmBtnClicked && inputVal.transactionID === "") {
+      notify("TransactionID field empty");
+    } else {
+      if (
+        confirmBtnClicked &&
+        inputVal.reason !== "" &&
+        !backBtnClicked &&
+        inputVal.transactionID !== ""
+      ) {
+        console.log(inputVal.reason);
+        setSuccess(true);
+        setTimeout(() => {
+          // setGenerateInvoice(false);
+          alert("Invoice cancellation successful");
+        }, 3000);
+        setTimeout(() => window.location.reload(), 5000);
+      }
     }
   };
 
   const cancelInvoice = (e) => {
     e.preventDefault();
-    setConfirmBtnClicked(true);
+    setCancelBtnClicked(true);
     setBackbtnClicked(false);
-    if (confirmBtnClicked) cancelInvoiceAction(e);
+    if (cancelBtnClicked) cancelInvoiceAction(e);
   };
 
   const hideForm = () => {
