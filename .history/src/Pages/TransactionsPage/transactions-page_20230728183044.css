@@ -1,0 +1,36 @@
+.transactionPage-heading {
+  display: flex;
+  margin-bottom: 60px;
+}
+.transactionPage-heading h3 {
+  flex-grow: 1;
+  color: #fb0000;
+  font-family: AgrandirBold;
+}
+.transaction-select {
+  border: solid 4px rgb(215, 212, 212);
+  border-style: outset;
+  border-radius: 15px;
+}
+.invoice-link {
+  color: #0e1e5b;
+  text-decoration: none;
+  font-family: AgrandirBold;
+}
+.modal-content {
+  height: fit-content !important;
+  margin: 0 !important;
+  border: none !important;
+  padding: 0 30px !important;
+  box-shadow: -1px 2px 5px 15px rgba(49, 49, 49, 0.75);
+  -webkit-box-shadow: -1px 2px 5px 15px rgba(49, 49, 49, 0.75);
+  -moz-box-shadow: -1px 2px 5px 15px rgba(49, 49, 49, 0.75);
+}
+.modal-body {
+  height: fit-content !important;
+  /* padding: 0 !important; */
+  margin: 0 !important;
+}
+.transact-div {
+  background: #0b0230;
+}

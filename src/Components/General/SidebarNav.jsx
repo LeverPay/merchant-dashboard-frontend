@@ -187,7 +187,7 @@ export default function SidebarNav(props) {
         >
           <div
             className="d-flex align-items-center bg-light px-3 logo-container"
-            style={{ height: "50%", borderTopRightRadius: "20px" }}
+            style={{ height: "130%", borderTopRightRadius: "20px" }}
           >
             <Logo />
             <span
