@@ -15,6 +15,8 @@ import View from "./Pages/View";
 import WelcomePage from "./Pages/WelcomePage/WelcomePage";
 import { useLocation } from "react-router-dom";
 import ForgetPassword from "./Pages/SignInPage/ForgotPassword/ForgetPassword";
+import Generate_Invoice_Page from "./Pages/Generate Invoice/Generate_Invoice_Page";
+import Subscription from "./Pages/SubscriptionPage/Subscription";
 
 function App(props) {
   const [showNav, setShowNav] = useState(true);
@@ -54,6 +56,8 @@ function App(props) {
           <Route path="payment-method" element={<PaymentMethod />} />
           <Route path="welcome" element={<WelcomePage />} />
           <Route path="forget-password" element={<ForgetPassword />} />
+          <Route path="create-invoice" element={<Generate_Invoice_Page />} />
+          <Route path="subscriptions" element={<Subscription />} />
         </Routes>
       </div>
     </div>

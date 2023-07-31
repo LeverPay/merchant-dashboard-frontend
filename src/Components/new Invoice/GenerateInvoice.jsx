@@ -11,9 +11,9 @@ import Success from "./Success";
 import TokenContext from "../User-Token/TokenContext";
 import Cancel from "./cancel";
 
-export default function GenerateInvoice({ setGenerateInvoice }) {
+export default function GenerateInvoice() {
   const { notification, setNotification } = useContext(NotificationContext);
-  const { success: alert } = useContext(TokenContext);
+  const { success: alert, notify } = useContext(TokenContext);
   const [confirm, setConfirm] = useState(false);
   const [success, setSuccess] = useState(false);
   const [cancel, setCancel] = useState(false);
@@ -48,8 +48,8 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
       console.log(inputVal.reason);
       setSuccess(true);
       setTimeout(() => {
-        setGenerateInvoice(false);
-        alert("Invoce cancellation successful");
+        // setGenerateInvoice(false);
+        alert("Invoice cancellation successful");
       }, 3000);
       setTimeout(() => window.location.reload(), 5000);
     }
@@ -206,7 +206,7 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
       const newPrice = price.current.textContent;
       input.price = newPrice;
       setTimeout(() => {
-        setGenerateInvoice(false);
+        // setGenerateInvoice(false);
         alert("Invoice Successfully Sent To User");
       }, 3000);
       setTimeout(() => window.location.reload(), 5000);
@@ -214,7 +214,7 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
       console.log(input, token);
       newNotification();
     } else {
-      console.log("token is empty");
+      notify("token is empty");
     }
   };
 
@@ -372,7 +372,13 @@ export default function GenerateInvoice({ setGenerateInvoice }) {
             setConfirm={setConfirm}
           />
         )}
-        {success && <Success setGenerateInvoice={setGenerateInvoice} />}
+        {success && (
+          <Success
+            setCancel={setCancel}
+            setSuccess={setSuccess}
+            setConfirm={setConfirm}
+          />
+        )}
         {cancel && (
           <Cancel
             inputVal={inputVal}

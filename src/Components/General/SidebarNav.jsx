@@ -16,6 +16,8 @@ import CloseIcon from "../../Assets/close2.png";
 import { AiOutlineLogout } from "react-icons/ai";
 import { baseUrl, logout } from "../Endpoints/Endpoints";
 import TokenContext from "../User-Token/TokenContext";
+import { MdReceiptLong } from "react-icons/md";
+import { MdSubscriptions } from "react-icons/md";
 import axios from "axios";
 
 export default function SidebarNav(props) {
@@ -67,6 +69,16 @@ export default function SidebarNav(props) {
       icon: <SyncAltRoundedIcon htmlColor="white" />,
       link: "transactions",
       title: "Transaction",
+    },
+    {
+      icon: <MdReceiptLong color="white" size="25px" />,
+      link: "create-invoice",
+      title: "Create Invoice",
+    },
+    {
+      icon: <MdSubscriptions color="white" size="25px" />,
+      link: "subscriptions",
+      title: "subscriptions",
     },
     {
       icon: <CreditCardRoundedIcon htmlColor="white" />,
