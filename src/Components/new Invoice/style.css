@@ -1,86 +1,76 @@
-.invoice {
-  position: fixed;
-  top: 5%;
-  left: 35%;
-  z-index: 8;
+.generate-invoice-container {
+  width: 100%;
+}
+.generate-invoice-container .invoice {
+  box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
   background-color: #fff;
-  width: 50%;
-  max-height: 100vh;
-  overflow-y: auto;
+  width: 80%;
 }
-.invoice .form {
+.generate-invoice-container .invoice .form {
   max-height: 100%;
-  overflow-y: auto;
 }
-
-.f-con {
+.generate-invoice-container .f-con {
   width: 100% !important;
   outline: none;
   border: none;
   border-bottom: 2px solid #d9d9d9;
 }
-.f-con:focus {
+.generate-invoice-container .f-con:focus {
   outline: none;
   border: none;
 }
-
-.btn-send {
+.generate-invoice-container .btn-send {
   width: 60%;
 }
-
-.btn-cancel {
+.generate-invoice-container .btn-cancel {
   width: 30%;
 }
-
-.warning {
+.generate-invoice-container .warning {
   color: #fb0000;
 }
-
-.hidden {
+.generate-invoice-container .hidden {
   display: none;
 }
-
-.confirm,
-.cancel {
+.generate-invoice-container .confirm,
+.generate-invoice-container .cancel {
   border-radius: 10px;
   background: linear-gradient(154deg, #0051ff 0%, #0b0230 100%);
   width: 70%;
+  height: auto !important;
 }
-.confirm h6,
-.cancel h6 {
+.generate-invoice-container .confirm h6,
+.generate-invoice-container .cancel h6 {
   color: #fff;
 }
-.confirm input,
-.cancel input {
+.generate-invoice-container .confirm input,
+.generate-invoice-container .cancel input {
   outline: none;
   border: none;
 }
-.confirm input:focus,
-.cancel input:focus {
+.generate-invoice-container .confirm input:focus,
+.generate-invoice-container .cancel input:focus {
   border: 1px solid green;
 }
-.confirm .grp,
-.cancel .grp {
+.generate-invoice-container .confirm .grp,
+.generate-invoice-container .cancel .grp {
   color: #fff;
 }
-.confirm textarea,
-.cancel textarea {
+.generate-invoice-container .confirm textarea,
+.generate-invoice-container .cancel textarea {
   outline: none;
   border: none;
   resize: none;
 }
-.confirm textarea:focus,
-.cancel textarea:focus {
+.generate-invoice-container .confirm textarea:focus,
+.generate-invoice-container .cancel textarea:focus {
   border: 1px solid green;
 }
-
-.success {
+.generate-invoice-container .success {
   background-color: #fff;
   z-index: 10;
   width: 80%;
 }
-
-.s-close {
+.generate-invoice-container .s-close {
   margin-left: 6rem;
   cursor: pointer;
 }
@@ -96,17 +86,22 @@
     left: 20%;
     top: 10%;
   }
-  .cancel, .confirm {
+  .cancel,
+  .confirm {
     width: 80%;
   }
-  .cancel h6, .confirm h6 {
+  .cancel h6,
+  .confirm h6 {
     font-size: 1.5rem !important;
   }
 }
 @media screen and (max-width: 767px) {
   .invoice {
-    width: 90%;
+    width: 100%;
     left: 5%;
     top: 10%;
+  }
+  .cancel, .confirm {
+    width: 100% !important;
   }
 }/*# sourceMappingURL=style.css.map */

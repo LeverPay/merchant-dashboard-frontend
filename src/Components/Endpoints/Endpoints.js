@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
+// export const baseUrl = "https://leverpay-api.azurewebsites.net/api/v1";
 export const baseUrl = "http://api.leverpay.io";
 export const fetchInfo = async (props) => {
   const response = await axios.get(baseUrl + props.endPoint);
