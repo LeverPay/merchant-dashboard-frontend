@@ -79,7 +79,8 @@ function SignInPage() {
     setShowPassword(!showPassword);
   };
 
-  function validateForm() {
+  function validateForm(e) {
+    e.preventDefault();
     // Check if the Email matches the user
 
     if (!emailRegex.test(inputText)) {
@@ -156,7 +157,7 @@ function SignInPage() {
             value={password}
             onChange={handlePasswordChange}
             placeholder="Password should be at least 10 characters"
-            autocomplete="new-password"
+            autoComplete="new-password"
           />
           <span onClick={toggleShowPassword}>
             {showPassword ? (
@@ -174,9 +175,7 @@ function SignInPage() {
           <button
             disabled={submitButtonDisabled}
             className="sign-in"
-            onClick={() => {
-              validateForm();
-            }}
+            onClick={validateForm}
             id="signin-button"
           >
             Sign In
