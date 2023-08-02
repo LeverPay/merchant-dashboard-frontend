@@ -1,0 +1,46 @@
+.subscription-container {
+  width: 100%;
+}
+.subscription-container .card-section {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+.subscription-container .input-section .input-container .input:focus {
+  border: none;
+}
+.subscription-container .input-section .input-container .input-icon {
+  margin-left: -90%;
+}
+.subscription-container .table-section {
+  width: 100%;
+  overflow-x: auto;
+}
+.subscription-container .table-section .table1 {
+  width: 100%;
+}
+.subscription-container .table-section .table1 .table-border1 {
+  border-bottom: 4px solid #282541;
+}
+.subscription-container .table-section .table2 {
+  width: 100%;
+  overflow-x: auto;
+}
+
+@media screen and (min-width: 1024px) {
+  .subscription-container .card-section {
+    display: flex;
+    flex-direction: row;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .subscription-container .card-section {
+    flex-wrap: wrap;
+  }
+}
+@media screen and (max-width: 767px) {
+  .subscription-container .card-section {
+    flex-wrap: wrap !important;
+  }
+}/*# sourceMappingURL=style.css.map */
