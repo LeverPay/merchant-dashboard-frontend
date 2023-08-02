@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Card from "../cards/subscription-cards/Card";
 import all from "../../Assets/all.png";
 import pending from "../../Assets/pending1.png";
@@ -7,8 +7,8 @@ import failed from "../../Assets/ep-failed.png";
 import cancel from "../../Assets/material-symbols-cancel-outline.png";
 import "./style.css";
 import { TableHead, HeaderData, data } from "./card-data";
-import { useEffect } from "react";
 import ToggleSwitch from "../General/Toggle Component/ToggleSwitch";
+import TokenContext from "../User-Token/TokenContext";
 
 export default function Subscription_el() {
   const [tableHeader] = useState(TableHead);
@@ -21,6 +21,7 @@ export default function Subscription_el() {
   const [failedSubscriptions, setFailedSubscriptions] = useState(null);
   const [trackClicked, settrackClicked] = useState("ALL");
   const [filteredData, setFilteredData] = useState(tableBody);
+  const { notify, success } = useContext(TokenContext);
 
   //Determines if toggle switch is checked
   const initialCheckedState = filteredData.reduce((acc, el) => {
@@ -48,6 +49,21 @@ export default function Subscription_el() {
 
     // Update the filteredData state
     setFilteredData(newData);
+  };
+
+  //copy link to clipboard
+  const copyLink = (index) => {
+    const linkText = index.link;
+
+    if (!navigator.clipboard) {
+      notify("Clipboard Api not supported on this browser");
+      return Promise.reject("Clipboard Api not Supported");
+    } else {
+      return navigator.clipboard
+        .writeText(linkText)
+        .then(() => success("Link copied to clipboard"))
+        .catch((err) => notify("Failed to copy text:", err));
+    }
   };
 
   // Tracks total value of each subscriptions status for cards
@@ -141,7 +157,7 @@ export default function Subscription_el() {
             {tableHeader.map((el, i) => (
               <th
                 key="key"
-                className={`headers mx-4 fs-4 ${
+                className={`headers mx-4 fs-4 fw-light ${
                   el === "ALL"
                     ? "blue"
                     : el === "PENDING"
@@ -192,7 +208,15 @@ export default function Subscription_el() {
                     }
                   />{" "}
                 </td>
-                <td className="text-center px-4 py-2">{el.link}</td>
+                <td className="text-center d-flex px-4 py-2">
+                  {el.link}{" "}
+                  <span className="mx-2" onClick={() => copyLink(el)}>
+                    <img
+                      src={require(`../../Assets/typcn-messages.png`)}
+                      alt=""
+                    />
+                  </span>{" "}
+                </td>
               </>
             </tr>
           ))}
