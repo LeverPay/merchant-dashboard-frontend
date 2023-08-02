@@ -78,7 +78,7 @@ export default function SidebarNav(props) {
     {
       icon: <MdSubscriptions color="white" size="25px" />,
       link: "subscriptions",
-      title: "subscriptions",
+      title: "Subscriptions",
     },
     {
       icon: <CreditCardRoundedIcon htmlColor="white" />,

@@ -8,6 +8,7 @@
   }
 
   .input-section {
+    font-family: AgrandirRegular;
     .input-container {
       .input {
         &:focus {
@@ -23,12 +24,15 @@
   .table-section {
     width: 100%;
     overflow-x: auto;
+    font-family: AgrandirRegular;
     .table1 {
       width: 100%;
       .table-border1 {
         border-bottom: 4px solid #282541;
         .headers {
-          &:hover {
+          font-family: AgrandirWideLight;
+          &:hover,
+          :active {
             border-bottom: 2px solid #082e88;
             cursor: pointer;
           }
