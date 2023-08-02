@@ -1,0 +1,93 @@
+.subscription-container {
+  width: 100%;
+  .card-section {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+  }
+
+  .input-section {
+    font-family: AgrandirRegular;
+    .input-container {
+      .input {
+        &:focus {
+          border: none;
+        }
+      }
+      .input-icon {
+        margin-left: -90%;
+      }
+    }
+  }
+
+  .table-section {
+    width: 100%;
+    overflow-x: auto;
+    font-family: AgrandirRegular;
+    .table1 {
+      width: 100%;
+      .table-border1 {
+        border-bottom: 4px solid #282541;
+        .headers {
+          font-family: AgrandirWideLight;
+          &:hover,
+          :active {
+            border-bottom: 2px solid #082e88;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .table2 {
+      width: 100%;
+      overflow-x: auto;
+    }
+  }
+}
+
+.orange {
+  color: #f5a31d;
+}
+
+.blue {
+  color: #082e88;
+}
+
+.green {
+  color: #5fce2f;
+}
+
+.red {
+  color: #fd3003;
+}
+
+.black {
+  color: #000000;
+}
+
+@media screen and (min-width: 1024px) {
+  .subscription-container {
+    .card-section {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .subscription-container {
+    // padding-left: 8%;
+    .card-section {
+      flex-wrap: wrap;
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .subscription-container {
+    .card-section {
+      flex-wrap: wrap !important;
+    }
+  }
+}
