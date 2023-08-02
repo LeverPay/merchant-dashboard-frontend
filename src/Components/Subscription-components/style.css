@@ -23,9 +23,33 @@
 .subscription-container .table-section .table1 .table-border1 {
   border-bottom: 4px solid #282541;
 }
+.subscription-container .table-section .table1 .table-border1 .headers:hover {
+  border-bottom: 2px solid #082e88;
+  cursor: pointer;
+}
 .subscription-container .table-section .table2 {
   width: 100%;
   overflow-x: auto;
+}
+
+.orange {
+  color: #f5a31d;
+}
+
+.blue {
+  color: #082e88;
+}
+
+.green {
+  color: #5fce2f;
+}
+
+.red {
+  color: #fd3003;
+}
+
+.black {
+  color: #000000;
 }
 
 @media screen and (min-width: 1024px) {

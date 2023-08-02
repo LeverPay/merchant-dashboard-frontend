@@ -8,6 +8,7 @@ import cancel from "../../Assets/material-symbols-cancel-outline.png";
 import "./style.css";
 import { TableHead, HeaderData, data } from "./card-data";
 import { useEffect } from "react";
+import ToggleSwitch from "../General/Toggle Component/ToggleSwitch";
 
 export default function Subscription_el() {
   const [tableHeader] = useState(TableHead);
@@ -21,6 +22,35 @@ export default function Subscription_el() {
   const [trackClicked, settrackClicked] = useState("ALL");
   const [filteredData, setFilteredData] = useState(tableBody);
 
+  //Determines if toggle switch is checked
+  const initialCheckedState = filteredData.reduce((acc, el) => {
+    acc[el.id] = el.status === "Active";
+    return acc;
+  }, {});
+
+  //Toggle switch state
+  const [checked, setChecked] = useState(initialCheckedState);
+
+  //Update items status
+  const handleSwitchChange = (itemID, isChecked) => {
+    setChecked((prevChecked) => ({
+      ...prevChecked,
+      [itemID]: isChecked,
+    }));
+
+    // Update the status for the item based on isChecked value
+    const newData = filteredData.map((el) => {
+      if (el.id === itemID) {
+        el.status = isChecked ? "Active" : "Canceled";
+      }
+      return el;
+    });
+
+    // Update the filteredData state
+    setFilteredData(newData);
+  };
+
+  // Tracks total value of each subscriptions status for cards
   const dummyDataMap = () => {
     const allData = tableBody.map((el) => el.status);
     setAllSubscriptions(allData);
@@ -35,6 +65,7 @@ export default function Subscription_el() {
     setFailedSubscriptions(failed);
   };
 
+  //Filters items depending on status tab clicked
   const switchTab = (index) => {
     if (index === "ALL") {
       settrackClicked("ALL");
@@ -51,13 +82,18 @@ export default function Subscription_el() {
 
   useEffect(() => {
     dummyDataMap();
-  }, [tableBody]);
+  }, [tableBody, filteredData]);
 
   return (
     <div className="subscription-container d-flex flex-column px-2">
       <section className="input-section d-flex justify-content-end">
         <span className="input-container">
-        <input type="search" name="" placeholder="Search" className="input px-5 py-2 rounded-4" />
+          <input
+            type="search"
+            name=""
+            placeholder="Search"
+            className="input px-5 py-2 rounded-4"
+          />
           <img
             src={require("../../Assets/search-icon.png")}
             alt=""
@@ -103,7 +139,23 @@ export default function Subscription_el() {
         <table className="table1">
           <tr className="table-border1 d-flex justify-content-center">
             {tableHeader.map((el, i) => (
-              <th key="key" className="mx-4" onClick={() => switchTab(el)}>
+              <th
+                key="key"
+                className={`headers mx-4 fs-4 ${
+                  el === "ALL"
+                    ? "blue"
+                    : el === "PENDING"
+                    ? "orange"
+                    : el === "CANCELED"
+                    ? "black"
+                    : el === "FAILED"
+                    ? "red"
+                    : el === "ACTIVE"
+                    ? "green"
+                    : ""
+                }`}
+                onClick={() => switchTab(el)}
+              >
                 {el}
               </th>
             ))}
@@ -120,19 +172,27 @@ export default function Subscription_el() {
           </tr>
 
           {filteredData.map((el) => (
-            <tr key={el.userID} className="">
+            <tr key={el.id} className="">
               <>
-                <td className="text-center px-4">{el.date}</td>
-                <td className="text-center px-4">{el.userID}</td>
-                <td className="text-center px-4">{el.phone}</td>
-                <td className="text-center px-4">{el.description}</td>
-                <td className="text-center px-4">{el.planType}</td>
-                <td className="text-center px-4">{el.Duration}</td>
-                <td className="text-center px-4">{el.startDate}</td>
-                <td className="text-center px-4">{el.endDate}</td>
-                <td className="text-center px-4">{el.paid}</td>
-                <td className="text-center px-4">{el.status}</td>
-                <td className="text-center px-4">{el.link}</td>
+                <td className="text-center px-4 py-2">{el.date}</td>
+                <td className="text-center px-4 py-2">{el.userID}</td>
+                <td className="text-center px-4 py-2">{el.phone}</td>
+                <td className="text-center px-4 py-2">{el.description}</td>
+                <td className="text-center px-4 py-2">{el.planType}</td>
+                <td className="text-center px-4 py-2">{el.Duration}</td>
+                <td className="text-center px-4 py-2">{el.startDate}</td>
+                <td className="text-center px-4 py-2">{el.endDate}</td>
+                <td className="text-center px-4 py-2">{el.paid}</td>
+                <td className="text-center px-4 py-2">
+                  <ToggleSwitch
+                    color="#0EB500"
+                    checked={checked[el.id]}
+                    handleChange={(event) =>
+                      handleSwitchChange(el.id, event.target.checked)
+                    }
+                  />{" "}
+                </td>
+                <td className="text-center px-4 py-2">{el.link}</td>
               </>
             </tr>
           ))}

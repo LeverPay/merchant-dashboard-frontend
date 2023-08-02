@@ -2,8 +2,14 @@ import React from "react";
 import "./style.css";
 import ToggleSwitch from "../General/Toggle Component/ToggleSwitch";
 import Form from "./form";
+import { useState } from "react";
 
 export default function SecurityElements() {
+  const [checked, setChecked] = useState(false);
+  const handleSwitchChange = () => {
+    setChecked(!checked);
+  };
+
   return (
     <section className="security-container d-flex flex-column">
       <section className="security-contents-container mt-2 d-flex flex-column justify-content-center align-items-center">
@@ -20,7 +26,11 @@ export default function SecurityElements() {
               <p>A code will be sent to you via Email or sms</p>
             </div>
 
-            <ToggleSwitch />
+            <ToggleSwitch
+              color="#2962F2"
+              checked={checked}
+              handleChange={handleSwitchChange}
+            />
           </section>
 
           <section className="d-flex flex-column mt-2">
