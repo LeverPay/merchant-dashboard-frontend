@@ -7,7 +7,7 @@ import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import BusinessCenterRoundedIcon from "@mui/icons-material/BusinessCenterRounded";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, Outlet } from "react-router-dom";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
 import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
@@ -18,6 +18,7 @@ import { baseUrl, logout } from "../Endpoints/Endpoints";
 import TokenContext from "../User-Token/TokenContext";
 import { MdReceiptLong } from "react-icons/md";
 import { MdSubscriptions } from "react-icons/md";
+import { IoMdArrowDropdown } from "react-icons/io";
 import axios from "axios";
 
 export default function SidebarNav(props) {
@@ -26,6 +27,7 @@ export default function SidebarNav(props) {
   const [click, setClick] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [activeItem, setActiveItem] = useState("home");
+  const [trackNavClicked, setTrackedNavClicked] = useState(false);
   const handleActive = (item) => {
     setActiveItem(item);
   };
@@ -58,6 +60,15 @@ export default function SidebarNav(props) {
     // return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const showdropDowns = () => {
+    setTrackedNavClicked(!trackNavClicked);
+    // const subLinks = item.sub.map((el) => el);
+    // console.log(subLinks);
+  };
+  const show = (idx) => {
+    console.log(idx);
+  };
+
   const sidebarItemsTop = [
     {
       icon: <DashboardRoundedIcon htmlColor="white" />,
@@ -74,6 +85,7 @@ export default function SidebarNav(props) {
       icon: <MdReceiptLong color="white" size="25px" />,
       link: "create-invoice",
       title: "Create Invoice",
+      sub: ["failed", "canceled", "unpaid"],
     },
     {
       icon: <MdSubscriptions color="white" size="25px" />,
@@ -213,10 +225,50 @@ export default function SidebarNav(props) {
                     className={`d-flex align-items-center${
                       active ? `active` : ``
                     }`}
-                    onClick={() => handleNavClick(idx)}
+                    onClick={
+                      !item.sub
+                        ? () => handleNavClick(idx)
+                        : () => showdropDowns()
+                    }
                   >
                     <span className="link-icon">{item.icon}</span>
-                    <span onClick={closeMobileMenu}>{item.title}</span>
+                    <span
+                      className={`${
+                        item.sub
+                          ? "d-flex align-items-start justify-content-between position-relative"
+                          : ""
+                      }`}
+                      onClick={closeMobileMenu}
+                    >
+                      {item.title}{" "}
+                      {item.sub && (
+                        <span className="sub-links d-flex flex-column position-absolute">
+                          <span>
+                            <IoMdArrowDropdown />
+                          </span>
+                          {item.sub && trackNavClicked ? (
+                            <span className="sub-link-items-container d-flex flex-column">
+                              {trackNavClicked
+                                ? item.sub.map((el, subIdx) => (
+                                    <React.Fragment key={subIdx}>
+                                      <NavLink
+                                        to={`${item.link}/${el}`}
+                                        key={subIdx}
+                                        className="mt-2 fs-5"
+                                      >
+                                        {el}
+                                      </NavLink>
+                                      <Outlet />
+                                    </React.Fragment>
+                                  ))
+                                : ""}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </span>
+                      )}
+                    </span>
                   </NavLink>
                 );
               })}
