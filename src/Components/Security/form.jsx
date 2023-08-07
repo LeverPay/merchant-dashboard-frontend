@@ -38,47 +38,26 @@ export default function Form() {
   const handleSubmit = (e) => {
     e.preventDefault();
     notifyInput();
-    // if (
-    //   Input.currentPassword !== "" &&
-    //   Input.newPassword !== "" &&
-    //   passwordRegex.test(Input.newPassword) &&
-    //   passwordRegex.test(Input.confirmPassword) &&
-    //   Input.confirmPassword === Input.newPassword &&
-    //   Input.newPassword !== Input.currentPassword
-    // ) {
-    //   console.log(Input.currentPassword, Input.newPassword);
-    // } else if (Input.currentPassword === "") {
-    // }
-
-    if (Input.newPassword === Input.confirmPassword) {
-      renderSuccess();
-    }
+    renderSuccess();
   };
 
   const renderSuccess = () => {
-    if (
-      Input.newPassword !== "" &&
-      Input.confirmPassword !== "" &&
-      Input.newPassword === Input.confirmPassword &&
-      passwordRegex.test(Input.newPassword) &&
-      passwordRegex.test(Input.confirmPassword)
-    ) {
-      if (iconRef.current.classList.contains("hidden")) {
-        iconRef.current.classList.remove("hidden");
-      }
+    const newPasswordValid = passwordRegex.test(Input.newPassword);
+    const confirmPasswordValid = passwordRegex.test(Input.confirmPassword);
+    const passwordsMatch = Input.newPassword === Input.confirmPassword;
 
-      if (iconRef1.current.classList.contains("hidden")) {
-        iconRef1.current.classList.remove("hidden");
-      }
+    if (newPasswordValid) {
+      iconRef.current.classList.remove("hidden");
     } else {
-      if (!iconRef.current.classList.contains("hidden")) {
-        iconRef.current.classList.add("hidden");
-      }
-
-      if (!iconRef1.current.classList.contains("hidden")) {
-        iconRef1.current.classList.add("hidden");
-      }
+      iconRef.current.classList.add("hidden");
     }
+
+    if (passwordsMatch && confirmPasswordValid) {
+      iconRef1.current.classList.remove("hidden");
+    } else {
+      iconRef1.current.classList.add("hidden");
+    }
+    console.log(passwordsMatch);
   };
 
   const notifyInput = () => {
@@ -133,6 +112,13 @@ export default function Form() {
       confirmPassword: "",
     }));
     console.log(Input);
+    if (!iconRef.current.classList.contains("hidden")) {
+      iconRef.current.classList.add("hidden");
+    }
+
+    if (!iconRef1.current.classList.contains("hidden")) {
+      iconRef1.current.classList.add("hidden");
+    }
   };
 
   return (
@@ -176,7 +162,7 @@ export default function Form() {
               name="newPassword"
               value={Input.newPassword}
               onChange={handleChange}
-              onInput={() => renderSuccess()}
+              onInput={renderSuccess}
               ref={newPassword}
             />
             <div className="input-icons d-flex align-items-center justify-content-center">
@@ -204,7 +190,7 @@ export default function Form() {
               name="confirmPassword"
               value={Input.confirmPassword}
               onChange={handleChange}
-              onInput={() => renderSuccess()}
+              onInput={renderSuccess}
               ref={confirmPassword}
             />
             <div className="input-icons d-flex align-items-center justify-content-center">
