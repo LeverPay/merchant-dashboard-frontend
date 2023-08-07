@@ -119,6 +119,10 @@ export default function Form() {
     if (!iconRef1.current.classList.contains("hidden")) {
       iconRef1.current.classList.add("hidden");
     }
+
+    if (currentPassword.current.classList.contains("bordered")) {
+      currentPassword.current.classList.remove("bordered");
+    }
   };
 
   return (
