@@ -56,7 +56,7 @@ function App(props) {
           <Route path="transactions" element={<TransactionsPage />} />
           <Route path="Help" element={<Help />} />
           <Route path="sign-in" element={<SignInPage />} />
-          <Route path="payment-method" element={<PaymentMethod />} />
+          <Route path="remitance-setup" element={<PaymentMethod />} />
           <Route path="welcome" element={<WelcomePage />} />
           <Route path="forget-password" element={<ForgetPassword />} />
           <Route path="create-invoice" element={<Generate_Invoice_Page />}>

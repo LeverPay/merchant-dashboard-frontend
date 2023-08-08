@@ -94,7 +94,7 @@ export default function SidebarNav(props) {
     },
     {
       icon: <CreditCardRoundedIcon htmlColor="white" />,
-      link: "payment-method",
+      link: "Remitance-setup",
       title: "Payment Method",
     },
     {

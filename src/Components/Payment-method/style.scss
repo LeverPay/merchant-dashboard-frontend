@@ -3,9 +3,92 @@
   .form-container {
     width: 90%;
     box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
-    background: url(../../Assets/Group\ 300.png) no-repeat center;
-    .form{
+    .form {
       width: 100%;
+      .paymentimg {
+        width: 100%;
+        min-height: 80vh;
+        background: url(../../Assets/payment-img.png) no-repeat center;
+      }
+    }
+  }
+
+  .remitance-form {
+    width: 100%;
+    .items-container {
+      width: 50%;
+    }
+  }
+
+  .remitance-btn-container {
+    display: flex;
+    .remitance-btn {
+      background-color: #0b0230;
+      border-radius: 1rem;
+      width: 20%;
+      background-color: #0b0230;
+      color: #fff;
+      display: flex;
+      align-items: end;
+      margin-left: 2%;
+    }
+  }
+}
+
+.inputs-container {
+  width: 100%;
+
+  .banks,
+  .payment-interval {
+    width: 100%;
+    padding: 5% 8%;
+    border-radius: 0.8rem;
+    border: 2px solid #c1bdbd;
+    font-size: 1rem;
+    background-color: transparent;
+    &:focus {
+      border: none;
+      outline: 2px solid #c1bdbd;
+    }
+    .select-value {
+      font-size: 2rem;
+      padding: 2% 4%;
+      background-color: transparent;
+      &:checked {
+        background-color: #1b0088;
+        color: #fff;
+      }
+      &:hover {
+        background-color: #1b0088 !important;
+      }
+    }
+  }
+
+  .inputs-container-2 {
+    width: 100%;
+    .input {
+      width: 100%;
+      padding: 5% 8%;
+      border-radius: 0.8rem;
+      border: 2px solid #c1bdbd;
+      &:focus {
+        border: none;
+        outline: 2px solid #c1bdbd;
+      }
+    }
+    .value-copy {
+      margin-left: -5%;
+    }
+  }
+
+  .input {
+    width: 100%;
+    padding: 5% 8%;
+    border-radius: 0.8rem;
+    border: 2px solid #c1bdbd;
+    &:focus {
+      border: none;
+      outline: 2px solid #c1bdbd;
     }
   }
 }
@@ -28,7 +111,7 @@
   }
 }
 
-.checkbox:checked{
+.checkbox:checked {
   accent-color: #fff;
 }
 
@@ -37,6 +120,15 @@
     width: 70vw;
     .form-container {
       width: 100%;
+    }
+
+    .remitance-btn-container {
+      flex-wrap: wrap;
+      justify-content: center;
+      .remitance-btn {
+        width: 40%;
+        margin-top: 2%;
+      }
     }
   }
 }
@@ -48,7 +140,14 @@
       width: 100%;
       box-shadow: none;
     }
+
+    .remitance-btn-container {
+      flex-wrap: wrap;
+      justify-content: center;
+      .remitance-btn {
+        width: 40%;
+        margin-top: 2%;
+      }
+    }
   }
 }
-
-
