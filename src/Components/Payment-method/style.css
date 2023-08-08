@@ -1,5 +1,5 @@
 .payment-method {
-  width: 70vw;
+  width: 100%;
 }
 .payment-method .form-container {
   width: 90%;
@@ -29,7 +29,7 @@
   background-color: #0b0230;
   color: #fff;
   display: flex;
-  align-items: end;
+  align-items: flex-end;
   margin-left: 2%;
 }
 
@@ -79,7 +79,7 @@
   outline: 2px solid #c1bdbd;
 }
 .inputs-container .inputs-container-2 .value-copy {
-  margin-left: -5%;
+  margin-left: -8%;
 }
 .inputs-container .input {
   width: 100%;
@@ -115,7 +115,7 @@
 
 @media screen and (max-width: 1023px) {
   .payment-method {
-    width: 70vw;
+    width: 70%;
   }
   .payment-method .form-container {
     width: 100%;
@@ -128,10 +128,17 @@
     width: 40%;
     margin-top: 2%;
   }
+  .payment-method .remitance-form {
+    width: 100%;
+    margin-top: 5%;
+  }
+  .payment-method .remitance-form .items-container {
+    width: 60%;
+  }
 }
 @media screen and (max-width: 767px) {
   .payment-method {
-    width: 100vw;
+    width: 100%;
   }
   .payment-method .form-container {
     width: 100%;
@@ -144,5 +151,12 @@
   .payment-method .remitance-btn-container .remitance-btn {
     width: 40%;
     margin-top: 2%;
+  }
+  .payment-method .remitance-form {
+    width: 100%;
+    margin-top: 5%;
+  }
+  .payment-method .remitance-form .items-container {
+    width: 80%;
   }
 }/*# sourceMappingURL=style.css.map */

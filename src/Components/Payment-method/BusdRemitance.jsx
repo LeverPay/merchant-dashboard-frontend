@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../General/Button component/Button";
 
-export default function NairaRemitance({ setRender, setInitialRender }) {
+export default function BusdRemitance({ setRender, setInitialRender }) {
   const renderMainPage = () => {
     setRender(false);
     setInitialRender(true);
@@ -18,7 +18,7 @@ export default function NairaRemitance({ setRender, setInitialRender }) {
 
         <section className="info mt-5">
           <h3 className="text-center">
-            <img src={require("../../Assets/Naira-logo.png")} alt="" /> Naira
+            <img src={require("../../Assets/busd-21.png")} alt="" /> BUSD
             Remittance Setup
           </h3>
           <p className="text-danger text-center fw-bolder fs-5">
@@ -129,3 +129,4 @@ export default function NairaRemitance({ setRender, setInitialRender }) {
     </form>
   );
 }
+

@@ -6,6 +6,10 @@ import axios from "axios";
 import Notifications from "../General/NotificationContext";
 import TokenContext from "../User-Token/TokenContext";
 import NairaRemitance from "./NairaRemitance";
+import BusdRemitance from "./BusdRemitance";
+import UsdcRemitance from "./UsdcRemitance";
+import TetherRemitance from "./TetherRemitance";
+
 export default function Form() {
   const [initialRender, setInitialRender] = useState(true);
   const [naira, setNaira] = useState(false);
@@ -100,7 +104,30 @@ export default function Form() {
           </div>
         </>
       )}
-      {naira && <NairaRemitance />}
+      {naira && (
+        <NairaRemitance
+          setRender={setNaira}
+          setInitialRender={setInitialRender}
+        />
+      )}
+      {usdc && (
+        <UsdcRemitance
+          setRender={setUsdc}
+          setInitialRender={setInitialRender}
+        />
+      )}
+      {busd && (
+        <BusdRemitance
+          setRender={setBusd}
+          setInitialRender={setInitialRender}
+        />
+      )}
+      {tether && (
+        <TetherRemitance
+          setRender={setTether}
+          setInitialRender={setInitialRender}
+        />
+      )}
     </>
   );
 }
