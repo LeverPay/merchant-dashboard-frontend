@@ -8,13 +8,19 @@
       .paymentimg {
         width: 100%;
         min-height: 80vh;
+        font-family: AgrandirTinItalic;
         background: url(../../Assets/payment-img.png) no-repeat center;
       }
     }
   }
 
+  .heading-text {
+    font-family: KB-sans-Bold;
+  }
+
   .remitance-form {
     width: 100%;
+    font-family: KB-sans-Bold;
     .items-container {
       width: 50%;
     }
@@ -52,7 +58,7 @@
     }
     .select-value {
       font-size: 2rem;
-      padding: 2% 4%;
+      padding: 4% 4%;
       background-color: transparent;
       &:checked {
         background-color: #1b0088;
@@ -78,6 +84,7 @@
     }
     .value-copy {
       margin-left: -8%;
+      cursor: pointer;
     }
   }
 

@@ -1,10 +1,19 @@
 import React from "react";
 import Button from "../General/Button component/Button";
 
-export default function NairaRemitance({ setRender, setInitialRender }) {
+export default function NairaRemitance({
+  setRender,
+  setInitialRender,
+  formValue,
+  handleForm,
+  cancelProcess,
+  submitForm,
+  copyText,
+}) {
   const renderMainPage = () => {
     setRender(false);
     setInitialRender(true);
+    cancelProcess();
   };
 
   return (
@@ -36,7 +45,15 @@ export default function NairaRemitance({ setRender, setInitialRender }) {
             <label htmlFor="bank" id="select-bank">
               Select Bank
             </label>
-            <select name="" id="select-bank" className="banks">
+            <select
+              name="input1"
+              id="select-bank"
+              className="banks"
+              onChange={handleForm}
+            >
+              <option value="Choose An Option" className="select-value">
+                Choose An Option
+              </option>
               <option value="Bank1" className="select-value">
                 Bank1
               </option>
@@ -62,11 +79,16 @@ export default function NairaRemitance({ setRender, setInitialRender }) {
             <div className="d-flex inputs-container-2">
               <input
                 type="text"
-                name=""
+                name="input2"
                 id="account-number"
                 className="input"
+                value={formValue.input2}
+                onChange={handleForm}
               />
-              <span className="value-copy d-flex align-items-center">
+              <span
+                className="value-copy d-flex align-items-center"
+                onClick={copyText}
+              >
                 <img src={require("../../Assets/copy-vector.png")} alt="" />
               </span>
             </div>
@@ -76,22 +98,37 @@ export default function NairaRemitance({ setRender, setInitialRender }) {
             <label htmlFor="Account-name" id="account-name">
               Account Name
             </label>
-            <input type="text" name="" id="account-name" className="input" />
+            <input
+              type="text"
+              name="input3"
+              id="account-name"
+              className="input"
+              onChange={handleForm}
+              value={formValue.input3}
+            />
           </div>
 
           <div className="options-select mt-5 d-flex flex-column inputs-container">
             <label htmlFor="interval" id="payment-interval">
               payment interval
             </label>
-            <select name="" id="payment-interval" className="payment-interval">
+            <select
+              name="input4"
+              id="payment-interval"
+              className="payment-interval"
+              onChange={handleForm}
+            >
+              <option value="Choose An Option" className="select-value">
+                Choose An Option
+              </option>
               <option value="Daily" className="select-value">
                 Daily
               </option>
-              <option value="Monthly" className="select-value">
-                Daily
-              </option>
               <option value="Weekly" className="select-value">
-                Daily
+                Weekly
+              </option>
+              <option value="Monthly" className="select-value">
+                Monthly
               </option>
             </select>
           </div>
@@ -106,6 +143,7 @@ export default function NairaRemitance({ setRender, setInitialRender }) {
               color: "#fff",
               fontSize: "1rem",
             }}
+            click={submitForm}
           >
             Save
           </Button>
