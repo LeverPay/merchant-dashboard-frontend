@@ -1,8 +1,23 @@
 .payment-method {
   width: 100%;
   .form-container {
-    width: 90%;
+    width: 100%;
     box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+    justify-content: center;
+    .remitance-btn-container {
+      display: flex;
+      .remitance-btn {
+        background-color: #0b0230;
+        border-radius: 1rem;
+        width: 20%;
+        background-color: #0b0230;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-left: 2%;
+      }
+    }
     .form {
       width: 100%;
       .paymentimg {
@@ -23,20 +38,33 @@
     font-family: KB-sans-Bold;
     .items-container {
       width: 50%;
-    }
-  }
 
-  .remitance-btn-container {
-    display: flex;
-    .remitance-btn {
-      background-color: #0b0230;
-      border-radius: 1rem;
-      width: 20%;
-      background-color: #0b0230;
-      color: #fff;
-      display: flex;
-      align-items: flex-end;
-      margin-left: 2%;
+      .success {
+        width: 30%;
+        height: 50%;
+        background-color: #fff;
+        top: 20%;
+        right: 25%;
+
+        .success-items-container {
+          height: 90%;
+          .success-icon {
+            height: 80%;
+          }
+        }
+
+        .footer-section {
+          .items-container {
+            width: 100%;
+            .first-content {
+              width: 60%;
+            }
+            .second-content {
+              width: 40%;
+            }
+          }
+        }
+      }
     }
   }
 }
@@ -127,14 +155,13 @@
     width: 70%;
     .form-container {
       width: 100%;
-    }
-
-    .remitance-btn-container {
-      flex-wrap: wrap;
-      justify-content: center;
-      .remitance-btn {
-        width: 40%;
-        margin-top: 2%;
+      .remitance-btn-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        .remitance-btn {
+          width: 40%;
+          margin-top: 2%;
+        }
       }
     }
 
@@ -154,14 +181,13 @@
     .form-container {
       width: 100%;
       box-shadow: none;
-    }
-
-    .remitance-btn-container {
-      flex-wrap: wrap;
-      justify-content: center;
-      .remitance-btn {
-        width: 40%;
-        margin-top: 2%;
+      .remitance-btn-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        .remitance-btn {
+          width: 40%;
+          margin-top: 2%;
+        }
       }
     }
 

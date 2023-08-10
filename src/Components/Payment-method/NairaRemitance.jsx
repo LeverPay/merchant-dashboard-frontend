@@ -1,7 +1,10 @@
 import React from "react";
 import Button from "../General/Button component/Button";
+import Success from "./Success";
+import naira from "../../Assets/Naira.svg";
 
 export default function NairaRemitance({
+  render,
   setRender,
   setInitialRender,
   formValue,
@@ -9,6 +12,7 @@ export default function NairaRemitance({
   cancelProcess,
   submitForm,
   copyText,
+  renderSuccess,
 }) {
   const renderMainPage = () => {
     setRender(false);
@@ -18,7 +22,7 @@ export default function NairaRemitance({
 
   return (
     <form className="remitance-form d-flex flex-column justify-content-center align-items-center">
-      <div className="items-container">
+      <div className="items-container position-relative">
         <section className="logo">
           <div>
             <img src={require("../../Assets/vector.png")} alt="" />
@@ -163,6 +167,8 @@ export default function NairaRemitance({
             Cancel
           </Button>
         </div>
+
+        {renderSuccess && <Success icon={naira} />}
       </div>
     </form>
   );

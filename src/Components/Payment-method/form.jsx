@@ -17,6 +17,7 @@ export default function Form() {
   const [usdc, setUsdc] = useState(false);
   const [busd, setBusd] = useState(false);
   const [tether, setTether] = useState(false);
+  const [renderSuccess, setRenderSuccess] = useState(false);
   const [input, setInput] = useState({
     input1: "",
     input2: "",
@@ -71,17 +72,33 @@ export default function Form() {
       console.log(input);
       cancel();
       if (naira) {
-        setNaira(false);
-        setInitialRender(true);
+        setTimeout(() => {
+          setNaira(false);
+          setInitialRender(true);
+          setRenderSuccess(false);
+        }, 5000);
+        setRenderSuccess(true);
       } else if (busd) {
-        setBusd(false);
-        setInitialRender(true);
+        setTimeout(() => {
+          setBusd(false);
+          setInitialRender(true);
+          setRenderSuccess(false);
+        }, 5000);
+        setRenderSuccess(true);
       } else if (usdc) {
-        setUsdc(false);
-        setInitialRender(true);
+        setTimeout(() => {
+          setUsdc(false);
+          setInitialRender(true);
+          setRenderSuccess(false);
+        }, 5000);
+        setRenderSuccess(true);
       } else {
-        setTether(false);
-        setInitialRender(true);
+        setTimeout(() => {
+          setTether(false);
+          setInitialRender(true);
+          setRenderSuccess(false);
+        }, 5000);
+        setRenderSuccess(true);
       }
     } else {
       notify("One or more input(s) are empty");
@@ -126,42 +143,58 @@ export default function Form() {
               remittance method.
             </h3>
           </div>
-          <div className="remitance-btn-container">
-            <div></div>
-            <button className="remitance-btn" onClick={showNaira}>
-              <img
-                src={require("../../Assets/naira-12.png")}
-                alt=""
-                className="mx-2"
-              />
-              <p className="fs-3 text-center">Naira</p>
-            </button>
-            <button className="remitance-btn" onClick={showUsdc}>
-              <img
-                src={require("../../Assets/icon-61.png")}
-                alt=""
-                className="mx-2"
-              />
-              <p className="fs-3 text-center">USDC</p>
-            </button>
-            <button className="remitance-btn" onClick={showBusd}>
-              <img
-                src={require("../../Assets/busd-21.png")}
-                alt=""
-                className="mx-2"
-              />
-              <p className="fs-3 text-center">BUSD</p>
-            </button>
-            <button className="remitance-btn" onClick={showTether}>
-              <img
-                src={require("../../Assets/usdt-42.png")}
-                alt=""
-                className="mx-2"
-              />
-              <p className="fs-3 text-center">USDT</p>
-            </button>
-          </div>
-          <div className="form-container flexy ">
+          <div className="form-container flexy flex-column">
+            <div className="remitance-btn-container mt-4 ms-lg-5">
+              <div></div>
+              <button
+                className="remitance-btn"
+                onClick={showNaira}
+                style={{ backgroundColor: "#428F21" }}
+              >
+                <img
+                  src={require("../../Assets/naira-12.png")}
+                  alt=""
+                  className="mx-2"
+                />
+                <p className="fs-3 text-center">Naira</p>
+              </button>
+              <button
+                className="remitance-btn"
+                onClick={showUsdc}
+                style={{ backgroundColor: "#8F2121" }}
+              >
+                <img
+                  src={require("../../Assets/icon-61.png")}
+                  alt=""
+                  className="mx-2"
+                />
+                <p className="fs-3 text-center">USDC</p>
+              </button>
+              <button
+                className="remitance-btn"
+                onClick={showBusd}
+                style={{ backgroundColor: "#0B0230" }}
+              >
+                <img
+                  src={require("../../Assets/busd-21.png")}
+                  alt=""
+                  className="mx-2"
+                />
+                <p className="fs-3 text-center">BUSD</p>
+              </button>
+              <button
+                className="remitance-btn"
+                onClick={showTether}
+                style={{ backgroundColor: "#082E88" }}
+              >
+                <img
+                  src={require("../../Assets/usdt-42.png")}
+                  alt=""
+                  className="mx-2"
+                />
+                <p className="fs-3 text-center">USDT</p>
+              </button>
+            </div>
             <div className="form  col-md-12">
               <div className="flexy ">
                 <div className="col-md-6 paymentimg d-flex align-items-end">
@@ -184,6 +217,7 @@ export default function Form() {
       )}
       {naira && (
         <NairaRemitance
+          render={naira}
           setRender={setNaira}
           setInitialRender={setInitialRender}
           formValue={input}
@@ -192,10 +226,12 @@ export default function Form() {
           cancelProcess={cancel}
           submitForm={handleSubmit}
           copyText={copyValue}
+          renderSuccess={renderSuccess}
         />
       )}
       {usdc && (
         <UsdcRemitance
+          render={usdc}
           setRender={setUsdc}
           setInitialRender={setInitialRender}
           formValue={input}
@@ -204,10 +240,12 @@ export default function Form() {
           cancelProcess={cancel}
           submitForm={handleSubmit}
           copyText={copyValue}
+          renderSuccess={renderSuccess}
         />
       )}
       {busd && (
         <BusdRemitance
+          render={busd}
           setRender={setBusd}
           setInitialRender={setInitialRender}
           formValue={input}
@@ -216,10 +254,12 @@ export default function Form() {
           cancelProcess={cancel}
           submitForm={handleSubmit}
           copyText={copyValue}
+          renderSuccess={renderSuccess}
         />
       )}
       {tether && (
         <TetherRemitance
+          render={tether}
           setRender={setTether}
           setInitialRender={setInitialRender}
           formValue={input}
@@ -228,6 +268,7 @@ export default function Form() {
           cancelProcess={cancel}
           submitForm={handleSubmit}
           copyText={copyValue}
+          renderSuccess={renderSuccess}
         />
       )}
     </>

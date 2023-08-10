@@ -1,7 +1,10 @@
 import React from "react";
 import Button from "../General/Button component/Button";
+import tether from "../../Assets/usdt-42.svg";
+import Success from "./Success";
 
 export default function TetherRemitance({
+  renderSuccess,
   setRender,
   setInitialRender,
   formValue,
@@ -171,6 +174,8 @@ export default function TetherRemitance({
             Cancel
           </Button>
         </div>
+
+        {renderSuccess && <Success icon={tether} />}
       </div>
     </form>
   );

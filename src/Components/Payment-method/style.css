@@ -2,8 +2,23 @@
   width: 100%;
 }
 .payment-method .form-container {
-  width: 90%;
+  width: 100%;
   box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+  justify-content: center;
+}
+.payment-method .form-container .remitance-btn-container {
+  display: flex;
+}
+.payment-method .form-container .remitance-btn-container .remitance-btn {
+  background-color: #0b0230;
+  border-radius: 1rem;
+  width: 20%;
+  background-color: #0b0230;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 2%;
 }
 .payment-method .form-container .form {
   width: 100%;
@@ -24,18 +39,27 @@
 .payment-method .remitance-form .items-container {
   width: 50%;
 }
-.payment-method .remitance-btn-container {
-  display: flex;
+.payment-method .remitance-form .items-container .success {
+  width: 30%;
+  height: 50%;
+  background-color: #fff;
+  top: 20%;
+  right: 25%;
 }
-.payment-method .remitance-btn-container .remitance-btn {
-  background-color: #0b0230;
-  border-radius: 1rem;
-  width: 20%;
-  background-color: #0b0230;
-  color: #fff;
-  display: flex;
-  align-items: flex-end;
-  margin-left: 2%;
+.payment-method .remitance-form .items-container .success .success-items-container {
+  height: 90%;
+}
+.payment-method .remitance-form .items-container .success .success-items-container .success-icon {
+  height: 80%;
+}
+.payment-method .remitance-form .items-container .success .footer-section .items-container {
+  width: 100%;
+}
+.payment-method .remitance-form .items-container .success .footer-section .items-container .first-content {
+  width: 60%;
+}
+.payment-method .remitance-form .items-container .success .footer-section .items-container .second-content {
+  width: 40%;
 }
 
 .inputs-container {
@@ -126,11 +150,11 @@
   .payment-method .form-container {
     width: 100%;
   }
-  .payment-method .remitance-btn-container {
+  .payment-method .form-container .remitance-btn-container {
     flex-wrap: wrap;
     justify-content: center;
   }
-  .payment-method .remitance-btn-container .remitance-btn {
+  .payment-method .form-container .remitance-btn-container .remitance-btn {
     width: 40%;
     margin-top: 2%;
   }
@@ -150,11 +174,11 @@
     width: 100%;
     box-shadow: none;
   }
-  .payment-method .remitance-btn-container {
+  .payment-method .form-container .remitance-btn-container {
     flex-wrap: wrap;
     justify-content: center;
   }
-  .payment-method .remitance-btn-container .remitance-btn {
+  .payment-method .form-container .remitance-btn-container .remitance-btn {
     width: 40%;
     margin-top: 2%;
   }

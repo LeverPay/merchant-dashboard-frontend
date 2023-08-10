@@ -1,7 +1,10 @@
 import React from "react";
 import Button from "../General/Button component/Button";
+import busd from "../../Assets/busd-22.svg";
+import Success from "./Success";
 
 export default function BusdRemitance({
+  renderSuccess,
   setRender,
   setInitialRender,
   formValue,
@@ -171,6 +174,8 @@ export default function BusdRemitance({
             Cancel
           </Button>
         </div>
+
+        {renderSuccess && <Success icon={busd} />}
       </div>
     </form>
   );

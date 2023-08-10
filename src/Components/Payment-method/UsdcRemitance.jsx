@@ -1,7 +1,10 @@
 import React from "react";
 import Button from "../General/Button component/Button";
+import usdc from "../../Assets/icon-62.svg";
+import Success from "./Success";
 
 export default function UsdcRemitance({
+  renderSuccess,
   setRender,
   setInitialRender,
   formValue,
@@ -171,6 +174,8 @@ export default function UsdcRemitance({
             Cancel
           </Button>
         </div>
+
+        {renderSuccess && <Success icon={usdc} />}
       </div>
     </form>
   );
