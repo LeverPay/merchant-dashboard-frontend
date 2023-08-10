@@ -233,20 +233,25 @@ export default function GenerateInvoice() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // if (token !== "") {
-    setTimeout(() => {
-      // setGenerateInvoice(false);
-      alert(
-        "Your Invoice has been generated and successfully sent to leverpay user account for approval"
-      );
-    }, 3000);
-    // setTimeout(() => window.location.reload(), 5000);
-    setSuccess(true);
-    console.log(input, token);
-    newNotification();
-    // } else {
-    //   notify("token is empty");
-    // }
+    validate();
+    if (
+      input.description !== "" &&
+      input.customerId !== "" &&
+      input.price !== "" &&
+      input.productName !== "" &&
+      input.qty !== "" &&
+      input.totalPrice !== ""
+    ) {
+      setTimeout(() => {
+        alert(
+          "Your Invoice has been generated and successfully sent to leverpay user account for approval"
+        );
+      }, 3000);
+
+      setSuccess(true);
+      console.log(input, token);
+      newNotification();
+    }
   };
 
   // const verifyInvoice = (e) => {

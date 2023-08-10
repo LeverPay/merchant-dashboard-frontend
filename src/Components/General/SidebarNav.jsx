@@ -24,14 +24,9 @@ import axios from "axios";
 export default function SidebarNav(props) {
   const { notify, success } = useContext(TokenContext);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [click, setClick] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [activeItem, setActiveItem] = useState("home");
   const [trackNavClicked, setTrackedNavClicked] = useState(false);
-  const handleActive = (item) => {
-    setActiveItem(item);
-  };
-  const handleClick = () => setClick(!click);
+
   const closeMobileMenu = () => setSidebarOpen(!isMobile);
   const openSidebar = () => {
     setSidebarOpen(true);
@@ -55,18 +50,19 @@ export default function SidebarNav(props) {
 
     // Call the function once to set the initial screen size
     handleResize();
-
-    // Remove event listener when component unmounts
-    // return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const showdropDowns = () => {
-    setTrackedNavClicked(!trackNavClicked);
-    // const subLinks = item.sub.map((el) => el);
-    // console.log(subLinks);
+  //Active Nav functionality
+  const [active, setActive] = useState(null);
+  const handleNavClick = (idx) => {
+    setActive((prevActive) => (prevActive === idx ? null : idx));
   };
-  const show = (idx) => {
-    console.log(idx);
+
+  const [activeSubItem, setActiveSubItem] = useState(null);
+  const showdropDowns = (idx) => {
+    setTrackedNavClicked(!trackNavClicked);
+    setActive(idx);
+    setActiveSubItem(null);
   };
 
   const sidebarItemsTop = [
@@ -83,7 +79,6 @@ export default function SidebarNav(props) {
     },
     {
       icon: <MdReceiptLong color="white" size="25px" />,
-      link: "create-invoice",
       title: "Invoice",
       sub: ["New-invoice", "Failed", "Canceled"],
     },
@@ -132,12 +127,6 @@ export default function SidebarNav(props) {
       iconEnd: <OpenInNewOutlinedIcon htmlColor="white" />,
     },
   ];
-
-  //Active Nav functionality
-  const [active, setActive] = useState(false);
-  const handleNavClick = (idx) => {
-    setActive(idx);
-  };
 
   const navigate = useNavigate();
   const logOut = async () => {
@@ -222,13 +211,14 @@ export default function SidebarNav(props) {
                   <NavLink
                     to={item.sub ? item.sub.map((el) => el) : item.link}
                     key={idx}
-                    className={`d-flex align-items-center${
-                      active ? `active` : ``
+                    className={`d-flex align-items-center ${
+                      active === idx ? "custom-active" : ""
                     }`}
+                    activeclassname="custom-active"
                     onClick={
                       !item.sub
                         ? () => handleNavClick(idx)
-                        : () => showdropDowns()
+                        : () => showdropDowns(idx)
                     }
                   >
                     <span className="link-icon">{item.icon}</span>
@@ -254,7 +244,11 @@ export default function SidebarNav(props) {
                                       <NavLink
                                         to={`${el}`}
                                         key={subIdx}
-                                        className="mt-2 fs-5"
+                                        className={`mt-2 fs-5 ${
+                                          activeSubItem === subIdx
+                                            ? "custom-active"
+                                            : ""
+                                        }`}
                                       >
                                         {el}
                                       </NavLink>
