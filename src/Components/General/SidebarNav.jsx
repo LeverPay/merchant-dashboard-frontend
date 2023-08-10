@@ -84,8 +84,8 @@ export default function SidebarNav(props) {
     {
       icon: <MdReceiptLong color="white" size="25px" />,
       link: "create-invoice",
-      title: "Create Invoice",
-      sub: ["failed", "canceled", "unpaid"],
+      title: "Invoice",
+      sub: ["New-invoice", "Failed", "Canceled"],
     },
     {
       icon: <MdSubscriptions color="white" size="25px" />,
@@ -220,7 +220,7 @@ export default function SidebarNav(props) {
               {sidebarItemsTop.map((item, idx) => {
                 return (
                   <NavLink
-                    to={item.link}
+                    to={item.sub ? item.sub.map((el) => el) : item.link}
                     key={idx}
                     className={`d-flex align-items-center${
                       active ? `active` : ``
@@ -252,7 +252,7 @@ export default function SidebarNav(props) {
                                 ? item.sub.map((el, subIdx) => (
                                     <React.Fragment key={subIdx}>
                                       <NavLink
-                                        to={`${item.link}/${el}`}
+                                        to={`${el}`}
                                         key={subIdx}
                                         className="mt-2 fs-5"
                                       >
