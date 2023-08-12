@@ -2,8 +2,7 @@
   padding: 1rem;
   background: transparent;
   margin: 0 auto 2rem auto;
-
-  width: 100%;
+  width: 100% !important;
   border: none;
 }
 .expenses2 {

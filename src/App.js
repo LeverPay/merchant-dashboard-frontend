@@ -17,6 +17,9 @@ import { useLocation } from "react-router-dom";
 import ForgetPassword from "./Pages/SignInPage/ForgotPassword/ForgetPassword";
 import Generate_Invoice_Page from "./Pages/Generate Invoice/Generate_Invoice_Page";
 import Subscription from "./Pages/SubscriptionPage/Subscription";
+import Failed_Invoice_Page from "./Pages/Failed Invoice/Failed_Invoice_Page";
+import Canceled_invoice from "./Pages/Canceled Invoice/Canceled_invoice_Page";
+import Unpaid_invoice from "./Pages/Unpaid Invoice/Unpaid_invoice_Page";
 
 function App(props) {
   const [showNav, setShowNav] = useState(true);
@@ -53,10 +56,12 @@ function App(props) {
           <Route path="transactions" element={<TransactionsPage />} />
           <Route path="Help" element={<Help />} />
           <Route path="sign-in" element={<SignInPage />} />
-          <Route path="payment-method" element={<PaymentMethod />} />
+          <Route path="remitance-setup" element={<PaymentMethod />} />
           <Route path="welcome" element={<WelcomePage />} />
           <Route path="forget-password" element={<ForgetPassword />} />
-          <Route path="create-invoice" element={<Generate_Invoice_Page />} />
+          <Route path="new" element={<Generate_Invoice_Page />} />
+          <Route path="history" element={<Failed_Invoice_Page />} />
+          <Route path="canceled" element={<Canceled_invoice />} />
           <Route path="subscriptions" element={<Subscription />} />
         </Routes>
       </div>

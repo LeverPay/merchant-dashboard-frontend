@@ -10,6 +10,7 @@ import Confirm from "./confirm";
 import Success from "./Success";
 import TokenContext from "../User-Token/TokenContext";
 import Cancel from "./cancel";
+import { useNavigate } from "react-router-dom";
 
 export default function GenerateInvoice() {
   const { notification, setNotification } = useContext(NotificationContext);
@@ -31,6 +32,7 @@ export default function GenerateInvoice() {
     qty: "",
     discount: "",
     price: "",
+    totalPrice: "",
     description: "",
     customerId: "",
   });
@@ -70,11 +72,17 @@ export default function GenerateInvoice() {
     }
   };
 
+  // const cancelInvoice = (e) => {
+  //   e.preventDefault();
+  //   setCancelBtnClicked(true);
+  //   setBackbtnClicked(false);
+  //   if (cancelBtnClicked) cancelInvoiceAction(e);
+  // };
+
+  const navigate = useNavigate();
   const cancelInvoice = (e) => {
     e.preventDefault();
-    setCancelBtnClicked(true);
-    setBackbtnClicked(false);
-    if (cancelBtnClicked) cancelInvoiceAction(e);
+    setTimeout(() => navigate("/dashboard"), 3000);
   };
 
   const hideForm = () => {
@@ -132,24 +140,32 @@ export default function GenerateInvoice() {
     }
   };
 
-  const addVatToPrice = (e) => {
+  useEffect(() => {
     const vat = 0.075;
-    let discount = input.discount === "" ? 0 : parseFloat(input.discount / 100);
+    let discount = input.discount === "" ? 0 : parseFloat(input.discount) / 100;
     let final;
+
     if (input.price !== "") {
-      if (total.current.classList.contains("hidden")) {
-        total.current?.classList.remove("hidden");
-      }
       const currentPrice = parseFloat(input.price);
       const vatPrice = currentPrice * vat;
       let finalVatPrice = currentPrice + vatPrice;
       const discountPrice = parseFloat(finalVatPrice * discount);
       final = finalVatPrice - discountPrice;
-      return final;
+
+      setInput((prev) => ({
+        ...prev,
+        totalPrice: final.toFixed(2),
+      }));
+
+      if (total.current?.classList.contains("hidden")) {
+        total.current?.classList.remove("hidden");
+      }
     } else {
-      total.current?.classList.add("hidden");
+      if (!total.current?.classList.contains("hidden")) {
+        total.current?.classList.add("hidden");
+      }
     }
-  };
+  }, [input.price, input.discount]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -217,35 +233,40 @@ export default function GenerateInvoice() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (token !== "") {
-      const newPrice = price.current.textContent;
-      input.price = newPrice;
+    validate();
+    if (
+      input.description !== "" &&
+      input.customerId !== "" &&
+      input.price !== "" &&
+      input.productName !== "" &&
+      input.qty !== "" &&
+      input.totalPrice !== ""
+    ) {
       setTimeout(() => {
-        // setGenerateInvoice(false);
-        alert("Invoice Successfully Sent To User");
+        alert(
+          "Your Invoice has been generated and successfully sent to leverpay user account for approval"
+        );
       }, 3000);
-      setTimeout(() => window.location.reload(), 5000);
+
       setSuccess(true);
       console.log(input, token);
       newNotification();
-    } else {
-      notify("token is empty");
     }
   };
 
-  const verifyInvoice = (e) => {
-    e.preventDefault();
-    validate();
-    if (
-      input.productName !== "" &&
-      input.qty !== "" &&
-      input.price !== "" &&
-      input.description !== "" &&
-      input.customerId !== ""
-    ) {
-      setConfirm(true);
-    }
-  };
+  // const verifyInvoice = (e) => {
+  //   e.preventDefault();
+  //   validate();
+  //   if (
+  //     input.productName !== "" &&
+  //     input.qty !== "" &&
+  //     input.price !== "" &&
+  //     input.description !== "" &&
+  //     input.customerId !== ""
+  //   ) {
+  //     setSuccess(true);
+  //   }
+  // };
 
   return (
     <section className="invoice p-2 px-4">
@@ -285,17 +306,15 @@ export default function GenerateInvoice() {
         </div>
 
         <div className="container mt-2">
-          <select
-            name="discount"
-            id=""
+          <input
+            type="number"
+            placeholder="Discount in % (NOTE: This field is optional)"
             className="f-con"
+            name="discount"
+            value={input.discount}
             onChange={handleChange}
-          >
-            <option value="">Discount</option>
-            <option value="5">5%</option>
-            <option value="10">10%</option>
-            <option value="15">15%</option>
-          </select>
+            // onInput={toggleErr3}
+          />
         </div>
 
         <div className="container mt-2">
@@ -312,8 +331,9 @@ export default function GenerateInvoice() {
             This field is required
           </small>
           <p ref={total} className="text-success fs-6 hidden">
-            Total price is: <span ref={price}>{addVatToPrice()}</span> (This
-            price is will be shown on invoice)
+            Total price is: <span ref={price}>{input.totalPrice}</span> (This
+            price is will be shown on invoice and it's inclusive of 7.5% VAT
+            charges)
           </p>
         </div>
 
@@ -354,11 +374,11 @@ export default function GenerateInvoice() {
             <Button
               style={{
                 backgroundColor: "#0051FF",
-                width: "100%",
+                width: "50%",
                 color: "#fff",
                 Padding: "2%",
               }}
-              click={verifyInvoice}
+              click={handleSubmit}
             >
               Send
             </Button>
@@ -368,7 +388,7 @@ export default function GenerateInvoice() {
             <Button
               style={{
                 backgroundColor: "#FF0505",
-                width: "100%",
+                width: "80%",
                 color: "#fff",
                 Padding: "2%",
               }}
@@ -379,14 +399,14 @@ export default function GenerateInvoice() {
             </Button>
           </div>
         </div>
-        {confirm && (
+        {/* {confirm && (
           <Confirm
             handleSubmit={handleSubmit}
             token={token}
             setToken={setToken}
             setConfirm={setConfirm}
           />
-        )}
+        )} */}
         {success && (
           <Success
             setCancel={setCancel}
@@ -394,7 +414,7 @@ export default function GenerateInvoice() {
             setConfirm={setConfirm}
           />
         )}
-        {cancel && (
+        {/* {cancel && (
           <Cancel
             inputVal={inputVal}
             setInputVal={setInputVal}
@@ -402,7 +422,7 @@ export default function GenerateInvoice() {
             setCancel={setCancel}
             hideForm={hideForm}
           />
-        )}
+        )} */}
       </form>
     </section>
   );
