@@ -59,9 +59,8 @@ function App(props) {
           <Route path="remitance-setup" element={<PaymentMethod />} />
           <Route path="welcome" element={<WelcomePage />} />
           <Route path="forget-password" element={<ForgetPassword />} />
-          <Route path="new-invoice" element={<Generate_Invoice_Page />} />
-          <Route path="failed" element={<Failed_Invoice_Page />} />
-          {/* <Route path="unpaid" element={<Unpaid_invoice />} /> */}
+          <Route path="new" element={<Generate_Invoice_Page />} />
+          <Route path="history" element={<Failed_Invoice_Page />} />
           <Route path="canceled" element={<Canceled_invoice />} />
           <Route path="subscriptions" element={<Subscription />} />
         </Routes>

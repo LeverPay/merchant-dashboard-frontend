@@ -25,12 +25,16 @@
         min-height: 80vh;
         font-family: AgrandirTinItalic;
         background: url(../../Assets/payment-img.png) no-repeat center;
+        font-size: 1rem;
       }
     }
   }
 
   .heading-text {
     font-family: KB-sans-Bold;
+    .page-text {
+      color: #f40909eb;
+    }
   }
 
   .remitance-form {

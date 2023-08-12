@@ -138,7 +138,7 @@ export default function Form() {
       {initialRender && (
         <>
           <div className="heading-text">
-            <h3 className="fs-6 text-center mb-4">
+            <h3 className="fs-6 text-center mb-4 page-text">
               Please click on the currency tab to select your preferred
               remittance method.
             </h3>
@@ -198,12 +198,12 @@ export default function Form() {
             <div className="form  col-md-12">
               <div className="flexy ">
                 <div className="col-md-6 paymentimg d-flex align-items-end">
-                  <div className="d-flex px-4">
+                  <div className="d-flex px-4 align-items-center">
                     <img
                       src={require("../../Assets/ep-info-filled.png")}
                       alt=""
                     />
-                    <small className="text-wrap fs-6 mx-4 fw-bolder">
+                    <small className="text-wrap mx-4 fw-bolder">
                       Also note that Leverpay allows you to setup more than one
                       remitance method. in this case, we will to create one of
                       your preferred options.

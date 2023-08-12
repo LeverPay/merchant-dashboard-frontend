@@ -28,9 +28,13 @@
   min-height: 80vh;
   font-family: AgrandirTinItalic;
   background: url(../../Assets/payment-img.png) no-repeat center;
+  font-size: 1rem;
 }
 .payment-method .heading-text {
   font-family: KB-sans-Bold;
+}
+.payment-method .heading-text .page-text {
+  color: rgba(244, 9, 9, 0.9215686275);
 }
 .payment-method .remitance-form {
   width: 100%;

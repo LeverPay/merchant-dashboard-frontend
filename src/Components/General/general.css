@@ -159,6 +159,14 @@
   .link-light span {
     font-size: 15px !important;
   }
+
+  .sub-links .sub-link-items-container {
+    width: 200px;
+  }
+
+  .sub-link-items-container>a {
+    font-size: 2rem;
+  }
 }
 
 .open {
@@ -179,6 +187,8 @@
   background: #2c379b;
   margin-left: -50% !important;
   border-radius: 1rem;
+  width: 100%;
+  font-size: 1.5rem !important;
 }
 
 .sub-links a {

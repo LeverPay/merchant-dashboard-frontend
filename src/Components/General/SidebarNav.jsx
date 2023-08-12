@@ -27,7 +27,9 @@ export default function SidebarNav(props) {
   const [isMobile, setIsMobile] = useState(false);
   const [trackNavClicked, setTrackedNavClicked] = useState(false);
 
-  const closeMobileMenu = () => setSidebarOpen(!isMobile);
+  const closeMobileMenu = () => {
+    if (window.innerWidth <= 768) setSidebarOpen(!isMobile);
+  };
   const openSidebar = () => {
     setSidebarOpen(true);
   };
@@ -55,7 +57,16 @@ export default function SidebarNav(props) {
   //Active Nav functionality
   const [active, setActive] = useState(null);
   const handleNavClick = (idx) => {
-    setActive((prevActive) => (prevActive === idx ? null : idx));
+    if (sidebarItemsTop[idx].sub) {
+      setActiveSubItem(null);
+      setActive((prevActive) => (prevActive === idx ? null : idx));
+    } else {
+      setActive((prevActive) => (prevActive === idx ? null : idx));
+      setActiveSubItem(null);
+      if (window.innerWidth <= 768) {
+        closeSidebar();
+      }
+    }
   };
 
   const [activeSubItem, setActiveSubItem] = useState(null);
@@ -71,7 +82,6 @@ export default function SidebarNav(props) {
       link: "./dashboard",
       title: "Dashboard",
     },
-    // {icon: <SyncAltRoundedIcon htmlColor="white"/>, link: 'payment_method', title: 'Overview'},
     {
       icon: <SyncAltRoundedIcon htmlColor="white" />,
       link: "transactions",
@@ -80,7 +90,7 @@ export default function SidebarNav(props) {
     {
       icon: <MdReceiptLong color="white" size="25px" />,
       title: "Invoice",
-      sub: ["New-invoice", "Failed", "Canceled"],
+      sub: ["New", "History"],
     },
     {
       icon: <MdSubscriptions color="white" size="25px" />,
@@ -107,10 +117,6 @@ export default function SidebarNav(props) {
       link: "security",
       title: "Setting",
     },
-    // {
-    //   icon: <AiOutlineLogout color="#FC0019" size="25px" />,
-    //   title: "Logout",
-    // },
   ];
 
   const sidebarItemsBottom = [
@@ -228,7 +234,6 @@ export default function SidebarNav(props) {
                           ? "d-flex align-items-start justify-content-between position-relative"
                           : ""
                       }`}
-                      onClick={closeMobileMenu}
                     >
                       {item.title}{" "}
                       {item.sub && (
@@ -244,11 +249,12 @@ export default function SidebarNav(props) {
                                       <NavLink
                                         to={`${el}`}
                                         key={subIdx}
-                                        className={`mt-2 fs-5 ${
+                                        className={`mt-2 text-center ${
                                           activeSubItem === subIdx
                                             ? "custom-active"
                                             : ""
                                         }`}
+                                        onClick={closeMobileMenu}
                                       >
                                         {el}
                                       </NavLink>
