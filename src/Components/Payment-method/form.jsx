@@ -138,7 +138,7 @@ export default function Form() {
       {initialRender && (
         <>
           <div className="heading-text">
-            <h3 className="fs-4 text-center mb-4">
+            <h3 className="fs-6 text-center mb-4">
               Please click on the currency tab to select your preferred
               remittance method.
             </h3>
