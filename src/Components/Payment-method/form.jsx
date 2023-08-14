@@ -227,6 +227,7 @@ export default function Form() {
           submitForm={handleSubmit}
           copyText={copyValue}
           renderSuccess={renderSuccess}
+          setRenderSuccess={setRenderSuccess}
         />
       )}
       {usdc && (
@@ -241,6 +242,7 @@ export default function Form() {
           submitForm={handleSubmit}
           copyText={copyValue}
           renderSuccess={renderSuccess}
+          setRenderSuccess={setRenderSuccess}
         />
       )}
       {busd && (
@@ -255,11 +257,13 @@ export default function Form() {
           submitForm={handleSubmit}
           copyText={copyValue}
           renderSuccess={renderSuccess}
+          setRenderSuccess={setRenderSuccess}
         />
       )}
       {tether && (
         <TetherRemitance
           render={tether}
+          setRenderSuccess={setRenderSuccess}
           setRender={setTether}
           setInitialRender={setInitialRender}
           formValue={input}

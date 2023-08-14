@@ -12,12 +12,15 @@ export default function BusdRemitance({
   cancelProcess,
   submitForm,
   copyText,
+  setRenderSuccess,
 }) {
   const renderMainPage = () => {
     setRender(false);
     setInitialRender(true);
     cancelProcess();
   };
+
+  const btnColor = "#F2AE00";
 
   return (
     <form className="remitance-form d-flex flex-column justify-content-center align-items-center">
@@ -175,7 +178,13 @@ export default function BusdRemitance({
           </Button>
         </div>
 
-        {renderSuccess && <Success icon={busd} />}
+        {renderSuccess && (
+          <Success
+            icon={busd}
+            btnColor={btnColor}
+            setRenderSuccess={setRenderSuccess}
+          />
+        )}
       </div>
     </form>
   );

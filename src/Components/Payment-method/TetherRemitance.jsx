@@ -12,12 +12,15 @@ export default function TetherRemitance({
   cancelProcess,
   submitForm,
   copyText,
+  setRenderSuccess,
 }) {
   const renderMainPage = () => {
     setRender(false);
     setInitialRender(true);
     cancelProcess();
   };
+
+  const btnColor = "#4DBDA6";
 
   return (
     <form className="remitance-form d-flex flex-column justify-content-center align-items-center">
@@ -175,7 +178,14 @@ export default function TetherRemitance({
           </Button>
         </div>
 
-        {renderSuccess && <Success icon={tether} />}
+        {renderSuccess && (
+          <Success
+            icon={tether}
+            btnColor={btnColor}
+            renderSuccess={renderSuccess}
+            setRenderSuccess={setRenderSuccess}
+          />
+        )}
       </div>
     </form>
   );
