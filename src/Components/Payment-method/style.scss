@@ -179,6 +179,10 @@
       margin-top: 5%;
       .items-container {
         width: 60%;
+        .success{
+          width: 90%;
+          left: 10%;
+        }
       }
     }
   }
@@ -205,6 +209,10 @@
       margin-top: 5%;
       .items-container {
         width: 80%;
+        .success{
+          left: 10%;
+          width: 80%;
+        }
       }
     }
   }
