@@ -14,13 +14,28 @@ export default function Subscription_el() {
   const [tableHeader] = useState(TableHead);
   const [tableheader2] = useState(HeaderData);
   const [tableBody] = useState(data);
+
+  // Initialize all subuscription
   const [allSubscriptions, setAllSubscriptions] = useState(null);
+
+  // Initialize pending subscriptions
   const [pendingSubscriptions, setPendingSubscriptions] = useState(null);
+
+  //Initialize active subscriptions
   const [activeSubscriptions, setActiveSubscriptions] = useState(null);
+
+  //Initialize canceled subscriptions
   const [canceledSubscriptions, setCanceledSubscriptions] = useState(null);
+
+  //Initialize failed subscriptions
   const [failedSubscriptions, setFailedSubscriptions] = useState(null);
+
+  // Ttacks clcked header and set colors dynamically
   const [trackClicked, settrackClicked] = useState("ALL");
   const [filteredData, setFilteredData] = useState(tableBody);
+
+  // Tracks active table header tab
+  const [activeTabIndex, setActiveTabIndex] = useState(0);
   const { notify, success } = useContext(TokenContext);
 
   //Determines if toggle switch is checked
@@ -69,15 +84,20 @@ export default function Subscription_el() {
   // Tracks total value of each subscriptions status for cards
   const dummyDataMap = () => {
     const allData = tableBody.map((el) => el.status);
+    // Update all subscriptions
     setAllSubscriptions(allData);
     const pendingData = allData.filter((el) => el === "Pending");
+    //Update pending subscriptions
     setPendingSubscriptions(pendingData);
 
     const canceled = allData.filter((el) => el === "Canceled");
+    //Update canceled subscription
     setCanceledSubscriptions(canceled);
     const active = allData.filter((el) => el === "Active");
+    // Update active subscriptions
     setActiveSubscriptions(active);
     const failed = allData.filter((el) => el === "Failed");
+    //Update failed subscriptions
     setFailedSubscriptions(failed);
   };
 
@@ -93,6 +113,10 @@ export default function Subscription_el() {
       settrackClicked(index);
       setFilteredData(filteredData);
     }
+
+    //Update active tabel header
+    const indexInTableHead = tableHeader.indexOf(index);
+    setActiveTabIndex(indexInTableHead);
     console.log(filteredData, trackClicked);
   };
 
@@ -123,31 +147,31 @@ export default function Subscription_el() {
           icon={all}
           status="All"
           count={allSubscriptions?.length}
-          color="blue"
+          color="#2962F2"
         />
         <Card
           icon={pending}
           status="Pending"
           count={pendingSubscriptions?.length}
-          color="orange"
+          color="#F5A31D"
         />
         <Card
           icon={active}
           status="Active"
           count={activeSubscriptions?.length}
-          color="green"
+          color="#0C6904"
         />
         <Card
           icon={failed}
           status="Failed"
           count={failedSubscriptions?.length}
-          color="red"
+          color="#FD3003"
         />
         <Card
           icon={cancel}
           status="Canceled"
           count={canceledSubscriptions?.length}
-          color="red"
+          color="#FF0505"
         />
       </section>
 
@@ -169,7 +193,7 @@ export default function Subscription_el() {
                     : el === "ACTIVE"
                     ? "green"
                     : ""
-                }`}
+                } ${activeTabIndex === i ? "active-tab" : ""}`}
                 onClick={() => switchTab(el)}
               >
                 {el}

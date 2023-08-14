@@ -28,12 +28,13 @@
   border-bottom: 4px solid #282541;
 }
 .subscription-container .table-section .table1 .table-border1 .headers {
-  font-family: AgrandirWideLight;
+  font-family: AgrandirRegular;
 }
-.subscription-container .table-section .table1 .table-border1 .headers:hover,
-.subscription-container .table-section .table1 .table-border1 .headers :active {
-  border-bottom: 2px solid #082e88;
+.subscription-container .table-section .table1 .table-border1 .headers:hover {
   cursor: pointer;
+}
+.subscription-container .table-section .table1 .table-border1 .active-tab {
+  border-bottom: 4px solid #082e88;
 }
 .subscription-container .table-section .table2 {
   width: 100%;
