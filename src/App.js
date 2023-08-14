@@ -17,9 +17,7 @@ import { useLocation } from "react-router-dom";
 import ForgetPassword from "./Pages/SignInPage/ForgotPassword/ForgetPassword";
 import Generate_Invoice_Page from "./Pages/Generate Invoice/Generate_Invoice_Page";
 import Subscription from "./Pages/SubscriptionPage/Subscription";
-import Failed_Invoice_Page from "./Pages/Failed Invoice/Failed_Invoice_Page";
-import Canceled_invoice from "./Pages/Canceled Invoice/Canceled_invoice_Page";
-import Unpaid_invoice from "./Pages/Unpaid Invoice/Unpaid_invoice_Page";
+import History from "./Components/new Invoice/History";
 
 function App(props) {
   const [showNav, setShowNav] = useState(true);
@@ -60,8 +58,7 @@ function App(props) {
           <Route path="welcome" element={<WelcomePage />} />
           <Route path="forget-password" element={<ForgetPassword />} />
           <Route path="new" element={<Generate_Invoice_Page />} />
-          <Route path="history" element={<Failed_Invoice_Page />} />
-          <Route path="canceled" element={<Canceled_invoice />} />
+          <Route path="history" element={<History />} />
           <Route path="subscriptions" element={<Subscription />} />
         </Routes>
       </div>

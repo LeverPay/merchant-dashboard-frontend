@@ -4,7 +4,7 @@ import "./style.css";
 export default function Card({ icon, status, count, color }) {
   return (
     <div
-      className="cards rounded-4 py-1 px-2 d-flex"
+      className="cards rounded-4 py-1 px-2 d-flex flex-column"
       style={{ backgroundColor: color, color: "white" }}
     >
       <div className="d-flex my-2">

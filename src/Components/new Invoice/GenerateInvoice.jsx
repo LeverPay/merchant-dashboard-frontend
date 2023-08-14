@@ -270,81 +270,120 @@ export default function GenerateInvoice() {
 
   return (
     <section className="invoice p-2 px-4">
-      <div className="mt-2">
-        <AiFillPlusCircle size="25px" className="text-primary" />{" "}
-        <span className="mx-2 fw-light">Generate Invoice</span>
+      <div className="d-flex justify-content-between icon-container">
+        <div className="mt-2 text-icon">
+          <AiFillPlusCircle size="25px" className="text-primary" />{" "}
+          <span className="mx-2 fw-light">Generate Invoice</span>
+        </div>
+
+        <div className="company-logo">
+          <img src={require("../../Assets/vector.png")} alt="company-logo" />
+        </div>
       </div>
       <form className="form container mx-4 position-relative" action="">
-        <div className="container mt-5">
+        <div className="container form-container mt-5">
+          <label htmlFor="Product-name" className="label fw-bolder">
+            Product Name
+          </label>
           <input
             type="text"
-            placeholder="Product Name"
             className="f-con"
             name="productName"
             value={input.productName}
             onChange={handleChange}
             onInput={toggleErr1}
+            id="product-name"
           />
           <small ref={warningMsg1} className="warning hidden">
             This field is required
           </small>
         </div>
 
-        <div className="container mt-2">
+        <div className="container form-container mt-2">
+          <label htmlFor="Quantity" className="label fw-bolder">
+            Quantity
+          </label>
           <input
             type="number"
-            placeholder="Quantity"
             className="f-con"
             name="qty"
             value={input.qty}
             onChange={handleChange}
             onInput={toggleErr2}
+            id="Qunatity"
           />
           <small ref={warningMsg2} className="warning hidden">
             This field is required
           </small>
         </div>
 
-        <div className="container mt-2">
+        <div className="container form-container mt-2">
+          <label htmlFor="Discount" className="label fw-bolder">
+            Discount in %
+          </label>
           <input
             type="number"
-            placeholder="Discount in % (NOTE: This field is optional)"
+            placeholder="This field is optional"
             className="f-con"
             name="discount"
             value={input.discount}
             onChange={handleChange}
+            id="Discount"
             // onInput={toggleErr3}
           />
         </div>
 
-        <div className="container mt-2">
-          <input
-            type="number"
-            placeholder="Price + (VAT 7.5%)"
-            className="f-con"
-            name="price"
-            value={input.price}
-            onChange={handleChange}
-            onInput={toggleErr3}
-          />
-          <small ref={warningMsg3} className="warning hidden">
-            This field is required
-          </small>
-          <p ref={total} className="text-success fs-6 hidden">
-            Total price is: <span ref={price}>{input.totalPrice}</span> (This
-            price is will be shown on invoice and it's inclusive of 7.5% VAT
-            charges)
+        <div className="mt-2 px-3">
+          <div className="d-lg-flex align-items-center price-container">
+            <div className="me-4 d-flex flex-wrap price-container">
+              <label htmlFor="Price" className="label special-label fw-bolder">
+                Price
+              </label>
+              <input
+                type="number"
+                className="f-con-1"
+                name="price"
+                value={input.price}
+                onChange={handleChange}
+                onInput={toggleErr3}
+                id="Price"
+              />
+              <small ref={warningMsg3} className="warning hidden">
+                This field is required
+              </small>
+            </div>
+
+            <div className="mt-lg-0 mt-sm-2 price-container">
+              <label htmlFor="Total-price" className="label fw-bolder">
+                Total Price
+              </label>
+              <input
+                type="text"
+                name=""
+                className="f-con-1"
+                id="Total-price"
+                onChange={handleChange}
+                value={input.totalPrice}
+                readOnly={true}
+              />
+            </div>
+          </div>
+          <p ref={total} className="text-success fs-6 hidden text-wrap">
+            Total price will be shown on invoice and it's inclusive of 7.5% VAT
+            charges
           </p>
         </div>
 
-        <div className="container mt-2">
+        <div className="container form-container mt-2">
+          <label htmlFor="Description" className="label fw-bolder">
+            Description
+          </label>
           <textarea
             className="f-con"
             name="description"
-            id=""
+            id="Description"
             cols="30"
             rows="10"
-            placeholder="Product(s) Description"
             value={input.description}
             onChange={handleChange}
             onInput={toggleErr4}
@@ -354,15 +393,18 @@ export default function GenerateInvoice() {
           </small>
         </div>
 
-        <div className="container mt-2">
+        <div className="container form-container mt-2">
+          <label htmlFor="Customer-id" className="label fw-bolder">
+            Customer's ID
+          </label>
           <input
             type="text"
-            placeholder="customer's LeverPay userID"
             className="f-con"
             name="customerId"
             value={input.customerId}
             onChange={handleChange}
             onInput={toggleErr5}
+            id="Customer-id"
           />
           <small ref={warningMsg5} className="warning hidden">
             This field is required
