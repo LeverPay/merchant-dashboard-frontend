@@ -12,12 +12,15 @@ export default function UsdcRemitance({
   cancelProcess,
   submitForm,
   copyText,
+  setRenderSuccess,
 }) {
   const renderMainPage = () => {
     setRender(false);
     setInitialRender(true);
     cancelProcess();
   };
+
+  const btnColor = "#6A65ED";
 
   return (
     <form className="remitance-form d-flex flex-column justify-content-center align-items-center">
@@ -175,7 +178,13 @@ export default function UsdcRemitance({
           </Button>
         </div>
 
-        {renderSuccess && <Success icon={usdc} />}
+        {renderSuccess && (
+          <Success
+            icon={usdc}
+            btnColor={btnColor}
+            setRenderSuccess={setRenderSuccess}
+          />
+        )}
       </div>
     </form>
   );

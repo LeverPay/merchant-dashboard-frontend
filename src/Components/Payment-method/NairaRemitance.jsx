@@ -13,12 +13,15 @@ export default function NairaRemitance({
   submitForm,
   copyText,
   renderSuccess,
+  setRenderSuccess,
 }) {
   const renderMainPage = () => {
     setRender(false);
     setInitialRender(true);
     cancelProcess();
   };
+
+  const btnColor = "#0C6904";
 
   return (
     <form className="remitance-form d-flex flex-column justify-content-center align-items-center">
@@ -168,7 +171,13 @@ export default function NairaRemitance({
           </Button>
         </div>
 
-        {renderSuccess && <Success icon={naira} />}
+        {renderSuccess && (
+          <Success
+            icon={naira}
+            btnColor={btnColor}
+            setRenderSuccess={setRenderSuccess}
+          />
+        )}
       </div>
     </form>
   );
