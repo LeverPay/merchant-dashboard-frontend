@@ -106,6 +106,28 @@
   }
 }
 
+.history {
+  .input-section {
+    .input-container {
+      position: relative;
+      .input-icon {
+        margin-left: -90%;
+      }
+    }
+  }
+
+  .invoice-history-table {
+    overflow-x: auto;
+    .table-header {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .active-header {
+      border-bottom: 2px solid #008cff;
+    }
+  }
+}
 @media screen and (min-width: 1024px) {
   .invoice {
     top: 2%;

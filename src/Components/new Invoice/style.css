@@ -91,6 +91,22 @@
   cursor: pointer;
 }
 
+.history .input-section .input-container {
+  position: relative;
+}
+.history .input-section .input-container .input-icon {
+  margin-left: -90%;
+}
+.history .invoice-history-table {
+  overflow-x: auto;
+}
+.history .invoice-history-table .table-header:hover {
+  cursor: pointer;
+}
+.history .invoice-history-table .active-header {
+  border-bottom: 2px solid #008cff;
+}
+
 @media screen and (min-width: 1024px) {
   .invoice {
     top: 2%;
