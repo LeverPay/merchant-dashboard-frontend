@@ -91,6 +91,9 @@
   cursor: pointer;
 }
 
+.history {
+  font-family: Inter-Regular;
+}
 .history .input-section .input-container {
   position: relative;
 }
@@ -105,6 +108,13 @@
 }
 .history .invoice-history-table .active-header {
   border-bottom: 2px solid #008cff;
+}
+.history .invoice-history-table .link {
+  text-decoration: none;
+  color: #06ae21;
+}
+.history .invoice-history-table .link :hover {
+  text-decoration: none;
 }
 
 @media screen and (min-width: 1024px) {

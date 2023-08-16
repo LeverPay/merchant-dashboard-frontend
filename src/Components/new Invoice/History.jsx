@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./style.css";
 import sent from "../../Assets/all2.png";
 import paid from "../../Assets/active.png";
-import failed from "../../Assets/failed.png";
+import failed from "../../Assets/ep-failed.png";
 import Card from "../cards/subscription-cards/Card";
 import { TableHead, HeaderData, data } from "./historyData";
+import { NavLink } from "react-router-dom";
 
 export default function History() {
   const [tableHeader1, setTableHeader] = useState(TableHead);
@@ -35,7 +36,7 @@ export default function History() {
     const activeTab = tableHeader1.indexOf(item);
     setActive(activeTab);
 
-    if (item === null || item === "Sent") {
+    if (item === null || item === "Sent" || item === undefined) {
       setFiltered(sentData);
     } else {
       const Data = tableBody.filter((el) =>
@@ -99,7 +100,9 @@ export default function History() {
           <tr>
             {tableHeader1.map((el, i) => (
               <th
-                className={`table-header text-center mx-5 ${active === i? "active-header" : ""}`}
+                className={`table-header text-center mx-5 ${
+                  active === i ? "active-header" : ""
+                }`}
                 onClick={() => switchTab(el)}
               >
                 {el}
@@ -117,14 +120,39 @@ export default function History() {
             </tr>
 
             {filtered.map((el, i) => (
-              <tr key={el.id}>
+              <tr key={el.id} className="fw-bolder">
                 <td className="text-center px-4 py-2">{el.date}</td>
                 <td className="text-center px-4 py-2">{el.SenderID}</td>
                 <td className="text-center px-4 py-2">{el.ReceiverID}</td>
-                <td className="text-center px-4 py-2">{el.productName}</td>
-                <td className="text-center px-4 py-2">{el.Notification}</td>
-                <td className="text-center px-4 py-2">{el.details}</td>
-                <td className="text-center px-4 py-2">{el.status}</td>
+                <td
+                  className="text-center px-4 py-2"
+                  style={{ color: "#CB1919" }}
+                >
+                  {el.productName}
+                </td>
+                <td
+                  className="text-center px-4 py-2"
+                  style={{ color: "#FFCC16" }}
+                >
+                  {el.Notification}
+                </td>
+                <td className="text-center px-4 py-2">
+                  <NavLink className="link">{el.details}</NavLink>
+                </td>
+                <td
+                  className="text-center px-4 py-2"
+                  style={{
+                    color: `${
+                      el.status === "Received"
+                        ? "#046A0E"
+                        : el.status === "Sent"
+                        ? "#3A09FF"
+                        : "#FB3105"
+                    }`,
+                  }}
+                >
+                  {el.status}
+                </td>
               </tr>
             ))}
           </table>

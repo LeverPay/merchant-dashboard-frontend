@@ -107,6 +107,7 @@
 }
 
 .history {
+  font-family: Inter-Regular;
   .input-section {
     .input-container {
       position: relative;
@@ -125,6 +126,14 @@
     }
     .active-header {
       border-bottom: 2px solid #008cff;
+    }
+
+    .link {
+      text-decoration: none;
+      color: #06ae21;
+      :hover {
+        text-decoration: none;
+      }
     }
   }
 }
