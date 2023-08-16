@@ -70,6 +70,7 @@
   font-family: Montserrat-Regular;
   src: url(./Assets/fonts/static/Montserrat-Regular.ttf);
 }
+
 @font-face {
   font-family: Montserrat-Light;
   src: url(./Assets/fonts/static/Montserrat-Light.ttf);
@@ -88,6 +89,31 @@
 @font-face {
   font-family: Montserrat-LightItalic;
   src: url(./Assets/fonts/static/Montserrat-LightItalic.ttf);
+}
+
+@font-face {
+  font-family: Inter-Regular;
+  src: url(./Assets/fonts/inter/Inter-Regular.ttf);
+}
+
+@font-face {
+  font-family: Inter-Bold;
+  src: url(./Assets/fonts//inter/Inter-Bold.ttf);
+}
+
+@font-face {
+  font-family: Inter-Bold;
+  src: url(./Assets/fonts/inter/Inter-Bold.ttf);
+}
+
+@font-face {
+  font-family: Inter-ExtraBold;
+  src: url(./Assets//fonts/inter/Inter-ExtraBold.ttf);
+}
+
+@font-face {
+  font-family: Inter-Black;
+  src: url(./Assets/fonts/inter/Inter-Black.ttf);
 }
 
 @media screen and (min-width: 620px) {

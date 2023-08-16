@@ -91,6 +91,32 @@
   cursor: pointer;
 }
 
+.history {
+  font-family: Inter-Regular;
+}
+.history .input-section .input-container {
+  position: relative;
+}
+.history .input-section .input-container .input-icon {
+  margin-left: -90%;
+}
+.history .invoice-history-table {
+  overflow-x: auto;
+}
+.history .invoice-history-table .table-header:hover {
+  cursor: pointer;
+}
+.history .invoice-history-table .active-header {
+  border-bottom: 2px solid #008cff;
+}
+.history .invoice-history-table .link {
+  text-decoration: none;
+  color: #06ae21;
+}
+.history .invoice-history-table .link :hover {
+  text-decoration: none;
+}
+
 @media screen and (min-width: 1024px) {
   .invoice {
     top: 2%;
