@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../General/Button component/Button";
 import busd from "../../Assets/busd-22.svg";
 import Success from "./Success";
+import RemitanceFooter from "./RemitanceFooter";
 
 export default function BusdRemitance({
   renderSuccess,
@@ -24,7 +25,7 @@ export default function BusdRemitance({
 
   return (
     <form className="remitance-form d-flex flex-column justify-content-center align-items-center">
-      <div className="items-container">
+      <div className="items-container py-5">
         <section className="logo">
           <div>
             <img src={require("../../Assets/vector.png")} alt="" />
@@ -47,7 +48,7 @@ export default function BusdRemitance({
         </section>
 
         <section>
-          <div className="d-flex flex-column inputs-container">
+          <div className="d-flex flex-column mb-3 inputs-container">
             <label htmlFor="bank" id="select-bank">
               Select Your Crypto Exchange Network
             </label>
@@ -78,7 +79,7 @@ export default function BusdRemitance({
             </select>
           </div>
 
-          <div className="d-flex flex-column mt-4 inputs-container">
+          <div className="d-flex flex-column mb-3 inputs-container">
             <label htmlFor="Account-number" id="account-number">
               Account Number
             </label>
@@ -100,7 +101,7 @@ export default function BusdRemitance({
             </div>
           </div>
 
-          <div className="d-flex flex-column mt-4 inputs-container">
+          <div className="d-flex flex-column mb-3 inputs-container">
             <label htmlFor="Account-number" id="account-number">
               Preferred Narration
             </label>
@@ -122,7 +123,7 @@ export default function BusdRemitance({
             </div>
           </div>
 
-          <div className="options-select mt-5 d-flex flex-column inputs-container">
+          <div className="options-select mb-3 d-flex flex-column inputs-container">
             <label htmlFor="interval" id="payment-interval">
               payment interval
             </label>
@@ -186,6 +187,8 @@ export default function BusdRemitance({
           />
         )}
       </div>
+
+      <RemitanceFooter />
     </form>
   );
 }

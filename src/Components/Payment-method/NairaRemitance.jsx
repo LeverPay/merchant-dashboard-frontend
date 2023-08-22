@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../General/Button component/Button";
 import Success from "./Success";
 import naira from "../../Assets/Naira.svg";
+import RemitanceFooter from "./RemitanceFooter";
 
 export default function NairaRemitance({
   render,
@@ -25,7 +26,7 @@ export default function NairaRemitance({
 
   return (
     <form className="remitance-form d-flex flex-column justify-content-center align-items-center">
-      <div className="items-container position-relative">
+      <div className="items-container position-relative py-5">
         <section className="logo">
           <div>
             <img src={require("../../Assets/vector.png")} alt="" />
@@ -48,7 +49,7 @@ export default function NairaRemitance({
         </section>
 
         <section>
-          <div className="d-flex flex-column inputs-container">
+          <div className="d-flex flex-column inputs-container mb-3">
             <label htmlFor="bank" id="select-bank">
               Select Bank
             </label>
@@ -79,7 +80,7 @@ export default function NairaRemitance({
             </select>
           </div>
 
-          <div className="d-flex flex-column mt-4 inputs-container">
+          <div className="d-flex flex-column mb-3 inputs-container">
             <label htmlFor="Account-number" id="account-number">
               Account Number
             </label>
@@ -101,7 +102,7 @@ export default function NairaRemitance({
             </div>
           </div>
 
-          <div className="d-flex flex-column mt-4 inputs-container">
+          <div className="d-flex flex-column mb-3 inputs-container">
             <label htmlFor="Account-name" id="account-name">
               Account Name
             </label>
@@ -115,7 +116,7 @@ export default function NairaRemitance({
             />
           </div>
 
-          <div className="options-select mt-5 d-flex flex-column inputs-container">
+          <div className="options-select mb-3 d-flex flex-column inputs-container">
             <label htmlFor="interval" id="payment-interval">
               payment interval
             </label>
@@ -179,6 +180,8 @@ export default function NairaRemitance({
           />
         )}
       </div>
+
+      <RemitanceFooter />
     </form>
   );
 }
