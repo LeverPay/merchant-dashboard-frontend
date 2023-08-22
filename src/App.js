@@ -7,7 +7,7 @@ import Header from "./Components/General/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import OverviewPage from "./Pages/OverviewPage/OverviewPage";
 import "./App.css";
-import PortfolioPage from "./Pages/PortfolioPage/PortfolioPage";
+// import PortfolioPage from "./Pages/PortfolioPage/PortfolioPage";
 import TransactionsPage from "./Pages/TransactionsPage/TransactionsPage";
 import Help from "./Pages/Help & Support/help";
 import SignInPage from "./Pages/SignInPage/SignInPage";
@@ -48,7 +48,7 @@ function App(props) {
           <Route index element={<SignInPage />} />
           <Route path="dashboard" element={<OverviewPage />} />
           <Route path="view" element={<View />} />
-          <Route path="portfolio" element={<PortfolioPage />} />
+          {/* <Route path="portfolio" element={<PortfolioPage />} /> */}
           <Route path="profile" element={<Profile />} />
           <Route path="security" element={<Security />} />
           <Route path="transactions" element={<TransactionsPage />} />

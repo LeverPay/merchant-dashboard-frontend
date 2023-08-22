@@ -11,8 +11,6 @@ import PhoneInput, {
   isPossiblePhoneNumber,
 } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
-import { countries } from "countries-list";
-import Select from "react-select";
 import TokenContext from "../User-Token/TokenContext";
 import {
   get_Merchant_Profile,
@@ -24,17 +22,22 @@ import {
 import axios from "axios";
 import { CountrySelect } from "../CountrySelect";
 import ImageContext from "../General/ImageContext";
+import { FaCamera } from "react-icons/fa";
 
 export default function Form() {
   const { userToken, userData, setUserData, notify, success } =
     useContext(TokenContext);
   const { vectorImage, setVectorImage } = useContext(ImageContext);
   const [phone, setPhone] = useState("");
+  const [BusinessPhone, setBusinessPhone] = useState("");
   const [country, setCountry] = useState(null);
   const [Input, setInput] = useState({
     firstName: "",
     lastName: "",
-    businuessName: null,
+    businuessName: "",
+    businuessAddress: "",
+    businuessPhone: "",
+    businessRegisteration: "",
     country: null,
     image: "",
     address: "",
@@ -52,6 +55,7 @@ export default function Form() {
   const [selectState, setSelectState] = useState();
   const [selectCity, setSelectCity] = useState();
   const [countryString, setCountryString] = useState();
+  const [businessCertification, setBusinessCertification] = useState(null);
 
   // const [Image, setImage] = useState(null);
 
@@ -66,7 +70,7 @@ export default function Form() {
           Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
         },
       });
-      console.log(request);
+      console.log("Profile:", request);
       if (request.status === 200) {
         const data = request.data.data;
         //save user data for use somewhere else
@@ -79,13 +83,16 @@ export default function Form() {
             lastName: data.last_name,
             address: data.address,
             email: data.email,
+            businuessName: data.merchant.business_name,
+            businuessAddress: data.merchant.business_address,
           };
         });
         setPhone(data.phone);
+        setBusinessPhone(data.merchant.business_phone);
         setVectorImage(data.passport);
-        setCountry(data.country_id);
-        setSelectState(data.state_id);
-        setSelectCity(data.city_id);
+        setSelectCountry(data.state.country_id);
+        setSelectState(data.state.id);
+        setSelectCity(data.city.id);
         data.passport && data.passport !== null ? setImage(data.passport) : "";
       }
     } catch (err) {
@@ -232,11 +239,6 @@ export default function Form() {
   }, []);
 
   useEffect(() => {
-    getCountry();
-    getState(country);
-  }, [Input, selectState]);
-
-  useEffect(() => {
     if (selectCountry !== "") {
       getState(selectCountry);
     }
@@ -291,9 +293,6 @@ export default function Form() {
       console.log(Input.address);
     }
 
-    // if (country !== null) {
-    //   console.log(country.label);
-    // }
     if (
       selectCountry === "" ||
       selectCountry === undefined ||
@@ -323,7 +322,11 @@ export default function Form() {
     ) {
       console.log(phone);
     } else {
-      notify("Number is invalid");
+      notify("Phone Number is invalid");
+    }
+
+    if (businessCertification !== "") {
+      console.log(businessCertification);
     }
 
     if (vectorImage) {
@@ -340,24 +343,22 @@ export default function Form() {
     window.location.reload();
   };
 
-  const handleDivClick = () => {
-    // if (!ReadOnly) {
-    const input = document.createElement("input");
-    input.type = "file";
-    input.style.zIndex = "5";
-    input.accept = "image/x-png,image/jpeg,/image/jpg";
-    input.onchange = changeImage;
-    input.click();
-    // }
-  };
-
+  // Update Profile Image
   const changeImage = (e) => {
     const file = e.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      setVectorImage(fileReader.result);
-    };
+    if (file) {
+      const fileReader = new FileReader();
+      fileReader ? fileReader.readAsDataURL(file) : "";
+      fileReader.onload = () => {
+        setVectorImage(fileReader.result);
+      };
+    }
+  };
+
+  // Handle businesss certification input
+  const handleBusinessFileChange = (event) => {
+    const selectedFiles = event.target.files[0];
+    setBusinessCertification(selectedFiles);
   };
 
   const removeImage = () => {
@@ -373,7 +374,8 @@ export default function Form() {
           last_name: Input.lastName,
           email: Input.email,
           address: Input.address !== "" ? Input.address : null,
-          business_name: Input.businuessName === null,
+          business_name:
+            Input.businuessName !== "" ? Input.businuessName : null,
           phone: phone !== "" ? phone : null,
           password: Input.password === null,
           country_id:
@@ -390,6 +392,9 @@ export default function Form() {
             vectorImage !== ""
               ? vectorImage
               : null,
+          business_address:
+            Input.businuessAddress !== "" ? Input.businuessAddress : null,
+          business_phone: BusinessPhone !== "" ? BusinessPhone : null,
         },
         {
           headers: {
@@ -398,6 +403,9 @@ export default function Form() {
         }
       );
       console.log(request);
+      if (request.status === 200) {
+        success("Action Successful");
+      }
     } catch (err) {
       console.log(err);
       if (
@@ -410,6 +418,7 @@ export default function Form() {
       } else {
         if (err.response !== undefined) {
           notify(err.response.data.message);
+          console.log(err.response.data.message);
         } else {
           notify("Something went wrong :(");
         }
@@ -420,12 +429,37 @@ export default function Form() {
   return (
     <>
       <section className="profile-edit d-flex justify-content-around align-items-center">
-        <div className="profile-img rounded-circle" onClick={handleDivClick}>
-          <img
-            className={`rounded-circle ${!ReadOnly ? `opacity-75 cursor` : ``}`}
-            src={!vectorImage ? require("../../Assets/edit.png") : vectorImage}
-            alt=""
-          />
+        <div className="profile-pic-wrapper">
+          <div className="pic-holder">
+            <img
+              id="profilePic"
+              className="pic"
+              src={
+                !vectorImage ? require("../../Assets/edit.png") : vectorImage
+              }
+            />
+            <input
+              className="uploadProfileInput"
+              type="file"
+              name="profile_pic"
+              id="newProfilePhoto"
+              accept="image/*"
+              style={{ opacity: 0 }}
+              onChange={changeImage}
+            />
+            <label for="newProfilePhoto" className="upload-file-block">
+              <div className="text-center">
+                <div className="mb-2">
+                  <i className="fs-2">
+                    <FaCamera />
+                  </i>
+                </div>
+                <div className="text-uppercase">
+                  Update <br /> Company's Logo
+                </div>
+              </div>
+            </label>
+          </div>
         </div>
 
         {/* Allows user to change information on the database  */}
@@ -466,6 +500,7 @@ export default function Form() {
               value={Input.firstName}
               onChange={handleChange}
               readOnly={disabled}
+              id="Firstname"
             />
           </div>
         </div>
@@ -481,12 +516,13 @@ export default function Form() {
               value={Input.lastName}
               onChange={handleChange}
               readOnly={disabled}
+              id="Lastname"
             />
           </div>
         </div>
 
-        {/* <div className="mt-1 py-2 d-flex flex-column">
-          <label htmlFor="Businuess-name">Businuess Name</label>
+        <div className="mt-1 py-2 d-flex flex-column">
+          <label htmlFor="Business-name">Businuess Name</label>
 
           <div className="">
             <input
@@ -496,9 +532,26 @@ export default function Form() {
               value={Input.businuessName}
               onChange={handleChange}
               readOnly={ReadOnly}
+              id="Business-name"
             />
           </div>
-        </div> */}
+        </div>
+
+        <div className="mt-1 py-2 d-flex flex-column">
+          <label htmlFor="Businuess-address">Businuess Address</label>
+
+          <div className="">
+            <input
+              className="rounded-1 text-input"
+              type="text"
+              name="businuessAddress"
+              value={Input.businuessAddress}
+              onChange={handleChange}
+              readOnly={ReadOnly}
+              id="Business-address"
+            />
+          </div>
+        </div>
 
         <div className="mt-1 py-2 d-flex flex-column">
           <label htmlFor="address">Address</label>
@@ -511,6 +564,7 @@ export default function Form() {
               value={Input.address}
               onChange={handleChange}
               readOnly={ReadOnly}
+              id="address"
             />
           </div>
         </div>
@@ -526,24 +580,10 @@ export default function Form() {
               value={Input.email}
               onChange={handleChange}
               readOnly={ReadOnly}
+              id="email"
             />
           </div>
         </div>
-
-        {/* <div className="mt-1 py-2 d-flex flex-column">
-          <label htmlFor="password">Password</label>
-
-          <div className="">
-            <input
-              className="rounded-1 text-input"
-              type="password"
-              name="password"
-              value={Input.password}
-              onChange={handleChange}
-              readOnly={ReadOnly}
-            />
-          </div>
-        </div> */}
 
         <div className="mt-1 py-2 d-flex flex-column" id="options">
           <label htmlFor="Country" className="rounded-1">
@@ -617,6 +657,22 @@ export default function Form() {
           </div>
         </div>
 
+        <div className="mt-2 py-2 d-flex flex-column">
+          <label htmlFor="business-reg">Business Registeration ID</label>
+
+          <div className="">
+            <input
+              className="rounded-1 text-input"
+              type="text"
+              name="businessRegisteration"
+              value={Input.businessRegisteration}
+              onChange={handleChange}
+              disabled={ReadOnly}
+              id="business-reg"
+            />
+          </div>
+        </div>
+
         <div className="mt-1 py-2 d-flex flex-column" id="options">
           <label htmlFor="Country" className="rounded-1">
             Phone Number
@@ -629,6 +685,38 @@ export default function Form() {
               onChange={(val) => setPhone(val)}
               className="select-btn rounded-1"
               disabled={ReadOnly}
+            />
+          </div>
+        </div>
+
+        <div className="mt-1 py-2 d-flex flex-column" id="options">
+          <label htmlFor="Country" className="rounded-1">
+            Business Phone
+          </label>
+
+          <div className="items">
+            <PhoneInput
+              international
+              value={BusinessPhone}
+              onChange={(val) => setBusinessPhone(val)}
+              className="select-btn rounded-1"
+              disabled={ReadOnly}
+            />
+          </div>
+        </div>
+
+        <div className="mt-2 py-2 d-flex flex-column">
+          <label htmlFor="business-certificate">Business Certification</label>
+
+          <div className="">
+            <input
+              className="rounded-1 text-input"
+              type="file"
+              name="BusinessCertification"
+              onChange={handleBusinessFileChange}
+              disabled={ReadOnly}
+              id="business-certificate"
+              value={businessCertification}
             />
           </div>
         </div>

@@ -102,11 +102,11 @@ export default function SidebarNav(props) {
       link: "Remitance-setup",
       title: "Payment Method",
     },
-    {
-      icon: <BusinessCenterRoundedIcon htmlColor="white" />,
-      link: "portfolio",
-      title: "Portfolio",
-    },
+    // {
+    //   icon: <BusinessCenterRoundedIcon htmlColor="white" />,
+    //   link: "portfolio",
+    //   title: "Portfolio",
+    // },
     {
       icon: <AccountCircleTwoToneIcon htmlColor="white" />,
       link: "profile",

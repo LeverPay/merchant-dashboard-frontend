@@ -95,7 +95,10 @@ export default function History() {
         />
       </section>
 
-      <section className="invoice-history-table d-flex flex-column justify-content-center mt-5">
+      <section
+        className="invoice-history-table d-flex flex-column justify-content-center mt-5 
+      border border-light-subtle rounded"
+      >
         <table className="mt-5">
           <tr>
             {tableHeader1.map((el, i) => (
