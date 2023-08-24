@@ -152,7 +152,7 @@
 .sidebar-links-top .mapped-items .custom-active {
   font-weight: bold;
   border: solid 1px #fff;
-  background: #fff;
+  background: #e4b42fb0;
   color: #2c379b !important;
   border-radius: 35px;
   width: 100%;

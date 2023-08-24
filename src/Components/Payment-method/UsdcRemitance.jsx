@@ -42,7 +42,7 @@ export default function UsdcRemitance({
             this account
           </p>
 
-          <p className="mt-5 text-center fw-bolder fs-4">
+          <p className="mt-5 text-center fs-4">
             Please fill the input below
           </p>
         </section>
@@ -184,6 +184,8 @@ export default function UsdcRemitance({
             icon={usdc}
             btnColor={btnColor}
             setRenderSuccess={setRenderSuccess}
+            setRender={setRender}
+            setInitialRender={setInitialRender}
           />
         )}
       </div>

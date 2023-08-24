@@ -87,13 +87,13 @@
   .contact-support {
     width: 80%;
     left: 18%;
-    top: 2%;
+    top: 1%;
   }
 }
 @media screen and (max-width: 767px) {
   .contact-support {
     width: 100%;
-    top: 5%;
+    top: 1%;
     left: 0%;
     flex-direction: column !important;
     max-height: 100vh;

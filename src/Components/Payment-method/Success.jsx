@@ -1,7 +1,21 @@
 import React from "react";
 import Button from "../General/Button component/Button";
 
-export default function Success({ icon, btnColor, setRenderSuccess }) {
+export default function Success({
+  icon,
+  btnColor,
+  setRenderSuccess,
+  setRender,
+  setInitialRender,
+}) {
+
+  // Manually close succes icon
+  const closeMe = () => {
+    setRenderSuccess(false);
+    setRender(false);
+    setInitialRender(true);
+  };
+
   return (
     <section className="success d-flex flex-column position-fixed px-2">
       <div className="success-items-container d-flex flex-column justify-content-center align-iems-center">
@@ -28,7 +42,7 @@ export default function Success({ icon, btnColor, setRenderSuccess }) {
                 padding: "0.3rem 0.6rem",
                 width: "40%",
               }}
-              click={() => setRenderSuccess(false)}
+              click={() => closeMe()}
             >
               Close
             </Button>

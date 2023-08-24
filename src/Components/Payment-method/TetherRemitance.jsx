@@ -37,7 +37,7 @@ export default function TetherRemitance({
             <img src={require("../../Assets/usdt-42.png")} alt="" /> USDT
             Remittance Setup
           </h3>
-          <p className="text-danger text-center fw-bolder fs-5">
+          <p className="text-danger text-center fs-5">
             Please note that your earnings with Leverpay will be remitted into
             this account
           </p>
@@ -185,6 +185,8 @@ export default function TetherRemitance({
             btnColor={btnColor}
             renderSuccess={renderSuccess}
             setRenderSuccess={setRenderSuccess}
+            setRender={setRender}
+            setInitialRender={setInitialRender}
           />
         )}
       </div>

@@ -14,7 +14,7 @@ export default function Success({ setCancel, setSuccess, setConfirm }) {
     >
       <div className="d-flex justify-content-end fw-bold container-fluid">
         <div className="s-close" onClick={closeRenders}>
-          <AiOutlineCloseCircle size="40px" />
+          <AiOutlineCloseCircle size="40px" color="red" />
         </div>
       </div>
       <img src={require(`../../Assets/check.png`)} alt="Success" />

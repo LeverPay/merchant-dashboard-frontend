@@ -30,6 +30,7 @@ export default function Form() {
     setInput((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Empty All input values
   const cancel = () => {
     setInput((prev) => ({
       ...prev,
@@ -40,6 +41,7 @@ export default function Form() {
     }));
   };
 
+  // Copy values on input to device clipboard
   const copyValue = (e) => {
     const parentValue = e.target
       .closest(".inputs-container-2")
@@ -59,6 +61,8 @@ export default function Form() {
     }
   };
 
+  //Account number value pattern
+  const testAccVal = /^\d{10}$/;
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -69,36 +73,71 @@ export default function Form() {
       input.input4 !== "" &&
       input.input4 !== "Choose An OPtion"
     ) {
-      console.log(input);
-      cancel();
-      if (naira) {
-        setTimeout(() => {
-          setNaira(false);
-          setInitialRender(true);
-          setRenderSuccess(false);
-        }, 5000);
+      //Validate A/c no input once naira state is true
+      if (naira && testAccVal.test(input.input2)) {
+        console.log(input);
+        cancel();
+
+        // Automatically Sets page back to default state if user does't close succes icon manually
         setRenderSuccess(true);
+
+        // Automatically Sets page back to default state if user does't close succes icon manually
+        if (!initialRender && !renderSuccess && naira) {
+          setTimeout(() => {
+            setNaira(false);
+            setInitialRender(true);
+            setRenderSuccess(false);
+          }, 3000);
+        }
       } else if (busd) {
-        setTimeout(() => {
-          setBusd(false);
-          setInitialRender(true);
-          setRenderSuccess(false);
-        }, 5000);
+        console.log(input);
+        cancel();
+
+        // Displays Success icon
         setRenderSuccess(true);
+
+        // Automatically Sets page back to default state if user does't close succes icon manually
+        if (!initialRender && !renderSuccess && busd) {
+          setTimeout(() => {
+            setBusd(false);
+            setInitialRender(true);
+            setRenderSuccess(false);
+          }, 3000);
+        }
       } else if (usdc) {
-        setTimeout(() => {
-          setUsdc(false);
-          setInitialRender(true);
-          setRenderSuccess(false);
-        }, 5000);
+        console.log(input);
+        cancel();
+
+        // Displays success icons
         setRenderSuccess(true);
+
+        // Automatically Sets page back to default state if user does't close succes icon manually
+        if (!initialRender && !renderSuccess && usdc) {
+          setTimeout(() => {
+            setUsdc(false);
+            setInitialRender(true);
+            setRenderSuccess(false);
+          }, 3000);
+        }
+      } else if (naira && !testAccVal.test(input.input2)) {
+        notify("Invalid account number");
       } else {
-        setTimeout(() => {
-          setTether(false);
-          setInitialRender(true);
-          setRenderSuccess(false);
-        }, 5000);
+        console.log(input);
+        // Displays success icon
         setRenderSuccess(true);
+        //Empty input fields
+        cancel();
+
+        console.log(initialRender, renderSuccess, tether);
+
+        // Automatically Sets page back to default state if user does't close succes icon manually
+        if (!initialRender && !renderSuccess && tether) {
+          setTimeout(() => {
+            setTether(false);
+            setInitialRender(true);
+            setRenderSuccess(false);
+          }, 3000);
+        }
       }
     } else {
       notify("One or more input(s) are empty");

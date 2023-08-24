@@ -42,7 +42,7 @@ export default function BusdRemitance({
             this account
           </p>
 
-          <p className="mt-5 text-center fw-bolder fs-4">
+          <p className="mt-5 text-center fs-4">
             Please fill the input below
           </p>
         </section>
@@ -81,7 +81,7 @@ export default function BusdRemitance({
 
           <div className="d-flex flex-column mb-3 inputs-container">
             <label htmlFor="Account-number" id="account-number">
-              Account Number
+              Wallet Address
             </label>
             <div className="d-flex inputs-container-2">
               <input
@@ -184,6 +184,8 @@ export default function BusdRemitance({
             icon={busd}
             btnColor={btnColor}
             setRenderSuccess={setRenderSuccess}
+            setRender={setRender}
+            setInitialRender={setInitialRender}
           />
         )}
       </div>

@@ -43,7 +43,7 @@ export default function NairaRemitance({
             this account
           </p>
 
-          <p className="mt-5 text-center fw-bolder fs-4">
+          <p className="mt-5 text-center fs-4">
             Please fill the input below
           </p>
         </section>
@@ -86,7 +86,7 @@ export default function NairaRemitance({
             </label>
             <div className="d-flex inputs-container-2">
               <input
-                type="text"
+                type="number"
                 name="input2"
                 id="account-number"
                 className="input"
@@ -177,6 +177,8 @@ export default function NairaRemitance({
             icon={naira}
             btnColor={btnColor}
             setRenderSuccess={setRenderSuccess}
+            setRender={setRender}
+            setInitialRender={setInitialRender}
           />
         )}
       </div>
