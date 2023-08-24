@@ -27,8 +27,9 @@ export default function Form({ setRenderForm, notify, success }) {
     mail = useRef(),
     errMsg6 = useRef();
 
-  const closebtnAction = () => {
+  const closebtnAction = (e) => {
     setRenderForm(false);
+    console.log(e);
   };
 
   const mailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -317,7 +318,7 @@ export default function Form({ setRenderForm, notify, success }) {
               id=""
               value={input.issue}
               onChange={handleChange}
-              className="container mt-4 px-2 px-1 py-2 input-field"
+              className="container mt-4 px-2 px-1 py-2 input-field fs-5"
               ref={selectField}
               onInput={toggleErr5}
             >
