@@ -29,9 +29,9 @@ export default function Help() {
         if (!formContainer.current.contains(e.target)) {
           setRenderForm(false);
         }
-        if (notificationContainer.current.contains(e.target)) {
-          setRenderForm(true);
-        }
+        // if (notificationContainer.current.contains(e.target)) {
+        //   setRenderForm(true);
+        // }
       }
     };
     document.addEventListener("mousedown", closeForm);
@@ -66,9 +66,9 @@ export default function Help() {
       })}
 
       <div className="container d-flex justify-content-center align-items-center">
-        <div ref={notificationContainer}>
+        {/* <div ref={notificationContainer}>
           <ToastContainer />
-        </div>
+        </div> */}
         <p
           className="mt-5 fw-bold fs-5 more"
           onClick={() => setRenderForm(true)}
