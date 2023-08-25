@@ -3,6 +3,7 @@ import Button from "../General/Button component/Button";
 import usdc from "../../Assets/icon-62.svg";
 import Success from "./Success";
 import RemitanceFooter from "./RemitanceFooter";
+import Select from "react-select";
 
 export default function UsdcRemitance({
   renderSuccess,
@@ -14,6 +15,16 @@ export default function UsdcRemitance({
   submitForm,
   copyText,
   setRenderSuccess,
+  selectOptions,
+  selectOptions2,
+  selectedBank,
+  setSelectedBank,
+  renderLogos,
+  intervals,
+  selectedInterval,
+  CustomOption,
+  instituteOption,
+  customSelectStyles,
 }) {
   const renderMainPage = () => {
     setRender(false);
@@ -42,9 +53,7 @@ export default function UsdcRemitance({
             this account
           </p>
 
-          <p className="mt-5 text-center fs-4">
-            Please fill the input below
-          </p>
+          <p className="mt-5 text-center fs-4">Please fill the input below</p>
         </section>
 
         <section>
@@ -52,31 +61,16 @@ export default function UsdcRemitance({
             <label htmlFor="bank" id="select-bank">
               Select Your Crypto Exchnage Network
             </label>
-            <select
-              name="input1"
-              id="select-bank"
-              className="banks"
-              onChange={handleForm}
-            >
-              <option value="Choose An Option" className="select-value">
-                Choose An Option
-              </option>
-              <option value="Exchange Network1" className="select-value">
-                Exchange Network1
-              </option>
-              <option value="Exchange Network2" className="select-value">
-                Exchange Network2
-              </option>
-              <option value="Exchange Network3" className="select-value">
-                Exchange Network3
-              </option>
-              <option value="Exchange Network4" className="select-value">
-                Exchange Network4
-              </option>
-              <option value="Exchange Network5" className="select-value">
-                Exchange Network5
-              </option>
-            </select>
+            <Select
+              options={instituteOption}
+              onChange={(opt) => selectOptions(opt)}
+              value={selectedBank}
+              isSearchable={false}
+              components={{
+                Option: CustomOption,
+              }}
+              styles={customSelectStyles}
+            />
           </div>
 
           <div className="d-flex flex-column mb-3 inputs-container">
@@ -127,25 +121,16 @@ export default function UsdcRemitance({
             <label htmlFor="interval" id="payment-interval">
               payment interval
             </label>
-            <select
-              name="input4"
-              id="payment-interval"
-              className="payment-interval"
-              onChange={handleForm}
-            >
-              <option value="Choose An Option" className="select-value">
-                Choose An Option
-              </option>
-              <option value="Daily" className="select-value">
-                Daily
-              </option>
-              <option value="Weekly" className="select-value">
-                Weekly
-              </option>
-              <option value="Monthly" className="select-value">
-                Monthly
-              </option>
-            </select>
+            <Select
+              options={intervals}
+              onChange={(opt) => selectOptions2(opt)}
+              value={selectedInterval}
+              isSearchable={false}
+              components={{
+                Option: CustomOption,
+              }}
+              styles={customSelectStyles}
+            />
           </div>
         </section>
 

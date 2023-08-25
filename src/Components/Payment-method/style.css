@@ -103,6 +103,35 @@
 .inputs-container .payment-interval .select-value:hover {
   background-color: #1b0088 !important;
 }
+.inputs-container .selected-bank-logo {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+.inputs-container .selected-bank-logo .selected-logo {
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+}
+.inputs-container .selected-bank-logo span {
+  flex: 1;
+}
+.inputs-container .custom-option {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+.inputs-container .custom-option .option-logo {
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+}
+.inputs-container .custom-option span {
+  flex: 1;
+}
+.inputs-container .css-1hb7zxy-IndicatorsContainer {
+  display: none !important;
+}
 .inputs-container .inputs-container-2 {
   width: 100%;
 }

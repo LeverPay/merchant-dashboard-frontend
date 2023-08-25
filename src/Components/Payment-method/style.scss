@@ -107,6 +107,44 @@
     }
   }
 
+  // React Select styles on page
+  .selected-bank-logo {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+
+    .selected-logo {
+      width: 30px;
+      height: 30px;
+      margin-right: 8px;
+    }
+
+    span {
+      flex: 1;
+    }
+  }
+
+  .custom-option {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+
+    .option-logo {
+      width: 30px;
+      height: 30px;
+      margin-right: 8px;
+    }
+
+    span {
+      flex: 1;
+    }
+  }
+
+  .css-1hb7zxy-IndicatorsContainer {
+    display: none !important;
+  }
+  // End of React Select stylels on page
+
   .inputs-container-2 {
     width: 100%;
     .input {
@@ -179,7 +217,7 @@
       margin-top: 5%;
       .items-container {
         width: 60%;
-        .success{
+        .success {
           width: 90%;
           left: 10%;
         }
@@ -209,7 +247,7 @@
       margin-top: 5%;
       .items-container {
         width: 80%;
-        .success{
+        .success {
           left: 10%;
           width: 80%;
         }
