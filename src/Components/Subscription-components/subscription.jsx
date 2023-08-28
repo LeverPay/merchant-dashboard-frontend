@@ -181,7 +181,7 @@ export default function Subscription_el() {
             {tableHeader.map((el, i) => (
               <th
                 key="key"
-                className={`headers mx-4 fs-4 fw-light ${
+                className={`headers mx-4 fs-5 fw-light ${
                   el === "ALL"
                     ? "blue"
                     : el === "PENDING"

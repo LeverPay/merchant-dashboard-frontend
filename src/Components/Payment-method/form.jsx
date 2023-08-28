@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useState, useContext, useEffect } from "react";
 import Button from "../General/Button component/Button";
 import PaymentImg from "../../Assets/payment-img.png";
 import { baseUrl, update_payment_Method } from "../Endpoints/Endpoints";
@@ -17,7 +17,11 @@ export default function Form() {
   const [usdc, setUsdc] = useState(false);
   const [busd, setBusd] = useState(false);
   const [tether, setTether] = useState(false);
+  const [allBanks, setAllBanks] = useState(null);
+  const [selectedBank, setSelectedBank] = useState(null);
+  const [selectIntervals, setSelectedInterVal] = useState(null);
   const [renderSuccess, setRenderSuccess] = useState(false);
+  const [renderLogos] = useState(null);
   const [input, setInput] = useState({
     input1: "",
     input2: "",
@@ -30,6 +34,101 @@ export default function Form() {
     setInput((prev) => ({ ...prev, [name]: value }));
   };
 
+  // selected option value
+  const handleInstituteSelect = (selectedOption) => {
+    setSelectedBank(selectedOption);
+    setInput((prev) => ({ ...prev, input1: selectedOption }));
+    console.log(input.input1);
+  };
+
+  // Selected interval value
+  const handleSelectedInterval = (opt) => {
+    setInput((prev) => ({ ...prev, input4: opt }));
+    setSelectedInterVal(opt);
+    console.log(input.input4);
+  };
+
+  // Display intervals
+  const intervals = ["daily", "weekly", "monthly"];
+  const allIntervals = intervals
+    ? intervals.map((opt) => ({
+        value: opt,
+        label: opt,
+        ...(renderLogos && { logo: "url-to-logo" }),
+      }))
+    : [];
+
+  //Logic to display bank images on select component
+  const CustomOption = ({ innerProps, label, data, isFocused, isSelected }) => (
+    <div
+      {...innerProps}
+      className={`custom-option ${isFocused ? "focused" : ""} ${
+        isSelected ? "selected" : ""
+      }`}
+    >
+      {data.logo && (
+        <img src={data.logo} alt="bank logo" className="option-logo" />
+      )}
+      <span>{label}</span>
+    </div>
+  );
+
+  //Select Component syle
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      width: "100%",
+      padding: "5% 8%",
+      borderRadius: "0.8rem",
+      border: state.isFocused ? "2px solid #c1bdbd" : "2px solid #c1bdbd",
+      outline: "none",
+      boxShadow: state.isFocused ? "none" : provided.boxShadow,
+      "&:hover": {
+        border: "2px solid #c1bdbd",
+        outline: "none",
+      },
+    }),
+  };
+
+  const requestUrl = "https://nigerianbanks.xyz";
+
+  const cryptoExchange = ["Binance", "Coinbase", "Huobi", "Luno"];
+
+  const ExchangeOptions = cryptoExchange
+    ? cryptoExchange.map((val) => ({
+        value: val,
+        label: val,
+        ...(renderLogos && { logo: "logo-to-url" }),
+      }))
+    : [];
+
+  // Fetch banks and set the state...
+  const bankOptions = allBanks
+    ? allBanks.map((bank) => ({
+        value: bank.name,
+        label: bank.name,
+        logo: bank.logo,
+      }))
+    : [];
+
+  //Get banks data
+  const getBankLists = async () => {
+    try {
+      const req = await axios.get(requestUrl);
+      console.log(req);
+      if (req.status === 200) {
+        setAllBanks(req.data);
+      }
+    } catch (err) {
+      console.log(`Oh No Something went wrong ${err}`);
+    }
+  };
+
+  useEffect(() => {
+    getBankLists();
+  }, []);
+
+  // Empty All input values
   const cancel = () => {
     setInput((prev) => ({
       ...prev,
@@ -38,8 +137,11 @@ export default function Form() {
       input3: "",
       input4: "",
     }));
+    setSelectedBank(null);
+    setSelectedInterVal(null);
   };
 
+  // Copy values on input to device clipboard
   const copyValue = (e) => {
     const parentValue = e.target
       .closest(".inputs-container-2")
@@ -59,6 +161,8 @@ export default function Form() {
     }
   };
 
+  //Account number value pattern
+  const testAccVal = /^\d{10}$/;
   const handleSubmit = (e) => {
     e.preventDefault();
     if (
@@ -69,36 +173,71 @@ export default function Form() {
       input.input4 !== "" &&
       input.input4 !== "Choose An OPtion"
     ) {
-      console.log(input);
-      cancel();
-      if (naira) {
-        setTimeout(() => {
-          setNaira(false);
-          setInitialRender(true);
-          setRenderSuccess(false);
-        }, 5000);
+      //Validate A/c no input once naira state is true
+      if (naira && testAccVal.test(input.input2)) {
+        console.log(input);
+        cancel();
+
+        // Automatically Sets page back to default state if user does't close succes icon manually
         setRenderSuccess(true);
+
+        // Automatically Sets page back to default state if user does't close succes icon manually
+        if (!initialRender && !renderSuccess && naira) {
+          setTimeout(() => {
+            setNaira(false);
+            setInitialRender(true);
+            setRenderSuccess(false);
+          }, 3000);
+        }
       } else if (busd) {
-        setTimeout(() => {
-          setBusd(false);
-          setInitialRender(true);
-          setRenderSuccess(false);
-        }, 5000);
+        console.log(input);
+        cancel();
+
+        // Displays Success icon
         setRenderSuccess(true);
+
+        // Automatically Sets page back to default state if user does't close succes icon manually
+        if (!initialRender && !renderSuccess && busd) {
+          setTimeout(() => {
+            setBusd(false);
+            setInitialRender(true);
+            setRenderSuccess(false);
+          }, 3000);
+        }
       } else if (usdc) {
-        setTimeout(() => {
-          setUsdc(false);
-          setInitialRender(true);
-          setRenderSuccess(false);
-        }, 5000);
+        console.log(input);
+        cancel();
+
+        // Displays success icons
         setRenderSuccess(true);
+
+        // Automatically Sets page back to default state if user does't close succes icon manually
+        if (!initialRender && !renderSuccess && usdc) {
+          setTimeout(() => {
+            setUsdc(false);
+            setInitialRender(true);
+            setRenderSuccess(false);
+          }, 3000);
+        }
+      } else if (naira && !testAccVal.test(input.input2)) {
+        notify("Invalid account number");
       } else {
-        setTimeout(() => {
-          setTether(false);
-          setInitialRender(true);
-          setRenderSuccess(false);
-        }, 5000);
+        console.log(input);
+        // Displays success icon
         setRenderSuccess(true);
+        //Empty input fields
+        cancel();
+
+        console.log(initialRender, renderSuccess, tether);
+
+        // Automatically Sets page back to default state if user does't close succes icon manually
+        if (!initialRender && !renderSuccess && tether) {
+          setTimeout(() => {
+            setTether(false);
+            setInitialRender(true);
+            setRenderSuccess(false);
+          }, 3000);
+        }
       }
     } else {
       notify("One or more input(s) are empty");
@@ -228,6 +367,16 @@ export default function Form() {
           copyText={copyValue}
           renderSuccess={renderSuccess}
           setRenderSuccess={setRenderSuccess}
+          selectOptions={handleInstituteSelect}
+          selectOptions2={handleSelectedInterval}
+          selectedBank={selectedBank}
+          setSelectedBank={setSelectedBank}
+          intervals={allIntervals}
+          renderLogos={renderLogos}
+          selectedInterval={selectIntervals}
+          CustomOption={CustomOption}
+          customSelectStyles={customStyles}
+          instituteOption={bankOptions}
         />
       )}
       {usdc && (
@@ -243,6 +392,16 @@ export default function Form() {
           copyText={copyValue}
           renderSuccess={renderSuccess}
           setRenderSuccess={setRenderSuccess}
+          selectOptions={handleInstituteSelect}
+          selectOptions2={handleSelectedInterval}
+          selectedBank={selectedBank}
+          setSelectedBank={setSelectedBank}
+          intervals={allIntervals}
+          renderLogos={renderLogos}
+          selectedInterval={selectIntervals}
+          CustomOption={CustomOption}
+          customSelectStyles={customStyles}
+          instituteOption={ExchangeOptions}
         />
       )}
       {busd && (
@@ -258,6 +417,16 @@ export default function Form() {
           copyText={copyValue}
           renderSuccess={renderSuccess}
           setRenderSuccess={setRenderSuccess}
+          selectOptions={handleInstituteSelect}
+          selectOptions2={handleSelectedInterval}
+          selectedBank={selectedBank}
+          setSelectedBank={setSelectedBank}
+          intervals={allIntervals}
+          renderLogos={renderLogos}
+          selectedInterval={selectIntervals}
+          CustomOption={CustomOption}
+          instituteOption={ExchangeOptions}
+          customSelectStyles={customStyles}
         />
       )}
       {tether && (
@@ -273,6 +442,16 @@ export default function Form() {
           submitForm={handleSubmit}
           copyText={copyValue}
           renderSuccess={renderSuccess}
+          selectOptions={handleInstituteSelect}
+          selectOptions2={handleSelectedInterval}
+          selectedBank={selectedBank}
+          setSelectedBank={setSelectedBank}
+          intervals={allIntervals}
+          renderLogos={renderLogos}
+          selectedInterval={selectIntervals}
+          CustomOption={CustomOption}
+          customSelectStyles={customStyles}
+          instituteOption={ExchangeOptions}
         />
       )}
     </>

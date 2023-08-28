@@ -3,6 +3,9 @@ import Button from "../General/Button component/Button";
 import Success from "./Success";
 import naira from "../../Assets/Naira.svg";
 import RemitanceFooter from "./RemitanceFooter";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import Select from "react-select";
 
 export default function NairaRemitance({
   render,
@@ -15,12 +18,69 @@ export default function NairaRemitance({
   copyText,
   renderSuccess,
   setRenderSuccess,
+  selectOptions,
+  selectOptions2,
+  selectedBank,
+  setSelectedBank,
+  renderLogos,
+  intervals,
+  selectedInterval,
+  CustomOption,
+  instituteOption,
+  customSelectStyles,
 }) {
   const renderMainPage = () => {
     setRender(false);
     setInitialRender(true);
     cancelProcess();
   };
+
+  // //Select Component syle
+  // const customStyles = {
+  //   control: (provided, state) => ({
+  //     ...provided,
+  //     width: "100%",
+  //     padding: "5% 8%",
+  //     borderRadius: "0.8rem",
+  //     border: "2px solid #c1bdbd",
+  //     boxShadow: state.isFocused ? "none" : provided.boxShadow,
+  //     "&:focus": {
+  //       border: "none",
+  //       outline: "2px solid #c1bdbd",
+  //     },
+  //   }),
+  // };
+
+  // const [allBanks, setAllBanks] = useState(null);
+
+  // const requestUrl = "https://nigerianbanks.xyz";
+
+  // // Fetch banks and set the state...
+
+  // const bankOptions = allBanks
+  //   ? allBanks.map((bank) => ({
+  //       value: bank.name,
+  //       label: bank.name,
+  //       logo: bank.logo,
+  //     }))
+  //   : [];
+
+  // //Get banks data
+  // const getBankLists = async () => {
+  //   try {
+  //     const req = await axios.get(requestUrl);
+  //     console.log(req);
+  //     if (req.status === 200) {
+  //       setAllBanks(req.data);
+  //     }
+  //   } catch (err) {
+  //     console.log(`Oh No Something went wrong ${err}`);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getBankLists();
+  // }, []);
 
   const btnColor = "#0C6904";
 
@@ -43,9 +103,7 @@ export default function NairaRemitance({
             this account
           </p>
 
-          <p className="mt-5 text-center fw-bolder fs-4">
-            Please fill the input below
-          </p>
+          <p className="mt-5 text-center fs-4">Please fill the input below</p>
         </section>
 
         <section>
@@ -53,31 +111,26 @@ export default function NairaRemitance({
             <label htmlFor="bank" id="select-bank">
               Select Bank
             </label>
-            <select
-              name="input1"
-              id="select-bank"
-              className="banks"
-              onChange={handleForm}
-            >
-              <option value="Choose An Option" className="select-value">
-                Choose An Option
-              </option>
-              <option value="Bank1" className="select-value">
-                Bank1
-              </option>
-              <option value="Bank2" className="select-value">
-                Bank2
-              </option>
-              <option value="Bank3" className="select-value">
-                Bank3
-              </option>
-              <option value="Bank4" className="select-value">
-                Bank4
-              </option>
-              <option value="Bank5" className="select-value">
-                Bank5
-              </option>
-            </select>
+            <Select
+              options={instituteOption}
+              onChange={(selectedOption) => selectOptions(selectedOption)}
+              value={selectedBank}
+              isSearchable={false}
+              components={{
+                Option: CustomOption,
+              }}
+              styles={customSelectStyles}
+            />
+            {/* {selectedBank && (
+              <div className="selected-bank-logo">
+                <img
+                  src={selectedBank.logo}
+                  alt="selected bank logo"
+                  className="selected-logo"
+                />
+                <span>{selectedBank.label}</span>
+              </div>
+            )} */}
           </div>
 
           <div className="d-flex flex-column mb-3 inputs-container">
@@ -86,7 +139,7 @@ export default function NairaRemitance({
             </label>
             <div className="d-flex inputs-container-2">
               <input
-                type="text"
+                type="number"
                 name="input2"
                 id="account-number"
                 className="input"
@@ -120,7 +173,18 @@ export default function NairaRemitance({
             <label htmlFor="interval" id="payment-interval">
               payment interval
             </label>
-            <select
+            <Select
+              options={intervals}
+              onChange={(opt) => selectOptions2(opt)}
+              value={selectedInterval}
+              isSearchable={false}
+              components={{
+                Option: CustomOption,
+              }}
+              styles={customSelectStyles}
+            />
+
+            {/* <select
               name="input4"
               id="payment-interval"
               className="payment-interval"
@@ -138,7 +202,7 @@ export default function NairaRemitance({
               <option value="Monthly" className="select-value">
                 Monthly
               </option>
-            </select>
+            </select> */}
           </div>
         </section>
 
@@ -177,6 +241,8 @@ export default function NairaRemitance({
             icon={naira}
             btnColor={btnColor}
             setRenderSuccess={setRenderSuccess}
+            setRender={setRender}
+            setInitialRender={setInitialRender}
           />
         )}
       </div>

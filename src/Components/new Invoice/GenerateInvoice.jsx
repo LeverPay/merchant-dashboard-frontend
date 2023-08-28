@@ -250,8 +250,22 @@ export default function GenerateInvoice() {
 
       setSuccess(true);
       console.log(input, token);
+      clearInput();
       newNotification();
     }
+  };
+
+  const clearInput = () => {
+    setInput((prev) => ({
+      ...prev,
+      productName: "",
+      qty: "",
+      price: "",
+      discount: "",
+      customerId: "",
+      totalPrice: "",
+      description: "",
+    }));
   };
 
   // const verifyInvoice = (e) => {

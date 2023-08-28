@@ -94,7 +94,7 @@
       outline: 2px solid #c1bdbd;
     }
     .select-value {
-      font-size: 2rem;
+      font-size: 1.2rem;
       padding: 4% 4%;
       background-color: transparent;
       &:checked {
@@ -106,6 +106,59 @@
       }
     }
   }
+
+  // React Select styles on page
+  .selected-bank-logo {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+
+    .selected-logo {
+      width: 30px;
+      height: 30px;
+      margin-right: 8px;
+    }
+
+    span {
+      flex: 1;
+    }
+  }
+
+  .custom-option {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    &:hover {
+      background-color: #1b0088;
+      color: #c1bdbd;
+      cursor: pointer;
+    }
+
+    &.selected {
+      background-color: #1b0088;
+      color: #c1bdbd;
+    }
+
+    &.focused {
+      background-color: lightblue;
+      color: black;
+    }
+
+    .option-logo {
+      width: 30px;
+      height: 30px;
+      margin-right: 8px;
+    }
+
+    span {
+      flex: 1;
+    }
+  }
+
+  .css-1hb7zxy-IndicatorsContainer {
+    display: none !important;
+  }
+  // End of React Select stylels on page
 
   .inputs-container-2 {
     width: 100%;
@@ -179,7 +232,7 @@
       margin-top: 5%;
       .items-container {
         width: 60%;
-        .success{
+        .success {
           width: 90%;
           left: 10%;
         }
@@ -209,7 +262,7 @@
       margin-top: 5%;
       .items-container {
         width: 80%;
-        .success{
+        .success {
           left: 10%;
           width: 80%;
         }

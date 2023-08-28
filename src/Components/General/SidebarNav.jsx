@@ -17,9 +17,10 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { baseUrl, logout } from "../Endpoints/Endpoints";
 import TokenContext from "../User-Token/TokenContext";
 import { MdReceiptLong } from "react-icons/md";
-import { MdSubscriptions } from "react-icons/md";
+import { MdSubscriptions, MdOutlineCreateNewFolder } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
 import axios from "axios";
+import { FaHistory } from "react-icons/fa";
 
 export default function SidebarNav(props) {
   const { notify, success } = useContext(TokenContext);
@@ -91,6 +92,10 @@ export default function SidebarNav(props) {
       icon: <MdReceiptLong color="white" size="25px" />,
       title: "Invoice",
       sub: ["New", "History"],
+      icons: [
+        <MdOutlineCreateNewFolder color="white" size="25px" />,
+        <FaHistory color="white" size="25px" />,
+      ],
     },
     {
       icon: <MdSubscriptions color="white" size="25px" />,
@@ -256,7 +261,11 @@ export default function SidebarNav(props) {
                                         }`}
                                         onClick={closeMobileMenu}
                                       >
-                                        {el}
+                                        <div className="d-flex align-items-center justify-content-start fs-6 fw-lighter">
+                                          {/* Add the icon from the icons array */}
+                                          {item.icons[subIdx]}
+                                          <span className="mx-1">{el}</span>
+                                        </div>
                                       </NavLink>
                                       <Outlet />
                                     </React.Fragment>
