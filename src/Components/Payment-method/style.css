@@ -121,6 +121,19 @@
   align-items: center;
   padding: 8px;
 }
+.inputs-container .custom-option:hover {
+  background-color: #1b0088;
+  color: #c1bdbd;
+  cursor: pointer;
+}
+.inputs-container .custom-option.selected {
+  background-color: #1b0088;
+  color: #c1bdbd;
+}
+.inputs-container .custom-option.focused {
+  background-color: lightblue;
+  color: black;
+}
 .inputs-container .custom-option .option-logo {
   width: 30px;
   height: 30px;

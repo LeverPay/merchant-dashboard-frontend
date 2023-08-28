@@ -59,8 +59,13 @@ export default function Form() {
     : [];
 
   //Logic to display bank images on select component
-  const CustomOption = ({ innerProps, label, data }) => (
-    <div {...innerProps} className="custom-option">
+  const CustomOption = ({ innerProps, label, data, isFocused, isSelected }) => (
+    <div
+      {...innerProps}
+      className={`custom-option ${isFocused ? "focused" : ""} ${
+        isSelected ? "selected" : ""
+      }`}
+    >
       {data.logo && (
         <img src={data.logo} alt="bank logo" className="option-logo" />
       )}
@@ -75,11 +80,12 @@ export default function Form() {
       width: "100%",
       padding: "5% 8%",
       borderRadius: "0.8rem",
-      border: "2px solid #c1bdbd",
+      border: state.isFocused ? "2px solid #c1bdbd" : "2px solid #c1bdbd",
+      outline: "none",
       boxShadow: state.isFocused ? "none" : provided.boxShadow,
-      "&:focus": {
-        border: "none",
-        outline: "2px solid #c1bdbd",
+      "&:hover": {
+        border: "2px solid #c1bdbd",
+        outline: "none",
       },
     }),
   };
