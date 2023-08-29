@@ -8,7 +8,7 @@ export const HeaderData = [
   "Payment Interval",
 ];
 
-export const NairaHeader = [
+export const NairaHeading = [
   "Account Name",
   "Account Number",
   "Bank Name",
