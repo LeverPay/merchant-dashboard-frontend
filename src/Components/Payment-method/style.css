@@ -35,6 +35,8 @@
 .payment-method .form-container .form .paymentimg .table-container {
   height: 90%;
   width: 100%;
+  font-family: AgrandirRegular;
+  overflow-x: auto;
 }
 .payment-method .form-container .form .paymentimg .table-container .table-content {
   width: 100%;
@@ -251,6 +253,16 @@
   .payment-method .form-container {
     width: 100%;
     box-shadow: none;
+  }
+  .payment-method .form-container .form {
+    width: 100%;
+  }
+  .payment-method .form-container .form .paymentimg {
+    width: 100%;
+    min-height: 60vh;
+  }
+  .payment-method .form-container .form .paymentimg .table-container {
+    margin: 2% 0 30% 0;
   }
   .payment-method .form-container .remitance-btn-container {
     flex-wrap: wrap;

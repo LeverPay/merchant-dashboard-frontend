@@ -28,7 +28,7 @@ export default function Form() {
   const [SecondHeader] = useState(HeaderData);
   const [TableBody] = useState(data);
   const [NairaHeader, setNairaHeader] = useState(true);
-  const [active, setActive] = useState(null);
+  const [active, setActive] = useState(0);
 
   const [filteredData, setFilteredData] = useState(null);
   const [renderSuccess, setRenderSuccess] = useState(false);
@@ -426,27 +426,37 @@ export default function Form() {
                         <table className="mt-4">
                           <tr>
                             {SecondHeader.map((el) => (
-                              <th className="fw-bolder">{el}</th>
+                              <th className="fw-bolder px-4 py-2">{el}</th>
                             ))}
                           </tr>
 
                           {!NairaHeader
                             ? filteredData?.map((el) => (
                                 <tr key={el.id}>
-                                  <td>{el.WalletAddress}</td>
-                                  <td>{el.Exchange}</td>
-                                  <td>{el.Network}</td>
-                                  <td>{el.Narration}</td>
-                                  <td>{el.PaymentInterval}</td>
+                                  <td className="px-4 py-2">
+                                    {el.WalletAddress}
+                                  </td>
+                                  <td className="px-4 py-2">{el.Exchange}</td>
+                                  <td className="px-4 py-2">{el.Network}</td>
+                                  <td className="px-4 py-2">{el.Narration}</td>
+                                  <td className="px-4 py-2">
+                                    {el.PaymentInterval}
+                                  </td>
                                 </tr>
                               ))
                             : filteredData?.map((el) => (
                                 <tr key={el.id}>
-                                  <td>{el.AccountName}</td>
-                                  <td>{el.AccountNumber}</td>
-                                  <td>{el.BankName}</td>
-                                  <td>{el.Narration}</td>
-                                  <td>{el.PaymentInterval}</td>
+                                  <td className="px-4 py-2">
+                                    {el.AccountName}
+                                  </td>
+                                  <td className="px-4 py-2">
+                                    {el.AccountNumber}
+                                  </td>
+                                  <td className="px-4 py-2">{el.BankName}</td>
+                                  <td className="px-4 py-2">{el.Narration}</td>
+                                  <td className="px-4 py-2">
+                                    {el.PaymentInterval}
+                                  </td>
                                 </tr>
                               ))}
                         </table>

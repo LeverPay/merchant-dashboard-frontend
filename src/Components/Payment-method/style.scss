@@ -32,6 +32,8 @@
         .table-container {
           height: 90%;
           width: 100%;
+          font-family: AgrandirRegular;
+          overflow-x: auto;
           .table-content {
             width: 100%;
             height: 40%;
@@ -275,6 +277,16 @@
     .form-container {
       width: 100%;
       box-shadow: none;
+      .form {
+        width: 100%;
+        .paymentimg {
+          width: 100%;
+          min-height: 60vh;
+          .table-container{
+            margin: 2% 0 30% 0;
+          }
+        }
+      }
       .remitance-btn-container {
         flex-wrap: wrap;
         justify-content: center;
