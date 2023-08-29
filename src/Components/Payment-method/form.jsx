@@ -9,7 +9,7 @@ import NairaRemitance from "./NairaRemitance";
 import BusdRemitance from "./BusdRemitance";
 import UsdcRemitance from "./UsdcRemitance";
 import TetherRemitance from "./TetherRemitance";
-import { TableHead, HeaderData, data } from "./TestData";
+import { TableHead, HeaderData, data, NairaHeading } from "./TestData";
 
 export default function Form() {
   const [initialRender, setInitialRender] = useState(true);
@@ -25,7 +25,7 @@ export default function Form() {
 
   const [showTable, setShowTable] = useState(true);
   const [TableHeader] = useState(TableHead);
-  const [SecondHeader] = useState(HeaderData);
+  const [SecondHeader, setSecondHeader] = useState(HeaderData);
   const [TableBody] = useState(data);
   const [NairaHeader, setNairaHeader] = useState(true);
   const [active, setActive] = useState(0);
@@ -46,6 +46,12 @@ export default function Form() {
   const initialFilter = () => {
     const naira = data.filter((el) => el.Type === "Naira");
     setFilteredData(naira);
+
+    if (active === 0) {
+      const nairaValue = NairaHeading.map((el) => el);
+      setNairaHeader(true);
+      setSecondHeader(nairaValue);
+    }
   };
 
   const TrackedClickedHeader = (item) => {
@@ -56,9 +62,13 @@ export default function Form() {
     SetAciveHeader(item);
 
     if (item === "Naira") {
+      const nairaValue = NairaHeading.map((el) => el);
       setNairaHeader(true);
+      setSecondHeader(nairaValue);
     } else {
+      const Header = HeaderData.map((el) => el);
       setNairaHeader(false);
+      setSecondHeader(Header);
     }
   };
 
@@ -446,15 +456,15 @@ export default function Form() {
                               ))
                             : filteredData?.map((el) => (
                                 <tr key={el.id}>
-                                  <td className="px-4 py-2">
+                                  <td className="px-4 py-1">
                                     {el.AccountName}
                                   </td>
-                                  <td className="px-4 py-2">
+                                  <td className="px-4 py-1">
                                     {el.AccountNumber}
                                   </td>
-                                  <td className="px-4 py-2">{el.BankName}</td>
-                                  <td className="px-4 py-2">{el.Narration}</td>
-                                  <td className="px-4 py-2">
+                                  <td className="px-4 py-1">{el.BankName}</td>
+                                  <td className="px-4 py-1">{el.Narration}</td>
+                                  <td className="px-4 py-1">
                                     {el.PaymentInterval}
                                   </td>
                                 </tr>
