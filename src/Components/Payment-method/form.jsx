@@ -9,6 +9,7 @@ import NairaRemitance from "./NairaRemitance";
 import BusdRemitance from "./BusdRemitance";
 import UsdcRemitance from "./UsdcRemitance";
 import TetherRemitance from "./TetherRemitance";
+import { TableHead, HeaderData, data } from "./TestData";
 
 export default function Form() {
   const [initialRender, setInitialRender] = useState(true);
@@ -17,9 +18,19 @@ export default function Form() {
   const [usdc, setUsdc] = useState(false);
   const [busd, setBusd] = useState(false);
   const [tether, setTether] = useState(false);
+
   const [allBanks, setAllBanks] = useState(null);
   const [selectedBank, setSelectedBank] = useState(null);
   const [selectIntervals, setSelectedInterVal] = useState(null);
+
+  const [showTable, setShowTable] = useState(true);
+  const [TableHeader] = useState(TableHead);
+  const [SecondHeader] = useState(HeaderData);
+  const [TableBody] = useState(data);
+  const [NairaHeader, setNairaHeader] = useState(true);
+  const [active, setActive] = useState(0);
+
+  const [filteredData, setFilteredData] = useState(null);
   const [renderSuccess, setRenderSuccess] = useState(false);
   const [renderLogos] = useState(null);
   const [input, setInput] = useState({
@@ -28,6 +39,52 @@ export default function Form() {
     input3: "",
     input4: "",
   });
+  const DisplayImg = useRef(),
+    TableRef = useRef();
+
+  // Populates with naira data on initial page load
+  const initialFilter = () => {
+    const naira = data.filter((el) => el.Type === "Naira");
+    setFilteredData(naira);
+  };
+
+  const TrackedClickedHeader = (item) => {
+    const filtered = data.filter(
+      (el) => el.Type.toLowerCase() === item.toLowerCase()
+    );
+    setFilteredData(filtered);
+    SetAciveHeader(item);
+
+    if (item === "Naira") {
+      setNairaHeader(true);
+    } else {
+      setNairaHeader(false);
+    }
+  };
+
+  const SetAciveHeader = (item) => {
+    const activeItem = TableHeader.indexOf(item);
+    setActive(activeItem);
+    console.log(active);
+  };
+
+  //Renders Table based on data available
+  const renderTableByDataLength = () => {
+    TableBody.length >= 1 ? setShowTable(true) : setShowTable(false);
+
+    if (!showTable) {
+      if (!DisplayImg.current.classList.contains("backgroundImg"))
+        DisplayImg.current.classList.add("backgroundImg");
+    } else {
+      if (DisplayImg.current.classList.contains("backgroundImg")) {
+        DisplayImg.current.classList.remove("backgroundImg");
+      }
+    }
+  };
+
+  useEffect(() => {
+    renderTableByDataLength();
+  }, [showTable]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -126,6 +183,7 @@ export default function Form() {
 
   useEffect(() => {
     getBankLists();
+    initialFilter();
   }, []);
 
   // Empty All input values
@@ -336,7 +394,75 @@ export default function Form() {
             </div>
             <div className="form  col-md-12">
               <div className="flexy ">
-                <div className="col-md-6 paymentimg d-flex align-items-end">
+                <div
+                  className={`col-md-6 paymentimg d-flex ${
+                    showTable
+                      ? "justify-content-center flex-column"
+                      : "align-items-end"
+                  }`}
+                  ref={DisplayImg}
+                >
+                  {showTable && (
+                    <div
+                      className="table-container d-flex flex-column justify-content-center align-items-center px-4"
+                      ref={TableRef}
+                    >
+                      <div className="table-content d-flex flex-column align-items-center justify-content-center">
+                        <table>
+                          <tr className="t-row d-flex align-items-center justify-content-center">
+                            {TableHeader.map((el, i) => (
+                              <th
+                                className={`t-head1 mx-4 fs-5 text-center ${
+                                  active === i ? "activeHeader" : ""
+                                }`}
+                                onClick={() => TrackedClickedHeader(el)}
+                              >
+                                {el}
+                              </th>
+                            ))}
+                          </tr>
+                        </table>
+
+                        <table className="mt-4">
+                          <tr>
+                            {SecondHeader.map((el) => (
+                              <th className="fw-bolder px-4 py-2">{el}</th>
+                            ))}
+                          </tr>
+
+                          {!NairaHeader
+                            ? filteredData?.map((el) => (
+                                <tr key={el.id}>
+                                  <td className="px-4 py-2">
+                                    {el.WalletAddress}
+                                  </td>
+                                  <td className="px-4 py-2">{el.Exchange}</td>
+                                  <td className="px-4 py-2">{el.Network}</td>
+                                  <td className="px-4 py-2">{el.Narration}</td>
+                                  <td className="px-4 py-2">
+                                    {el.PaymentInterval}
+                                  </td>
+                                </tr>
+                              ))
+                            : filteredData?.map((el) => (
+                                <tr key={el.id}>
+                                  <td className="px-4 py-2">
+                                    {el.AccountName}
+                                  </td>
+                                  <td className="px-4 py-2">
+                                    {el.AccountNumber}
+                                  </td>
+                                  <td className="px-4 py-2">{el.BankName}</td>
+                                  <td className="px-4 py-2">{el.Narration}</td>
+                                  <td className="px-4 py-2">
+                                    {el.PaymentInterval}
+                                  </td>
+                                </tr>
+                              ))}
+                        </table>
+                      </div>
+                    </div>
+                  )}
                   <div className="d-flex px-4 align-items-center">
                     <img
                       src={require("../../Assets/ep-info-filled.png")}
