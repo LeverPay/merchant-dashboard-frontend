@@ -23,12 +23,32 @@
 .payment-method .form-container .form {
   width: 100%;
 }
+.payment-method .form-container .form .backgroundImg {
+  background: url(../../Assets/payment-img.png) no-repeat center;
+}
 .payment-method .form-container .form .paymentimg {
   width: 100%;
   min-height: 80vh;
   font-family: AgrandirTinItalic;
-  background: url(../../Assets/payment-img.png) no-repeat center;
   font-size: 1rem;
+}
+.payment-method .form-container .form .paymentimg .table-container {
+  height: 90%;
+  width: 100%;
+}
+.payment-method .form-container .form .paymentimg .table-container .table-content {
+  width: 100%;
+  height: 40%;
+}
+.payment-method .form-container .form .paymentimg .table-container .table-content table {
+  width: 80%;
+}
+.payment-method .form-container .form .paymentimg .table-container .table-content table .t-row .t-head1 {
+  width: 100%;
+  cursor: pointer;
+}
+.payment-method .activeHeader {
+  border-bottom: 2px solid #008cff;
 }
 .payment-method .heading-text {
   font-family: KB-sans-Bold;
@@ -220,6 +240,9 @@
     width: 90%;
     left: 10%;
   }
+  .css-1hb7zxy-IndicatorsContainer {
+    display: none !important;
+  }
 }
 @media screen and (max-width: 767px) {
   .payment-method {
@@ -247,5 +270,8 @@
   .payment-method .remitance-form .items-container .success {
     left: 10%;
     width: 80%;
+  }
+  .css-1hb7zxy-IndicatorsContainer {
+    display: none !important;
   }
 }/*# sourceMappingURL=style.css.map */
