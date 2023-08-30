@@ -128,7 +128,7 @@ export default function Form() {
     : [];
 
   // Display Networks on select field
-  const networks = ["trc20", "bep20", "runc"];
+  const networks = ["ERC20", "TRC20", "BEP20"];
   const allNetworks = networks
     ? networks.map((opt) => ({
         value: opt,
@@ -163,7 +163,7 @@ export default function Form() {
     control: (provided, state) => ({
       ...provided,
       width: "100%",
-      padding: "5% 8%",
+      padding: "2rem 4rem",
       borderRadius: "0.8rem",
       border: state.isFocused ? "2px solid #c1bdbd" : "2px solid #c1bdbd",
       outline: "none",
