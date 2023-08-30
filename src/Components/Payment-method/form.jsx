@@ -22,6 +22,7 @@ export default function Form() {
   const [allBanks, setAllBanks] = useState(null);
   const [selectedBank, setSelectedBank] = useState(null);
   const [selectIntervals, setSelectedInterVal] = useState(null);
+  const [selectNetwork, setSelectedNetwork] = useState(null);
 
   const [showTable, setShowTable] = useState(true);
   const [TableHeader] = useState(TableHead);
@@ -38,6 +39,7 @@ export default function Form() {
     input2: "",
     input3: "",
     input4: "",
+    input5: "",
   });
   const DisplayImg = useRef(),
     TableRef = useRef();
@@ -83,11 +85,11 @@ export default function Form() {
     TableBody.length >= 1 ? setShowTable(true) : setShowTable(false);
 
     if (!showTable) {
-      if (!DisplayImg.current.classList.contains("backgroundImg"))
-        DisplayImg.current.classList.add("backgroundImg");
+      if (!DisplayImg.current?.classList?.contains("backgroundImg"))
+        DisplayImg.current?.classList?.add("backgroundImg");
     } else {
-      if (DisplayImg.current.classList.contains("backgroundImg")) {
-        DisplayImg.current.classList.remove("backgroundImg");
+      if (DisplayImg.current?.classList?.contains("backgroundImg")) {
+        DisplayImg.current?.classList?.remove("backgroundImg");
       }
     }
   };
@@ -124,6 +126,22 @@ export default function Form() {
         ...(renderLogos && { logo: "url-to-logo" }),
       }))
     : [];
+
+  // Display Networks on select field
+  const networks = ["trc20", "bep20", "runc"];
+  const allNetworks = networks
+    ? networks.map((opt) => ({
+        value: opt,
+        label: opt,
+        ...(renderLogos && { logo: "url-to-logo" }),
+      }))
+    : [];
+
+  const handleSelectedNetwork = (opt) => {
+    setInput((prev) => ({ ...prev, input5: opt }));
+    setSelectedNetwork(opt);
+    console.log(input.input5);
+  };
 
   //Logic to display bank images on select component
   const CustomOption = ({ innerProps, label, data, isFocused, isSelected }) => (
@@ -204,9 +222,11 @@ export default function Form() {
       input2: "",
       input3: "",
       input4: "",
+      input5: "",
     }));
     setSelectedBank(null);
     setSelectedInterVal(null);
+    setSelectedNetwork(null);
   };
 
   // Copy values on input to device clipboard
@@ -239,7 +259,9 @@ export default function Form() {
       input.input2 !== "" &&
       input.input3 !== "" &&
       input.input4 !== "" &&
-      input.input4 !== "Choose An OPtion"
+      input.input4 !== "Choose An OPtion" &&
+      input.input5 !== "" &&
+      input.input5 !== "Choose An OPtion"
     ) {
       //Validate A/c no input once naira state is true
       if (naira && testAccVal.test(input.input2)) {
@@ -433,38 +455,42 @@ export default function Form() {
                           </tr>
                         </table>
 
-                        <table className="mt-4">
+                        <table className="second-table mt-4 px-2">
                           <tr>
                             {SecondHeader.map((el) => (
-                              <th className="fw-bolder px-4 py-2">{el}</th>
+                              <th className="fw-bolder px-2 py-2">{el}</th>
                             ))}
                           </tr>
 
                           {!NairaHeader
                             ? filteredData?.map((el) => (
                                 <tr key={el.id}>
-                                  <td className="px-4 py-2">
+                                  <td className="px-2 py-2 text-break">
                                     {el.WalletAddress}
                                   </td>
-                                  <td className="px-4 py-2">{el.Exchange}</td>
-                                  <td className="px-4 py-2">{el.Network}</td>
-                                  <td className="px-4 py-2">{el.Narration}</td>
-                                  <td className="px-4 py-2">
+                                  <td className="px-2 py-2">{el.Exchange}</td>
+                                  <td className="px-2 py-2">{el.Network}</td>
+                                  <td className="px-2 py-2 text-break">
+                                    {el.Narration}
+                                  </td>
+                                  <td className="px-2 py-2">
                                     {el.PaymentInterval}
                                   </td>
                                 </tr>
                               ))
                             : filteredData?.map((el) => (
                                 <tr key={el.id}>
-                                  <td className="px-4 py-1">
+                                  <td className="px-2 py-2 text-break">
                                     {el.AccountName}
                                   </td>
-                                  <td className="px-4 py-1">
+                                  <td className="px-2 py-2">
                                     {el.AccountNumber}
                                   </td>
-                                  <td className="px-4 py-1">{el.BankName}</td>
-                                  <td className="px-4 py-1">{el.Narration}</td>
-                                  <td className="px-4 py-1">
+                                  <td className="px-2 py-2">{el.BankName}</td>
+                                  <td className="px-2 py-2 text-break">
+                                    {el.Narration}
+                                  </td>
+                                  <td className="px-2 py-2">
                                     {el.PaymentInterval}
                                   </td>
                                 </tr>
@@ -538,6 +564,10 @@ export default function Form() {
           CustomOption={CustomOption}
           customSelectStyles={customStyles}
           instituteOption={ExchangeOptions}
+          networkOptions={allNetworks}
+          selectedNetwork={selectNetwork}
+          setSelectedNetwork={setSelectedNetwork}
+          selectOptions3={handleSelectedNetwork}
         />
       )}
       {busd && (
@@ -563,6 +593,10 @@ export default function Form() {
           CustomOption={CustomOption}
           instituteOption={ExchangeOptions}
           customSelectStyles={customStyles}
+          networkOptions={allNetworks}
+          selectedNetwork={selectNetwork}
+          setSelectedNetwork={setSelectedNetwork}
+          selectOptions3={handleSelectedNetwork}
         />
       )}
       {tether && (
@@ -588,6 +622,10 @@ export default function Form() {
           CustomOption={CustomOption}
           customSelectStyles={customStyles}
           instituteOption={ExchangeOptions}
+          networkOptions={allNetworks}
+          selectedNetwork={selectNetwork}
+          setSelectedNetwork={setSelectedNetwork}
+          selectOptions3={handleSelectedNetwork}
         />
       )}
     </>

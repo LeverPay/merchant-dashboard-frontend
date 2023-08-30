@@ -43,7 +43,7 @@
   height: 40%;
 }
 .payment-method .form-container .form .paymentimg .table-container .table-content table {
-  width: 80%;
+  width: 100%;
 }
 .payment-method .form-container .form .paymentimg .table-container .table-content table .t-row .t-head1 {
   width: 100%;
@@ -166,6 +166,7 @@
 }
 .inputs-container .css-1hb7zxy-IndicatorsContainer {
   display: none !important;
+  display: -webkit-none !important;
 }
 .inputs-container .inputs-container-2 {
   width: 100%;
