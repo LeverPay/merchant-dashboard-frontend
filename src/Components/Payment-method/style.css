@@ -173,7 +173,7 @@
 }
 .inputs-container .inputs-container-2 .input {
   width: 100%;
-  padding: 5% 8%;
+  padding: 6% 8%;
   border-radius: 0.8rem;
   border: 2px solid #c1bdbd;
 }
@@ -184,16 +184,6 @@
 .inputs-container .inputs-container-2 .value-copy {
   margin-left: -8%;
   cursor: pointer;
-}
-.inputs-container .input {
-  width: 100%;
-  padding: 5% 8%;
-  border-radius: 0.8rem;
-  border: 2px solid #c1bdbd;
-}
-.inputs-container .input:focus {
-  border: none;
-  outline: 2px solid #c1bdbd;
 }
 
 .form-btn {
