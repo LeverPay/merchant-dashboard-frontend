@@ -433,38 +433,38 @@ export default function Form() {
                           </tr>
                         </table>
 
-                        <table className="mt-4">
+                        <table className="second-table mt-4 px-2">
                           <tr>
                             {SecondHeader.map((el) => (
-                              <th className="fw-bolder px-4 py-2">{el}</th>
+                              <th className="fw-bolder px-2 py-2">{el}</th>
                             ))}
                           </tr>
 
                           {!NairaHeader
                             ? filteredData?.map((el) => (
                                 <tr key={el.id}>
-                                  <td className="px-4 py-2">
+                                  <td className="px-2 py-2 text-break">
                                     {el.WalletAddress}
                                   </td>
-                                  <td className="px-4 py-2">{el.Exchange}</td>
-                                  <td className="px-4 py-2">{el.Network}</td>
-                                  <td className="px-4 py-2">{el.Narration}</td>
-                                  <td className="px-4 py-2">
+                                  <td className="px-2 py-2">{el.Exchange}</td>
+                                  <td className="px-2 py-2">{el.Network}</td>
+                                  <td className="px-2 py-2 text-break">{el.Narration}</td>
+                                  <td className="px-2 py-2">
                                     {el.PaymentInterval}
                                   </td>
                                 </tr>
                               ))
                             : filteredData?.map((el) => (
                                 <tr key={el.id}>
-                                  <td className="px-4 py-1">
+                                  <td className="px-2 py-2 text-break">
                                     {el.AccountName}
                                   </td>
-                                  <td className="px-4 py-1">
+                                  <td className="px-2 py-2">
                                     {el.AccountNumber}
                                   </td>
-                                  <td className="px-4 py-1">{el.BankName}</td>
-                                  <td className="px-4 py-1">{el.Narration}</td>
-                                  <td className="px-4 py-1">
+                                  <td className="px-2 py-2">{el.BankName}</td>
+                                  <td className="px-2 py-2 text-break">{el.Narration}</td>
+                                  <td className="px-2 py-2">
                                     {el.PaymentInterval}
                                   </td>
                                 </tr>

@@ -39,7 +39,7 @@
             height: 40%;
             // background-color: #0b0230;
             table {
-              width: 80%;
+              width: 100%;
               .t-row {
                 .t-head1 {
                   width: 100%;
@@ -184,6 +184,7 @@
 
   .css-1hb7zxy-IndicatorsContainer {
     display: none !important;
+    display: -webkit-none !important;
   }
   // End of React Select stylels on page
 
