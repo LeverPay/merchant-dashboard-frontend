@@ -159,28 +159,32 @@ export default function NairaRemitance({
             <label htmlFor="Account-name" id="account-name">
               Account Name
             </label>
-            <input
-              type="text"
-              name="input3"
-              id="account-name"
-              className="input"
-              onChange={handleForm}
-              value={formValue.input3}
-            />
+            <div className="d-flex inputs-container-2">
+              <input
+                type="text"
+                name="input3"
+                id="account-name"
+                className="input"
+                onChange={handleForm}
+                value={formValue.input3}
+              />
+            </div>
           </div>
 
           <div className="d-flex flex-column mb-3 inputs-container">
             <label htmlFor="Narration" id="narration">
               Narration
             </label>
-            <input
-              type="text"
-              name="input5"
-              id="narration"
-              className="input"
-              onChange={handleForm}
-              value={formValue.input5}
-            />
+            <div className="d-flex inputs-container-2">
+              <input
+                type="text"
+                name="input5"
+                id="narration"
+                className="input"
+                onChange={handleForm}
+                value={formValue.input5}
+              />
+            </div>
           </div>
 
           <div className="options-select mb-3 d-flex flex-column inputs-container">

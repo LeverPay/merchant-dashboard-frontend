@@ -192,7 +192,7 @@
     width: 100%;
     .input {
       width: 100%;
-      padding: 5% 8%;
+      padding: 6% 8%;
       border-radius: 0.8rem;
       border: 2px solid #c1bdbd;
       &:focus {
@@ -203,17 +203,6 @@
     .value-copy {
       margin-left: -8%;
       cursor: pointer;
-    }
-  }
-
-  .input {
-    width: 100%;
-    padding: 5% 8%;
-    border-radius: 0.8rem;
-    border: 2px solid #c1bdbd;
-    &:focus {
-      border: none;
-      outline: 2px solid #c1bdbd;
     }
   }
 }
