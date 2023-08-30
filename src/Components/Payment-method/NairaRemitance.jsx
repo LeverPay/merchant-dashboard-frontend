@@ -169,6 +169,20 @@ export default function NairaRemitance({
             />
           </div>
 
+          <div className="d-flex flex-column mb-3 inputs-container">
+            <label htmlFor="Narration" id="narration">
+              Narration
+            </label>
+            <input
+              type="text"
+              name="input5"
+              id="narration"
+              className="input"
+              onChange={handleForm}
+              value={formValue.input5}
+            />
+          </div>
+
           <div className="options-select mb-3 d-flex flex-column inputs-container">
             <label htmlFor="interval" id="payment-interval">
               payment interval

@@ -25,6 +25,10 @@ export default function UsdcRemitance({
   CustomOption,
   instituteOption,
   customSelectStyles,
+  networkOptions,
+  selectedNetwork,
+  setSelectedNetwork,
+  selectOptions3,
 }) {
   const renderMainPage = () => {
     setRender(false);
@@ -65,6 +69,22 @@ export default function UsdcRemitance({
               options={instituteOption}
               onChange={(opt) => selectOptions(opt)}
               value={selectedBank}
+              isSearchable={false}
+              components={{
+                Option: CustomOption,
+              }}
+              styles={customSelectStyles}
+            />
+          </div>
+
+          <div className="d-flex flex-column mb-3 inputs-container">
+            <label htmlFor="network" id="select-network">
+              Select Crypto Network
+            </label>
+            <Select
+              options={networkOptions}
+              onChange={(opt) => selectOptions3(opt)}
+              value={selectedNetwork}
               isSearchable={false}
               components={{
                 Option: CustomOption,
