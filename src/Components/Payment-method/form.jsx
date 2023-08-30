@@ -163,7 +163,7 @@ export default function Form() {
     control: (provided, state) => ({
       ...provided,
       width: "100%",
-      padding: "2rem 4rem",
+      padding: "1.5rem 4rem",
       borderRadius: "0.8rem",
       border: state.isFocused ? "2px solid #c1bdbd" : "2px solid #c1bdbd",
       outline: "none",
