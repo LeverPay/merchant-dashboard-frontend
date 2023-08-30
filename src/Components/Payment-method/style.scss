@@ -256,6 +256,15 @@
       }
     }
   }
+  
+  .inputs-container {
+    .inputs-container-2 {
+      .input {
+        padding: 2rem 4rem;
+      }
+    }
+  }
+
   .css-1hb7zxy-IndicatorsContainer {
     display: none !important;
   }
@@ -272,7 +281,7 @@
         .paymentimg {
           width: 100%;
           min-height: 60vh;
-          .table-container{
+          .table-container {
             margin: 2% 0 30% 0;
           }
         }
@@ -296,6 +305,14 @@
           left: 10%;
           width: 80%;
         }
+      }
+    }
+  }
+
+  .inputs-container {
+    .inputs-container-2 {
+      .input {
+        padding: 2.5rem 4rem;
       }
     }
   }
