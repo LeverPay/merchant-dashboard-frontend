@@ -233,6 +233,9 @@
     width: 90%;
     left: 10%;
   }
+  .inputs-container .inputs-container-2 .input {
+    padding: 2rem 4rem;
+  }
   .css-1hb7zxy-IndicatorsContainer {
     display: none !important;
   }
@@ -273,6 +276,9 @@
   .payment-method .remitance-form .items-container .success {
     left: 10%;
     width: 80%;
+  }
+  .inputs-container .inputs-container-2 .input {
+    padding: 2.5rem 4rem;
   }
   .css-1hb7zxy-IndicatorsContainer {
     display: none !important;
