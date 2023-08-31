@@ -85,18 +85,18 @@ export default function Form() {
     TableBody.length >= 1 ? setShowTable(true) : setShowTable(false);
 
     if (!showTable) {
-      if (!DisplayImg.current?.classList?.contains("backgroundImg"))
+      if (!DisplayImg?.current?.classList?.contains("backgroundImg"))
         DisplayImg.current?.classList?.add("backgroundImg");
     } else {
-      if (DisplayImg.current?.classList?.contains("backgroundImg")) {
-        DisplayImg.current?.classList?.remove("backgroundImg");
+      if (DisplayImg?.current?.classList?.contains("backgroundImg")) {
+        DisplayImg?.current?.classList?.remove("backgroundImg");
       }
     }
   };
 
   useEffect(() => {
     renderTableByDataLength();
-  }, [showTable]);
+  }, [showTable, naira, busd, usdc, tether, TableBody]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
