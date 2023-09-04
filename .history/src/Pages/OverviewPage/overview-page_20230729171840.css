@@ -244,8 +244,8 @@
   text-align: center;
 } */
 .dashboard-container {
-  background: url("../../Assets/merchant-bg.jpg");
-  /* background: #fff; */
+  /* background: url("../../Assets/merchant-bg.jpg"); */
+  background: #fff;
   background-size: cover;
   background-repeat: no-repeat;
   margin-top: -58px !important;

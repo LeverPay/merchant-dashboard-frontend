@@ -432,7 +432,7 @@ export const OverviewPage = (props) => {
             <div className="empty-div col-md-11  mdiv1 glass-bg">
               <center>
                 {" "}
-                <h3>Customers</h3>
+                <h3>Report</h3>
               </center>
               <div className="flexy flexyM">
                 <div className="col-md-6 report-div">
