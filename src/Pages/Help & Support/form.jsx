@@ -27,8 +27,9 @@ export default function Form({ setRenderForm, notify, success }) {
     mail = useRef(),
     errMsg6 = useRef();
 
-  const closebtnAction = () => {
+  const closebtnAction = (e) => {
     setRenderForm(false);
+    console.log(e);
   };
 
   const mailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -317,7 +318,7 @@ export default function Form({ setRenderForm, notify, success }) {
               id=""
               value={input.issue}
               onChange={handleChange}
-              className="container mt-4 px-2 px-1 py-2 input-field"
+              className="container mt-4 px-2 px-1 py-2 input-field fs-5"
               ref={selectField}
               onInput={toggleErr5}
             >
@@ -387,7 +388,7 @@ export default function Form({ setRenderForm, notify, success }) {
           <p className="white fs-5">Call/Chat us</p>
           <a
             href=""
-            className="d-flex justtify-content-center align-items-center color"
+            className="d-flex justtify-content-center align-items-center color py-2"
           >
             <img
               src={require("../../Assets/call.png")}
@@ -395,12 +396,12 @@ export default function Form({ setRenderForm, notify, success }) {
               height="25px"
               alt=""
             />
-            <p className="fs-6 mx-4 color">+234 7068936389</p>
+            <p className="fs-6 mx-4 my-auto color">+234 7068936389</p>
           </a>
 
           <a
             href=""
-            className="d-flex justtify-content-center align-items-center color"
+            className="d-flex justtify-content-center align-items-center color py-2"
           >
             <img
               src={require("../../Assets/whatsapp.png")}
@@ -408,11 +409,11 @@ export default function Form({ setRenderForm, notify, success }) {
               height="25px"
               alt=""
             />
-            <p className="fs-6 mx-4 color">+234 7068936389</p>
+            <p className="fs-6 mx-4 my-auto color">+234 7068936389</p>
           </a>
           <a
             href=""
-            className="d-flex justtify-content-center align-items-center color"
+            className="d-flex justtify-content-center align-items-center color py-2"
           >
             <img
               src={require("../../Assets/telegram.png")}
@@ -420,13 +421,26 @@ export default function Form({ setRenderForm, notify, success }) {
               height="25px"
               alt=""
             />
-            <p className="fs-6 mx-4 color">+234 7068936389</p>
+            <p className="fs-6 mx-4 my-auto color">+234 7068936389</p>
+          </a>
+
+          <a
+            href="mailto:conact@leverpay.io"
+            className="d-flex justtify-content-center align-items-center color py-2"
+          >
+            <img
+              src={require("../../Assets/gmail.png")}
+              width="25px"
+              height="25px"
+              alt=""
+            />
+            <p className="fs-6 mx-4 my-auto color">contact@leverpay.io</p>
           </a>
         </div>
 
         <a
           href=""
-          className="d-flex justtify-content-center align-items-center mt-4 color"
+          className="d-flex justtify-content-center align-items-center mt-4 color py-2"
         >
           {" "}
           <img

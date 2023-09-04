@@ -35,9 +35,6 @@ export default function SecurityElements() {
 
           <section className="d-flex flex-column mt-2">
             <h4 className="">Change Password</h4>
-            <p className="fs-6">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
             <Form />
           </section>
         </div>

@@ -1,11 +1,208 @@
 .payment-method {
-  width: 70vw;
+  width: 100%;
   .form-container {
-    width: 90%;
+    width: 100%;
     box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
-    background: url(../../Assets/Group\ 300.png) no-repeat center;
-    .form{
+    justify-content: center;
+    .remitance-btn-container {
+      display: flex;
+      .remitance-btn {
+        background-color: #0b0230;
+        border-radius: 1rem;
+        width: 20%;
+        background-color: #0b0230;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        margin-left: 2%;
+      }
+    }
+    .form {
       width: 100%;
+      .backgroundImg {
+        background: url(../../Assets/payment-img.png) no-repeat center;
+      }
+      .paymentimg {
+        width: 100%;
+        min-height: 80vh;
+        font-family: AgrandirTinItalic;
+        // background: url(../../Assets/payment-img.png) no-repeat center;
+        font-size: 1rem;
+        .table-container {
+          height: 90%;
+          width: 100%;
+          font-family: AgrandirRegular;
+          overflow-x: auto;
+          .table-content {
+            width: 100%;
+            height: 40%;
+            // background-color: #0b0230;
+            table {
+              width: 100%;
+              .t-row {
+                .t-head1 {
+                  width: 100%;
+                  cursor: pointer;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .activeHeader {
+    border-bottom: 2px solid #008cff;
+  }
+
+  .heading-text {
+    font-family: KB-sans-Bold;
+    .page-text {
+      color: #f40909eb;
+    }
+  }
+
+  .remitance-form {
+    width: 100%;
+    font-family: KB-sans-Bold;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
+    .items-container {
+      width: 50%;
+
+      .success {
+        width: 30%;
+        height: 50%;
+        background-color: #fff;
+        top: 20%;
+        right: 25%;
+        border-radius: 10px;
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.5);
+
+        .success-items-container {
+          height: 90%;
+          .success-icon {
+            height: 80%;
+          }
+        }
+
+        .footer-section {
+          .items-container {
+            width: 100%;
+            .first-content {
+              width: 60%;
+            }
+            .second-content {
+              width: 40%;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.inputs-container {
+  width: 100%;
+
+  .banks,
+  .payment-interval {
+    width: 100%;
+    padding: 5% 8%;
+    border-radius: 0.8rem;
+    border: 2px solid #c1bdbd;
+    font-size: 1rem;
+    background-color: transparent;
+    &:focus {
+      border: none;
+      outline: 2px solid #c1bdbd;
+    }
+    .select-value {
+      font-size: 1.2rem;
+      padding: 4% 4%;
+      background-color: transparent;
+      &:checked {
+        background-color: #1b0088;
+        color: #fff;
+      }
+      &:hover {
+        background-color: #1b0088 !important;
+      }
+    }
+  }
+
+  // React Select styles on page
+  .selected-bank-logo {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+
+    .selected-logo {
+      width: 30px;
+      height: 30px;
+      margin-right: 8px;
+    }
+
+    span {
+      flex: 1;
+    }
+  }
+
+  .custom-option {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    &:hover {
+      background-color: #1b0088;
+      color: #c1bdbd;
+      cursor: pointer;
+    }
+
+    &.selected {
+      background-color: #1b0088;
+      color: #c1bdbd;
+    }
+
+    &.focused {
+      background-color: lightblue;
+      color: black;
+    }
+
+    .option-logo {
+      width: 30px;
+      height: 30px;
+      margin-right: 8px;
+    }
+
+    span {
+      flex: 1;
+    }
+  }
+
+  .css-1hb7zxy-IndicatorsContainer {
+    display: none !important;
+    display: -webkit-none !important;
+  }
+  // End of React Select stylels on page
+
+  .inputs-container-2 {
+    width: 100%;
+    .input {
+      width: 100%;
+      padding: 2rem 4rem;
+      border-radius: 0.8rem;
+      border: 2px solid #c1bdbd;
+      &:focus {
+        border: none;
+        outline: 2px solid #c1bdbd;
+      }
+    }
+    .value-copy {
+      margin-left: -8%;
+      cursor: pointer;
     }
   }
 }
@@ -28,27 +225,99 @@
   }
 }
 
-.checkbox:checked{
+.checkbox:checked {
   accent-color: #fff;
 }
 
 @media screen and (max-width: 1023px) {
   .payment-method {
-    width: 70vw;
+    width: 70%;
     .form-container {
       width: 100%;
+      .remitance-btn-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        .remitance-btn {
+          width: 40%;
+          margin-top: 2%;
+        }
+      }
     }
+
+    .remitance-form {
+      width: 100%;
+      margin-top: 5%;
+      .items-container {
+        width: 60%;
+        .success {
+          width: 90%;
+          left: 10%;
+        }
+      }
+    }
+  }
+  
+  .inputs-container {
+    .inputs-container-2 {
+      .input {
+        padding: 2rem 4rem;
+      }
+    }
+  }
+
+  .css-1hb7zxy-IndicatorsContainer {
+    display: none !important;
   }
 }
 
 @media screen and (max-width: 767px) {
   .payment-method {
-    width: 100vw;
+    width: 100%;
     .form-container {
       width: 100%;
       box-shadow: none;
+      .form {
+        width: 100%;
+        .paymentimg {
+          width: 100%;
+          min-height: 60vh;
+          .table-container {
+            margin: 2% 0 30% 0;
+          }
+        }
+      }
+      .remitance-btn-container {
+        flex-wrap: wrap;
+        justify-content: center;
+        .remitance-btn {
+          width: 40%;
+          margin-top: 2%;
+        }
+      }
+    }
+
+    .remitance-form {
+      width: 100%;
+      margin-top: 5%;
+      .items-container {
+        width: 80%;
+        .success {
+          left: 10%;
+          width: 80%;
+        }
+      }
     }
   }
+
+  .inputs-container {
+    .inputs-container-2 {
+      .input {
+        padding: 2.5rem 4rem;
+      }
+    }
+  }
+
+  .css-1hb7zxy-IndicatorsContainer {
+    display: none !important;
+  }
 }
-
-

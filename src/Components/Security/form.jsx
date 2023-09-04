@@ -1,9 +1,22 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../General/Button component/Button";
 import Img from "../../Assets/sec-padlock.png";
+import { BsFillCheckCircleFill } from "react-icons/bs";
+import { BsFillEyeFill, BsFillEyeSlashFill } from "react-icons/bs";
+import TokenContext from "../User-Token/TokenContext";
+import { useContext } from "react";
 
 export default function Form() {
+  const [showPasswod, setShowPassword] = useState(false);
+  const { notify, success } = useContext(TokenContext);
+  const [showCurrent, setShowCurrent] = useState(false);
+  const iconRef = useRef(),
+    iconRef1 = useRef(),
+    currentPassword = useRef(),
+    newPassword = useRef(),
+    confirmPassword = useRef();
+
   const [Input, setInput] = useState({
     currentPassword: "",
     newPassword: "",
@@ -18,25 +31,98 @@ export default function Form() {
     });
   };
 
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const passwordRegex =
+    /^(?=.*[!@#$%^&*()\-_=+{};:,<.>?])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*()\-_=+{};:,<.>?]{10,}$/;
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      Input.currentPassword !== "" &&
-      Input.newPassword !== "" &&
-      Input.newPassword.length >= 5 &&
-      Input.confirmPassword === Input.newPassword &&
-      Input.newPassword !== Input.currentPassword
-    ) {
-      console.log(Input.currentPassword, Input.newPassword);
+    notifyInput();
+    renderSuccess();
+  };
+
+  const renderSuccess = () => {
+    const newPasswordValid = passwordRegex.test(Input.newPassword);
+    const confirmPasswordValid = passwordRegex.test(Input.confirmPassword);
+    const passwordsMatch = Input.newPassword === Input.confirmPassword;
+
+    if (newPasswordValid) {
+      iconRef.current.classList.remove("hidden");
+    } else {
+      iconRef.current.classList.add("hidden");
     }
+
+    if (passwordsMatch && confirmPasswordValid) {
+      iconRef1.current.classList.remove("hidden");
+    } else {
+      iconRef1.current.classList.add("hidden");
+    }
+    console.log(passwordsMatch);
+  };
+
+  const notifyInput = () => {
+    if (Input.currentPassword === "") {
+      if (!currentPassword.current.classList.contains("bordered")) {
+        currentPassword.current.classList.add("bordered");
+      }
+    } else {
+      if (currentPassword.current.classList.contains("bordered")) {
+        currentPassword.current.classList.remove("bordered");
+      }
+    }
+
+    if (!passwordRegex.test(Input.newPassword)) {
+      notify(
+        "Password must contain a special character and cannot be less than 10characters"
+      );
+    } else if (!passwordRegex.test(Input.confirmPassword)) {
+      notify(
+        "Password must contain a special character and cannot be less than 10characters"
+      );
+    } else if (Input.newPassword !== Input.confirmPassword) {
+      notify("Confirm password and new password fields not the same");
+    } else if (Input.newPassword === Input.currentPassword) {
+      notify("New password cannot be same as current Password");
+    } else {
+      if (
+        Input.currentPassword !== "" &&
+        passwordRegex.test(Input.newPassword) ===
+          passwordRegex.test(Input.confirmPassword)
+      ) {
+        success("Action Successful");
+      }
+    }
+  };
+
+  const toggleShow = () => {
+    setShowPassword(!showPasswod);
+  };
+
+  const toggleCurrentShow = () => {
+    setShowCurrent(!showCurrent);
   };
 
   const discardChanges = (e) => {
     e.preventDefault();
 
-    Input.currentPassword = "";
-    Input.newPassword = "";
-    Input.confirmPassword = "";
+    setInput((prev) => ({
+      ...prev,
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    }));
+    console.log(Input);
+    if (!iconRef.current.classList.contains("hidden")) {
+      iconRef.current.classList.add("hidden");
+    }
+
+    if (!iconRef1.current.classList.contains("hidden")) {
+      iconRef1.current.classList.add("hidden");
+    }
+
+    if (currentPassword.current.classList.contains("bordered")) {
+      currentPassword.current.classList.remove("bordered");
+    }
   };
 
   return (
@@ -45,14 +131,26 @@ export default function Form() {
         <label htmlFor="current-password">Current password</label>
 
         <div className="flexy flexyM">
-          <img className="" src={Img} alt="Scholar" />
-          <input
-            className="rounded-1 text-input"
-            type="password"
-            name="currentPassword"
-            value={Input.currentPassword}
-            onChange={handleChange}
-          />
+          <div className="container-fluid d-flex align-items-center justify-content-center">
+            <img className="" src={Img} alt="Scholar" />
+            <input
+              className="rounded-1 text-input"
+              type={!showCurrent ? "password" : "text"}
+              name="currentPassword"
+              value={Input.currentPassword}
+              onChange={handleChange}
+              ref={currentPassword}
+            />
+
+            <div className="input-icons d-flex align-items-center justify-content-center">
+              <span
+                className="input-eye-icon d-flex"
+                onClick={toggleCurrentShow}
+              >
+                {!showCurrent ? <BsFillEyeFill /> : <BsFillEyeSlashFill />}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -60,14 +158,27 @@ export default function Form() {
         <label htmlFor="new-password">New password</label>
 
         <div className="flexy flexyM">
-          <img className="" src={Img} alt="Scholar" />
-          <input
-            className="rounded-1 text-input"
-            type="password"
-            name="newPassword"
-            value={Input.newPassword}
-            onChange={handleChange}
-          />
+          <div className="container-fluid d-flex align-items-center justify-content-center">
+            <img className="" src={Img} alt="Scholar" />
+            <input
+              className="rounded-1 text-input"
+              type={!showPasswod ? "password" : "text"}
+              name="newPassword"
+              value={Input.newPassword}
+              onChange={handleChange}
+              onInput={renderSuccess}
+              ref={newPassword}
+            />
+            <div className="input-icons d-flex align-items-center justify-content-center">
+              <span className="success-mark me-2 hidden" ref={iconRef}>
+                <BsFillCheckCircleFill color="green" />
+              </span>
+
+              <span className="input-eye-icon" onClick={toggleShow}>
+                {!showPasswod ? <BsFillEyeFill /> : <BsFillEyeSlashFill />}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -75,19 +186,28 @@ export default function Form() {
         <label htmlFor="confirm-new-password">Confirm password</label>
 
         <div className="flexy flexyM">
-          <img className="" src={Img} alt="Scholar" />
-          <input
-            className="rounded-1 text-input"
-            type="password"
-            name="confirmPassword"
-            value={Input.confirmPassword}
-            onChange={handleChange}
-          />
+          <div className="container-fluid d-flex align-items-center justify-content-center">
+            <img className="" src={Img} alt="Scholar" />
+            <input
+              className="rounded-1 text-input"
+              type={!showPasswod ? "password" : "text"}
+              name="confirmPassword"
+              value={Input.confirmPassword}
+              onChange={handleChange}
+              onInput={renderSuccess}
+              ref={confirmPassword}
+            />
+            <div className="input-icons d-flex align-items-center justify-content-center">
+              <span className="success-mark me-2 hidden" ref={iconRef1}>
+                <BsFillCheckCircleFill color="green" />
+              </span>
+
+              <span className="input-eye-icon" onClick={toggleShow}>
+                {!showPasswod ? <BsFillEyeFill /> : <BsFillEyeSlashFill />}
+              </span>
+            </div>
+          </div>
         </div>
-        <br />
-        <Link to={"/forget-password"} className="form-links">
-          Forgot Password?
-        </Link>
       </div>
 
       <div className="d-flex mt-5 justify-content-center align-items-center">

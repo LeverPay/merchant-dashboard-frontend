@@ -7,7 +7,7 @@ import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import BusinessCenterRoundedIcon from "@mui/icons-material/BusinessCenterRounded";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, Outlet } from "react-router-dom";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
 import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
@@ -17,20 +17,20 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { baseUrl, logout } from "../Endpoints/Endpoints";
 import TokenContext from "../User-Token/TokenContext";
 import { MdReceiptLong } from "react-icons/md";
-import { MdSubscriptions } from "react-icons/md";
+import { MdSubscriptions, MdOutlineCreateNewFolder } from "react-icons/md";
+import { IoMdArrowDropdown } from "react-icons/io";
 import axios from "axios";
+import { FaHistory } from "react-icons/fa";
 
 export default function SidebarNav(props) {
   const { notify, success } = useContext(TokenContext);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [click, setClick] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [activeItem, setActiveItem] = useState("home");
-  const handleActive = (item) => {
-    setActiveItem(item);
+  const [trackNavClicked, setTrackedNavClicked] = useState(false);
+
+  const closeMobileMenu = () => {
+    if (window.innerWidth <= 768) setSidebarOpen(!isMobile);
   };
-  const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setSidebarOpen(!isMobile);
   const openSidebar = () => {
     setSidebarOpen(true);
   };
@@ -53,10 +53,29 @@ export default function SidebarNav(props) {
 
     // Call the function once to set the initial screen size
     handleResize();
-
-    // Remove event listener when component unmounts
-    // return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  //Active Nav functionality
+  const [active, setActive] = useState(null);
+  const handleNavClick = (idx) => {
+    if (sidebarItemsTop[idx].sub) {
+      setActiveSubItem(null);
+      setActive((prevActive) => (prevActive === idx ? null : idx));
+    } else {
+      setActive((prevActive) => (prevActive === idx ? null : idx));
+      setActiveSubItem(null);
+      if (window.innerWidth <= 768) {
+        closeSidebar();
+      }
+    }
+  };
+
+  const [activeSubItem, setActiveSubItem] = useState(null);
+  const showdropDowns = (idx) => {
+    setTrackedNavClicked(!trackNavClicked);
+    setActive(idx);
+    setActiveSubItem(null);
+  };
 
   const sidebarItemsTop = [
     {
@@ -64,7 +83,6 @@ export default function SidebarNav(props) {
       link: "./dashboard",
       title: "Dashboard",
     },
-    // {icon: <SyncAltRoundedIcon htmlColor="white"/>, link: 'payment_method', title: 'Overview'},
     {
       icon: <SyncAltRoundedIcon htmlColor="white" />,
       link: "transactions",
@@ -72,8 +90,12 @@ export default function SidebarNav(props) {
     },
     {
       icon: <MdReceiptLong color="white" size="25px" />,
-      link: "create-invoice",
-      title: "Create Invoice",
+      title: "Invoice",
+      sub: ["New", "History"],
+      icons: [
+        <MdOutlineCreateNewFolder color="white" size="25px" />,
+        <FaHistory color="white" size="25px" />,
+      ],
     },
     {
       icon: <MdSubscriptions color="white" size="25px" />,
@@ -82,14 +104,14 @@ export default function SidebarNav(props) {
     },
     {
       icon: <CreditCardRoundedIcon htmlColor="white" />,
-      link: "payment-method",
+      link: "Remitance-setup",
       title: "Payment Method",
     },
-    {
-      icon: <BusinessCenterRoundedIcon htmlColor="white" />,
-      link: "portfolio",
-      title: "Portfolio",
-    },
+    // {
+    //   icon: <BusinessCenterRoundedIcon htmlColor="white" />,
+    //   link: "portfolio",
+    //   title: "Portfolio",
+    // },
     {
       icon: <AccountCircleTwoToneIcon htmlColor="white" />,
       link: "profile",
@@ -100,10 +122,6 @@ export default function SidebarNav(props) {
       link: "security",
       title: "Setting",
     },
-    // {
-    //   icon: <AiOutlineLogout color="#FC0019" size="25px" />,
-    //   title: "Logout",
-    // },
   ];
 
   const sidebarItemsBottom = [
@@ -120,12 +138,6 @@ export default function SidebarNav(props) {
       iconEnd: <OpenInNewOutlinedIcon htmlColor="white" />,
     },
   ];
-
-  //Active Nav functionality
-  const [active, setActive] = useState(false);
-  const handleNavClick = (idx) => {
-    setActive(idx);
-  };
 
   const navigate = useNavigate();
   const logOut = async () => {
@@ -208,15 +220,64 @@ export default function SidebarNav(props) {
               {sidebarItemsTop.map((item, idx) => {
                 return (
                   <NavLink
-                    to={item.link}
+                    to={item.sub ? item.sub.map((el) => el) : item.link}
                     key={idx}
-                    className={`d-flex align-items-center${
-                      active ? `active` : ``
+                    className={`d-flex align-items-center ${
+                      active === idx ? "custom-active" : ""
                     }`}
-                    onClick={() => handleNavClick(idx)}
+                    activeclassname="custom-active"
+                    onClick={
+                      !item.sub
+                        ? () => handleNavClick(idx)
+                        : () => showdropDowns(idx)
+                    }
                   >
                     <span className="link-icon">{item.icon}</span>
-                    <span onClick={closeMobileMenu}>{item.title}</span>
+                    <span
+                      className={`${
+                        item.sub
+                          ? "d-flex align-items-start justify-content-between position-relative"
+                          : ""
+                      }`}
+                    >
+                      {item.title}{" "}
+                      {item.sub && (
+                        <span className="sub-links d-flex flex-column position-absolute">
+                          <span>
+                            <IoMdArrowDropdown />
+                          </span>
+                          {item.sub && trackNavClicked ? (
+                            <span className="sub-link-items-container d-flex flex-column">
+                              {trackNavClicked
+                                ? item.sub.map((el, subIdx) => (
+                                    <React.Fragment key={subIdx}>
+                                      <NavLink
+                                        to={`${el}`}
+                                        key={subIdx}
+                                        className={`mt-2 text-center ${
+                                          activeSubItem === subIdx
+                                            ? "custom-active"
+                                            : ""
+                                        }`}
+                                        onClick={closeMobileMenu}
+                                      >
+                                        <div className="d-flex align-items-center justify-content-start fs-6 fw-lighter">
+                                          {/* Add the icon from the icons array */}
+                                          {item.icons[subIdx]}
+                                          <span className="mx-1">{el}</span>
+                                        </div>
+                                      </NavLink>
+                                      <Outlet />
+                                    </React.Fragment>
+                                  ))
+                                : ""}
+                            </span>
+                          ) : (
+                            ""
+                          )}
+                        </span>
+                      )}
+                    </span>
                   </NavLink>
                 );
               })}
