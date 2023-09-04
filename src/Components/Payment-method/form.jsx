@@ -441,26 +441,33 @@ export default function Form() {
                     >
                       <div className="table-content d-flex flex-column align-items-center justify-content-center">
                         <table>
-                          <tr className="t-row d-flex align-items-center justify-content-center">
-                            {TableHeader.map((el, i) => (
-                              <th
-                                className={`t-head1 mx-4 fs-5 text-center ${
-                                  active === i ? "activeHeader" : ""
-                                }`}
-                                onClick={() => TrackedClickedHeader(el)}
-                              >
-                                {el}
-                              </th>
-                            ))}
-                          </tr>
+                          <thead>
+                            <tr className="t-row d-flex align-items-center justify-content-center">
+                              {TableHeader.map((el, i) => (
+                                <th
+                                  key={i}
+                                  className={`t-head1 mx-4 fs-5 text-center ${
+                                    active === i ? "activeHeader" : ""
+                                  }`}
+                                  onClick={() => TrackedClickedHeader(el)}
+                                >
+                                  {el}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
                         </table>
 
                         <table className="second-table mt-4 px-2">
-                          <tr>
-                            {SecondHeader.map((el) => (
-                              <th className="fw-bolder px-2 py-2">{el}</th>
-                            ))}
-                          </tr>
+                          <thead>
+                            <tr>
+                              {SecondHeader.map((el, i) => (
+                                <th className="fw-bolder px-2 py-2" key={i}>
+                                  {el}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
 
                           {!NairaHeader
                             ? filteredData?.map((el) => (
@@ -479,21 +486,23 @@ export default function Form() {
                                 </tr>
                               ))
                             : filteredData?.map((el) => (
-                                <tr key={el.id}>
-                                  <td className="px-2 py-2 text-break">
-                                    {el.AccountName}
-                                  </td>
-                                  <td className="px-2 py-2">
-                                    {el.AccountNumber}
-                                  </td>
-                                  <td className="px-2 py-2">{el.BankName}</td>
-                                  <td className="px-2 py-2 text-break">
-                                    {el.Narration}
-                                  </td>
-                                  <td className="px-2 py-2">
-                                    {el.PaymentInterval}
-                                  </td>
-                                </tr>
+                                <tbody>
+                                  <tr key={el.id}>
+                                    <td className="px-2 py-2 text-break">
+                                      {el.AccountName}
+                                    </td>
+                                    <td className="px-2 py-2">
+                                      {el.AccountNumber}
+                                    </td>
+                                    <td className="px-2 py-2">{el.BankName}</td>
+                                    <td className="px-2 py-2 text-break">
+                                      {el.Narration}
+                                    </td>
+                                    <td className="px-2 py-2">
+                                      {el.PaymentInterval}
+                                    </td>
+                                  </tr>
+                                </tbody>
                               ))}
                         </table>
                       </div>

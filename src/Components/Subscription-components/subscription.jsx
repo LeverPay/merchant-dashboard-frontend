@@ -177,72 +177,78 @@ export default function Subscription_el() {
 
       <section className="table-section d-flex flex-column justify-content-center mt-5">
         <table className="table1">
-          <tr className="table-border1 d-flex justify-content-center">
-            {tableHeader.map((el, i) => (
-              <th
-                key="key"
-                className={`headers mx-4 fs-5 fw-light ${
-                  el === "ALL"
-                    ? "blue"
-                    : el === "PENDING"
-                    ? "orange"
-                    : el === "CANCELED"
-                    ? "black"
-                    : el === "FAILED"
-                    ? "red"
-                    : el === "ACTIVE"
-                    ? "green"
-                    : ""
-                } ${activeTabIndex === i ? "active-tab" : ""}`}
-                onClick={() => switchTab(el)}
-              >
-                {el}
-              </th>
-            ))}
-          </tr>
+          <thead>
+            <tr className="table-border1 d-flex justify-content-center">
+              {tableHeader.map((el, i) => (
+                <th
+                  key={i}
+                  className={`headers mx-4 fs-5 fw-light ${
+                    el === "ALL"
+                      ? "blue"
+                      : el === "PENDING"
+                      ? "orange"
+                      : el === "CANCELED"
+                      ? "black"
+                      : el === "FAILED"
+                      ? "red"
+                      : el === "ACTIVE"
+                      ? "green"
+                      : ""
+                  } ${activeTabIndex === i ? "active-tab" : ""}`}
+                  onClick={() => switchTab(el)}
+                >
+                  {el}
+                </th>
+              ))}
+            </tr>
+          </thead>
         </table>
 
         <table className="table2 mt-5 px-5">
-          <tr>
-            {tableheader2.map((el) => (
-              <th key="key" className="text-center">
-                {el}
-              </th>
-            ))}
-          </tr>
-
-          {filteredData.map((el) => (
-            <tr key={el.id} className="">
-              <>
-                <td className="text-center px-4 py-2">{el.date}</td>
-                <td className="text-center px-4 py-2">{el.userID}</td>
-                <td className="text-center px-4 py-2">{el.phone}</td>
-                <td className="text-center px-4 py-2">{el.description}</td>
-                <td className="text-center px-4 py-2">{el.planType}</td>
-                <td className="text-center px-4 py-2">{el.Duration}</td>
-                <td className="text-center px-4 py-2">{el.startDate}</td>
-                <td className="text-center px-4 py-2">{el.endDate}</td>
-                <td className="text-center px-4 py-2">{el.paid}</td>
-                <td className="text-center px-4 py-2">
-                  <ToggleSwitch
-                    color="#0EB500"
-                    checked={checked[el.id]}
-                    handleChange={(event) =>
-                      handleSwitchChange(el.id, event.target.checked)
-                    }
-                  />{" "}
-                </td>
-                <td className="text-center d-flex px-4 py-2">
-                  {el.link}{" "}
-                  <span className="mx-2" onClick={() => copyLink(el)}>
-                    <img
-                      src={require(`../../Assets/typcn-messages.png`)}
-                      alt=""
-                    />
-                  </span>{" "}
-                </td>
-              </>
+          <tbody>
+            <tr>
+              {tableheader2.map((el, i) => (
+                <th key={i} className="text-center">
+                  {el}
+                </th>
+              ))}
             </tr>
+          </tbody>
+
+          {filteredData.map((el, i) => (
+            <tbody>
+              <tr key={i} className="">
+                <>
+                  <td className="text-center px-4 py-2">{el.date}</td>
+                  <td className="text-center px-4 py-2">{el.userID}</td>
+                  <td className="text-center px-4 py-2">{el.phone}</td>
+                  <td className="text-center px-4 py-2">{el.description}</td>
+                  <td className="text-center px-4 py-2">{el.planType}</td>
+                  <td className="text-center px-4 py-2">{el.Duration}</td>
+                  <td className="text-center px-4 py-2">{el.startDate}</td>
+                  <td className="text-center px-4 py-2">{el.endDate}</td>
+                  <td className="text-center px-4 py-2">{el.paid}</td>
+                  <td className="text-center px-4 py-2">
+                    <ToggleSwitch
+                      color="#0EB500"
+                      checked={checked[el.id]}
+                      handleChange={(event) =>
+                        handleSwitchChange(el.id, event.target.checked)
+                      }
+                    />{" "}
+                  </td>
+                  <td className="text-center d-flex px-4 py-2">
+                    {el.link}{" "}
+                    <span className="mx-2" onClick={() => copyLink(el)}>
+                      <img
+                        src={require(`../../Assets/typcn-messages.png`)}
+                        alt=""
+                      />
+                    </span>{" "}
+                  </td>
+                </>
+              </tr>
+            </tbody>
           ))}
         </table>
       </section>

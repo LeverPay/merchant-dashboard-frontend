@@ -329,6 +329,10 @@ export default function Form() {
       console.log(businessCertification);
     }
 
+    if (Input.businessRegisteration !== "") {
+      console.log(Input.businessRegisteration);
+    }
+
     if (vectorImage) {
       console.log(vectorImage);
     }
@@ -367,65 +371,139 @@ export default function Form() {
 
   const updateProfileData = async () => {
     try {
-      const request = await axios.post(
-        baseUrl + update_Merchant_Profile,
-        {
-          first_name: Input.firstName,
-          last_name: Input.lastName,
-          email: Input.email,
-          address: Input.address !== "" ? Input.address : null,
-          business_name:
-            Input.businuessName !== "" ? Input.businuessName : null,
-          phone: phone !== "" ? phone : null,
-          password: Input.password === null,
-          country_id:
-            selectCountry === undefined ||
-            selectCountry === null ||
-            selectCountry === ""
-              ? country
-              : selectCountry,
-          state_id: selectState,
-          city_id: selectCity,
-          passport:
-            vectorImage !== null ||
-            vectorImage !== undefined ||
-            vectorImage !== ""
-              ? vectorImage
-              : null,
-          business_address:
-            Input.businuessAddress !== "" ? Input.businuessAddress : null,
-          business_phone: BusinessPhone !== "" ? BusinessPhone : null,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
-          },
-        }
-      );
-      console.log(request);
-      if (request.status === 200) {
+      const formData = new FormData();
+
+      // Append values conditionally based on your requirements
+      if (Input.firstName !== "") {
+        formData.append("first_name", Input.firstName);
+      } else {
+        formData.append("first_name", null);
+      }
+
+      if (Input.lastName !== "") {
+        formData.append("last_name", Input.lastName);
+      } else {
+        formData.append("last_name", null);
+      }
+
+      if (Input.email !== "") {
+        formData.append("email", Input.email);
+      } else {
+        formData.append("email", null);
+      }
+
+      if (Input.address !== "") {
+        formData.append("address", Input.address);
+      } else {
+        formData.append("address", null);
+      }
+
+      if (Input.businuessName !== "") {
+        formData.append("business_name", Input.businuessName);
+      } else {
+        formData.append("business_name", null);
+      }
+
+      if (phone !== "") {
+        formData.append("phone", phone);
+      } else {
+        formData.append("phone", null);
+      }
+
+      if (Input.password !== "") {
+        formData.append("password", Input.password);
+      } else {
+        formData.append("password", null);
+      }
+
+      if (selectCountry || country) {
+        formData.append("country_id", selectCountry || country);
+      } else {
+        formData.append("country_id", null);
+      }
+
+      if (selectState !== "") {
+        formData.append("state_id", selectState);
+      } else {
+        formData.append("state_id", null);
+      }
+
+      if (selectCity !== "") {
+        formData.append("city_id", selectCity);
+      } else {
+        formData.append("city_id", null);
+      }
+
+      if (Input.businuessAddress !== "") {
+        formData.append("business_address", Input.businuessAddress);
+      } else {
+        formData.append("business_address", null);
+      }
+
+      if (BusinessPhone !== "") {
+        formData.append("business_phone", BusinessPhone);
+      } else {
+        formData.append("business_phone", null);
+      }
+
+      if (Input.businessRegisteration !== "") {
+        formData.append("businessRegisteration", Input.businessRegisteration);
+      } else {
+        formData.append("businessRegisteration", null);
+      }
+
+      if (vectorImage) {
+        formData.append("vectorImage", vectorImage);
+      }
+
+      const headers = {
+        Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+      };
+
+      if (vectorImage) {
+        headers["Content-Type"] = "multipart/form-data";
+      }
+
+      const url = baseUrl + update_Merchant_Profile;
+
+      const response = await axios.post(url, formData, {
+        headers,
+      });
+
+      if (response.status === 200) {
         success("Action Successful");
+      } else {
+        // Handle other response statuses if needed
+        console.log("Unexpected response status:", response.status);
       }
     } catch (err) {
-      console.log(err);
-      if (
-        err.response.status === 400 ||
-        err.response.status === 401 ||
-        err.response.status === 403 ||
-        err.response.status === 404
-      ) {
-        notify(err.response.data.message);
-      } else {
-        if (err.response !== undefined) {
+      if (err.response) {
+        if (
+          err.response.status === 400 ||
+          err.response.status === 401 ||
+          err.response.status === 403 ||
+          err.response.status === 404
+        ) {
           notify(err.response.data.message);
-          console.log(err.response.data.message);
         } else {
+          // Handle other response status codes and errors
+          console.error(
+            "Request failed with status code:",
+            err.response.status
+          );
           notify("Something went wrong :(");
         }
+      } else if (err.request) {
+        // The request was made, but no response was received
+        console.error("Request error:", err.request);
+        notify("Something went wrong with the request :(");
+      } else {
+        // Something else went wrong
+        console.error("Error:", err.message);
+        notify("Something went wrong :(");
       }
     }
   };
-
   return (
     <>
       <section className="profile-edit d-flex justify-content-around align-items-center">
@@ -447,7 +525,7 @@ export default function Form() {
               style={{ opacity: 0 }}
               onChange={changeImage}
             />
-            <label for="newProfilePhoto" className="upload-file-block">
+            <label htmlFor="newProfilePhoto" className="upload-file-block">
               <div className="text-center">
                 <div className="mb-2">
                   <i className="fs-2">
@@ -716,7 +794,6 @@ export default function Form() {
               onChange={handleBusinessFileChange}
               disabled={ReadOnly}
               id="business-certificate"
-              value={businessCertification}
             />
           </div>
         </div>
