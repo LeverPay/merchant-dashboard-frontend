@@ -219,66 +219,66 @@ export default function SidebarNav(props) {
             <div className="mapped-items">
               {sidebarItemsTop.map((item, idx) => {
                 return (
-                  <NavLink
-                    to={item.sub ? item.sub.map((el) => el) : item.link}
-                    key={idx}
-                    className={`d-flex align-items-center ${
-                      active === idx ? "custom-active" : ""
-                    }`}
-                    activeclassname="custom-active"
-                    onClick={
-                      !item.sub
-                        ? () => handleNavClick(idx)
-                        : () => showdropDowns(idx)
-                    }
-                  >
-                    <span className="link-icon">{item.icon}</span>
-                    <span
-                      className={`${
-                        item.sub
-                          ? "d-flex align-items-start justify-content-between position-relative"
-                          : ""
-                      }`}
-                    >
-                      {item.title}{" "}
-                      {item.sub && (
-                        <span className="sub-links d-flex flex-column position-absolute">
-                          <span>
-                            <IoMdArrowDropdown />
-                          </span>
-                          {item.sub && trackNavClicked ? (
-                            <span className="sub-link-items-container d-flex flex-column">
-                              {trackNavClicked
-                                ? item.sub.map((el, subIdx) => (
-                                    <React.Fragment key={subIdx}>
-                                      <NavLink
-                                        to={`${el}`}
-                                        key={subIdx}
-                                        className={`mt-2 text-center ${
-                                          activeSubItem === subIdx
-                                            ? "custom-active"
-                                            : ""
-                                        }`}
-                                        onClick={closeMobileMenu}
-                                      >
-                                        <div className="d-flex align-items-center justify-content-start fs-6 fw-lighter">
-                                          {/* Add the icon from the icons array */}
-                                          {item.icons[subIdx]}
-                                          <span className="mx-1">{el}</span>
-                                        </div>
-                                      </NavLink>
-                                      <Outlet />
-                                    </React.Fragment>
-                                  ))
-                                : ""}
+                  <div key={idx}>
+                    {item.sub ? (
+                      <NavLink
+                        to={item.link}
+                        className={`d-flex align-items-center ${
+                          active === idx ? "custom-active" : ""
+                        }`}
+                        activeClassName="custom-active"
+                        onClick={() => showdropDowns(idx)}
+                      >
+                        <span className="link-icon">{item.icon}</span>
+                        <span
+                          className={`d-flex align-items-start justify-content-between position-relative`}
+                        >
+                          {item.title}{" "}
+                          <span className="sub-links d-flex flex-column position-absolute">
+                            <span>
+                              <IoMdArrowDropdown />
                             </span>
-                          ) : (
-                            ""
-                          )}
+                            {trackNavClicked && (
+                              <span className="sub-link-items-container d-flex flex-column">
+                                {item.sub.map((el, subIdx) => (
+                                  <React.Fragment key={subIdx}>
+                                    <NavLink
+                                      to={`${el}`}
+                                      className={`mt-2 text-center ${
+                                        activeSubItem === subIdx
+                                          ? "custom-active"
+                                          : ""
+                                      }`}
+                                      onClick={closeMobileMenu}
+                                    >
+                                      <div className="d-flex align-items-center justify-content-start fs-6 fw-lighter">
+                                        {/* Add the icon from the icons array */}
+                                        {item.icons[subIdx]}
+                                        <span className="mx-1">{el}</span>
+                                      </div>
+                                    </NavLink>
+                                    <Outlet />
+                                  </React.Fragment>
+                                ))}
+                              </span>
+                            )}
+                          </span>
                         </span>
-                      )}
-                    </span>
-                  </NavLink>
+                      </NavLink>
+                    ) : (
+                      <NavLink
+                        to={item.link}
+                        className={`d-flex align-items-center ${
+                          active === idx ? "custom-active" : ""
+                        }`}
+                        activeClassName="custom-active"
+                        onClick={() => handleNavClick(idx)}
+                      >
+                        <span className="link-icon">{item.icon}</span>
+                        <span>{item.title}</span>
+                      </NavLink>
+                    )}
+                  </div>
                 );
               })}
             </div>
