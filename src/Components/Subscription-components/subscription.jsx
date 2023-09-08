@@ -216,14 +216,11 @@ export default function Subscription_el() {
           </tbody>
 
           {filteredData.map((el, i) => (
-            <tbody>
+            <tbody className="tbody">
               <tr key={i} className="">
                 <>
                   <td className="text-center px-4 py-2">{el.date}</td>
                   <td className="text-center px-4 py-2">{el.userID}</td>
-                  <td className="text-center px-4 py-2">{el.phone}</td>
-                  <td className="text-center px-4 py-2">{el.description}</td>
-                  <td className="text-center px-4 py-2">{el.planType}</td>
                   <td className="text-center px-4 py-2">{el.Duration}</td>
                   <td className="text-center px-4 py-2">{el.startDate}</td>
                   <td className="text-center px-4 py-2">{el.endDate}</td>
@@ -237,14 +234,8 @@ export default function Subscription_el() {
                       }
                     />{" "}
                   </td>
-                  <td className="text-center d-flex px-4 py-2">
-                    {el.link}{" "}
-                    <span className="mx-2" onClick={() => copyLink(el)}>
-                      <img
-                        src={require(`../../Assets/typcn-messages.png`)}
-                        alt=""
-                      />
-                    </span>{" "}
+                  <td className="text-center d-flex px-4 py-2 table-link">
+                    {el.link}
                   </td>
                 </>
               </tr>

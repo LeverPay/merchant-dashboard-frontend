@@ -41,6 +41,15 @@
   overflow-x: auto;
 }
 
+.tbody .table-link {
+  color: #082e88;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.tbody .table-link:hover {
+  text-decoration: none;
+}
+
 .orange {
   color: #f5a31d;
 }

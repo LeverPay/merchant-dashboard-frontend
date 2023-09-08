@@ -16,8 +16,6 @@ export default function ProfileElements() {
     [userData];
   });
   return (
-    // <center>
-
     <section className="profile-container d-flex flex-column offset-md-1">
       <section className="profile-contents-container ">
         <div className="profile-contents mt-4 px-2">
@@ -32,6 +30,5 @@ export default function ProfileElements() {
         </div>
       </section>
     </section>
-    // </center>
   );
 }
