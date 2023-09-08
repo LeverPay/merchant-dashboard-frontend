@@ -736,7 +736,7 @@ export default function Form() {
         </div>
 
         <div className="mt-2 py-2 d-flex flex-column">
-          <label htmlFor="business-reg">Business Registeration ID</label>
+          <label htmlFor="business-reg">Rc-Number</label>
 
           <div className="">
             <input
@@ -784,7 +784,7 @@ export default function Form() {
         </div>
 
         <div className="mt-2 py-2 d-flex flex-column">
-          <label htmlFor="business-certificate">Business Certification</label>
+          <label htmlFor="business-certificate">CAC Certificate</label>
 
           <div className="">
             <input
