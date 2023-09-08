@@ -10,10 +10,12 @@ import BusdRemitance from "./BusdRemitance";
 import UsdcRemitance from "./UsdcRemitance";
 import TetherRemitance from "./TetherRemitance";
 import { TableHead, HeaderData, data, NairaHeading } from "./TestData";
+import Scroll from "../General/ScrollContext";
 
 export default function Form() {
   const [initialRender, setInitialRender] = useState(true);
   const { notify, success } = useContext(TokenContext);
+  const { scrollToTop, isVisible } = useContext(Scroll);
   const [naira, setNaira] = useState(false);
   const [usdc, setUsdc] = useState(false);
   const [busd, setBusd] = useState(false);
@@ -23,6 +25,7 @@ export default function Form() {
   const [selectedBank, setSelectedBank] = useState(null);
   const [selectIntervals, setSelectedInterVal] = useState(null);
   const [selectNetwork, setSelectedNetwork] = useState(null);
+  const [changeInput, setChangeInput] = useState(false);
 
   const [showTable, setShowTable] = useState(true);
   const [TableHeader] = useState(TableHead);
@@ -74,6 +77,11 @@ export default function Form() {
     }
   };
 
+  const ChangeInputType = () => {
+    setChangeInput(!changeInput);
+    if (isVisible) scrollToTop();
+  };
+
   const SetAciveHeader = (item) => {
     const activeItem = TableHeader.indexOf(item);
     setActive(activeItem);
@@ -106,7 +114,10 @@ export default function Form() {
   // selected option value
   const handleInstituteSelect = (selectedOption) => {
     setSelectedBank(selectedOption);
-    setInput((prev) => ({ ...prev, input1: selectedOption }));
+    setInput((prev) => ({
+      ...prev,
+      input1: !changeInput ? selectedOption : "",
+    }));
     console.log(input.input1);
   };
 
@@ -227,6 +238,7 @@ export default function Form() {
     setSelectedBank(null);
     setSelectedInterVal(null);
     setSelectedNetwork(null);
+    setChangeInput(false);
   };
 
   // Copy values on input to device clipboard
@@ -277,6 +289,7 @@ export default function Form() {
             setNaira(false);
             setInitialRender(true);
             setRenderSuccess(false);
+            setChangeInput(false);
           }, 3000);
         }
       } else if (busd) {
@@ -548,6 +561,8 @@ export default function Form() {
           CustomOption={CustomOption}
           customSelectStyles={customStyles}
           instituteOption={bankOptions}
+          changeInput={changeInput}
+          inputValueUpdate={ChangeInputType}
         />
       )}
       {usdc && (

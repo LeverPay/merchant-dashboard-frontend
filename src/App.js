@@ -18,6 +18,7 @@ import ForgetPassword from "./Pages/SignInPage/ForgotPassword/ForgetPassword";
 import Generate_Invoice_Page from "./Pages/Generate Invoice/Generate_Invoice_Page";
 import Subscription from "./Pages/SubscriptionPage/Subscription";
 import History from "./Components/new Invoice/History";
+import { ScrollContext } from "./Components/General/ScrollContext";
 
 function App(props) {
   const [showNav, setShowNav] = useState(true);
@@ -41,28 +42,30 @@ function App(props) {
   let NavId;
   NavId = showNav ? "merchant-dashboard" : "";
   return (
-    <div id={NavId} className="general-container">
-      {showNav && <Header />}
-      <div className="contents-container">
-        <Routes>
-          <Route index element={<SignInPage />} />
-          <Route path="dashboard" element={<OverviewPage />} />
-          <Route path="view" element={<View />} />
-          {/* <Route path="portfolio" element={<PortfolioPage />} /> */}
-          <Route path="profile" element={<Profile />} />
-          <Route path="security" element={<Security />} />
-          <Route path="transactions" element={<TransactionsPage />} />
-          <Route path="Help" element={<Help />} />
-          <Route path="sign-in" element={<SignInPage />} />
-          <Route path="remitance-setup" element={<PaymentMethod />} />
-          <Route path="welcome" element={<WelcomePage />} />
-          <Route path="forget-password" element={<ForgetPassword />} />
-          <Route path="new" element={<Generate_Invoice_Page />} />
-          <Route path="history" element={<History />} />
-          <Route path="subscriptions" element={<Subscription />} />
-        </Routes>
+    <ScrollContext>
+      <div id={NavId} className="general-container">
+        {showNav && <Header />}
+        <div className="contents-container">
+          <Routes>
+            <Route index element={<SignInPage />} />
+            <Route path="dashboard" element={<OverviewPage />} />
+            <Route path="view" element={<View />} />
+            {/* <Route path="portfolio" element={<PortfolioPage />} /> */}
+            <Route path="profile" element={<Profile />} />
+            <Route path="security" element={<Security />} />
+            <Route path="transactions" element={<TransactionsPage />} />
+            <Route path="Help" element={<Help />} />
+            <Route path="sign-in" element={<SignInPage />} />
+            <Route path="remitance-setup" element={<PaymentMethod />} />
+            <Route path="welcome" element={<WelcomePage />} />
+            <Route path="forget-password" element={<ForgetPassword />} />
+            <Route path="new" element={<Generate_Invoice_Page />} />
+            <Route path="history" element={<History />} />
+            <Route path="subscriptions" element={<Subscription />} />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </ScrollContext>
   );
 }
 
