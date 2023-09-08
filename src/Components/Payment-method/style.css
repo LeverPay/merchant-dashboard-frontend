@@ -203,6 +203,11 @@
   outline: none;
 }
 
+.input-section .change-input-state {
+  color: #1b0088;
+  cursor: pointer;
+}
+
 .checkbox:checked {
   accent-color: #fff;
 }

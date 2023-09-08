@@ -10,10 +10,12 @@ import BusdRemitance from "./BusdRemitance";
 import UsdcRemitance from "./UsdcRemitance";
 import TetherRemitance from "./TetherRemitance";
 import { TableHead, HeaderData, data, NairaHeading } from "./TestData";
+import Scroll from "../General/ScrollContext";
 
 export default function Form() {
   const [initialRender, setInitialRender] = useState(true);
   const { notify, success } = useContext(TokenContext);
+  const { scrollToTop, isVisible } = useContext(Scroll);
   const [naira, setNaira] = useState(false);
   const [usdc, setUsdc] = useState(false);
   const [busd, setBusd] = useState(false);
@@ -23,6 +25,7 @@ export default function Form() {
   const [selectedBank, setSelectedBank] = useState(null);
   const [selectIntervals, setSelectedInterVal] = useState(null);
   const [selectNetwork, setSelectedNetwork] = useState(null);
+  const [changeInput, setChangeInput] = useState(false);
 
   const [showTable, setShowTable] = useState(true);
   const [TableHeader] = useState(TableHead);
@@ -74,6 +77,11 @@ export default function Form() {
     }
   };
 
+  const ChangeInputType = () => {
+    setChangeInput(!changeInput);
+    if (isVisible) scrollToTop();
+  };
+
   const SetAciveHeader = (item) => {
     const activeItem = TableHeader.indexOf(item);
     setActive(activeItem);
@@ -106,7 +114,10 @@ export default function Form() {
   // selected option value
   const handleInstituteSelect = (selectedOption) => {
     setSelectedBank(selectedOption);
-    setInput((prev) => ({ ...prev, input1: selectedOption }));
+    setInput((prev) => ({
+      ...prev,
+      input1: !changeInput ? selectedOption : "",
+    }));
     console.log(input.input1);
   };
 
@@ -227,6 +238,7 @@ export default function Form() {
     setSelectedBank(null);
     setSelectedInterVal(null);
     setSelectedNetwork(null);
+    setChangeInput(false);
   };
 
   // Copy values on input to device clipboard
@@ -277,6 +289,7 @@ export default function Form() {
             setNaira(false);
             setInitialRender(true);
             setRenderSuccess(false);
+            setChangeInput(false);
           }, 3000);
         }
       } else if (busd) {
@@ -441,26 +454,33 @@ export default function Form() {
                     >
                       <div className="table-content d-flex flex-column align-items-center justify-content-center">
                         <table>
-                          <tr className="t-row d-flex align-items-center justify-content-center">
-                            {TableHeader.map((el, i) => (
-                              <th
-                                className={`t-head1 mx-4 fs-5 text-center ${
-                                  active === i ? "activeHeader" : ""
-                                }`}
-                                onClick={() => TrackedClickedHeader(el)}
-                              >
-                                {el}
-                              </th>
-                            ))}
-                          </tr>
+                          <thead>
+                            <tr className="t-row d-flex align-items-center justify-content-center">
+                              {TableHeader.map((el, i) => (
+                                <th
+                                  key={i}
+                                  className={`t-head1 mx-4 fs-5 text-center ${
+                                    active === i ? "activeHeader" : ""
+                                  }`}
+                                  onClick={() => TrackedClickedHeader(el)}
+                                >
+                                  {el}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
                         </table>
 
                         <table className="second-table mt-4 px-2">
-                          <tr>
-                            {SecondHeader.map((el) => (
-                              <th className="fw-bolder px-2 py-2">{el}</th>
-                            ))}
-                          </tr>
+                          <thead>
+                            <tr>
+                              {SecondHeader.map((el, i) => (
+                                <th className="fw-bolder px-2 py-2" key={i}>
+                                  {el}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
 
                           {!NairaHeader
                             ? filteredData?.map((el) => (
@@ -479,21 +499,23 @@ export default function Form() {
                                 </tr>
                               ))
                             : filteredData?.map((el) => (
-                                <tr key={el.id}>
-                                  <td className="px-2 py-2 text-break">
-                                    {el.AccountName}
-                                  </td>
-                                  <td className="px-2 py-2">
-                                    {el.AccountNumber}
-                                  </td>
-                                  <td className="px-2 py-2">{el.BankName}</td>
-                                  <td className="px-2 py-2 text-break">
-                                    {el.Narration}
-                                  </td>
-                                  <td className="px-2 py-2">
-                                    {el.PaymentInterval}
-                                  </td>
-                                </tr>
+                                <tbody>
+                                  <tr key={el.id}>
+                                    <td className="px-2 py-2 text-break">
+                                      {el.AccountName}
+                                    </td>
+                                    <td className="px-2 py-2">
+                                      {el.AccountNumber}
+                                    </td>
+                                    <td className="px-2 py-2">{el.BankName}</td>
+                                    <td className="px-2 py-2 text-break">
+                                      {el.Narration}
+                                    </td>
+                                    <td className="px-2 py-2">
+                                      {el.PaymentInterval}
+                                    </td>
+                                  </tr>
+                                </tbody>
                               ))}
                         </table>
                       </div>
@@ -539,6 +561,8 @@ export default function Form() {
           CustomOption={CustomOption}
           customSelectStyles={customStyles}
           instituteOption={bankOptions}
+          changeInput={changeInput}
+          inputValueUpdate={ChangeInputType}
         />
       )}
       {usdc && (

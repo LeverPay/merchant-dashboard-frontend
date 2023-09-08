@@ -3,8 +3,6 @@ import Button from "../General/Button component/Button";
 import Success from "./Success";
 import naira from "../../Assets/Naira.svg";
 import RemitanceFooter from "./RemitanceFooter";
-import axios from "axios";
-import { useState, useEffect } from "react";
 import Select from "react-select";
 
 export default function NairaRemitance({
@@ -28,59 +26,14 @@ export default function NairaRemitance({
   CustomOption,
   instituteOption,
   customSelectStyles,
+  changeInput,
+  inputValueUpdate,
 }) {
   const renderMainPage = () => {
     setRender(false);
     setInitialRender(true);
     cancelProcess();
   };
-
-  // //Select Component syle
-  // const customStyles = {
-  //   control: (provided, state) => ({
-  //     ...provided,
-  //     width: "100%",
-  //     padding: "5% 8%",
-  //     borderRadius: "0.8rem",
-  //     border: "2px solid #c1bdbd",
-  //     boxShadow: state.isFocused ? "none" : provided.boxShadow,
-  //     "&:focus": {
-  //       border: "none",
-  //       outline: "2px solid #c1bdbd",
-  //     },
-  //   }),
-  // };
-
-  // const [allBanks, setAllBanks] = useState(null);
-
-  // const requestUrl = "https://nigerianbanks.xyz";
-
-  // // Fetch banks and set the state...
-
-  // const bankOptions = allBanks
-  //   ? allBanks.map((bank) => ({
-  //       value: bank.name,
-  //       label: bank.name,
-  //       logo: bank.logo,
-  //     }))
-  //   : [];
-
-  // //Get banks data
-  // const getBankLists = async () => {
-  //   try {
-  //     const req = await axios.get(requestUrl);
-  //     console.log(req);
-  //     if (req.status === 200) {
-  //       setAllBanks(req.data);
-  //     }
-  //   } catch (err) {
-  //     console.log(`Oh No Something went wrong ${err}`);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getBankLists();
-  // }, []);
 
   const btnColor = "#0C6904";
 
@@ -106,31 +59,36 @@ export default function NairaRemitance({
           <p className="mt-5 text-center fs-4">Please fill the input below</p>
         </section>
 
-        <section>
+        <section className="input-section">
           <div className="d-flex flex-column inputs-container mb-3">
             <label htmlFor="bank" id="select-bank">
-              Select Bank
+              {!changeInput ? "Select Bank" : "Choose Other Bank"}
             </label>
-            <Select
-              options={instituteOption}
-              onChange={(selectedOption) => selectOptions(selectedOption)}
-              value={selectedBank}
-              isSearchable={false}
-              components={{
-                Option: CustomOption,
-              }}
-              styles={customSelectStyles}
-            />
-            {/* {selectedBank && (
-              <div className="selected-bank-logo">
-                <img
-                  src={selectedBank.logo}
-                  alt="selected bank logo"
-                  className="selected-logo"
+            {!changeInput ? (
+              <>
+                <Select
+                  options={instituteOption}
+                  onChange={(selectedOption) => selectOptions(selectedOption)}
+                  value={selectedBank}
+                  isSearchable={false}
+                  components={{
+                    Option: CustomOption,
+                  }}
+                  styles={customSelectStyles}
                 />
-                <span>{selectedBank.label}</span>
+              </>
+            ) : (
+              <div className="d-flex inputs-container-2">
+                <input
+                  type="text"
+                  name="input1"
+                  id="account-number"
+                  className="input"
+                  value={formValue.input1}
+                  onChange={handleForm}
+                />
               </div>
-            )} */}
+            )}
           </div>
 
           <div className="d-flex flex-column mb-3 inputs-container">
@@ -201,27 +159,13 @@ export default function NairaRemitance({
               }}
               styles={customSelectStyles}
             />
-
-            {/* <select
-              name="input4"
-              id="payment-interval"
-              className="payment-interval"
-              onChange={handleForm}
-            >
-              <option value="Choose An Option" className="select-value">
-                Choose An Option
-              </option>
-              <option value="Daily" className="select-value">
-                Daily
-              </option>
-              <option value="Weekly" className="select-value">
-                Weekly
-              </option>
-              <option value="Monthly" className="select-value">
-                Monthly
-              </option>
-            </select> */}
           </div>
+          <small
+            className="change-input-state fs-6"
+            onClick={() => inputValueUpdate()}
+          >
+            Can't find bank?
+          </small>
         </section>
 
         <div className="mt-4">

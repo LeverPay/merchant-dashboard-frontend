@@ -225,6 +225,13 @@
   }
 }
 
+.input-section {
+  .change-input-state {
+    color: #1b0088;
+    cursor: pointer;
+  }
+}
+
 .checkbox:checked {
   accent-color: #fff;
 }
@@ -256,7 +263,7 @@
       }
     }
   }
-  
+
   .inputs-container {
     .inputs-container-2 {
       .input {

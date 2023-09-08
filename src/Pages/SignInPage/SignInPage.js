@@ -2,31 +2,24 @@ import { useState, useContext } from "react";
 import "./sign-in-page.css";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../Components/General/Header-components/Logo";
-import { Password } from "./Password";
 import EyeClose from "../../Assets/eye-close.jpg";
 import EyeOpen from "../../Assets/eye-open.svg";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { login, baseUrl } from "../../Components/Endpoints";
 import axios from "axios";
 import TokenContext from "../../Components/User-Token/TokenContext";
 
 function SignInPage() {
-  const [inputText, setInputText] = useState("");
+  const [inputText, setInputText] = useState({
+    email: "",
+    password: "",
+  });
   const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const { userToken, setUserToken } = useContext(TokenContext);
-
-  const maxLength = 8;
-  function handleInputChange(event) {
-    const inputValue = event.target.value;
-    console.log(inputText);
-    setInputText(inputValue);
-  }
 
   const notify = (message) => {
     toast.error(message, {
@@ -52,28 +45,19 @@ function SignInPage() {
   const passwordRegex =
     /^(?=.*[!@#$%^&*()\-_=+{};:,<.>?])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*()\-_=+{};:,<.>?]{10,}$/;
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-
-    // setPassword(password);
-    console.log(password);
-    if (passwordRegex.test(password)) {
+  const handleOncange = (e) => {
+    const { name, value } = e.target;
+    setInputText((prev) => ({ ...prev, [name]: value }));
+    console.log(inputText);
+    if (
+      emailRegex.test(inputText.email) &&
+      passwordRegex.test(inputText.password)
+    ) {
       setSubmitButtonDisabled(false);
     } else {
       setSubmitButtonDisabled(true);
     }
   };
-  // const handleConfirmPassword = (e) => {
-  //   setConfirmPassword(e.target.value);
-
-  //   // setPassword(password);
-  //   console.log(confirmPassword);
-  //   if (confirmPassword === password) {
-  //     setSubmitButtonDisabled(true);
-  //   } else {
-  //     setSubmitButtonDisabled(false);
-  //   }
-  // };
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -83,16 +67,19 @@ function SignInPage() {
     e.preventDefault();
     // Check if the Email matches the user
 
-    if (!emailRegex.test(inputText)) {
+    if (!emailRegex.test(inputText.email)) {
       notify("Invalid mail format");
       return;
     }
-    if (!passwordRegex.test(password)) {
+    if (!passwordRegex.test(inputText.password)) {
       notify("Invalid password format");
       return;
     }
 
-    if (emailRegex.test(inputText) && passwordRegex.test(password)) {
+    if (
+      emailRegex.test(inputText.email) &&
+      passwordRegex.test(inputText.password)
+    ) {
       handleLogin();
     }
   }
@@ -100,8 +87,8 @@ function SignInPage() {
   const handleLogin = async () => {
     try {
       const request = await axios.post(baseUrl + login, {
-        email: inputText,
-        password: password,
+        email: inputText.email,
+        password: inputText.password,
       });
       console.log(request);
       if (request.status === 200) {
@@ -144,34 +131,47 @@ function SignInPage() {
           <h4>Sign In</h4>
         </div>
         <div className="col-md-12 sign-form-body">
-          <h6>Email</h6>
-          <input
-            type="email"
-            required
-            value={inputText}
-            onChange={handleInputChange}
-          />
-          <h6>PASSWORD</h6>
-          <input
-            type={showPassword ? "text" : "password"}
-            value={password}
-            onChange={handlePasswordChange}
-            placeholder="Password should be at least 10 characters"
-            autoComplete="new-password"
-          />
-          <span onClick={toggleShowPassword}>
-            {showPassword ? (
-              <img className="" src={EyeClose} alt="Scholar" width="5%" />
-            ) : (
-              <img
-                className=""
-                src={EyeOpen}
-                alt="Scholar"
-                width="5%"
-                height="5%"
-              />
-            )}
-          </span>{" "}
+          <div>
+            <label htmlFor="mail" className="signin-label">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              required
+              value={inputText.email}
+              onChange={handleOncange}
+              placeholder="E-mail"
+              id="mail"
+            />
+          </div>
+          <div>
+            <label htmlFor="pass-code" className="signin-label">
+              PASSWORD
+            </label>
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              value={inputText.password}
+              onChange={handleOncange}
+              placeholder="Password should be at least 10 characters"
+              autoComplete="new-password"
+              id="pass-code"
+            />
+            <span onClick={toggleShowPassword}>
+              {showPassword ? (
+                <img className="" src={EyeClose} alt="Scholar" width="5%" />
+              ) : (
+                <img
+                  className=""
+                  src={EyeOpen}
+                  alt="Scholar"
+                  width="5%"
+                  height="5%"
+                />
+              )}
+            </span>{" "}
+          </div>
           <button
             disabled={submitButtonDisabled}
             className="sign-in"
