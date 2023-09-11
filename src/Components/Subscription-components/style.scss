@@ -43,6 +43,38 @@
     .table2 {
       width: 100%;
       overflow-x: auto;
+
+      .subscription-details-container {
+        width: 25%;
+        background-color: white;
+        position: fixed;
+        top: 20%;
+        left: 40%;
+        z-index: 40;
+        box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+        .top-section {
+          height: 20%;
+          display: flex;
+          flex-direction: row !important;
+          justify-content: space-between !important;
+          align-items: center;
+        }
+        .header {
+          color: #fc0019;
+        }
+        .close-btn {
+          cursor: pointer;
+        }
+      }
+      .confirmation {
+        width: 25%;
+        background-color: white;
+        position: fixed;
+        top: 30%;
+        left: 40%;
+        z-index: 60;
+        box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+      }
     }
   }
 }
@@ -93,6 +125,19 @@
     .card-section {
       flex-wrap: wrap;
     }
+
+    .table2 {
+      .subscription-details-container,
+      .confirmation {
+        width: 65% !important;
+        left: 20% !important;
+        top: 50% !important;
+      }
+
+      .confirmation {
+        top: 60% !important;
+      }
+    }
   }
 }
 
@@ -100,6 +145,19 @@
   .subscription-container {
     .card-section {
       flex-wrap: wrap !important;
+    }
+
+    .table2 {
+      .subscription-details-container,
+      .confirmation {
+        width: 65% !important;
+        left: 20% !important;
+        top: 50% !important;
+      }
+
+      .confirmation {
+        top: 60% !important;
+      }
     }
   }
 }

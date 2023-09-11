@@ -226,7 +226,7 @@ export default function SidebarNav(props) {
                         className={`d-flex align-items-center ${
                           active === idx ? "custom-active" : ""
                         }`}
-                        activeClassName="custom-active"
+                        // activeClassName="custom-active"
                         onClick={() => showdropDowns(idx)}
                       >
                         <span className="link-icon">{item.icon}</span>
@@ -271,7 +271,7 @@ export default function SidebarNav(props) {
                         className={`d-flex align-items-center ${
                           active === idx ? "custom-active" : ""
                         }`}
-                        activeClassName="custom-active"
+                        // activeClassName="custom-active"
                         onClick={() => handleNavClick(idx)}
                       >
                         <span className="link-icon">{item.icon}</span>
