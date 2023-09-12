@@ -44,7 +44,8 @@
       width: 100%;
       overflow-x: auto;
 
-      .subscription-details-container {
+      .subscription-details-container,
+      .success-msg-1 {
         width: 25%;
         background-color: white;
         position: fixed;
@@ -74,6 +75,24 @@
         left: 40%;
         z-index: 60;
         box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+      }
+
+      .success-msg-1 {
+        top: 5%;
+        z-index: 61;
+        color: #082e88;
+        .header-section {
+          background-color: #082e88;
+          .header-text {
+            color: #ffffff;
+          }
+        }
+        .image-section {
+          .red-hr {
+            border-top: #fc0019;
+            color: #fc0019;
+          }
+        }
       }
     }
   }
@@ -137,6 +156,12 @@
       .confirmation {
         top: 60% !important;
       }
+
+      .success-msg-1{
+        width: 80% !important;
+        left: 15% !important;
+        top: 30% !important;
+      }
     }
   }
 }
@@ -157,6 +182,12 @@
 
       .confirmation {
         top: 60% !important;
+      }
+
+      .success-msg-1{
+        width: 80% !important;
+        left: 10% !important;
+        top: 40% !important;
       }
     }
   }

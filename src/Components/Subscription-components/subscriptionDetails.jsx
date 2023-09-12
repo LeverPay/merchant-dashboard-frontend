@@ -3,10 +3,26 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import Button from "../General/Button component/Button";
 import { useState } from "react";
 import Confiramtion from "./confiramtion";
+import Success_msg1 from "./success_msg-1";
 
 export default function Show_Details({ details, state }) {
   const [confirm, setConfirm] = useState(false);
   const [cancel, setCancel] = useState(false);
+  const [renderSuccess, setRenderSuccess] = useState(false);
+  const [renderCancel, setRenderCancel] = useState(false);
+  // Tracks button being clicked on
+  const [buttonClicked, setButtonClicked] = useState("");
+
+  const message1 = `Your subscription for Netflix has been approved successfully. 
+  Start date: ${details.startDate} 
+  End date: ${details.endDate} 
+
+You can now enjoy uninterrupted service!
+Cheers.
+`;
+
+  const message2 = `Your subscription for Netflix has been canceled successfully. 
+`;
 
   const closeContainer = () => {
     state(false);
@@ -14,10 +30,12 @@ export default function Show_Details({ details, state }) {
 
   const confirmSubscription = () => {
     setConfirm(true);
+    setButtonClicked((prev) => (prev = "Approve button is clicked"));
   };
 
   const CancelSubscription = () => {
     setCancel(true);
+    setButtonClicked((prev) => (prev = "Cancel button is clicked"));
   };
 
   const tableRows = Object.entries(details).map(([key, value], index) => (
@@ -104,6 +122,9 @@ export default function Show_Details({ details, state }) {
         <Confiramtion
           confirmationText="Are you sure you want to approve subscription?"
           closeItem={setConfirm}
+          details={details}
+          buttonMessage={buttonClicked}
+          successMessage={setRenderSuccess}
         />
       )}
 
@@ -111,6 +132,28 @@ export default function Show_Details({ details, state }) {
         <Confiramtion
           confirmationText="Are you sure you want to cancel subscription?"
           closeItem={setCancel}
+          details={details}
+          buttonMessage={buttonClicked}
+          cancelMessage={setRenderCancel}
+        />
+      )}
+
+      {renderSuccess && (
+        <Success_msg1
+          messageBody={message1}
+          success="Successful"
+          closeParent={setConfirm}
+          closeItem={setRenderSuccess}
+          closegrandContainer={closeContainer}
+        />
+      )}
+      {renderCancel && (
+        <Success_msg1
+          messageBody={message2}
+          success="Cancel"
+          closeParent={setCancel}
+          closeItem={setRenderCancel}
+          closegrandContainer={closeContainer}
         />
       )}
     </div>
