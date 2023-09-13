@@ -233,6 +233,8 @@ export default function Subscription_el() {
                   <>
                     <td className="text-center px-4 py-2">{el.date}</td>
                     <td className="text-center px-4 py-2">{el.userID}</td>
+                    <td className="text-center px-4 py-2">{el.firstname}</td>
+                    <td className="text-center px-4 py-2">{el.lastname}</td>
                     <td className="text-center px-4 py-2">{el.Duration}</td>
                     <td className="text-center px-4 py-2">{el.startDate}</td>
                     <td className="text-center px-4 py-2">{el.endDate}</td>

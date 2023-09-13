@@ -46,10 +46,11 @@
 
       .subscription-details-container,
       .success-msg-1 {
+        font-family: Montserrat-Regular;
         width: 25%;
         background-color: white;
         position: fixed;
-        top: 20%;
+        top: 5%;
         left: 40%;
         z-index: 40;
         box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
@@ -68,6 +69,7 @@
         }
       }
       .confirmation {
+        font-family: Montserrat-Regular;
         width: 25%;
         background-color: white;
         position: fixed;
@@ -78,9 +80,10 @@
       }
 
       .success-msg-1 {
-        top: 5%;
+        top: 2%;
         z-index: 61;
         color: #082e88;
+        overflow-y: auto;
         .header-section {
           background-color: #082e88;
           .header-text {
@@ -150,14 +153,14 @@
       .confirmation {
         width: 65% !important;
         left: 20% !important;
-        top: 50% !important;
+        top: 30% !important;
       }
 
       .confirmation {
-        top: 60% !important;
+        top: 50% !important;
       }
 
-      .success-msg-1{
+      .success-msg-1 {
         width: 80% !important;
         left: 15% !important;
         top: 30% !important;
@@ -175,19 +178,19 @@
     .table2 {
       .subscription-details-container,
       .confirmation {
-        width: 65% !important;
-        left: 20% !important;
-        top: 50% !important;
+        width: 80% !important;
+        left: 10% !important;
+        top: 30% !important;
       }
 
       .confirmation {
-        top: 60% !important;
+        top: 40% !important;
       }
 
-      .success-msg-1{
+      .success-msg-1 {
         width: 80% !important;
         left: 10% !important;
-        top: 40% !important;
+        top: 30% !important;
       }
     }
   }

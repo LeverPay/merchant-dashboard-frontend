@@ -48,8 +48,16 @@ Cheers.
         {key}:{" "}
       </td>
       <td
-        className={`${
-          key === "id" ? "hidden" : key === "link" ? "hidden" : ""
+        className={`px-3 py-2 ${
+          key === "id"
+            ? "hidden"
+            : key === "link"
+            ? "hidden"
+            : key === "firstname"
+            ? "fw-bolder"
+            : key === "lastname"
+            ? "fw-bolder"
+            : ""
         }`}
       >
         {value}
