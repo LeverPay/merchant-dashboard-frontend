@@ -40,6 +40,59 @@
   width: 100%;
   overflow-x: auto;
 }
+.subscription-container .table-section .table2 .subscription-details-container,
+.subscription-container .table-section .table2 .success-msg-1 {
+  font-family: Montserrat-Regular;
+  width: 25%;
+  background-color: white;
+  position: fixed;
+  top: 5%;
+  left: 40%;
+  z-index: 40;
+  box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+}
+.subscription-container .table-section .table2 .subscription-details-container .top-section,
+.subscription-container .table-section .table2 .success-msg-1 .top-section {
+  height: 20%;
+  display: flex;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center;
+}
+.subscription-container .table-section .table2 .subscription-details-container .header,
+.subscription-container .table-section .table2 .success-msg-1 .header {
+  color: #fc0019;
+}
+.subscription-container .table-section .table2 .subscription-details-container .close-btn,
+.subscription-container .table-section .table2 .success-msg-1 .close-btn {
+  cursor: pointer;
+}
+.subscription-container .table-section .table2 .confirmation {
+  font-family: Montserrat-Regular;
+  width: 25%;
+  background-color: white;
+  position: fixed;
+  top: 30%;
+  left: 40%;
+  z-index: 60;
+  box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+}
+.subscription-container .table-section .table2 .success-msg-1 {
+  top: 2%;
+  z-index: 61;
+  color: #082e88;
+  overflow-y: auto;
+}
+.subscription-container .table-section .table2 .success-msg-1 .header-section {
+  background-color: #082e88;
+}
+.subscription-container .table-section .table2 .success-msg-1 .header-section .header-text {
+  color: #ffffff;
+}
+.subscription-container .table-section .table2 .success-msg-1 .image-section .red-hr {
+  border-top: #fc0019;
+  color: #fc0019;
+}
 
 .tbody .table-link {
   color: #082e88;
@@ -80,9 +133,37 @@
   .subscription-container .card-section {
     flex-wrap: wrap;
   }
+  .subscription-container .table2 .subscription-details-container,
+  .subscription-container .table2 .confirmation {
+    width: 65% !important;
+    left: 20% !important;
+    top: 30% !important;
+  }
+  .subscription-container .table2 .confirmation {
+    top: 50% !important;
+  }
+  .subscription-container .table2 .success-msg-1 {
+    width: 80% !important;
+    left: 15% !important;
+    top: 30% !important;
+  }
 }
 @media screen and (max-width: 767px) {
   .subscription-container .card-section {
     flex-wrap: wrap !important;
+  }
+  .subscription-container .table2 .subscription-details-container,
+  .subscription-container .table2 .confirmation {
+    width: 80% !important;
+    left: 10% !important;
+    top: 30% !important;
+  }
+  .subscription-container .table2 .confirmation {
+    top: 40% !important;
+  }
+  .subscription-container .table2 .success-msg-1 {
+    width: 80% !important;
+    left: 10% !important;
+    top: 30% !important;
   }
 }/*# sourceMappingURL=style.css.map */

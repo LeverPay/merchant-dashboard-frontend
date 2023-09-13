@@ -53,6 +53,10 @@ html {
   cursor: pointer;
 }
 
+.hidden{
+  display: none;
+}
+
 /* Larger screen sizes */
 @media screen and (min-width: 1024px) {
   .contents-container {

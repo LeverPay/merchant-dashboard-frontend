@@ -40,8 +40,6 @@ export default function TopNav() {
     displayItems = useRef(),
     btn = useRef();
 
-  console.log(notification.length);
-
   useEffect(() => {
     const showNotification = () => {
       setcloseNotification(!closenotification);

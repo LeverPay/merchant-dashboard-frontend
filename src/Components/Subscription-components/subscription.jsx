@@ -9,11 +9,13 @@ import "./style.css";
 import { TableHead, HeaderData, data } from "./card-data";
 import ToggleSwitch from "../General/Toggle Component/ToggleSwitch";
 import TokenContext from "../User-Token/TokenContext";
+import Show_Details from "./subscriptionDetails";
 
 export default function Subscription_el() {
   const [tableHeader] = useState(TableHead);
   const [tableheader2] = useState(HeaderData);
   const [tableBody] = useState(data);
+  const [showDetails, setShowDetails] = useState({});
 
   // Initialize all subuscription
   const [allSubscriptions, setAllSubscriptions] = useState(null);
@@ -120,6 +122,15 @@ export default function Subscription_el() {
     console.log(filteredData, trackClicked);
   };
 
+  const show_subscriptions_info = (item) => {
+    console.log(item.id);
+    setShowDetails((prev) => ({
+      ...prev,
+      [item.id]: !prev[item.id],
+    }));
+    console.log(showDetails);
+  };
+
   useEffect(() => {
     dummyDataMap();
   }, [tableBody, filteredData]);
@@ -216,30 +227,44 @@ export default function Subscription_el() {
           </tbody>
 
           {filteredData.map((el, i) => (
-            <tbody className="tbody">
-              <tr key={i} className="">
-                <>
-                  <td className="text-center px-4 py-2">{el.date}</td>
-                  <td className="text-center px-4 py-2">{el.userID}</td>
-                  <td className="text-center px-4 py-2">{el.Duration}</td>
-                  <td className="text-center px-4 py-2">{el.startDate}</td>
-                  <td className="text-center px-4 py-2">{el.endDate}</td>
-                  <td className="text-center px-4 py-2">{el.paid}</td>
-                  <td className="text-center px-4 py-2">
-                    <ToggleSwitch
-                      color="#0EB500"
-                      checked={checked[el.id]}
-                      handleChange={(event) =>
-                        handleSwitchChange(el.id, event.target.checked)
-                      }
-                    />{" "}
-                  </td>
-                  <td className="text-center d-flex px-4 py-2 table-link">
-                    {el.link}
-                  </td>
-                </>
-              </tr>
-            </tbody>
+            <React.Fragment key={i}>
+              <tbody className="tbody">
+                <tr key={el.id} className="">
+                  <>
+                    <td className="text-center px-4 py-2">{el.date}</td>
+                    <td className="text-center px-4 py-2">{el.userID}</td>
+                    <td className="text-center px-4 py-2">{el.firstname}</td>
+                    <td className="text-center px-4 py-2">{el.lastname}</td>
+                    <td className="text-center px-4 py-2">{el.Duration}</td>
+                    <td className="text-center px-4 py-2">{el.startDate}</td>
+                    <td className="text-center px-4 py-2">{el.endDate}</td>
+                    <td className="text-center px-4 py-2">{el.paid}</td>
+                    <td className="text-center px-4 py-2">
+                      <ToggleSwitch
+                        color="#0EB500"
+                        checked={checked[el.id]}
+                        handleChange={(event) =>
+                          handleSwitchChange(el.id, event.target.checked)
+                        }
+                      />{" "}
+                    </td>
+                    <td
+                      className="text-center d-flex px-4 py-2 table-link"
+                      onClick={() => show_subscriptions_info(el)}
+                    >
+                      {el.link}
+                    </td>
+                  </>
+                </tr>
+              </tbody>
+              {showDetails[el.id] && (
+                <Show_Details
+                  details={el}
+                  state={() => show_subscriptions_info(el)}
+                  key={el.id}
+                />
+              )}
+            </React.Fragment>
           ))}
         </table>
       </section>

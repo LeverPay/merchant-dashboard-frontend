@@ -43,6 +43,60 @@
     .table2 {
       width: 100%;
       overflow-x: auto;
+
+      .subscription-details-container,
+      .success-msg-1 {
+        font-family: Montserrat-Regular;
+        width: 25%;
+        background-color: white;
+        position: fixed;
+        top: 5%;
+        left: 40%;
+        z-index: 40;
+        box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+        .top-section {
+          height: 20%;
+          display: flex;
+          flex-direction: row !important;
+          justify-content: space-between !important;
+          align-items: center;
+        }
+        .header {
+          color: #fc0019;
+        }
+        .close-btn {
+          cursor: pointer;
+        }
+      }
+      .confirmation {
+        font-family: Montserrat-Regular;
+        width: 25%;
+        background-color: white;
+        position: fixed;
+        top: 30%;
+        left: 40%;
+        z-index: 60;
+        box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+      }
+
+      .success-msg-1 {
+        top: 2%;
+        z-index: 61;
+        color: #082e88;
+        overflow-y: auto;
+        .header-section {
+          background-color: #082e88;
+          .header-text {
+            color: #ffffff;
+          }
+        }
+        .image-section {
+          .red-hr {
+            border-top: #fc0019;
+            color: #fc0019;
+          }
+        }
+      }
     }
   }
 }
@@ -93,6 +147,25 @@
     .card-section {
       flex-wrap: wrap;
     }
+
+    .table2 {
+      .subscription-details-container,
+      .confirmation {
+        width: 65% !important;
+        left: 20% !important;
+        top: 30% !important;
+      }
+
+      .confirmation {
+        top: 50% !important;
+      }
+
+      .success-msg-1 {
+        width: 80% !important;
+        left: 15% !important;
+        top: 30% !important;
+      }
+    }
   }
 }
 
@@ -100,6 +173,25 @@
   .subscription-container {
     .card-section {
       flex-wrap: wrap !important;
+    }
+
+    .table2 {
+      .subscription-details-container,
+      .confirmation {
+        width: 80% !important;
+        left: 10% !important;
+        top: 30% !important;
+      }
+
+      .confirmation {
+        top: 40% !important;
+      }
+
+      .success-msg-1 {
+        width: 80% !important;
+        left: 10% !important;
+        top: 30% !important;
+      }
     }
   }
 }
