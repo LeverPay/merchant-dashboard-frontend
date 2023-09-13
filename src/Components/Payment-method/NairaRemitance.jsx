@@ -89,6 +89,12 @@ export default function NairaRemitance({
                 />
               </div>
             )}
+            <small
+            className="change-input-state fs-6"
+            onClick={() => inputValueUpdate()}
+          >
+            Can't find bank? click here!
+          </small>
           </div>
 
           <div className="d-flex flex-column mb-3 inputs-container">
@@ -160,12 +166,6 @@ export default function NairaRemitance({
               styles={customSelectStyles}
             />
           </div>
-          <small
-            className="change-input-state fs-6"
-            onClick={() => inputValueUpdate()}
-          >
-            Can't find bank?
-          </small>
         </section>
 
         <div className="mt-4">

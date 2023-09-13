@@ -43,12 +43,13 @@
 .subscription-container .table-section .table2 .subscription-details-container,
 .subscription-container .table-section .table2 .success-msg-1 {
   font-family: Montserrat-Regular;
-  width: 25%;
+  width: 40%;
   background-color: white;
   position: fixed;
   top: 5%;
   left: 40%;
   z-index: 40;
+  max-height: 100vh;
   box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
 }
 .subscription-container .table-section .table2 .subscription-details-container .top-section,
@@ -73,7 +74,7 @@
   background-color: white;
   position: fixed;
   top: 30%;
-  left: 40%;
+  left: 45%;
   z-index: 60;
   box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
 }
@@ -92,6 +93,9 @@
 .subscription-container .table-section .table2 .success-msg-1 .image-section .red-hr {
   border-top: #fc0019;
   color: #fc0019;
+}
+.subscription-container .table-section .table2 .subscription-details-container {
+  overflow-y: auto;
 }
 
 .tbody .table-link {
