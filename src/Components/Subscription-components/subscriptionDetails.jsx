@@ -48,7 +48,7 @@ Cheers.
         {key}:{" "}
       </td>
       <td
-        className={`px-3 py-2 ${
+        className={`px-3 py-2 text-break ${
           key === "id"
             ? "hidden"
             : key === "link"
@@ -67,8 +67,8 @@ Cheers.
 
   return (
     <div className="popup position-relative">
-      <div className="subscription-details-container py-4">
-        <div className="top-section mb-3">
+      <div className="subscription-details-container py-4 px-2">
+        <div className="top-section mb-3 px-1">
           <div className="show-details-logo">
             <img src={require("../../Assets/vector.png")} alt="logo" />
           </div>
@@ -79,7 +79,7 @@ Cheers.
         </div>
 
         <div className="header mb-3">
-          <h1 className="text-center fs-4">Subscription Details</h1>
+          <h1 className="text-center fs-4 fw-bolder">Subscription Details</h1>
         </div>
 
         <div className="px-4 mb-3">
