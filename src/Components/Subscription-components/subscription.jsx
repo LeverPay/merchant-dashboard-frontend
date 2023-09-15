@@ -238,7 +238,13 @@ export default function Subscription_el() {
                     <td className="text-center px-4 py-2">{el.startDate}</td>
                     <td className="text-center px-4 py-2">{el.endDate}</td>
                     <td className="text-center px-4 py-2">{el.paid}</td>
-                    {/* <td className="text-center px-4 py-2">
+                    <td
+                      className="text-center d-flex px-4 py-2 table-link"
+                      onClick={() => show_subscriptions_info(el)}
+                    >
+                      {el.link}
+                    </td>
+                     <td className="text-center px-4 py-2">
                       <ToggleSwitch
                         color="#0EB500"
                         checked={checked[el.id]}
@@ -246,12 +252,6 @@ export default function Subscription_el() {
                           handleSwitchChange(el.id, event.target.checked)
                         }
                       />{" "}
-                    </td> */}
-                    <td
-                      className="text-center d-flex px-4 py-2 table-link"
-                      onClick={() => show_subscriptions_info(el)}
-                    >
-                      {el.link}
                     </td>
                   </>
                 </tr>
