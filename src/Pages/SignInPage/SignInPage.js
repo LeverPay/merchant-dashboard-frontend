@@ -121,8 +121,8 @@ function SignInPage() {
   };
 
   return (
-    <center className="col-md-12 signin-div">
-      <form className="col-md-3 formmy-container ">
+    <div className="col-md-12 signin-div">
+      <form className="col-md-4 formmy-container offset-md-4">
         <div className="col-md-12 form-heading">
           {" "}
           <center>
@@ -199,7 +199,7 @@ function SignInPage() {
         </div>
         {/* </form> */}
       </form>
-    </center>
+    </div>
   );
 }
 

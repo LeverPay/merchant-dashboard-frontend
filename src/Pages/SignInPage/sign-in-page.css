@@ -1,5 +1,4 @@
 .signin-div {
-  background: url("../../Assets/login-bg.jpg");
   background-size: cover;
   height: 1000px;
   margin-top: -80px;
@@ -13,7 +12,6 @@
   margin-top: 70px;
   border-radius: 20px;
   padding: 30px 0;
-  /* From https://css.glass */
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   backdrop-filter: blur(9.5px);
@@ -23,16 +21,16 @@
 }
 
 .form-heading {
-  /* box-shadow: 0px 8px 5px 0px rgba(206, 206, 206, 0.75);
+  box-shadow: 0px 8px 5px 0px rgba(206, 206, 206, 0.75);
   -webkit-box-shadow: 0px 8px 5px 0px rgba(206, 206, 206, 0.75);
-  -moz-box-shadow: 0px 8px 5px 0px rgba(206, 206, 206, 0.75); */
+  -moz-box-shadow: 0px 8px 5px 0px rgba(206, 206, 206, 0.75);
   padding: 0 40px;
 }
 
 .form-heading h4 {
-  color: #fff;
+  color: #2d63f2;
   font-family: AgrandirBold;
-  margin-top: 10px;
+  margin-top: 50px;
   text-align: left !important;
 }
 
@@ -41,7 +39,7 @@
   width: 100%;
   border-radius: 10px;
   /* margin-top: -10px; */
-  background: #9eb5f4;
+  background: #e6eaf6;
   border: none;
   outline: none;
   padding-left: 10px;
@@ -66,7 +64,7 @@
 .sign-form-body h6, .signin-label {
   margin-top: 35px;
   font-family: AgrandirBold;
-  color: #fff;
+  /* color: #fff; */
   text-align: left !important;
   display: block;
 }
@@ -74,7 +72,7 @@
 .sign-form-body button {
   width: 100%;
   margin-top: 60px;
-  color: #fff;
+  color: black;
   padding: 20px 0;
   border: none;
   border-radius: 10px;
@@ -84,7 +82,7 @@
 }
 
 .form-links {
-  color: #d4af37;
+  color: #2d63f2;
   text-decoration: none;
   font-family: AgrandirBold;
   font-size: 18px;
@@ -93,7 +91,7 @@
 
 .form-links :hover {
   text-decoration: underline;
-  color: #000 !important;
+  color: #2d63f2 !important;
 }
 
 .form-links span {
@@ -102,10 +100,11 @@
 }
 
 .sign-form-body p {
-  color: #fff;
+  color: black;
   font-family: AgrandirBold !important;
   margin-top: 45px;
   margin-bottom: 0;
+
   text-align: left !important;
 }
 

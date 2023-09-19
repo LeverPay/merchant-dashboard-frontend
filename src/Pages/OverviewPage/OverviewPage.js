@@ -380,7 +380,7 @@ export const OverviewPage = (props) => {
             <div className="summary-item flexy flexyM activity-item glass-bg2">
               <div className="col-md-7">
                 {" "}
-                <h5>Activity</h5>
+                <h5>Subscriptions</h5>
                 <h3>
                   {" "}
                   <CountUp
@@ -432,7 +432,7 @@ export const OverviewPage = (props) => {
             <div className="empty-div col-md-11  mdiv1 glass-bg">
               <center>
                 {" "}
-                <h3>Report</h3>
+                <h3>Customers</h3>
               </center>
               <div className="flexy flexyM">
                 <div className="col-md-6 report-div">
@@ -540,7 +540,7 @@ export const OverviewPage = (props) => {
               </center>
               <div className="flexy flexyM">
                 <div className="col-md-6 report-div">
-                  <p>Successful Transactions </p>
+                  <h5>Successful </h5>
 
                   <h4>
                     {" "}
@@ -556,7 +556,7 @@ export const OverviewPage = (props) => {
                   </h4>
                 </div>
                 <div className="col-md-6 report-div">
-                  <p>Failed Transactions</p>
+                  <h5>Failed </h5>
                   <h4>
                     {" "}
                     <CountUp

@@ -485,7 +485,7 @@ export default function CreateAccountForm({
             Create Account
           </button>
           <p style={{ fontSize: "13px", marginTop: "4px", color: "black" }}>
-            Already have an count?{" "}
+            Already have an account?{" "}
             <Link
               to={"/"}
               style={{
