@@ -355,7 +355,7 @@
   color: #1b2559;
 }
 
-.report-div p {
+.report-div h5 {
   font-family: AgrandirRegular;
   margin: 20px 0;
   text-align: center;
@@ -383,7 +383,8 @@
   border-radius: 11.883px;
   border: 0.625px solid #082e88;
   background: #082e88;
-  box-shadow: 0px 6.253967761993408px 12.507935523986816px 0px rgba(227, 227, 227, 0.5);
+  box-shadow: 0px 6.253967761993408px 12.507935523986816px 0px
+    rgba(227, 227, 227, 0.5);
   color: #fff;
   font-family: AgrandirBold;
   font-size: 12px;

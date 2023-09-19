@@ -540,7 +540,7 @@ export const OverviewPage = (props) => {
               </center>
               <div className="flexy flexyM">
                 <div className="col-md-6 report-div">
-                  <p>Successful Transactions </p>
+                  <h5>Successful </h5>
 
                   <h4>
                     {" "}
@@ -556,7 +556,7 @@ export const OverviewPage = (props) => {
                   </h4>
                 </div>
                 <div className="col-md-6 report-div">
-                  <p>Failed Transactions</p>
+                  <h5>Failed </h5>
                   <h4>
                     {" "}
                     <CountUp
