@@ -7,6 +7,7 @@ import PhoneInput from "react-phone-number-input";
 import Button from "../../Components/General/Button component/Button";
 import EyeClose from "../../Assets/eye-close.jpg";
 import EyeOpen from "../../Assets/eye-open.svg";
+import "react-phone-number-input/style.css";
 import {
   fetchInfo,
   states,
@@ -15,154 +16,109 @@ import {
   signup,
   verify_Mail,
   resendVerification_Token,
+  countries,
 } from "../../Components/Endpoints";
 import axios from "axios";
 import "./VerifyEmail.css";
+import { toast } from "react-toastify";
+import Verify from "./verify";
 
-export default function CreateAccountForm({
-  accType,
-  countryList,
-  notify,
-  success,
-}) {
-  const [firstName, setFirstName] = useState(""); // useState to store First Name
-  const [lastName, setLastName] = useState(""); // useState to store Last Name
-  const [email, setEmail] = useState("");
-  const [BusinessName, setBusinessName] = useState("");
-  const [password, setPassword] = useState(""); // useState to store Password
-  const [confirmPassword, setConfirmPassword] = useState(""); // useState to store Password
-  const [selectedCountryId, setSelectedCountryId] = useState("");
-  const [selectedStateId, setSelectedStateId] = useState("");
-  // const [inputText, setInputText] = useState("");
-  // const [submitButtonDisabled, setSubmitButtonDisabled] = useState(true);
-  const [isChecked, setIsChecked] = useState(false);
-  const [slideShow, setSlideShow] = useState(false);
+export default function CreateAccountForm({ accType }) {
+  // const [confirmPassword, setConfirmPassword] = useState("");
+  const [countryData, setCountryData] = useState(null);
+  const [stateData, setStateData] = useState(null);
+  const [cityData, setCityData] = useState(null);
   const [value, setValue] = useState("");
-  const [statesData, setStatesData] = useState({});
-  const [citiesData, setCitiesData] = useState({});
-  const [cities_id, setCities_id] = useState();
-  const [city, setCity] = useState();
-  const [Address, setAddress] = useState("");
-  const [renderForm, setRenderForm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const [v_email, setV_email] = useState();
+  const [v_email, setV_email] = useState("");
+  const [renderVerify, setRenderVerify] = useState(false);
 
-  // Generates an array for for inputs
-  const inputs = Array(4).fill(0);
-  // adds useRefs to inputs
-  const inputRefs = inputs.map(() => useRef());
+  const [person, setPerson] = useState({
+    firstName: "",
+    lastName: "",
+    surName: "",
+    dob: "",
+    gender: "",
+    address: "",
+    businessName: "",
+    rcNumber: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    starter: false,
+    registered: false,
+    agree: false,
+    country: "",
+    state: "",
+    city: "",
+  });
 
-  const handleChange = (e, index) => {
-    const { value } = e.target;
-
-    //Tests if values is number
-    if (/^\d*$/.test(value)) {
-      if (value.length === 1) {
-        if (index < inputs.length - 1) {
-          // Focus on the next input if value is a number
-          inputRefs[index + 1].current.focus();
-        }
-      }
-    }
+  const handleChange = (e) => {
+    const { name, value, checked, type } = e.target;
+    setPerson((prev) => {
+      return { ...prev, [name]: type === "checkbox" ? checked : value };
+    });
   };
 
-  // Populate data automatically on all input fields
-  const handlePaste = (e) => {
-    e.preventDefault();
-    // Get copied data
-    const pastedData = e.clipboardData.getData("text/plain").trim();
-    // Check if data is a number and length is == 4
-    if (/^\d{4}$/.test(pastedData)) {
-      inputs.forEach((_, i) => {
-        inputRefs[i].current.value = pastedData[i];
-        inputRefs[i].current.dispatchEvent(
-          new Event("input", { bubbles: true })
-        );
-      });
-    }
-  };
+  const errorNotify = (message) =>
+    toast.error(message, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      theme: "light",
+    });
 
-  const navigate = useNavigate();
+  const successNotify = (message) =>
+    toast(message, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: true,
+      theme: "light",
+    });
 
-  const verifyMail = async (e) => {
-    e.preventDefault();
-    const _inputValues = inputRefs.map((el) => el.current.value);
-    const value_As_String = _inputValues.toString().replace(/,/g, "");
-    console.log(value_As_String, v_email);
+  const fetchcountryData = async () => {
+    //fetch country
+    const req1 = await axios.get(baseUrl + countries);
+    const response1 = req1.data?.data?.map((el) => el);
+    setCountryData(response1);
+  };
+  useEffect(() => {
+    fetchcountryData();
+  }, []);
 
-    try {
-      const request = await axios.post(baseUrl + verify_Mail, {
-        email: v_email,
-        token: value_As_String,
-      });
-      if (request.status === 200) {
-        success(request.data.message);
-        setTimeout(() => {
-          // Route to signin page
-          navigate("/");
-        }, 3000);
-      } else {
-        notify("Something went wrong :(");
-      }
-    } catch (err) {
-      console.log(err);
-      notify(err.response.data.message);
-    }
-  };
-
-  const fetchData = async (country_id) => {
-    try {
-      const response = await axios.post(baseUrl + states, {
-        country_id: country_id,
-      }); // Replace with your API endpoint
-      setStatesData(response.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const fetchDataState = async (state_id) => {
-    try {
-      const response = await axios.post(baseUrl + cities, {
-        state_id: state_id,
-      }); // Replace with your API endpoint
-      setCitiesData(response.data);
-      setCities_id(state_id);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-  const fetchDataCity = async (state_id) => {
-    try {
-      const response = await axios.post(baseUrl + cities, {
-        state_id: cities_id,
-      }); // Replace with your API endpoint
-      console.log(state_id);
-    } catch (error) {
-      console.error(error);
-    }
+  const fetchState = async (id) => {
+    id = person.country;
+    const req2 = await axios.post(baseUrl + states, {
+      country_id: id,
+    });
+    const response = req2.data?.data;
+    setStateData(response);
   };
 
   useEffect(() => {
-    if (selectedCountryId !== "") {
-      fetchData(selectedCountryId);
-    }
-  }, [selectedCountryId]);
+    if (person.country !== "") fetchState(person.country);
+  }, [person.country]);
 
-  useEffect(() => {
-    if (city !== "") {
-      fetchDataCity(city);
-    }
-  }, [selectedStateId]);
-
-  useEffect(() => {
-    if (city !== "") {
-      fetchDataState(selectedStateId);
-    }
-  }, [selectedStateId]);
-
-  const handleChecked = (event) => {
-    setIsChecked(event.target.checked);
+  const fetchcity = async (id) => {
+    id = person.state;
+    const req3 = await axios.post(baseUrl + cities, {
+      state_id: id,
+    });
+    const response = req3.data?.data;
+    console.log(response);
+    setCityData(response);
   };
+
+  useEffect(() => {
+    if (person.state !== "") fetchcity(person.state);
+    console.log(person.state);
+  }, [person.state]);
+  // console.log(cityData, "is city data");
+
+  // const handleChecked = (event) => {
+  //   setIsChecked(event.target.checked);
+  // };
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -176,32 +132,78 @@ export default function CreateAccountForm({
     e.preventDefault();
     // Check if the First Name is an Empty string or not.
 
-    if (firstName.length == 0) {
-      notify("Invalid Form, First Name can not be empty");
+    if (person.firstName.length == 0) {
+      errorNotify("Invalid Form, First Name can not be empty");
       return;
     }
 
-    // Check if the Email is an Empty string or not.
-
-    if (email.length == 0) {
-      notify("Invalid Form, Email Address can not be empty");
+    // Check if rc-Number is empty
+    if (person.rcNumber.length == 0) {
+      errorNotify("Invalid Form, Rc-number can not be empty");
       return;
-    } else if (!emailRegex.test(email)) {
-      notify("Invalid mail format");
+    }
+
+    // checks if last name is empty
+    if (person.surName.length == 0) {
+      errorNotify("Invalid Form, Sur Name can not be empty");
+      return;
+    }
+
+    // chaecks if date of birth is empty
+    if (person.dob.length == 0) {
+      errorNotify("Invalid Form, birth date can not be empty");
+      return;
+    }
+
+    if (person.gender.length == 0) {
+      errorNotify("Invalid Form, gender can not be empty");
+      return;
+    }
+    // Check if the Email is an Empty string or not.
+    if (person.email.length == 0) {
+      errorNotify("Invalid Form, Email Address can not be empty");
+      return;
+    } else if (!emailRegex.test(person.email)) {
+      errorNotify("Invalid mail format");
     } else {
     }
 
     //Check if address length is an Empty string or not
 
-    if (Address.length == 0) {
-      notify("Invalid Form, Address cannot be empty");
+    if (person.address.length == 0) {
+      errorNotify("Invalid Form, Address cannot be empty");
       return;
     }
 
-    // Check if BusinuessName is an Empty string
+    //checks if country value is empty
+    if (person.country === "") {
+      errorNotify(
+        "counrty value cannot be empty, please select a country to get state"
+      );
+      return;
+    }
 
-    if (BusinessName.length == 0) {
-      notify("Invalid Form, Business name cannot be empty");
+    // chacks if state value is empty
+    if (person.state === "") {
+      errorNotify(
+        "state value cannot be empty, please select a state to get city"
+      );
+      return;
+    }
+
+    // checks if city value is empty
+    if (person.city === "") {
+      errorNotify("city value cannot be empty");
+      return;
+    }
+
+    if (value === "") {
+      errorNotify("phone number cannot be empty and must be valid!");
+    }
+
+    // Check if BusinuessName is an Empty string
+    if (person.businessName.length == 0) {
+      errorNotify("Invalid Form, Business name cannot be empty");
       return;
     }
 
@@ -209,341 +211,448 @@ export default function CreateAccountForm({
 
     // if password length is less than 8 characters, alert invalid form.
 
-    if (password.length < 10) {
-      notify(
+    if (person.password.length < 10) {
+      errorNotify(
         "Invalid Form, Password must contain more than or equal to 10 characters."
       );
-    } else if (!passwordRegex.test(password)) {
-      notify(
+    } else if (!passwordRegex.test(person.password)) {
+      errorNotify(
         "password must be 10characters long, must contain at least a special character and a number"
       );
-    } else if (password !== confirmPassword) {
-      notify("password mismatch");
+    } else if (person.password !== person.confirmPassword) {
+      errorNotify("password mismatch");
     } else {
     }
 
-    if (!isChecked) {
-      notify("Accept Terms of Services to continue");
+    if (!person.agree) {
+      errorNotify("Accept Terms of Services to continue");
       return;
     }
 
-    if (
-      isChecked &&
-      password === confirmPassword &&
-      email.length > 0 &&
-      emailRegex.test(email) &&
-      passwordRegex.test(password) &&
-      Address.length > 0 &&
-      BusinessName.length > 0 &&
-      selectedCountryId !== "" &&
-      selectedStateId !== "" &&
-      city !== ""
-    ) {
-      handleSubmit();
+    if (person.starter || person.registered) {
+      if (
+        person.agree &&
+        person.password === person.confirmPassword &&
+        person.email.length > 0 &&
+        emailRegex.test(person.email) &&
+        passwordRegex.test(person.password) &&
+        person.address.length > 0 &&
+        person.businessName.length > 0 &&
+        person.city !== "" &&
+        person.state !== "" &&
+        person.country !== "" &&
+        value !== ""
+      ) {
+        handleSubmit();
+      }
+    } else {
+      errorNotify("Please choose a business category");
     }
   }
-  function setCountry(country_id) {
-    console.log("called back with " + country_id + "");
-    // if (country_id !== "") {
-    setSelectedCountryId(country_id);
-    // }
-  }
 
-  function setStateCallBack(state_id) {
-    console.log("called back with state id  " + state_id + "");
-    setSelectedStateId(state_id);
-  }
-
-  function setCityCallBack(state_id) {
-    console.log("called back with state id  " + state_id + "");
-    setCity(state_id);
-  }
-
+  const navigate = useNavigate();
   async function handleSubmit() {
     try {
       const register = await axios.post(baseUrl + signup, {
-        first_name: firstName,
-        last_name: lastName,
-        address: Address,
-        password: password,
-        email: email,
-        business_name: BusinessName,
+        first_name: person.firstName,
+        last_name: person.lastName,
+        address: person.address,
+        password: person.password,
+        email: person.email,
+        business_name: person.businessName,
         phone: value,
-        password: password,
-        country_id: selectedCountryId,
-        state_id: selectedStateId,
-        city_id: city,
+        country_id: person.country,
+        state_id: person.state,
+        city_id: person.city,
       });
+      console.log(register);
       if (register.status === 200) {
         console.log(register);
-        success("Signup Success ✔");
+        successNotify("Signup Success ✔");
         localStorage.setItem("registered", "true");
         const cookie = localStorage.getItem("registered");
         // Continue process
         if (cookie) {
-          setRenderForm(true);
+          setRenderVerify(true);
         }
         setV_email(register.data.data.email);
       } else {
-        notify("Something went wrong :(");
+        errorNotify("Something went wrong :(");
       }
     } catch (err) {
       console.log(err);
-      if (err.response.status === 422) {
-        notify("Mail or phone already taken");
+      if (err.response?.status === 422) {
+        errorNotify(err.response?.data?.message);
       } else {
         if (err.response !== undefined) {
-          notify(err.response.data.message);
+          errorNotify(err.response.data.message);
         } else {
-          notify("Something went wrong :(");
+          errorNotify("Something went wrong :(");
         }
       }
     }
   }
 
-  const resend_Verification_Token = async (e) => {
-    e.preventDefault();
-    try {
-      const request = await axios.post(baseUrl + resendVerification_Token, {
-        email: v_email,
-      });
-      console.log(request);
-      if (request.status === 200) {
-        success(`New token has been sent to ${v_email}`);
-      } else {
-        notify("Something went wrong :(");
-      }
-    } catch (err) {
-      console.log(err);
-      if (err.response.status === 400) {
-        notify(err.response.data.message);
-      } else {
-        if (err.response !== undefined) {
-          notify(err.response.data.message);
-        } else {
-          notify("Something went wrong :(");
-        }
-      }
-    }
+  const continue_toVerification = () => {
+    setRenderVerify(true);
   };
 
   return (
     <>
-      {!renderForm ? (
+      {!renderVerify && (
         <form className="acc-form">
-          {" "}
-          <center>
-            <h5>Create your {accType} account</h5>
-          </center>
-          <h6>First Name</h6>
-          <input
-            type="text"
-            required
-            className="form-control"
-            onChange={(e) => setFirstName(e.target.value)}
-          />
-          <h6>Last Name</h6>
-          <input
-            required
-            type="text"
-            className="form-control"
-            onChange={(e) => setLastName(e.target.value)}
-          />
-          <h6>Address</h6>
-          <input
-            required
-            type="text"
-            className="form-control"
-            onChange={(e) => setAddress(e.target.value)}
-          />
-          <h6>BusinessName</h6>
-          <input
-            required
-            type="text"
-            className="form-control"
-            onChange={(e) => setBusinessName(e.target.value)}
-          />
-          <h6>Select Country</h6>
-          <CountrySelect
-            countyList={countryList}
-            callback={setCountry}
-            selector="country_name"
-          />
-          {selectedCountryId !== "" ? (
-            <>
-              <h6>Select State</h6>
-              <CountrySelect
-                countyList={statesData}
-                callback={setStateCallBack}
-                selector="state_name"
-              />
-            </>
-          ) : (
-            ""
-          )}
-          {selectedStateId != "" ? (
-            <>
-              <h6>Select City</h6>
-              <CountrySelect
-                countyList={citiesData}
-                callback={setCityCallBack}
-                selector="city_name"
-              />
-            </>
-          ) : (
-            ""
-          )}
-          <h6>Phone Number</h6>
-          <PhoneInput
-            value={value}
-            onChange={setValue}
-            placeholder="Mobile number"
-            required
-          />
-          <h6>Email address</h6>
-          <input
-            required
-            type="email"
-            className="form-control"
-            onChange={(e) => setEmail(e.target.value)}
-          />{" "}
-          <h6>Password</h6>
-          <input
-            required
-            type={showPassword ? "text" : "password"}
-            className="form-control"
-            placeholder="Password should be 10 characters long and must contain at least one special character a number"
-            onChange={(e) => setPassword(e.target.value)}
-          />{" "}
-          <span onClick={toggleShowPassword}>
-            {showPassword ? (
-              <img className="" src={EyeClose} alt="Scholar" width="5%" />
-            ) : (
-              <img
-                className=""
-                src={EyeOpen}
-                alt="Scholar"
-                width="5%"
-                height="5%"
-              />
-            )}
-          </span>
-          <h6>Confirm Password</h6>
-          <input
-            required
-            type={showPassword ? "text" : "password"}
-            className="form-control"
-            placeholder="Must be same as password"
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-          <span onClick={toggleShowPassword}>
-            {showPassword ? (
-              <img className="" src={EyeClose} alt="Scholar" width="5%" />
-            ) : (
-              <img
-                className=""
-                src={EyeOpen}
-                alt="Scholar"
-                width="5%"
-                height="5%"
-              />
-            )}
-          </span>
-          <div className="flexy flexyM">
+          <div className="acc-form-content">
+            {" "}
+            <center>
+              <h5>Create your {accType} account</h5>
+            </center>
+            <label htmlFor="firstname" id="firstname">
+              First Name
+            </label>
+            <input
+              type="text"
+              required
+              name="firstName"
+              className="form-control"
+              onChange={handleChange}
+              id="firstname"
+              value={person.firstName}
+            />
+            <label htmlFor="othername" id="othername">
+              Othername
+            </label>
             <input
               required
-              type="checkbox"
-              name="color"
-              checked={isChecked}
-              onChange={handleChecked}
-              style={{
-                height: "height:15px",
-                width: "15px",
-              }}
+              type="text"
+              className="form-control"
+              onChange={handleChange}
+              name="lastName"
+              value={person.lastName}
+              id="othername"
             />
-            <span
-              style={{
-                fontFamily: "AgrandirBold",
-
-                fontSize: "12px",
-                marginTop: "15px",
-                marginLeft: "15px",
-              }}
+            <label htmlFor="surname" id="surname">
+              Surname
+            </label>
+            <input
+              required
+              type="text"
+              className="form-control"
+              onChange={handleChange}
+              name="surName"
+              value={person.surName}
+              id="surname"
+            />
+            <label htmlFor="gender" id="gender">
+              Gender
+            </label>
+            <input
+              required
+              type="text"
+              className="form-control"
+              onChange={handleChange}
+              id="gender"
+              value={person.gender}
+              name="gender"
+            />
+            <label htmlFor="date of birth" id="dob">
+              Date of Birth
+            </label>
+            <input
+              required
+              type="date"
+              className="form-control"
+              onChange={handleChange}
+              name="dob"
+              id="dob"
+              value={person.dob}
+            />
+            <label htmlFor="Address" id="address">
+              Address
+            </label>
+            <input
+              required
+              type="text"
+              className="form-control"
+              onChange={handleChange}
+              id="address"
+              value={person.address}
+              name="address"
+            />
+            <label htmlFor="business-name" id="business">
+              BusinessName
+            </label>
+            <input
+              required
+              type="text"
+              className="form-control"
+              onChange={handleChange}
+              value={person.businessName}
+              name="businessName"
+              id="business"
+            />
+            <label htmlFor="rc-number" id="rc-number">
+              Rc Number
+            </label>
+            <input
+              required
+              type="number"
+              className="form-control"
+              onChange={handleChange}
+              value={person.rcNumber}
+              name="rcNumber"
+              id="rc-number"
+            />{" "}
+            <label htmlFor="country" id="country">
+              Select Country
+            </label>
+            <select
+              name="country"
+              value={person.country}
+              onChange={handleChange}
+              className="form-control"
+              id="country"
             >
-              {" "}
-              I agree to the <strong>Terms of Service</strong> and
-              <strong> Privacy Policy.</strong>
-            </span>
-          </div>
-          <button
-            type="submit"
-            onClick={validateForm}
-            // disabled={submitButtonDisabled}
-            className="acct-btn"
-            // onClick={handleClick}
-          >
-            Create Account
-          </button>
-          <p style={{ fontSize: "13px", marginTop: "4px", color: "black" }}>
-            Already have an account?{" "}
-            <Link
-              to={"/"}
-              style={{
-                color: "#2962F2",
-                fontSize: "16px",
-                textDecoration: "none",
-              }}
-            >
-              Login
-            </Link>
-          </p>
-        </form>
-      ) : (
-        <form className="p-5">
-          <center>
-            <p>Please Verify Your Account</p>
-            <div>
-              <h5>A code has beeen sent to {v_email}</h5>
+              {countryData !== null ? (
+                countryData?.map((el) => (
+                  <option key={el.id} value={el.id}>
+                    {el.country_name}
+                  </option>
+                ))
+              ) : (
+                <option value="">No value to display</option>
+              )}
+            </select>
+            {person.country !== "" && (
+              <>
+                <div>
+                  <label htmlFor="state" id="state">
+                    Select State
+                  </label>
+                  <select
+                    className="form-control"
+                    onChange={handleChange}
+                    name="state"
+                    value={person.state}
+                    id="state"
+                  >
+                    {stateData !== null ? (
+                      stateData?.map((el) => (
+                        <option key={el.id} value={el.id}>
+                          {el.state_name}
+                        </option>
+                      ))
+                    ) : (
+                      <option value="">No value to display</option>
+                    )}
+                  </select>
+                </div>
+              </>
+            )}
+            {person.state !== "" && (
+              <>
+                <div>
+                  <label htmlFor="city" id="city">
+                    Select City
+                  </label>
+                  <select
+                    className="form-control"
+                    onChange={handleChange}
+                    name="city"
+                    value={person.city}
+                    id="city"
+                  >
+                    {cityData !== null ? (
+                      cityData?.map((el) => (
+                        <option key={el.id} value={el.id}>
+                          {el.city_name}
+                        </option>
+                      ))
+                    ) : (
+                      <option value="">No value to display</option>
+                    )}
+                  </select>
+                </div>
+              </>
+            )}
+            <div className="mt-5">
+              <label htmlFor="phone number">Phone Number</label>
+              <PhoneInput
+                value={value}
+                onChange={setValue}
+                placeholder="Mobile number"
+                required
+              />
             </div>
-          </center>
-
-          <div className="d-flex">
-            {inputs.map((_, index) => {
-              return (
-                <input
-                  type="text"
-                  ref={inputRefs[index]}
-                  maxLength={1}
-                  className="mt-5 mx-2 verify-input fs-1 text-center"
-                  onChange={(e) => handleChange(e, index)}
-                  onPaste={handlePaste}
+            <label htmlFor="email" id="mail">
+              Email address
+            </label>
+            <input
+              required
+              type="email"
+              className="form-control"
+              onChange={handleChange}
+              name="email"
+              value={person.email}
+              id="mail"
+            />{" "}
+            <label htmlFor="password" id="password">
+              Password
+            </label>
+            <input
+              required
+              type={showPassword ? "text" : "password"}
+              className="form-control"
+              placeholder="Password should be 10 characters long and must contain at least one special character a number"
+              onChange={handleChange}
+              value={person.password}
+              name="password"
+              id="password"
+            />{" "}
+            <span onClick={toggleShowPassword}>
+              {showPassword ? (
+                <img className="" src={EyeClose} alt="Scholar" width="5%" />
+              ) : (
+                <img
+                  className=""
+                  src={EyeOpen}
+                  alt="Scholar"
+                  width="5%"
+                  height="5%"
                 />
-              );
-            })}
-          </div>
+              )}
+            </span>
+            <label htmlFor="confirm-password" id="confirm-password">
+              Confirm Password
+            </label>
+            <input
+              required
+              type={showPassword ? "text" : "password"}
+              className="form-control"
+              placeholder="Must be same as password"
+              onChange={handleChange}
+              name="confirmPassword"
+              value={person.confirmPassword}
+              id="confirm-password"
+            />
+            <span onClick={toggleShowPassword}>
+              {showPassword ? (
+                <img className="" src={EyeClose} alt="Scholar" width="5%" />
+              ) : (
+                <img
+                  className=""
+                  src={EyeOpen}
+                  alt="Scholar"
+                  width="5%"
+                  height="5%"
+                />
+              )}
+            </span>
+            <div className="question-container">
+              <div className="question-1-container d-flex flex-column mt-4">
+                <div className="d-flex">
+                  <input
+                    required
+                    type="checkbox"
+                    name="starter"
+                    checked={person.starter}
+                    onChange={handleChange}
+                    id="starter"
+                  />
+                  <label htmlFor="starter-business" id="starter">
+                    Starter Business
+                  </label>
+                </div>
+                <p>
+                  I’m testing my idea with real customers and preparing to
+                  register my company
+                </p>
+              </div>
 
-          <div>
-            <small className="fs-5 d-flex justify-content-center">
-              Didn't get code?{" "}
-              <Link onClick={resend_Verification_Token}>Click to resend</Link>
-            </small>
-          </div>
+              <div className="question-2-container d-flex flex-column mt-4">
+                <div className="d-flex">
+                  <input
+                    required
+                    type="checkbox"
+                    name="registered"
+                    checked={person.registered}
+                    onChange={handleChange}
+                    id="registered"
+                  />
+                  <label htmlFor="registered-business" id="registered">
+                    Registered Business
+                  </label>
+                </div>
+                <p>
+                  My business has the approval, documentation and license
+                  require to operate legally
+                </p>
+              </div>
+            </div>
+            <div className="flexy flexyM">
+              <input
+                required
+                type="checkbox"
+                name="agree"
+                checked={person.agree}
+                onChange={handleChange}
+                style={{
+                  height: "15px",
+                  width: "15px",
+                }}
+              />
+              <span
+                style={{
+                  fontFamily: "AgrandirBold",
 
-          <div className="mt-5 d-flex justify-content-center">
-            <Button
-              style={{
-                backgroundColor: "#2962F2",
-                width: "80%",
-                color: "#fff",
-                fontSize: "1.5rem",
-              }}
-              click={verifyMail}
+                  fontSize: "12px",
+                  marginTop: "15px",
+                  marginLeft: "15px",
+                }}
+              >
+                {" "}
+                I agree to the <strong>Terms of Service</strong> and
+                <strong> Privacy Policy.</strong>
+              </span>
+            </div>
+            <button
+              type="submit"
+              onClick={validateForm}
+              // disabled={submitButtonDisabled}
+              className="acct-btn"
+              // onClick={handleClick}
             >
-              Verify Account
-            </Button>
+              Create Account
+            </button>
+            <p style={{ fontSize: "13px", marginTop: "4px", color: "black" }}>
+              Already have an account?{" "}
+              <Link
+                to={"/"}
+                style={{
+                  color: "#2962F2",
+                  fontSize: "16px",
+                  textDecoration: "none",
+                }}
+              >
+                Login
+              </Link>
+            </p>
+            <p style={{ fontSize: "13px", marginTop: "4px", color: "black" }}>
+              Already Registered?{" "}
+              <Link
+                onClick={continue_toVerification}
+                style={{
+                  color: "#2962F2",
+                  fontSize: "16px",
+                  textDecoration: "none",
+                }}
+              >
+                continue your to verification
+              </Link>
+            </p>
           </div>
         </form>
       )}
+      {renderVerify && <Verify mail={v_email} renderSignUp={setRenderVerify} />}
     </>
   );
 }
