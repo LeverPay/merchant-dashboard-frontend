@@ -149,10 +149,28 @@ export default function CreateAccountForm({ accType }) {
       return;
     }
 
-    // chaecks if date of birth is empty
-    if (person.dob.length == 0) {
-      errorNotify("Invalid Form, birth date can not be empty");
-      return;
+    const selectedDate = new Date(person.dob);
+
+    // Get the current date
+    const currentDate = new Date();
+
+    // Calculate the minimum allowed date (5 years ago from the current date)
+    const minAllowedDate = new Date(
+      currentDate.getFullYear() - 5,
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
+
+    if (selectedDate >= minAllowedDate) {
+      // chaecks if date of birth is empty
+      if (person.dob.length == 0) {
+        errorNotify("Invalid Form, birth date can not be empty");
+      } else if (selectedDate < minAllowedDate) {
+        errorNotify(
+          "Date of birth is too recent. Must be at least 5 years ago."
+        );
+        return;
+      }
     }
 
     if (person.gender.length == 0) {
@@ -199,6 +217,11 @@ export default function CreateAccountForm({ accType }) {
 
     if (value === "") {
       errorNotify("phone number cannot be empty and must be valid!");
+    }
+
+    if (person.registered && person.starter) {
+      errorNotify("Please select only one business category");
+      return;
     }
 
     // Check if BusinuessName is an Empty string
@@ -558,7 +581,11 @@ export default function CreateAccountForm({ accType }) {
                     onChange={handleChange}
                     id="starter"
                   />
-                  <label htmlFor="starter-business" id="starter">
+                  <label
+                    htmlFor="starter-business"
+                    id="starter"
+                    className="mx-2"
+                  >
                     Starter Business
                   </label>
                 </div>
@@ -568,7 +595,7 @@ export default function CreateAccountForm({ accType }) {
                 </p>
               </div>
 
-              <div className="question-2-container d-flex flex-column mt-4">
+              <div className="question-2-container d-flex flex-column">
                 <div className="d-flex">
                   <input
                     required
@@ -578,7 +605,11 @@ export default function CreateAccountForm({ accType }) {
                     onChange={handleChange}
                     id="registered"
                   />
-                  <label htmlFor="registered-business" id="registered">
+                  <label
+                    htmlFor="registered-business"
+                    id="registered"
+                    className="mx-2"
+                  >
                     Registered Business
                   </label>
                 </div>
@@ -601,11 +632,11 @@ export default function CreateAccountForm({ accType }) {
                 }}
               />
               <span
+                id="agree"
                 style={{
                   fontFamily: "AgrandirBold",
 
                   fontSize: "12px",
-                  marginTop: "15px",
                   marginLeft: "15px",
                 }}
               >

@@ -50,9 +50,13 @@
 }
 
 .acc-form label {
-  /* margin-top: 15px;
-  margin-bottom: 0px; */
+  margin-top: 10px;
+  margin-bottom: 0px;
   font-size: 14px;
+  font-weight: bold;
+}
+#registered, #starter, #agree{
+  margin-top: 0;
 }
 
 .acc-form img {
