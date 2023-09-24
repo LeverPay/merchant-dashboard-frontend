@@ -19,6 +19,8 @@ import Generate_Invoice_Page from "./Pages/Generate Invoice/Generate_Invoice_Pag
 import Subscription from "./Pages/SubscriptionPage/Subscription";
 import History from "./Components/new Invoice/History";
 import { ScrollContext } from "./Components/General/ScrollContext";
+import CreateAccountForm from "./Pages/CreateAccountForm/CreateAccountForm";
+import Verify from "./Pages/CreateAccountForm/verify";
 
 function App(props) {
   const [showNav, setShowNav] = useState(true);
@@ -57,7 +59,7 @@ function App(props) {
             <Route path="Help" element={<Help />} />
             <Route path="sign-in" element={<SignInPage />} />
             <Route path="remitance-setup" element={<PaymentMethod />} />
-            <Route path="welcome" element={<WelcomePage />} />
+            <Route path="welcome" element={<CreateAccountForm />} />
             <Route path="forget-password" element={<ForgetPassword />} />
             <Route path="new" element={<Generate_Invoice_Page />} />
             <Route path="history" element={<History />} />
