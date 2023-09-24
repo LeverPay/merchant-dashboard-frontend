@@ -15,13 +15,13 @@ export default function Verify({ mail, renderSignUp }) {
   console.log(mail);
   let [email, setEmail] = useState("");
 
-//   useEffect(() => {
-//     if (mail === "") {
-//       mail = email
-//     }
-//   }, [email]);
+  //   useEffect(() => {
+  //     if (mail === "") {
+  //       mail = email
+  //     }
+  //   }, [email]);
 
-console.log(email);
+  console.log(email);
   // Generates an array for for inputs
   const inputs = Array(4).fill(0);
   // adds useRefs to inputs
@@ -89,7 +89,7 @@ console.log(email);
 
     try {
       const request = await axios.post(baseUrl + verify_Mail, {
-        email: mail === ""? email: mail ,
+        email: mail === "" ? email : mail,
         token: value_As_String,
       });
       if (request.status === 200) {
@@ -137,10 +137,11 @@ console.log(email);
     <form className="p-5 verify">
       <center>
         <p className="font-bold">
-          {mail ? "Please Verify Your Account" : "continue verification"}
+          {mail ? "Please Verify Your Account" : ""}
         </p>
         <div>
-          <h5>A code has beeen sent to {mail ? mail : "your mail"}</h5>
+          {!mail && <h5>A code was sent to your mail, enter it</h5>}
+          {mail && <h5>A code has beeen sent to {mail}</h5>}
         </div>
       </center>
 

@@ -681,6 +681,9 @@ export default function CreateAccountForm({ accType }) {
               </Link>
             </p>
           </div>
+          <div className="d-flex align-items-center justify-content-center">
+            <img src={require("../../Assets/logo.png")} alt="logo" />
+          </div>
         </form>
       )}
       {renderVerify && <Verify mail={v_email} renderSignUp={setRenderVerify} />}
