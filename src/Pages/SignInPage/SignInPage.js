@@ -94,10 +94,12 @@ function SignInPage() {
       if (request.status === 200) {
         success("Successful");
         const uniqueId = request.data.data.token;
-        const name = request.data.data.user.first_name;
+        const name = request.data.data.user;
+        sessionStorage.setItem('dx', JSON.stringify(name));
         setUserToken(uniqueId);
         // console.log(userToken);
         window.sessionStorage.setItem("Name", uniqueId);
+        // localStorage.setItem('userData', JSON.stringify(user));
         const cookie = window.sessionStorage.getItem("Name");
         if (cookie) {
           let lg = document.getElementById("signin-button");

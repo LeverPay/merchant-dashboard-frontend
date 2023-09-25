@@ -11,10 +11,17 @@ import Success from "./Success";
 import TokenContext from "../User-Token/TokenContext";
 import Cancel from "./cancel";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { baseUrl, create_invoice } from "../../Components/Endpoints";
 
 export default function GenerateInvoice() {
   const { notification, setNotification } = useContext(NotificationContext);
-  const { success: alert, notify } = useContext(TokenContext);
+  const {
+    success: alert,
+    notify,
+    userData,
+    setUserData,
+  } = useContext(TokenContext);
   const [confirm, setConfirm] = useState(false);
   const [success, setSuccess] = useState(false);
   const [cancel, setCancel] = useState(false);
@@ -35,6 +42,7 @@ export default function GenerateInvoice() {
     totalPrice: "",
     description: "",
     customerId: "",
+    currency: "",
   });
 
   const warningMsg1 = useRef(),
@@ -92,56 +100,59 @@ export default function GenerateInvoice() {
 
   const toggleErr1 = () => {
     if (input.productName !== "") {
-      if (!warningMsg1.current.classList.contains("hidden")) {
-        warningMsg1.current.classList.add("hidden");
+      if (!warningMsg1.current?.classList?.contains("hidden")) {
+        warningMsg1.current?.classList?.add("hidden");
       }
     } else {
-      warningMsg1.current.classList.remove("hidden");
+      warningMsg1.current?.classList?.remove("hidden");
     }
   };
 
   const toggleErr2 = () => {
     if (input.qty !== "") {
-      if (!warningMsg2.current.classList.contains("hidden")) {
-        warningMsg2.current.classList.add("hidden");
+      if (!warningMsg2.current?.classList?.contains("hidden")) {
+        warningMsg2.current?.classList?.add("hidden");
       }
     } else {
-      warningMsg2.current.classList.remove("hidden");
+      warningMsg2.current?.classList?.remove("hidden");
     }
   };
 
   const toggleErr3 = () => {
     if (input.price !== "") {
-      if (!warningMsg3.current.classList.contains("hidden")) {
-        warningMsg3.current.classList.add("hidden");
+      if (!warningMsg3.current?.classList?.contains("hidden")) {
+        warningMsg3.current?.classList?.add("hidden");
       }
     } else {
-      warningMsg3.current.classList.remove("hidden");
+      warningMsg3.current?.classList?.remove("hidden");
     }
   };
 
   const toggleErr4 = () => {
     if (input.description !== "") {
-      if (!warningMsg4.current.classList.contains("hidden")) {
-        warningMsg4.current.classList.add("hidden");
+      if (!warningMsg4.current?.classList?.contains("hidden")) {
+        warningMsg4.current?.classList?.add("hidden");
       }
     } else {
-      warningMsg4.current.classList.remove("hidden");
+      warningMsg4.current?.classList?.remove("hidden");
     }
   };
 
   const toggleErr5 = () => {
     if (input.customerId !== "") {
-      if (!warningMsg5.current.classList.contains("hidden")) {
-        warningMsg5.current.classList.add("hidden");
+      if (!warningMsg5.current?.classList?.contains("hidden")) {
+        warningMsg5.current?.classList?.add("hidden");
       }
     } else {
-      warningMsg5.current.classList.remove("hidden");
+      warningMsg5.current?.classList?.remove("hidden");
     }
   };
 
+  const [vat_val, setvatVal] = useState(null);
   useEffect(() => {
-    const vat = 0.075;
+    let vat = null;
+    input.currency === "dollar" ? (vat = 0.095) : (vat = 0.075);
+    setvatVal(vat);
     let discount = input.discount === "" ? 0 : parseFloat(input.discount) / 100;
     let final;
 
@@ -157,12 +168,12 @@ export default function GenerateInvoice() {
         totalPrice: final.toFixed(2),
       }));
 
-      if (total.current?.classList.contains("hidden")) {
-        total.current?.classList.remove("hidden");
+      if (total.current?.classList?.contains("hidden")) {
+        total.current?.classList?.remove("hidden");
       }
     } else {
-      if (!total.current?.classList.contains("hidden")) {
-        total.current?.classList.add("hidden");
+      if (!total.current?.classList?.contains("hidden")) {
+        total.current?.classList?.add("hidden");
       }
     }
   }, [input.price, input.discount]);
@@ -178,43 +189,43 @@ export default function GenerateInvoice() {
 
   const validate = () => {
     if (input.productName !== "") {
-      if (!warningMsg1.current.classList.contains("hidden")) {
-        warningMsg1.current.classList.add("hidden");
+      if (!warningMsg1.current?.classList?.contains("hidden")) {
+        warningMsg1.current?.classList?.add("hidden");
       }
     } else {
-      warningMsg1.current.classList.remove("hidden");
+      warningMsg1.current?.classList?.remove("hidden");
     }
 
     if (input.qty !== "") {
-      if (!warningMsg2.current.classList.contains("hidden")) {
-        warningMsg2.current.classList.add("hidden");
+      if (!warningMsg2.current?.classList?.contains("hidden")) {
+        warningMsg2.current?.classList?.add("hidden");
       }
     } else {
-      warningMsg2.current.classList.remove("hidden");
+      warningMsg2.current?.classList?.remove("hidden");
     }
 
     if (input.price !== "") {
-      if (!warningMsg3.current.classList.contains("hidden")) {
-        warningMsg3.current.classList.add("hidden");
+      if (!warningMsg3.current?.classList?.contains("hidden")) {
+        warningMsg3.current?.classList?.add("hidden");
       }
     } else {
-      warningMsg3.current.classList.remove("hidden");
+      warningMsg3.current?.classList?.remove("hidden");
     }
 
     if (input.description !== "") {
-      if (!warningMsg4.current.classList.contains("hidden")) {
-        warningMsg4.current.classList.add("hidden");
+      if (!warningMsg4.current?.classList?.contains("hidden")) {
+        warningMsg4.current?.classList?.add("hidden");
       }
     } else {
-      warningMsg4.current.classList.remove("hidden");
+      warningMsg4.current?.classList?.remove("hidden");
     }
 
     if (input.customerId !== "") {
-      if (!warningMsg5.current.classList.contains("hidden")) {
-        warningMsg5.current.classList.add("hidden");
+      if (!warningMsg5.current?.classList?.contains("hidden")) {
+        warningMsg5.current?.classList?.add("hidden");
       }
     } else {
-      warningMsg5.current.classList.remove("hidden");
+      warningMsg5.current?.classList?.remove("hidden");
     }
   };
 
@@ -239,16 +250,10 @@ export default function GenerateInvoice() {
       input.customerId !== "" &&
       input.price !== "" &&
       input.productName !== "" &&
-      input.qty !== "" &&
+      // input.qty !== "" &&
       input.totalPrice !== ""
     ) {
-      setTimeout(() => {
-        alert(
-          "Your Invoice has been generated and successfully sent to leverpay user account for approval"
-        );
-      }, 3000);
-
-      setSuccess(true);
+      createInvoice();
       console.log(input, token);
       clearInput();
       newNotification();
@@ -265,8 +270,50 @@ export default function GenerateInvoice() {
       customerId: "",
       totalPrice: "",
       description: "",
+      currency: "",
     }));
   };
+
+  const _v = JSON.parse(sessionStorage.getItem("dx"));
+  const createInvoice = async () => {
+    try {
+      const req = await axios.post(
+        baseUrl + create_invoice,
+        {
+          product_name: input.productName,
+          price: input.totalPrice,
+          product_description: input.description,
+          email: _v.email,
+          vat: vat_val,
+          currency: input.currency,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+          },
+        }
+      );
+      if (req.status === 200) {
+        const data = req.data;
+        alert(req.data.message);
+        console.log(data);
+        setSuccess(true);
+      } else {
+      }
+    } catch (err) {
+      console.error(err.response);
+      if (err.response) {
+        notify(err.response.data?.message);
+      }else{
+        notify("something went wrong")
+      }
+    }
+  };
+
+  // // console.log(_v);
+  // useEffect(() => {
+  //   createInvoice();
+  // }, []);
 
   // const verifyInvoice = (e) => {
   //   e.preventDefault();
@@ -313,38 +360,40 @@ export default function GenerateInvoice() {
           </small>
         </div>
 
-        <div className="container form-container mt-2">
-          <label htmlFor="Quantity" className="label fw-bolder">
-            Quantity
-          </label>
-          <input
-            type="number"
-            className="f-con"
-            name="qty"
-            value={input.qty}
-            onChange={handleChange}
-            onInput={toggleErr2}
-            id="Qunatity"
-          />
-          <small ref={warningMsg2} className="warning hidden">
-            This field is required
-          </small>
-        </div>
-
-        <div className="container form-container mt-2">
-          <label htmlFor="Discount" className="label fw-bolder">
-            Discount in %
-          </label>
-          <input
-            type="number"
-            placeholder="This field is optional"
-            className="f-con"
-            name="discount"
-            value={input.discount}
-            onChange={handleChange}
-            id="Discount"
-            // onInput={toggleErr3}
-          />
+        <div className="container d-flex form-container mt-2 d-flex">
+            <h5>Select Currency</h5>
+          <div className="input-1 d-flex mx-4">
+            <label htmlFor="currency" id="currency" className="label fw-bolder fs-4">
+              Naira
+            </label>
+            <input
+              type="radio"
+              className="f-con mx-2"
+              name="currency"
+              onChange={handleChange}
+              value="naira"
+              checked={input.currency === "naira"}
+              id="currency"
+            />
+          </div>
+          <div className="input-2 d-flex mx-2">
+            <label
+              htmlFor="currency1"
+              id="currency1"
+              className="label fw-bolder fs-4"
+            >
+              Dollar
+            </label>
+            <input
+              type="radio"
+              className="f-con mx-2"
+              name="currency"
+              value="dollar"
+              checked={input.currency === "dollar"}
+              onChange={handleChange}
+              id="currency1"
+            />
+          </div>
         </div>
 
         <div className="mt-2 px-3">
@@ -383,8 +432,8 @@ export default function GenerateInvoice() {
             </div>
           </div>
           <p ref={total} className="text-success fs-6 hidden text-wrap">
-            Total price will be shown on invoice and it's inclusive of 7.5% VAT
-            charges
+            Total price will be shown on invoice and it's inclusive of{" "}
+            {vat_val * 100}% VAT charges
           </p>
         </div>
 
@@ -482,4 +531,42 @@ export default function GenerateInvoice() {
       </form>
     </section>
   );
+}
+
+{
+  /* <div className="container form-container mt-2">
+<label htmlFor="Quantity" className="label fw-bolder">
+  Quantity
+</label>
+<input
+  type="number"
+  className="f-con"
+  name="qty"
+  value={input.qty}
+  onChange={handleChange}
+  onInput={toggleErr2}
+  id="Qunatity"
+/>
+<small ref={warningMsg2} className="warning hidden">
+  This field is required
+</small>
+</div> */
+}
+
+{
+  /* <div className="container form-container mt-2">
+<label htmlFor="Discount" className="label fw-bolder">
+  Discount in %
+</label>
+<input
+  type="number"
+  placeholder="This field is optional"
+  className="f-con"
+  name="discount"
+  value={input.discount}
+  onChange={handleChange}
+  id="Discount"
+  // onInput={toggleErr3}
+/>
+</div> */
 }
