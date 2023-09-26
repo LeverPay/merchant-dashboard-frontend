@@ -523,7 +523,7 @@ export default function CreateAccountForm({ accType }) {
                 required
                 type={showPassword ? "text" : "password"}
                 className="form-control"
-                placeholder="Password should be 10 characters long and must contain at least one special character a number"
+                placeholder="10 Alpha-numeric characters"
                 onChange={handleChange}
                 value={person.password}
                 name="password"
@@ -531,7 +531,7 @@ export default function CreateAccountForm({ accType }) {
               />{" "}
               <span onClick={toggleShowPassword} className="eye">
                 {showPassword ? (
-                  <img className="" src={EyeClose} alt="Scholar" width="5%" />
+                  <img className="image" src={EyeClose} alt="Scholar" width="5%" />
                 ) : (
                   <img
                     className="image"
@@ -557,7 +557,7 @@ export default function CreateAccountForm({ accType }) {
               />
               <span onClick={toggleShowPassword} className="eye">
                 {showPassword ? (
-                  <img className="" src={EyeClose} alt="Scholar" width="5%" />
+                  <img className="image" src={EyeClose} alt="Scholar" width="5%" />
                 ) : (
                   <img
                     className="image"
@@ -569,55 +569,6 @@ export default function CreateAccountForm({ accType }) {
                 )}
               </span>
             </div>
-            {/* <div className="question-container">
-              <div className="question-1-container d-flex flex-column mt-4">
-                <div className="d-flex">
-                  <input
-                    required
-                    type="checkbox"
-                    name="starter"
-                    checked={person.starter}
-                    onChange={handleChange}
-                    id="starter"
-                  />
-                  <label
-                    htmlFor="starter-business"
-                    id="starter"
-                    className="mx-2"
-                  >
-                    Starter Business
-                  </label>
-                </div>
-                <p>
-                  I’m testing my idea with real customers and preparing to
-                  register my company
-                </p>
-              </div>
-
-              <div className="question-2-container d-flex flex-column">
-                <div className="d-flex">
-                  <input
-                    required
-                    type="checkbox"
-                    name="registered"
-                    checked={person.registered}
-                    onChange={handleChange}
-                    id="registered"
-                  />
-                  <label
-                    htmlFor="registered-business"
-                    id="registered"
-                    className="mx-2"
-                  >
-                    Registered Business
-                  </label>
-                </div>
-                <p>
-                  My business has the approval, documentation and license
-                  require to operate legally
-                </p>
-              </div>
-            </div> */}
             <div className="flexy flexyM mt-4 mb-2">
               <input
                 required

@@ -328,8 +328,8 @@ export default function GenerateInvoice() {
   const getData = () => {
     const _key = sessionStorage.getItem("Name");
     const encryptedData = sessionStorage.getItem("dx");
-    const decrypt = CryptoJS.AES.decrypt(encryptedData, _key);
-    const val = decrypt.toString(CryptoJS.enc.Utf8);
+    const decrypt = CryptoJS?.AES?.decrypt(encryptedData, _key);
+    const val = decrypt.toString(CryptoJS?.enc?.Utf8);
     const data = JSON.parse(val);
     setUserData(data);
   };

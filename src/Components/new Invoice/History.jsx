@@ -59,7 +59,7 @@ export default function History() {
           Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
         },
       });
-      console.log(req);
+      console.log(req.data.data);
     } catch (err) {
       console.log(err);
     }
