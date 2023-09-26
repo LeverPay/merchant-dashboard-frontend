@@ -38,7 +38,7 @@ export default function CreateAccountForm({ accType }) {
     lastName: "",
     surName: "",
     dob: "",
-    gender: "",
+    gender: "Male",
     address: "",
     businessName: "",
     rcNumber: "",
@@ -137,12 +137,6 @@ export default function CreateAccountForm({ accType }) {
       return;
     }
 
-    // Check if rc-Number is empty
-    if (person.rcNumber.length == 0) {
-      errorNotify("Invalid Form, Rc-number can not be empty");
-      return;
-    }
-
     // checks if last name is empty
     if (person.surName.length == 0) {
       errorNotify("Invalid Form, Sur Name can not be empty");
@@ -161,10 +155,10 @@ export default function CreateAccountForm({ accType }) {
       currentDate.getDate()
     );
 
-    if (selectedDate >= minAllowedDate) {
-      // chaecks if date of birth is empty
-      if (person.dob.length == 0) {
-        errorNotify("Invalid Form, birth date can not be empty");
+    if (person.dob.length == 0) {
+      errorNotify("Invalid Form, birth date can not be empty");
+      if (selectedDate >= minAllowedDate) {
+        // chaecks if date of birth is empty
       } else if (selectedDate < minAllowedDate) {
         errorNotify(
           "Date of birth is too recent. Must be at least 5 years ago."
@@ -219,10 +213,10 @@ export default function CreateAccountForm({ accType }) {
       errorNotify("phone number cannot be empty and must be valid!");
     }
 
-    if (person.registered && person.starter) {
-      errorNotify("Please select only one business category");
-      return;
-    }
+    // if (person.registered && person.starter) {
+    //   errorNotify("Please select only one business category");
+    //   return;
+    // }
 
     // Check if BusinuessName is an Empty string
     if (person.businessName.length == 0) {
@@ -252,24 +246,21 @@ export default function CreateAccountForm({ accType }) {
       return;
     }
 
-    if (person.starter || person.registered) {
-      if (
-        person.agree &&
-        person.password === person.confirmPassword &&
-        person.email.length > 0 &&
-        emailRegex.test(person.email) &&
-        passwordRegex.test(person.password) &&
-        person.address.length > 0 &&
-        person.businessName.length > 0 &&
-        person.city !== "" &&
-        person.state !== "" &&
-        person.country !== "" &&
-        value !== ""
-      ) {
-        handleSubmit();
-      }
-    } else {
-      errorNotify("Please choose a business category");
+    if (
+      person.agree &&
+      person.password === person.confirmPassword &&
+      person.email.length > 0 &&
+      emailRegex.test(person.email) &&
+      passwordRegex.test(person.password) &&
+      person.address.length > 0 &&
+      person.businessName.length > 0 &&
+      person.city !== "" &&
+      person.state !== "" &&
+      person.country !== "" &&
+      value !== "" &&
+      person.dob !== ""
+    ) {
+      handleSubmit();
     }
   }
 
@@ -368,27 +359,32 @@ export default function CreateAccountForm({ accType }) {
             <label htmlFor="gender" id="gender">
               Gender
             </label>
-            <input
+            <select
               required
-              type="text"
+              // type="text"
               className="form-control"
               onChange={handleChange}
               id="gender"
               value={person.gender}
               name="gender"
-            />
-            <label htmlFor="date of birth" id="dob">
-              Date of Birth
-            </label>
-            <input
-              required
-              type="date"
-              className="form-control"
-              onChange={handleChange}
-              name="dob"
-              id="dob"
-              value={person.dob}
-            />
+            >
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <div>
+              <label htmlFor="date of birth" id="dob">
+                Date of Birth
+              </label>
+              <input
+                required
+                type="date"
+                className="form-control"
+                onChange={handleChange}
+                name="dob"
+                id="dob"
+                value={person.dob}
+              />
+            </div>
             <label htmlFor="Address" id="address">
               Address
             </label>
@@ -421,6 +417,7 @@ export default function CreateAccountForm({ accType }) {
               type="number"
               className="form-control"
               onChange={handleChange}
+              placeholder="optional"
               value={person.rcNumber}
               name="rcNumber"
               id="rc-number"
@@ -518,59 +515,61 @@ export default function CreateAccountForm({ accType }) {
               value={person.email}
               id="mail"
             />{" "}
-            <label htmlFor="password" id="password">
-              Password
-            </label>
-            <input
-              required
-              type={showPassword ? "text" : "password"}
-              className="form-control"
-              placeholder="Password should be 10 characters long and must contain at least one special character a number"
-              onChange={handleChange}
-              value={person.password}
-              name="password"
-              id="password"
-            />{" "}
-            <span onClick={toggleShowPassword}>
-              {showPassword ? (
-                <img className="" src={EyeClose} alt="Scholar" width="5%" />
-              ) : (
-                <img
-                  className=""
-                  src={EyeOpen}
-                  alt="Scholar"
-                  width="5%"
-                  height="5%"
-                />
-              )}
-            </span>
-            <label htmlFor="confirm-password" id="confirm-password">
-              Confirm Password
-            </label>
-            <input
-              required
-              type={showPassword ? "text" : "password"}
-              className="form-control"
-              placeholder="Must be same as password"
-              onChange={handleChange}
-              name="confirmPassword"
-              value={person.confirmPassword}
-              id="confirm-password"
-            />
-            <span onClick={toggleShowPassword}>
-              {showPassword ? (
-                <img className="" src={EyeClose} alt="Scholar" width="5%" />
-              ) : (
-                <img
-                  className=""
-                  src={EyeOpen}
-                  alt="Scholar"
-                  width="5%"
-                  height="5%"
-                />
-              )}
-            </span>
-            <div className="question-container">
+            <div>
+              <label htmlFor="password" id="password">
+                Password
+              </label>
+              <input
+                required
+                type={showPassword ? "text" : "password"}
+                className="form-control"
+                placeholder="Password should be 10 characters long and must contain at least one special character a number"
+                onChange={handleChange}
+                value={person.password}
+                name="password"
+                id="password"
+              />{" "}
+              <span onClick={toggleShowPassword} className="eye">
+                {showPassword ? (
+                  <img className="" src={EyeClose} alt="Scholar" width="5%" />
+                ) : (
+                  <img
+                    className="image"
+                    src={EyeOpen}
+                    alt="Scholar"
+                    width="5%"
+                    height="5%"
+                  />
+                )}
+              </span>
+              <label htmlFor="confirm-password mt-2" id="confirm-password">
+                Confirm Password
+              </label>
+              <input
+                required
+                type={showPassword ? "text" : "password"}
+                className="form-control"
+                placeholder="Must be same as password"
+                onChange={handleChange}
+                name="confirmPassword"
+                value={person.confirmPassword}
+                id="confirm-password"
+              />
+              <span onClick={toggleShowPassword} className="eye">
+                {showPassword ? (
+                  <img className="" src={EyeClose} alt="Scholar" width="5%" />
+                ) : (
+                  <img
+                    className="image"
+                    src={EyeOpen}
+                    alt="Scholar"
+                    width="5%"
+                    height="5%"
+                  />
+                )}
+              </span>
+            </div>
+            {/* <div className="question-container">
               <div className="question-1-container d-flex flex-column mt-4">
                 <div className="d-flex">
                   <input
@@ -618,8 +617,8 @@ export default function CreateAccountForm({ accType }) {
                   require to operate legally
                 </p>
               </div>
-            </div>
-            <div className="flexy flexyM">
+            </div> */}
+            <div className="flexy flexyM mt-4 mb-2">
               <input
                 required
                 type="checkbox"
@@ -680,9 +679,6 @@ export default function CreateAccountForm({ accType }) {
                 continue your to verification
               </Link>
             </p>
-          </div>
-          <div className="d-flex align-items-center justify-content-center">
-            <img src={require("../../Assets/logo.png")} alt="logo" />
           </div>
         </form>
       )}
