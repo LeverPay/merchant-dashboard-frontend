@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { login, baseUrl } from "../../Components/Endpoints";
 import axios from "axios";
 import TokenContext from "../../Components/User-Token/TokenContext";
+import { AES } from "crypto-js";
 
 function SignInPage() {
   const [inputText, setInputText] = useState({
@@ -95,8 +96,10 @@ function SignInPage() {
         success("Successful");
         const uniqueId = request.data.data.token;
         const name = request.data.data.user;
-        sessionStorage.setItem('dx', JSON.stringify(name));
-        setUserToken(uniqueId);
+        const stringify = JSON.stringify(name);
+        const encryptedData = AES.encrypt(stringify, uniqueId).toString();
+        const data = sessionStorage.setItem("dx", encryptedData);
+        // setUserToken(uniqueId);
         // console.log(userToken);
         window.sessionStorage.setItem("Name", uniqueId);
         // localStorage.setItem('userData', JSON.stringify(user));

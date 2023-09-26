@@ -12,7 +12,12 @@ import TokenContext from "../User-Token/TokenContext";
 import Cancel from "./cancel";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { baseUrl, create_invoice } from "../../Components/Endpoints";
+import {
+  baseUrl,
+  create_invoice,
+  get_invoice,
+} from "../../Components/Endpoints";
+import CryptoJS from "crypto-js";
 
 export default function GenerateInvoice() {
   const { notification, setNotification } = useContext(NotificationContext);
@@ -43,6 +48,7 @@ export default function GenerateInvoice() {
     description: "",
     customerId: "",
     currency: "",
+    vat: "0",
   });
 
   const warningMsg1 = useRef(),
@@ -148,11 +154,10 @@ export default function GenerateInvoice() {
     }
   };
 
-  const [vat_val, setvatVal] = useState(null);
   useEffect(() => {
-    let vat = null;
-    input.currency === "dollar" ? (vat = 0.095) : (vat = 0.075);
-    setvatVal(vat);
+    // input.currency === "dollar" ? (vat = 0.095) : (vat = 0.075);
+    // setvatVal(vat);
+    const vat = input.vat / 100;
     let discount = input.discount === "" ? 0 : parseFloat(input.discount) / 100;
     let final;
 
@@ -187,6 +192,7 @@ export default function GenerateInvoice() {
     setInput((prev) => ({ ...prev, [name]: numericValue }));
   };
 
+  const vatRegex = /^[0-9]*\.?[0-9]*$/;
   const validate = () => {
     if (input.productName !== "") {
       if (!warningMsg1.current?.classList?.contains("hidden")) {
@@ -227,6 +233,11 @@ export default function GenerateInvoice() {
     } else {
       warningMsg5.current?.classList?.remove("hidden");
     }
+
+    if (vatRegex.test(input.vat)) {
+    } else {
+      notify("Vat price is invalid");
+    }
   };
 
   const newNotification = () => {
@@ -245,18 +256,22 @@ export default function GenerateInvoice() {
   const handleSubmit = (e) => {
     e.preventDefault();
     validate();
-    if (
-      input.description !== "" &&
-      input.customerId !== "" &&
-      input.price !== "" &&
-      input.productName !== "" &&
-      // input.qty !== "" &&
-      input.totalPrice !== ""
-    ) {
-      createInvoice();
-      console.log(input, token);
-      clearInput();
-      newNotification();
+    if (input.currency !== "") {
+      if (
+        input.description !== "" &&
+        input.customerId !== "" &&
+        input.price !== "" &&
+        input.productName !== "" &&
+        // input.qty !== "" &&
+        input.totalPrice !== ""
+      ) {
+        createInvoice();
+        console.log(input, token);
+        clearInput();
+        newNotification();
+      }
+    } else {
+      notify("Please Select a currency");
     }
   };
 
@@ -271,10 +286,10 @@ export default function GenerateInvoice() {
       totalPrice: "",
       description: "",
       currency: "",
+      vat: "0",
     }));
   };
 
-  const _v = JSON.parse(sessionStorage.getItem("dx"));
   const createInvoice = async () => {
     try {
       const req = await axios.post(
@@ -283,8 +298,8 @@ export default function GenerateInvoice() {
           product_name: input.productName,
           price: input.totalPrice,
           product_description: input.description,
-          email: _v.email,
-          vat: vat_val,
+          email: userData.email,
+          vat: input.vat,
           currency: input.currency,
         },
         {
@@ -296,7 +311,6 @@ export default function GenerateInvoice() {
       if (req.status === 200) {
         const data = req.data;
         alert(req.data.message);
-        console.log(data);
         setSuccess(true);
       } else {
       }
@@ -304,11 +318,25 @@ export default function GenerateInvoice() {
       console.error(err.response);
       if (err.response) {
         notify(err.response.data?.message);
-      }else{
-        notify("something went wrong")
+      } else {
+        notify("something went wrong");
       }
     }
   };
+
+  // decrypy data on local storage for use
+  const getData = () => {
+    const _key = sessionStorage.getItem("Name");
+    const encryptedData = sessionStorage.getItem("dx");
+    const decrypt = CryptoJS.AES.decrypt(encryptedData, _key);
+    const val = decrypt.toString(CryptoJS.enc.Utf8);
+    const data = JSON.parse(val);
+    setUserData(data);
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   // // console.log(_v);
   // useEffect(() => {
@@ -359,11 +387,14 @@ export default function GenerateInvoice() {
             This field is required
           </small>
         </div>
-
         <div className="container d-flex form-container mt-2 d-flex">
-            <h5>Select Currency</h5>
+          <h5>Select Currency</h5>
           <div className="input-1 d-flex mx-4">
-            <label htmlFor="currency" id="currency" className="label fw-bolder fs-4">
+            <label
+              htmlFor="currency"
+              id="currency"
+              className="label fw-bolder fs-4"
+            >
               Naira
             </label>
             <input
@@ -395,7 +426,23 @@ export default function GenerateInvoice() {
             />
           </div>
         </div>
-
+        <div className="container form-container mt-2">
+          <label htmlFor="Discount" className="label fw-bolder" id="vat">
+            vat
+          </label>
+          <input
+            type="number"
+            pattern="^[0-9]*\.?[0-9]*$"
+            placeholder="Enter a positive number (This field is optional)"
+            className="f-con"
+            name="vat"
+            value={input.vat}
+            onChange={handleChange}
+            id="vat"
+            title="Please enter a positive number"
+            // onInput={toggleErr3}
+          />
+        </div>{" "}
         <div className="mt-2 px-3">
           <div className="d-lg-flex align-items-center price-container">
             <div className="me-4 d-flex flex-wrap price-container">
@@ -431,12 +478,20 @@ export default function GenerateInvoice() {
               />
             </div>
           </div>
-          <p ref={total} className="text-success fs-6 hidden text-wrap">
-            Total price will be shown on invoice and it's inclusive of{" "}
-            {vat_val * 100}% VAT charges
+          <p
+            ref={total}
+            className={`fs-6 hidden text-wrap ${
+              vatRegex.test(input.vat) ? "text-success" : "text-danger"
+            }`}
+          >
+            {vatRegex.test(input.vat) && input.vat !== ""
+              ? `Total price will be shown on invoice and it's inclusive of ${
+                  input.vat != "0" ? input.vat : "0"
+                }% VAT charges`
+              : `vat field ${input.vat}% is invalid (use a positive value)`}
+            {}
           </p>
         </div>
-
         <div className="container form-container mt-2">
           <label htmlFor="Description" className="label fw-bolder">
             Description
@@ -455,7 +510,6 @@ export default function GenerateInvoice() {
             This field is required
           </small>
         </div>
-
         <div className="container form-container mt-2">
           <label htmlFor="Customer-id" className="label fw-bolder">
             Customer's ID
@@ -473,7 +527,6 @@ export default function GenerateInvoice() {
             This field is required
           </small>
         </div>
-
         <div className="container mt-4 d-flex justify-content-between">
           <div className="btn-send">
             <Button
