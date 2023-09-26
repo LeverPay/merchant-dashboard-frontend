@@ -23,3 +23,4 @@ export const get_currencies = "/api/v1/merchant/get-merchant-currencies";
 export const logout = "/api/v1/merchant/logout";
 export const update_payment_Method = "/api/v1/admin/add-payment-option";
 export const create_invoice = "/api/v1/merchant/create-invoice";
+export const get_invoice = "/api/v1/merchant/get-invoices";

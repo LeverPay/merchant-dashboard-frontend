@@ -12,7 +12,11 @@ import TokenContext from "../User-Token/TokenContext";
 import Cancel from "./cancel";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { baseUrl, create_invoice } from "../../Components/Endpoints";
+import {
+  baseUrl,
+  create_invoice,
+  get_invoice,
+} from "../../Components/Endpoints";
 import CryptoJS from "crypto-js";
 
 export default function GenerateInvoice() {
@@ -282,7 +286,7 @@ export default function GenerateInvoice() {
       totalPrice: "",
       description: "",
       currency: "",
-      vat: "",
+      vat: "0",
     }));
   };
 
@@ -307,7 +311,6 @@ export default function GenerateInvoice() {
       if (req.status === 200) {
         const data = req.data;
         alert(req.data.message);
-        console.log(data);
         setSuccess(true);
       } else {
       }
@@ -321,6 +324,7 @@ export default function GenerateInvoice() {
     }
   };
 
+  // decrypy data on local storage for use
   const getData = () => {
     const _key = sessionStorage.getItem("Name");
     const encryptedData = sessionStorage.getItem("dx");
@@ -333,7 +337,6 @@ export default function GenerateInvoice() {
   useEffect(() => {
     getData();
   }, []);
-  console.log(userData);
 
   // // console.log(_v);
   // useEffect(() => {
@@ -481,11 +484,11 @@ export default function GenerateInvoice() {
               vatRegex.test(input.vat) ? "text-success" : "text-danger"
             }`}
           >
-            {vatRegex.test(input.vat)
-              ? `Total price will be shown on invoice and it's ${
+            {vatRegex.test(input.vat) && input.vat !== ""
+              ? `Total price will be shown on invoice and it's inclusive of ${
                   input.vat != "0" ? input.vat : "0"
                 }% VAT charges`
-              : "vat field is invalid"}
+              : `vat field ${input.vat}% is invalid (use a positive value)`}
             {}
           </p>
         </div>

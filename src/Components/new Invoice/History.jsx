@@ -6,6 +6,8 @@ import failed from "../../Assets/ep-failed.png";
 import Card from "../cards/subscription-cards/Card";
 import { TableHead, HeaderData, data } from "./historyData";
 import { NavLink } from "react-router-dom";
+import { baseUrl, get_invoice } from "../Endpoints";
+import axios from "axios";
 
 export default function History() {
   const [tableHeader1, setTableHeader] = useState(TableHead);
@@ -49,6 +51,23 @@ export default function History() {
       setFiltered(Data);
     }
   };
+
+  const getInvoice = async () => {
+    try {
+      const req = await axios.get(baseUrl + get_invoice, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      console.log(req);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getInvoice();
+  }, []);
 
   useEffect(() => {
     filteredItems();
