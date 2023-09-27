@@ -24,3 +24,7 @@ export const logout = "/api/v1/merchant/logout";
 export const update_payment_Method = "/api/v1/admin/add-payment-option";
 export const create_invoice = "/api/v1/merchant/create-invoice";
 export const get_invoice = "/api/v1/merchant/get-invoices";
+export const paid_invoice = "/api/v1/merchant/get-invoices?status=paid";
+export const pending_invoice = "/api/v1/merchant/get-invoices?status=pending";
+export const cancelled_invoice =
+  "/api/v1/merchant/get-invoices?status=cancelled";
