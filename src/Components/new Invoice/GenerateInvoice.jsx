@@ -46,7 +46,7 @@ export default function GenerateInvoice() {
     price: "",
     totalPrice: "",
     description: "",
-    customerId: "",
+    customerEmail: "",
     currency: "",
     vat: "0",
   });
@@ -145,7 +145,7 @@ export default function GenerateInvoice() {
   };
 
   const toggleErr5 = () => {
-    if (input.customerId !== "") {
+    if (input.customerEmail !== "") {
       if (!warningMsg5.current?.classList?.contains("hidden")) {
         warningMsg5.current?.classList?.add("hidden");
       }
@@ -154,34 +154,34 @@ export default function GenerateInvoice() {
     }
   };
 
-  useEffect(() => {
-    // input.currency === "dollar" ? (vat = 0.095) : (vat = 0.075);
-    // setvatVal(vat);
-    const vat = input.vat / 100;
-    let discount = input.discount === "" ? 0 : parseFloat(input.discount) / 100;
-    let final;
+  // useEffect(() => {
+  //   // input.currency === "dollar" ? (vat = 0.095) : (vat = 0.075);
+  //   // setvatVal(vat);
+  //   const vat = input.vat / 100;
+  //   let discount = input.discount === "" ? 0 : parseFloat(input.discount) / 100;
+  //   let final;
 
-    if (input.price !== "") {
-      const currentPrice = parseFloat(input.price);
-      const vatPrice = currentPrice * vat;
-      let finalVatPrice = currentPrice + vatPrice;
-      const discountPrice = parseFloat(finalVatPrice * discount);
-      final = finalVatPrice - discountPrice;
+  //   if (input.price !== "") {
+  //     const currentPrice = parseFloat(input.price);
+  //     const vatPrice = currentPrice * vat;
+  //     let finalVatPrice = currentPrice + vatPrice;
+  //     const discountPrice = parseFloat(finalVatPrice * discount);
+  //     final = finalVatPrice - discountPrice;
 
-      setInput((prev) => ({
-        ...prev,
-        totalPrice: final.toFixed(2),
-      }));
+  //     setInput((prev) => ({
+  //       ...prev,
+  //       totalPrice: final.toFixed(2),
+  //     }));
 
-      if (total.current?.classList?.contains("hidden")) {
-        total.current?.classList?.remove("hidden");
-      }
-    } else {
-      if (!total.current?.classList?.contains("hidden")) {
-        total.current?.classList?.add("hidden");
-      }
-    }
-  }, [input.price, input.discount]);
+  //     if (total.current?.classList?.contains("hidden")) {
+  //       total.current?.classList?.remove("hidden");
+  //     }
+  //   } else {
+  //     if (!total.current?.classList?.contains("hidden")) {
+  //       total.current?.classList?.add("hidden");
+  //     }
+  //   }
+  // }, [input.price, input.discount]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -226,7 +226,7 @@ export default function GenerateInvoice() {
       warningMsg4.current?.classList?.remove("hidden");
     }
 
-    if (input.customerId !== "") {
+    if (input.customerEmail !== "") {
       if (!warningMsg5.current?.classList?.contains("hidden")) {
         warningMsg5.current?.classList?.add("hidden");
       }
@@ -259,11 +259,11 @@ export default function GenerateInvoice() {
     if (input.currency !== "") {
       if (
         input.description !== "" &&
-        input.customerId !== "" &&
         input.price !== "" &&
         input.productName !== "" &&
-        // input.qty !== "" &&
-        input.totalPrice !== ""
+        input.customerEmail !== "" 
+        // &&
+        // input.totalPrice !== ""
       ) {
         createInvoice();
         console.log(input, token);
@@ -287,7 +287,21 @@ export default function GenerateInvoice() {
       description: "",
       currency: "",
       vat: "0",
+      customerEmail: "",
     }));
+  };
+
+  const getCurrency = async () => {
+    try {
+      const req = await axios.get(baseUrl + "/api/v1/user/get-currencies", {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      console.log(req.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const createInvoice = async () => {
@@ -296,9 +310,9 @@ export default function GenerateInvoice() {
         baseUrl + create_invoice,
         {
           product_name: input.productName,
-          price: input.totalPrice,
+          price: input.price,
           product_description: input.description,
-          email: userData.email,
+          email: input.customerEmail,
           vat: input.vat,
           currency: input.currency,
         },
@@ -336,6 +350,7 @@ export default function GenerateInvoice() {
 
   useEffect(() => {
     getData();
+    getCurrency();
   }, []);
 
   // // console.log(_v);
@@ -512,13 +527,13 @@ export default function GenerateInvoice() {
         </div>
         <div className="container form-container mt-2">
           <label htmlFor="Customer-id" className="label fw-bolder">
-            Customer's ID
+            Customer's Email
           </label>
           <input
-            type="text"
+            type="email"
             className="f-con"
-            name="customerId"
-            value={input.customerId}
+            name="customerEmail"
+            value={input.customerEmail}
             onChange={handleChange}
             onInput={toggleErr5}
             id="Customer-id"
