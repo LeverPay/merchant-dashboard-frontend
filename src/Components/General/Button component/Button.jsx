@@ -1,6 +1,7 @@
 import React from "react";
+import Loading from "../loading animation/loading";
 
-export default function Button({ children, click, style, disable}) {
+export default function Button({ children, click, style, disable, animate }) {
   return (
     <button
       className="btn d-flex justify-content-center align-items-center rounded-3 mx-1"
@@ -9,6 +10,11 @@ export default function Button({ children, click, style, disable}) {
       disabled={disable}
     >
       {children}
+      {animate && (
+        <span className="mx-2">
+          <Loading />
+        </span>
+      )}
     </button>
   );
 }

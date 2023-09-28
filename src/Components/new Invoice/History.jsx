@@ -12,8 +12,12 @@ import {
   paid_invoice,
   pending_invoice,
   cancelled_invoice,
+  get_invoice_by_uuid,
 } from "../Endpoints";
 import axios from "axios";
+import Invoice from "./invoice";
+import Button from "../General/Button component/Button";
+import Loading from "../General/loading animation/loading";
 
 export default function History() {
   const [invoice, setInvoice] = useState(null);
@@ -27,6 +31,15 @@ export default function History() {
   const [pending, setpending] = useState(null);
   const [cancelled, setCancelled] = useState(null);
   const [active, setActive] = useState(null);
+  const [closeDetails, setCloseDetails] = useState(false);
+  const [invoiceDetails, setInvoiceDetails] = useState([]);
+  const [displayItems, setDisplayItems] = useState(7);
+  const [animate, setAnimate] = useState(false);
+
+  // Close invoice details container
+  const details = () => {
+    setCloseDetails(!closeDetails);
+  };
 
   // Navigate table functionality
   const switchTab = (item) => {
@@ -46,6 +59,11 @@ export default function History() {
     }
 
     setTableBody(updatedTableBody);
+    setDisplayItems(7);
+  };
+
+  const loadMoreItems = () => {
+    setDisplayItems((prevDisplayedItems) => prevDisplayedItems + 7);
   };
 
   const getInvoice = async () => {
@@ -65,42 +83,71 @@ export default function History() {
 
   const getPaidInvoice = async () => {
     try {
+      setAnimate(true);
       const req = await axios.get(baseUrl + paid_invoice, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
         },
       });
-      setPaidData(req.data.data);
+      if (req.status === 200) {
+        setAnimate(false);
+        setPaidData(req.data.data);
+      }
     } catch (err) {
+      setAnimate(false);
       console.log(err);
     }
   };
   const getPendingInvoice = async () => {
     try {
+      setAnimate(true);
       const req = await axios.get(baseUrl + pending_invoice, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
         },
       });
-      setpending(req.data.data);
-      setTableBody(req.data.data);
+      if (req.status === 200) {
+        setAnimate(false);
+        setpending(req.data.data);
+        setTableBody(req.data.data);
+      }
     } catch (err) {
+      setAnimate(false);
       console.log(err);
     }
   };
   const getCanceledInvoice = async () => {
     try {
+      setAnimate(true);
       const req = await axios.get(baseUrl + cancelled_invoice, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
         },
       });
-      setCancelled(req.data.data);
+      if (req.status === 200) {
+        setCancelled(req.data.data);
+        setAnimate(false);
+      }
     } catch (err) {
+      setAnimate(false);
       console.log(err);
     }
   };
-  console.log(cancelled, "is cancelled");
+  const getSingleInvoice = async (uuid) => {
+    details();
+    try {
+      setAnimate(true);
+      const req = await axios.get(baseUrl + get_invoice_by_uuid + uuid);
+      if (req.status == 200) {
+        setAnimate(false);
+        console.log(req.data.data);
+        setInvoiceDetails(req.data.data);
+      }
+    } catch (err) {
+      setAnimate(false);
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     getInvoice();
@@ -182,7 +229,7 @@ export default function History() {
             )}
 
             {tableBody && tableBody.length > 0 ? (
-              tableBody.map((el, i) => (
+              tableBody.slice(0, displayItems).map((el, i) => (
                 <tr key={el.id} className="fw-bolder">
                   <td className="text-center px-4 py-2">{el.email}</td>
                   <td className="text-center px-4 py-2">{el.merchant_id}</td>
@@ -193,7 +240,12 @@ export default function History() {
                     {el.product_name}
                   </td>
                   <td className="text-center px-4 py-2">
-                    <NavLink className="link">View</NavLink>
+                    <NavLink
+                      className="link"
+                      onClick={() => getSingleInvoice(el.uuid)}
+                    >
+                      View
+                    </NavLink>
                   </td>
                   <td
                     className="text-center px-4 py-2"
@@ -221,18 +273,37 @@ export default function History() {
                       justifyContent: "center",
                       alignItems: "center",
                       height: "100%",
-                      width:"100%",
-                      margin: "auto"
+                      width: "100%",
+                      margin: "auto",
                     }}
                   >
-                    <p className="text-center">No data to display</p>
+                    {!animate ? (
+                      <p className="text-center">No data to display</p>
+                    ) : (
+                      <p>
+                        <Loading />
+                      </p>
+                    )}
                   </div>
                 </td>
               </tr>
             )}
           </table>
         </section>
+        <div className="btn-container d-flex justify-content-center mt-3">
+          {tableBody?.length > 7 && (
+            <Button
+              style={{ color: "#fff", backgroundColor: "#0051FF" }}
+              click={loadMoreItems}
+            >
+              View more
+            </Button>
+          )}
+        </div>
       </section>
+      {closeDetails && (
+        <Invoice closeMe={setCloseDetails} details={invoiceDetails} />
+      )}
     </section>
   );
 }

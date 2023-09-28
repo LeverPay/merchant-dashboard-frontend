@@ -32,6 +32,7 @@ export default function CreateAccountForm({ accType }) {
   const [showPassword, setShowPassword] = useState(false);
   const [v_email, setV_email] = useState("");
   const [renderVerify, setRenderVerify] = useState(false);
+  const [animate, setAnimate] = useState(false);
 
   const [person, setPerson] = useState({
     firstName: "",
@@ -79,21 +80,31 @@ export default function CreateAccountForm({ accType }) {
 
   const fetchcountryData = async () => {
     //fetch country
-    const req1 = await axios.get(baseUrl + countries);
-    const response1 = req1.data?.data?.map((el) => el);
-    setCountryData(response1);
+    try {
+      const req1 = await axios.get(baseUrl + countries);
+      const response1 = req1.data?.data?.map((el) => el);
+      setCountryData(response1);
+    } catch (err) {
+      errorNotify("something went wrong while getting country");
+      console.log(err);
+    }
   };
   useEffect(() => {
     fetchcountryData();
   }, []);
 
   const fetchState = async (id) => {
-    id = person.country;
-    const req2 = await axios.post(baseUrl + states, {
-      country_id: id,
-    });
-    const response = req2.data?.data;
-    setStateData(response);
+    try {
+      id = person.country;
+      const req2 = await axios.post(baseUrl + states, {
+        country_id: id,
+      });
+      const response = req2.data?.data;
+      setStateData(response);
+    } catch (err) {
+      errorNotify("Something went wrong while fetching states");
+      console.log(err);
+    }
   };
 
   useEffect(() => {
@@ -101,13 +112,17 @@ export default function CreateAccountForm({ accType }) {
   }, [person.country]);
 
   const fetchcity = async (id) => {
-    id = person.state;
-    const req3 = await axios.post(baseUrl + cities, {
-      state_id: id,
-    });
-    const response = req3.data?.data;
-    console.log(response);
-    setCityData(response);
+    try {
+      id = person.state;
+      const req3 = await axios.post(baseUrl + cities, {
+        state_id: id,
+      });
+      const response = req3.data?.data;
+      console.log(response);
+      setCityData(response);
+    } catch (err) {
+      errorNotify("something went wrong while fetching city");
+    }
   };
 
   useEffect(() => {
@@ -267,6 +282,7 @@ export default function CreateAccountForm({ accType }) {
   const navigate = useNavigate();
   async function handleSubmit() {
     try {
+      setAnimate(true);
       const register = await axios.post(baseUrl + signup, {
         first_name: person.firstName,
         last_name: person.lastName,
@@ -284,6 +300,7 @@ export default function CreateAccountForm({ accType }) {
         console.log(register);
         successNotify("Signup Success ✔");
         localStorage.setItem("registered", "true");
+        setAnimate(false);
         const cookie = localStorage.getItem("registered");
         // Continue process
         if (cookie) {
@@ -295,6 +312,7 @@ export default function CreateAccountForm({ accType }) {
       }
     } catch (err) {
       console.log(err);
+      setAnimate(false);
       if (err.response?.status === 422) {
         errorNotify(err.response?.data?.message);
       } else {
@@ -531,7 +549,12 @@ export default function CreateAccountForm({ accType }) {
               />{" "}
               <span onClick={toggleShowPassword} className="eye">
                 {showPassword ? (
-                  <img className="image" src={EyeClose} alt="Scholar" width="5%" />
+                  <img
+                    className="image"
+                    src={EyeClose}
+                    alt="Scholar"
+                    width="5%"
+                  />
                 ) : (
                   <img
                     className="image"
@@ -557,7 +580,12 @@ export default function CreateAccountForm({ accType }) {
               />
               <span onClick={toggleShowPassword} className="eye">
                 {showPassword ? (
-                  <img className="image" src={EyeClose} alt="Scholar" width="5%" />
+                  <img
+                    className="image"
+                    src={EyeClose}
+                    alt="Scholar"
+                    width="5%"
+                  />
                 ) : (
                   <img
                     className="image"
@@ -595,15 +623,20 @@ export default function CreateAccountForm({ accType }) {
                 <strong> Privacy Policy.</strong>
               </span>
             </div>
-            <button
-              type="submit"
-              onClick={validateForm}
-              // disabled={submitButtonDisabled}
-              className="acct-btn"
-              // onClick={handleClick}
+            <Button
+              click={validateForm}
+              style={{
+                width: "100%",
+                backgroundColor: "#0051FF",
+                color: "#fff",
+                paddingTop: "1%",
+                paddingBottom: "1%",
+              }}
+              animate={animate}
+              // className="acct-btn"
             >
               Create Account
-            </button>
+            </Button>
             <p style={{ fontSize: "13px", marginTop: "4px", color: "black" }}>
               Already have an account?{" "}
               <Link

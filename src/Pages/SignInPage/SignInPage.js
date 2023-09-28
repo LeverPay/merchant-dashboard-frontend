@@ -9,7 +9,9 @@ import "react-toastify/dist/ReactToastify.css";
 import { login, baseUrl } from "../../Components/Endpoints";
 import axios from "axios";
 import TokenContext from "../../Components/User-Token/TokenContext";
+import Loading from "../../Components/General/loading animation/loading";
 import { AES } from "crypto-js";
+import Button from "../../Components/General/Button component/Button";
 
 function SignInPage() {
   const [inputText, setInputText] = useState({
@@ -21,6 +23,7 @@ function SignInPage() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const { userToken, setUserToken } = useContext(TokenContext);
+  const [animate, setAnimate] = useState(false);
 
   const notify = (message) => {
     toast.error(message, {
@@ -87,6 +90,7 @@ function SignInPage() {
 
   const handleLogin = async () => {
     try {
+      setAnimate(true);
       const request = await axios.post(baseUrl + login, {
         email: inputText.email,
         password: inputText.password,
@@ -105,10 +109,8 @@ function SignInPage() {
         // localStorage.setItem('userData', JSON.stringify(user));
         const cookie = window.sessionStorage.getItem("Name");
         if (cookie) {
-          let lg = document.getElementById("signin-button");
-          lg.innerHTML = "Logging in...";
+          setAnimate(false);
           setTimeout(() => {
-            lg.innerHTML = "Sign in";
             navigate("/dashboard");
           }, 3000);
         } else {
@@ -117,6 +119,7 @@ function SignInPage() {
       }
     } catch (err) {
       console.log(err);
+      setAnimate(false);
       if (err.response !== undefined) {
         notify(err.response.data.message);
       } else {
@@ -177,14 +180,18 @@ function SignInPage() {
               )}
             </span>{" "}
           </div>
-          <button
-            disabled={submitButtonDisabled}
-            className="sign-in"
-            onClick={validateForm}
-            id="signin-button"
+          <Button
+            style={{
+              backgroundColor: `${
+                submitButtonDisabled ? "#abbce7" : "#0051FF"
+              }`,
+            }}
+            disable={submitButtonDisabled}
+            click={validateForm}
+            animate={animate}
           >
             Sign In
-          </button>
+          </Button>
           {errorMessage && <div className="error"> {errorMessage} </div>}
           <Link
             to={"/forget-password"}

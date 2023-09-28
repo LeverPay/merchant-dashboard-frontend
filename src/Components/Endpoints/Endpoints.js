@@ -28,3 +28,4 @@ export const paid_invoice = "/api/v1/merchant/get-invoices?status=paid";
 export const pending_invoice = "/api/v1/merchant/get-invoices?status=pending";
 export const cancelled_invoice =
   "/api/v1/merchant/get-invoices?status=cancelled";
+export const get_invoice_by_uuid = "/api/v1/invoice/"
