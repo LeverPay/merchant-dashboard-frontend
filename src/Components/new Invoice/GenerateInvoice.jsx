@@ -34,6 +34,7 @@ export default function GenerateInvoice() {
   const [backBtnClicked, setBackbtnClicked] = useState(false);
   const [cancelBtnClicked, setCancelBtnClicked] = useState(false);
   const [confirmBtnClicked, setConfirmBtnClicked] = useState(false);
+  const [animate, setAnimate] = useState(false);
   const [inputVal, setInputVal] = useState({
     reason: "",
     transactionID: "",
@@ -46,7 +47,7 @@ export default function GenerateInvoice() {
     price: "",
     totalPrice: "",
     description: "",
-    customerId: "",
+    customerEmail: "",
     currency: "",
     vat: "0",
   });
@@ -145,7 +146,7 @@ export default function GenerateInvoice() {
   };
 
   const toggleErr5 = () => {
-    if (input.customerId !== "") {
+    if (input.customerEmail !== "") {
       if (!warningMsg5.current?.classList?.contains("hidden")) {
         warningMsg5.current?.classList?.add("hidden");
       }
@@ -226,7 +227,7 @@ export default function GenerateInvoice() {
       warningMsg4.current?.classList?.remove("hidden");
     }
 
-    if (input.customerId !== "") {
+    if (input.customerEmail !== "") {
       if (!warningMsg5.current?.classList?.contains("hidden")) {
         warningMsg5.current?.classList?.add("hidden");
       }
@@ -259,11 +260,11 @@ export default function GenerateInvoice() {
     if (input.currency !== "") {
       if (
         input.description !== "" &&
-        input.customerId !== "" &&
         input.price !== "" &&
         input.productName !== "" &&
-        // input.qty !== "" &&
-        input.totalPrice !== ""
+        input.customerEmail !== ""
+        // &&
+        // input.totalPrice !== ""
       ) {
         createInvoice();
         console.log(input, token);
@@ -287,18 +288,33 @@ export default function GenerateInvoice() {
       description: "",
       currency: "",
       vat: "0",
+      customerEmail: "",
     }));
+  };
+
+  const getCurrency = async () => {
+    try {
+      const req = await axios.get(baseUrl + "/api/v1/user/get-currencies", {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      console.log(req.data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const createInvoice = async () => {
     try {
+      setAnimate(true);
       const req = await axios.post(
         baseUrl + create_invoice,
         {
           product_name: input.productName,
-          price: input.totalPrice,
+          price: input.price,
           product_description: input.description,
-          email: userData.email,
+          email: input.customerEmail,
           vat: input.vat,
           currency: input.currency,
         },
@@ -310,16 +326,22 @@ export default function GenerateInvoice() {
       );
       if (req.status === 200) {
         const data = req.data;
+        setAnimate(false);
         alert(req.data.message);
         setSuccess(true);
       } else {
       }
     } catch (err) {
       console.error(err.response);
-      if (err.response) {
+      setAnimate(false);
+      if (err.status === 500) {
+        notify(
+          "Oops! our server seems to be down at the moment, please try agin later :("
+        );
+      } else if (err.reponse) {
         notify(err.response.data?.message);
       } else {
-        notify("something went wrong");
+        notify("Something went wrong :(");
       }
     }
   };
@@ -328,14 +350,15 @@ export default function GenerateInvoice() {
   const getData = () => {
     const _key = sessionStorage.getItem("Name");
     const encryptedData = sessionStorage.getItem("dx");
-    const decrypt = CryptoJS.AES.decrypt(encryptedData, _key);
-    const val = decrypt.toString(CryptoJS.enc.Utf8);
+    const decrypt = CryptoJS?.AES?.decrypt(encryptedData, _key);
+    const val = decrypt.toString(CryptoJS?.enc?.Utf8);
     const data = JSON.parse(val);
     setUserData(data);
   };
 
   useEffect(() => {
     getData();
+    getCurrency();
   }, []);
 
   // // console.log(_v);
@@ -512,13 +535,13 @@ export default function GenerateInvoice() {
         </div>
         <div className="container form-container mt-2">
           <label htmlFor="Customer-id" className="label fw-bolder">
-            Customer's ID
+            Customer's Email
           </label>
           <input
-            type="text"
+            type="email"
             className="f-con"
-            name="customerId"
-            value={input.customerId}
+            name="customerEmail"
+            value={input.customerEmail}
             onChange={handleChange}
             onInput={toggleErr5}
             id="Customer-id"
@@ -537,6 +560,7 @@ export default function GenerateInvoice() {
                 Padding: "2%",
               }}
               click={handleSubmit}
+              animate={animate}
             >
               Send
             </Button>

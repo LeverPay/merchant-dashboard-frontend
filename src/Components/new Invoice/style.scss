@@ -109,6 +109,17 @@
 
 .history {
   font-family: Inter-Regular;
+  position: relative;
+  .invoice-details {
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    top: 2%;
+    left: 10%;
+    background-color: #fff;
+    box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+    overflow-y: auto !important;
+  }
   .input-section {
     .input-container {
       position: relative;
@@ -120,6 +131,9 @@
 
   .invoice-history-table {
     overflow-x: auto;
+    .btn-container {
+      width: 100%;
+    }
     .table-header {
       &:hover {
         cursor: pointer;
@@ -135,6 +149,10 @@
       :hover {
         text-decoration: none;
       }
+    }
+
+    .sub-table{
+      margin: auto;
     }
   }
 }
@@ -155,6 +173,14 @@
     width: 80%;
     h6 {
       font-size: 1.5rem !important;
+    }
+  }
+
+  .history {
+    .invoice-details {
+      width: 80%;
+      top: 20%;
+      left: 10%;
     }
   }
 
@@ -179,6 +205,14 @@
     width: 100% !important;
     left: 5%;
     top: 10%;
+  }
+
+  .history {
+    .invoice-details {
+      width: 80%;
+      top: 5%;
+      left: 10%;
+    }
   }
 
   .cancel,

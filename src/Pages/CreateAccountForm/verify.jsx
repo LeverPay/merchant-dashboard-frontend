@@ -29,6 +29,8 @@ export default function Verify({ mail, renderSignUp }) {
 
   const [v_email, setV_email] = useState();
 
+  const [animate, setAnimate] = useState(false);
+
   const navigate = useNavigate();
 
   const errorNotify = (message) =>
@@ -88,12 +90,14 @@ export default function Verify({ mail, renderSignUp }) {
     const value_As_String = _inputValues.toString().replace(/,/g, "");
 
     try {
+      setAnimate(true);
       const request = await axios.post(baseUrl + verify_Mail, {
         email: mail === "" ? email : mail,
         token: value_As_String,
       });
       if (request.status === 200) {
         successNotify(request.data.message);
+        setAnimate(false);
         setTimeout(() => {
           // Route to signin page
           navigate("/");
@@ -103,6 +107,7 @@ export default function Verify({ mail, renderSignUp }) {
       }
     } catch (err) {
       console.log(err);
+      setAnimate(false);
       errorNotify(err.response.data.message);
     }
   };
@@ -136,9 +141,7 @@ export default function Verify({ mail, renderSignUp }) {
   return (
     <form className="p-5 verify">
       <center>
-        <p className="font-bold">
-          {mail ? "Please Verify Your Account" : ""}
-        </p>
+        <p className="font-bold">{mail ? "Please Verify Your Account" : ""}</p>
         <div>
           {!mail && <h5>A code was sent to your mail, enter it</h5>}
           {mail && <h5>A code has beeen sent to {mail}</h5>}
@@ -193,6 +196,7 @@ export default function Verify({ mail, renderSignUp }) {
               fontSize: "1.5rem",
             }}
             click={verifyMail}
+            animate={animate}
           >
             Verify Account
           </Button>
