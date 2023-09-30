@@ -116,11 +116,11 @@ export default function Verify({ mail, renderSignUp }) {
     e.preventDefault();
     try {
       const request = await axios.post(baseUrl + resendVerification_Token, {
-        email: email,
+        email: mail,
       });
       console.log(request);
       if (request.status === 200) {
-        successNotify(`New token has been sent to ${v_email}`);
+        successNotify(`New token has been sent to ${mail}`);
       } else {
         errorNotify("Something went wrong :(");
       }
