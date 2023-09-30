@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import "./general.css";
 import Logo from "./Header-components/Logo";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
@@ -7,23 +7,30 @@ import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
 import BusinessCenterRoundedIcon from "@mui/icons-material/BusinessCenterRounded";
 import AccountCircleTwoToneIcon from "@mui/icons-material/AccountCircleTwoTone";
 import SettingsRoundedIcon from "@mui/icons-material/SettingsRounded";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate, Outlet } from "react-router-dom";
 import FileCopyOutlinedIcon from "@mui/icons-material/FileCopyOutlined";
 import QuizOutlinedIcon from "@mui/icons-material/QuizOutlined";
 import OpenInNewOutlinedIcon from "@mui/icons-material/OpenInNewOutlined";
 import MenuIcon from "../../Assets/menu2.png";
 import CloseIcon from "../../Assets/close2.png";
+import { AiOutlineLogout } from "react-icons/ai";
+import { baseUrl, logout } from "../Endpoints/Endpoints";
+import TokenContext from "../User-Token/TokenContext";
+import { MdReceiptLong } from "react-icons/md";
+import { MdSubscriptions, MdOutlineCreateNewFolder } from "react-icons/md";
+import { IoMdArrowDropdown } from "react-icons/io";
+import axios from "axios";
+import { FaHistory } from "react-icons/fa";
 
 export default function SidebarNav(props) {
+  const { notify, success } = useContext(TokenContext);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [click, setClick] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [activeItem, setActiveItem] = useState("home");
-  const handleActive = (item) => {
-    setActiveItem(item);
+  const [trackNavClicked, setTrackedNavClicked] = useState(false);
+
+  const closeMobileMenu = () => {
+    if (window.innerWidth <= 768) setSidebarOpen(!isMobile);
   };
-  const handleClick = () => setClick(!click);
-  const closeMobileMenu = () => setSidebarOpen(!isMobile);
   const openSidebar = () => {
     setSidebarOpen(true);
   };
@@ -46,33 +53,65 @@ export default function SidebarNav(props) {
 
     // Call the function once to set the initial screen size
     handleResize();
-
-    // Remove event listener when component unmounts
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  //Active Nav functionality
+  const [active, setActive] = useState(null);
+  const handleNavClick = (idx) => {
+    if (sidebarItemsTop[idx].sub) {
+      setActiveSubItem(null);
+      setActive((prevActive) => (prevActive === idx ? null : idx));
+    } else {
+      setActive((prevActive) => (prevActive === idx ? null : idx));
+      setActiveSubItem(null);
+      if (window.innerWidth <= 768) {
+        closeSidebar();
+      }
+    }
+  };
+
+  const [activeSubItem, setActiveSubItem] = useState(null);
+  const showdropDowns = (idx) => {
+    setTrackedNavClicked(!trackNavClicked);
+    setActive(idx);
+    setActiveSubItem(null);
+  };
 
   const sidebarItemsTop = [
     {
       icon: <DashboardRoundedIcon htmlColor="white" />,
-      link: "./",
+      link: "./dashboard",
       title: "Dashboard",
     },
-    // {icon: <SyncAltRoundedIcon htmlColor="white"/>, link: 'payment_method', title: 'Overview'},
     {
       icon: <SyncAltRoundedIcon htmlColor="white" />,
       link: "transactions",
       title: "Transaction",
     },
     {
-      icon: <CreditCardRoundedIcon htmlColor="white" />,
-      link: "payment_method",
-      title: "Payment Method",
+      icon: <MdReceiptLong color="white" size="25px" />,
+      title: "Invoice",
+      sub: ["New", "History"],
+      icons: [
+        <MdOutlineCreateNewFolder color="white" size="25px" />,
+        <FaHistory color="white" size="25px" />,
+      ],
     },
     {
-      icon: <BusinessCenterRoundedIcon htmlColor="white" />,
-      link: "portfolio",
-      title: "Portfolio",
+      icon: <MdSubscriptions color="white" size="25px" />,
+      link: "subscriptions",
+      title: "Subscriptions",
     },
+    {
+      icon: <CreditCardRoundedIcon htmlColor="white" />,
+      link: "Remitance-setup",
+      title: "Payment Method",
+    },
+    // {
+    //   icon: <BusinessCenterRoundedIcon htmlColor="white" />,
+    //   link: "portfolio",
+    //   title: "Portfolio",
+    // },
     {
       icon: <AccountCircleTwoToneIcon htmlColor="white" />,
       link: "profile",
@@ -94,16 +133,46 @@ export default function SidebarNav(props) {
     },
     {
       iconStart: <QuizOutlinedIcon htmlColor="white" />,
-      link: "Help&support",
+      link: "Help",
       title: "Help & Support",
       iconEnd: <OpenInNewOutlinedIcon htmlColor="white" />,
     },
   ];
 
-  //Active Nav functionality
-  const [active, setActive] = useState(false);
-  const handleNavClick = (idx) => {
-    setActive(idx);
+  const navigate = useNavigate();
+  const logOut = async () => {
+    try {
+      const req = await axios.get(baseUrl + logout, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      console.log(req);
+      if (req.status === 200) {
+        console.log("loggedOut");
+        window.localStorage.clear();
+        window.sessionStorage.clear();
+        if (!window.sessionStorage.getItem("Name")) {
+          setTimeout(() => navigate("/"), 3000);
+        }
+      }
+    } catch (err) {
+      console.log(err);
+      if (
+        err.response?.status === 400 ||
+        err.response?.status === 401 ||
+        err.response?.status === 403 ||
+        err.response?.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
+    }
   };
 
   return (
@@ -130,7 +199,7 @@ export default function SidebarNav(props) {
         >
           <div
             className="d-flex align-items-center bg-light px-3 logo-container"
-            style={{ height: "50%", borderTopRightRadius: "20px" }}
+            style={{ height: "130%", borderTopRightRadius: "20px" }}
           >
             <Logo />
             <span
@@ -147,21 +216,81 @@ export default function SidebarNav(props) {
           style={{ height: `calc(100% - ${props.fixedTopHeight}px)` }}
         >
           <div className="d-flex flex-column sidebar-links-top">
-            {sidebarItemsTop.map((item, idx) => {
-              return (
-                <NavLink
-                  to={item.link}
-                  key={idx}
-                  className={`d-flex align-items-center${
-                    active ? `active` : ``
-                  }`}
-                  onClick={() => handleNavClick(idx)}
-                >
-                  <span className="link-icon">{item.icon}</span>
-                  <span onClick={closeMobileMenu}>{item.title}</span>
-                </NavLink>
-              );
-            })}
+            <div className="mapped-items">
+              {sidebarItemsTop.map((item, idx) => {
+                return (
+                  <div key={idx}>
+                    {item.sub ? (
+                      <NavLink
+                        to={item.link}
+                        className={`d-flex align-items-center ${
+                          active === idx ? "custom-active" : ""
+                        }`}
+                        // activeClassName="custom-active"
+                        onClick={() => showdropDowns(idx)}
+                      >
+                        <span className="link-icon">{item.icon}</span>
+                        <span
+                          className={`d-flex align-items-start justify-content-between position-relative`}
+                        >
+                          {item.title}{" "}
+                          <span className="sub-links d-flex flex-column position-absolute">
+                            <span>
+                              <IoMdArrowDropdown />
+                            </span>
+                            {trackNavClicked && (
+                              <span className="sub-link-items-container d-flex flex-column">
+                                {item.sub.map((el, subIdx) => (
+                                  <React.Fragment key={subIdx}>
+                                    <NavLink
+                                      to={`${el}`}
+                                      className={`mt-2 text-center ${
+                                        activeSubItem === subIdx
+                                          ? "custom-active"
+                                          : ""
+                                      }`}
+                                      onClick={closeMobileMenu}
+                                    >
+                                      <div className="d-flex align-items-center justify-content-start fs-6 fw-lighter">
+                                        {/* Add the icon from the icons array */}
+                                        {item.icons[subIdx]}
+                                        <span className="mx-1">{el}</span>
+                                      </div>
+                                    </NavLink>
+                                    <Outlet />
+                                  </React.Fragment>
+                                ))}
+                              </span>
+                            )}
+                          </span>
+                        </span>
+                      </NavLink>
+                    ) : (
+                      <NavLink
+                        to={item.link}
+                        className={`d-flex align-items-center ${
+                          active === idx ? "custom-active" : ""
+                        }`}
+                        // activeClassName="custom-active"
+                        onClick={() => handleNavClick(idx)}
+                      >
+                        <span className="link-icon">{item.icon}</span>
+                        <span>{item.title}</span>
+                      </NavLink>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            <NavLink
+              className="d-flex align-items-center logout-btn mb-4"
+              onClick={logOut}
+            >
+              <span className="link-icon">
+                <AiOutlineLogout color="white" size="20px" />
+              </span>
+              Logout
+            </NavLink>
           </div>
           <div className="d-flex flex-column sidebar-links-bottom">
             {sidebarItemsBottom.map((item, idx) => {

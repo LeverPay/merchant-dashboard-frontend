@@ -33,13 +33,14 @@ const InvoiceModal = (props) => {
     if (item !== undefined && item !== "undefined")
       setInvoice(JSON.parse(item));
     console.log(invoice);
-  });
+  }, []);
+  // console.log(props.data);
   return (
     <>
       <Modal show={show} backdrop="static" keyboard={false}>
         <Modal.Body>
           {" "}
-          <Invoice className="className" invoice={invoice} />
+          <Invoice className="className" invoice={invoice} data={props.data} />
           <div className="flexy flexyM invoicebtn">
             {" "}
             <div className="closebtn">

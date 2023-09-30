@@ -3,7 +3,7 @@ import SecurityEl from "../Components/Security/securityElements";
 
 export default function Security() {
   return (
-    <div>
+    <div className="">
       <SecurityEl />
     </div>
   );

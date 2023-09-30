@@ -1,0 +1,237 @@
+.generate-invoice-container {
+  width: 100%;
+
+  .invoice {
+    box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+    background-color: #fff;
+    width: 80%;
+    // max-height: 100vh;
+
+    .form {
+      max-height: 100%;
+      .form-container {
+        .label {
+          font-family: Montserrat-Regular;
+        }
+      }
+    }
+
+    .icon-container {
+      .text-icon {
+        font-family: AgrandirRegular;
+      }
+    }
+  }
+
+  .f-con,
+  .f-con-1 {
+    width: 100% !important;
+    outline: none;
+    border: 2px solid #d9d9d9;
+    border-radius: 0.4rem;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  .price-container {
+    .price-container {
+      width: 50%;
+      // .f-con-1 {
+      //   width: 100%;
+      // }
+      .label {
+        font-family: Montserrat-Regular;
+      }
+      .special-label {
+        color: #00000099;
+      }
+    }
+  }
+
+  .btn-send {
+    width: 60%;
+  }
+
+  .btn-cancel {
+    width: 30%;
+  }
+
+  .warning {
+    color: #fb0000;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .confirm,
+  .cancel {
+    border-radius: 10px;
+    background: linear-gradient(154deg, #0051ff 0%, #0b0230 100%);
+    width: 70%;
+    height: auto !important;
+    h6 {
+      color: #fff;
+    }
+    input {
+      outline: none;
+      border: none;
+      &:focus {
+        border: 1px solid green;
+      }
+    }
+    .grp {
+      color: #fff;
+    }
+    textarea {
+      outline: none;
+      border: none;
+      resize: none;
+      &:focus {
+        border: 1px solid green;
+      }
+    }
+  }
+
+  .success {
+    background-color: #fff;
+    z-index: 10;
+    width: 50%;
+    box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+  }
+
+  .s-close {
+    margin-left: 6rem;
+    cursor: pointer;
+  }
+}
+
+.history {
+  font-family: Inter-Regular;
+  position: relative;
+  .invoice-details {
+    position: absolute;
+    width: 80%;
+    height: 100%;
+    top: 2%;
+    left: 10%;
+    background-color: #fff;
+    box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+    overflow-y: auto !important;
+  }
+  .input-section {
+    .input-container {
+      position: relative;
+      .input-icon {
+        margin-left: -90%;
+      }
+    }
+  }
+
+  .invoice-history-table {
+    overflow-x: auto;
+    .btn-container {
+      width: 100%;
+    }
+    .table-header {
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    .active-header {
+      border-bottom: 2px solid #008cff;
+    }
+
+    .link {
+      text-decoration: none;
+      color: #06ae21;
+      :hover {
+        text-decoration: none;
+      }
+    }
+
+    .sub-table{
+      margin: auto;
+    }
+  }
+}
+@media screen and (min-width: 1024px) {
+  .invoice {
+    top: 2%;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .invoice {
+    width: 65%;
+    left: 20%;
+    top: 10%;
+  }
+  .cancel,
+  .confirm {
+    width: 80%;
+    h6 {
+      font-size: 1.5rem !important;
+    }
+  }
+
+  .history {
+    .invoice-details {
+      width: 80%;
+      top: 20%;
+      left: 10%;
+    }
+  }
+
+  .generate-invoice-container {
+    .success {
+      width: 60%;
+    }
+  }
+
+  .price-container {
+    .price-container {
+      width: 100% !important;
+      // .f-con-1 {
+      //   width: 100%;
+      // }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .invoice {
+    width: 100% !important;
+    left: 5%;
+    top: 10%;
+  }
+
+  .history {
+    .invoice-details {
+      width: 80%;
+      top: 5%;
+      left: 10%;
+    }
+  }
+
+  .cancel,
+  .confirm {
+    width: 100% !important;
+  }
+
+  .generate-invoice-container {
+    .success {
+      width: 80%;
+    }
+  }
+
+  .price-container {
+    .price-container {
+      width: 100% !important;
+      // .f-con-1 {
+      //   width: 100%;
+      // }
+    }
+  }
+}

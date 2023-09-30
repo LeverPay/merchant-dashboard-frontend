@@ -4,7 +4,7 @@ import Refund from "../Assets/refund.png";
 import Failed from "../Assets/failed.png";
 
 export const allTransactions = {
-  headers: ["OrderID", "Date", "Status", "Amount", "INVOICE", "Help"],
+  headers: ["OrderID", "Date", "Status", "Amount", "INVOICE"],
   data: [
     {
       id: 1,
@@ -14,7 +14,6 @@ export const allTransactions = {
       color: "green",
       status: { icon: Success, statusName: "Successful" },
       invoice: "View",
-      help: "Help",
     },
 
     {
@@ -26,7 +25,6 @@ export const allTransactions = {
       status: { icon: Pending, statusName: "Pending" },
       date: "21 Mar 2023",
       invoice: "View",
-      help: "Help",
     },
     {
       id: 3,
@@ -37,23 +35,27 @@ export const allTransactions = {
       status: { icon: Refund, statusName: "Refund" },
       date: "12 Apr 2023",
       invoice: "View",
-      help: "Help",
     },
     {
       id: 4,
 
-      name: "Order3",
+      name: "Order4",
       amount: "$420.84",
       color: "red",
       status: { icon: Failed, statusName: "Canceled" },
       date: "12 Apr 2023",
       invoice: "View",
-      help: "Help",
     },
   ],
 };
 export const paidTransactions = {
-  headers: ["OrderID", "Date", "Status", "Amount", "INVOICE", "Help"],
+  headers: [
+    "OrderID",
+    "Date",
+    "Status",
+    "Amount",
+    "INVOICE",
+  ],
   data: [
     {
       id: 1,
@@ -63,12 +65,17 @@ export const paidTransactions = {
       color: "green",
       status: { icon: Success, statusName: "Successful" },
       invoice: "View",
-      help: "Help",
     },
   ],
 };
 export const pendingTransactions = {
-  headers: ["OrderID", "Date", "Status", "Amount", "INVOICE", "Help"],
+  headers: [
+    "OrderID",
+    "Date",
+    "Status",
+    "Amount",
+    "INVOICE",
+  ],
   data: [
     {
       id: 1,
@@ -78,12 +85,11 @@ export const pendingTransactions = {
       color: "blue",
       status: { icon: Pending, statusName: "Pending" },
       invoice: "View",
-      help: "Help",
     },
   ],
 };
 export const refundTransactions = {
-  headers: ["OrderID", "Date", "Status", "Amount", "INVOICE", "Help"],
+  headers: ["OrderID", "Date", "Status", "Amount", "INVOICE"],
   data: [
     {
       id: 1,
@@ -93,12 +99,12 @@ export const refundTransactions = {
       color: "orange",
       status: { icon: Refund, statusName: "Refund" },
       invoice: "View",
-      help: "Help",
+      // help: "Need help with this transaction?",
     },
   ],
 };
 export const failedTransactions = {
-  headers: ["OrderID", "Date", "Status", "Amount", "INVOICE", "Help"],
+  headers: ["OrderID", "Date", "Status", "Amount", "INVOICE"],
   data: [
     {
       id: 1,
@@ -108,12 +114,19 @@ export const failedTransactions = {
       color: "red",
       status: { icon: Failed, statusName: "Failed" },
       invoice: "View",
-      help: "Help",
+      // help: "Need help with this transaction?",
     },
   ],
 };
 export const canceledTransactions = {
-  headers: ["OrderID", "Date", "Status", "Amount", "INVOICE", "Help"],
+  headers: [
+    "OrderID",
+    "Date",
+    "Status",
+    "Amount",
+    "INVOICE",
+    // "Need help with this transaction?",
+  ],
   data: [
     {
       id: 1,
@@ -123,7 +136,7 @@ export const canceledTransactions = {
       color: "red",
       status: { icon: Failed, statusName: "Canceled" },
       invoice: "View",
-      help: "Help",
+      // help: "Need help with this transaction?",
     },
   ],
 };

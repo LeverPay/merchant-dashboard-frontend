@@ -6,7 +6,7 @@
   margin-right: 10px;
 }
 .search-box i {
-  color: grey;
+  color: #fff;
 }
 .input-search {
   height: 50px;
@@ -21,10 +21,10 @@
   /* background-color: #10133f; */
   background: transparent;
   padding-right: 40px;
-  color: black;
+  color: #fff;
 }
 .input-search::placeholder {
-  color: black !important;
+  color: #fff !important;
   font-size: 13px;
   letter-spacing: 2px;
   font-weight: 100;
@@ -40,7 +40,7 @@
   border-radius: 50%;
   position: absolute;
   right: 0px;
-  color: rgb(107, 106, 106);
+  color: #fff;
   background-color: transparent;
   pointer-events: painted;
 }

@@ -1,0 +1,190 @@
+.generate-invoice-container {
+  width: 100%;
+}
+.generate-invoice-container .invoice {
+  box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+  background-color: #fff;
+  width: 80%;
+}
+.generate-invoice-container .invoice .form {
+  max-height: 100%;
+}
+.generate-invoice-container .invoice .form .form-container .label {
+  font-family: Montserrat-Regular;
+}
+.generate-invoice-container .invoice .icon-container .text-icon {
+  font-family: AgrandirRegular;
+}
+.generate-invoice-container .f-con,
+.generate-invoice-container .f-con-1 {
+  width: 100% !important;
+  outline: none;
+  border: 2px solid #d9d9d9;
+  border-radius: 0.4rem;
+}
+.generate-invoice-container .f-con:focus,
+.generate-invoice-container .f-con-1:focus {
+  outline: none;
+}
+.generate-invoice-container .price-container .price-container {
+  width: 50%;
+}
+.generate-invoice-container .price-container .price-container .label {
+  font-family: Montserrat-Regular;
+}
+.generate-invoice-container .price-container .price-container .special-label {
+  color: rgba(0, 0, 0, 0.6);
+}
+.generate-invoice-container .btn-send {
+  width: 60%;
+}
+.generate-invoice-container .btn-cancel {
+  width: 30%;
+}
+.generate-invoice-container .warning {
+  color: #fb0000;
+}
+.generate-invoice-container .hidden {
+  display: none;
+}
+.generate-invoice-container .confirm,
+.generate-invoice-container .cancel {
+  border-radius: 10px;
+  background: linear-gradient(154deg, #0051ff 0%, #0b0230 100%);
+  width: 70%;
+  height: auto !important;
+}
+.generate-invoice-container .confirm h6,
+.generate-invoice-container .cancel h6 {
+  color: #fff;
+}
+.generate-invoice-container .confirm input,
+.generate-invoice-container .cancel input {
+  outline: none;
+  border: none;
+}
+.generate-invoice-container .confirm input:focus,
+.generate-invoice-container .cancel input:focus {
+  border: 1px solid green;
+}
+.generate-invoice-container .confirm .grp,
+.generate-invoice-container .cancel .grp {
+  color: #fff;
+}
+.generate-invoice-container .confirm textarea,
+.generate-invoice-container .cancel textarea {
+  outline: none;
+  border: none;
+  resize: none;
+}
+.generate-invoice-container .confirm textarea:focus,
+.generate-invoice-container .cancel textarea:focus {
+  border: 1px solid green;
+}
+.generate-invoice-container .success {
+  background-color: #fff;
+  z-index: 10;
+  width: 50%;
+  box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+}
+.generate-invoice-container .s-close {
+  margin-left: 6rem;
+  cursor: pointer;
+}
+
+.history {
+  font-family: Inter-Regular;
+  position: relative;
+}
+.history .invoice-details {
+  position: absolute;
+  width: 80%;
+  height: 100%;
+  top: 2%;
+  left: 10%;
+  background-color: #fff;
+  box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+  overflow-y: auto !important;
+}
+.history .input-section .input-container {
+  position: relative;
+}
+.history .input-section .input-container .input-icon {
+  margin-left: -90%;
+}
+.history .invoice-history-table {
+  overflow-x: auto;
+}
+.history .invoice-history-table .btn-container {
+  width: 100%;
+}
+.history .invoice-history-table .table-header:hover {
+  cursor: pointer;
+}
+.history .invoice-history-table .active-header {
+  border-bottom: 2px solid #008cff;
+}
+.history .invoice-history-table .link {
+  text-decoration: none;
+  color: #06ae21;
+}
+.history .invoice-history-table .link :hover {
+  text-decoration: none;
+}
+.history .invoice-history-table .sub-table {
+  margin: auto;
+}
+
+@media screen and (min-width: 1024px) {
+  .invoice {
+    top: 2%;
+  }
+}
+@media screen and (max-width: 1023px) {
+  .invoice {
+    width: 65%;
+    left: 20%;
+    top: 10%;
+  }
+  .cancel,
+  .confirm {
+    width: 80%;
+  }
+  .cancel h6,
+  .confirm h6 {
+    font-size: 1.5rem !important;
+  }
+  .history .invoice-details {
+    width: 80%;
+    top: 20%;
+    left: 10%;
+  }
+  .generate-invoice-container .success {
+    width: 60%;
+  }
+  .price-container .price-container {
+    width: 100% !important;
+  }
+}
+@media screen and (max-width: 767px) {
+  .invoice {
+    width: 100% !important;
+    left: 5%;
+    top: 10%;
+  }
+  .history .invoice-details {
+    width: 80%;
+    top: 5%;
+    left: 10%;
+  }
+  .cancel,
+  .confirm {
+    width: 100% !important;
+  }
+  .generate-invoice-container .success {
+    width: 80%;
+  }
+  .price-container .price-container {
+    width: 100% !important;
+  }
+}/*# sourceMappingURL=style.css.map */

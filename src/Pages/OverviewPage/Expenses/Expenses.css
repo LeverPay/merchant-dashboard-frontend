@@ -1,0 +1,16 @@
+.expenses {
+  padding: 1rem;
+  background: transparent;
+  margin: 0 auto 2rem auto;
+  width: 100% !important;
+  border: none;
+}
+.expenses2 {
+  margin-top: -50px;
+  z-index: 10;
+}
+@media screen and (max-width: 620px) {
+  .expenses2 {
+    margin-top: 0;
+  }
+}

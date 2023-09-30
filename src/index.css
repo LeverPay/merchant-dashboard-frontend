@@ -12,7 +12,7 @@ html {
 }
 
 .general-container {
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -51,6 +51,10 @@ html {
 .header-profile-dropdown:hover,
 .header-notification-container:hover {
   cursor: pointer;
+}
+
+.hidden{
+  display: none;
 }
 
 /* Larger screen sizes */

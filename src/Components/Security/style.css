@@ -42,6 +42,19 @@
   padding: 1% 2% 1% 2%;
 }
 
+.bordered {
+  border: 1px solid red;
+}
+
+.input-icons {
+  margin-left: -10%;
+  height: 100%;
+}
+.input-icons .input-eye-icon {
+  margin-left: 4%;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1023px) {
   .security-container {
     width: 70vw;

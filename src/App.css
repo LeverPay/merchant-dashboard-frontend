@@ -2,19 +2,23 @@
   background-color: #0b0230;
   /* padding-block: 2rem; */
 }
+
 @media screen and (max-width: 620px) {
   body {
     padding: 0 5px;
   }
 }
+
 @font-face {
   font-family: AgrandirBold;
   src: url(./Assets/fonts/Agrandir-Font/Agrandir-TextBold.otf);
 }
+
 @font-face {
   font-family: AgrandirGrandLight;
   src: url(./Assets/fonts/Agrandir-Font/Agrandir-GrandLight.otf);
 }
+
 @font-face {
   font-family: AgrandirWideLight;
   src: url(./Assets/fonts/Agrandir-Font/Agrandir-WideLight.otf);
@@ -24,22 +28,27 @@
   font-family: AgrandirHeavy;
   src: url(./Assets/fonts/Agrandir-Font/Agrandir-GrandHeavy.otf);
 }
+
 @font-face {
   font-family: AgrandirRegular;
   src: url(./Assets/fonts/Agrandir-Font/Agrandir-Regular.otf);
 }
+
 @font-face {
   font-family: AgrandirTight;
   src: url(./Assets/fonts/Agrandir-Font/Agrandir-Tight.otf);
 }
+
 @font-face {
   font-family: AgrandirBlackItalic;
   src: url(./Assets/fonts/Agrandir-Font/Agrandir-WideBlackItalic.otf);
 }
+
 @font-face {
   font-family: AgrandirTinItalic;
   src: url(./Assets/fonts/Agrandir-Font/Agrandir-ThinItalic.otf);
 }
+
 @font-face {
   font-family: AgrandirNarrow;
   src: url(./Assets/fonts/Agrandir-Font/Agrandir-Narrow.otf);
@@ -51,9 +60,60 @@
   font-family: KB-sans-Bold;
   src: url(./Assets/fonts/kumbh-sans/KumbhSans-Bold.ttf);
 }
+
 @font-face {
   font-family: KB-sans-Regular;
   src: url(./Assets/fonts/kumbh-sans/KumbhSans-Regular.ttf);
+}
+
+@font-face {
+  font-family: Montserrat-Regular;
+  src: url(./Assets/fonts/static/Montserrat-Regular.ttf);
+}
+
+@font-face {
+  font-family: Montserrat-Light;
+  src: url(./Assets/fonts/static/Montserrat-Light.ttf);
+}
+
+@font-face {
+  font-family: Montserrat-Black;
+  src: url(./Assets/fonts/static/Montserrat-Black.ttf);
+}
+
+@font-face {
+  font-family: Montserrat-Bold;
+  src: url(./Assets/fonts/static/Montserrat-Bold.ttf);
+}
+
+@font-face {
+  font-family: Montserrat-LightItalic;
+  src: url(./Assets/fonts/static/Montserrat-LightItalic.ttf);
+}
+
+@font-face {
+  font-family: Inter-Regular;
+  src: url(./Assets/fonts/inter/Inter-Regular.ttf);
+}
+
+@font-face {
+  font-family: Inter-Bold;
+  src: url(./Assets/fonts//inter/Inter-Bold.ttf);
+}
+
+@font-face {
+  font-family: Inter-Bold;
+  src: url(./Assets/fonts/inter/Inter-Bold.ttf);
+}
+
+@font-face {
+  font-family: Inter-ExtraBold;
+  src: url(./Assets//fonts/inter/Inter-ExtraBold.ttf);
+}
+
+@font-face {
+  font-family: Inter-Black;
+  src: url(./Assets/fonts/inter/Inter-Black.ttf);
 }
 
 @media screen and (min-width: 620px) {
@@ -61,6 +121,7 @@
     display: flex;
   }
 }
+
 @media screen and (max-width: 620px) {
   .flexyM {
     display: flex;

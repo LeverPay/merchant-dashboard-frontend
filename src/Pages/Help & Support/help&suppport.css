@@ -3,14 +3,25 @@
 }
 
 .faq_container {
-  width: 50%;
+  width: 100%;
 }
-
+.faq_container h3 {
+  font-family: AgrandirBold;
+  color: rgb(50, 49, 49);
+}
 .arrow {
   cursor: pointer;
 }
 
 .color {
+  color: #fff;
+  text-decoration: none !important;
+}
+.color:hover {
+  color: #dee2e6 !important;
+}
+
+.white {
   color: #fff;
 }
 
@@ -22,46 +33,80 @@
   -webkit-text-fill-color: transparent;
 }
 
-.message-form {
-  width: 60%;
-  background: linear-gradient(177.42deg, #0051ff -2.29%, #0b0230 113.02%);
+.contact-support {
+  width: 70%;
+  height: auto;
+  z-index: 20;
+  top: 0%;
+  left: 25%;
   position: fixed;
-  top: 10%;
-  left: 30%;
+  background: linear-gradient(177.42deg, #0051ff -2.29%, #0b0230 113.02%);
+  max-height: 100vh;
+  overflow-y: auto;
 }
-.message-form .message-form-content {
-  width: 60%;
-  margin: auto;
-}
-.message-form .message-form-content .form-field {
-  background-color: #fff;
-}
-.message-form .message-form-content .input {
-  outline: none;
-  border: none;
-  border-bottom: 2px solid #d9d9d9;
-}
-.message-form .message-form-content .input:focus {
+
+.contact-support .input-field {
+  border: 1px solid #f0f2f3;
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.12);
+  border-radius: 6px;
   outline: none;
   border: none;
 }
 
+.close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 50;
+  cursor: pointer;
+}
+
+.contact-support .second-container {
+  color: #fff;
+}
+
+.input-field-background {
+  background-color: #fff;
+  height: 100%;
+}
+
+.screenshot {
+  cursor: pointer;
+}
+
+.border-color {
+  border: 1px solid #fb0000 !important;
+}
+
+.important-msg {
+  color: #fb0000;
+}
+
 @media screen and (max-width: 1023px) {
-  .message-form {
-    top: 30%;
-    left: 20%;
-  }
-  .message-form .message-form-content {
-    width: 100%;
+  .contact-support {
+    width: 80%;
+    left: 18%;
+    top: 1%;
   }
 }
 @media screen and (max-width: 767px) {
-  .message-form {
-    width: 80%;
-    left: 10%;
-    top: 40%;
-  }
-  .message-form .message-form-content {
+  .contact-support {
     width: 100%;
+    top: 1%;
+    left: 0%;
+    flex-direction: column !important;
+    max-height: 100vh;
+    overflow-y: auto;
   }
-}/*# sourceMappingURL=help&suppport.css.map */
+  .next {
+    width: 10px;
+    height: 10px;
+  }
+  .name-input {
+    flex-direction: column;
+  }
+}
+.hidden {
+  display: none;
+} /*# sourceMappingURL=help&suppport.css.map */
