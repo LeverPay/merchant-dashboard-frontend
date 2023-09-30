@@ -162,7 +162,7 @@ function SignInPage() {
               name="password"
               value={inputText.password}
               onChange={handleOncange}
-              placeholder="Password should be at least 10 characters"
+              placeholder=""
               autoComplete="new-password"
               id="pass-code"
             />
