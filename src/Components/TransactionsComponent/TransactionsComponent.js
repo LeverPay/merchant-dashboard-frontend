@@ -13,6 +13,12 @@ import "./transactionsComponent.css";
 import Form from "../contact-support/form";
 import { AiFillEye } from "react-icons/ai";
 import { RiEyeCloseLine } from "react-icons/ri";
+import axios from "axios";
+import {
+  baseUrl,
+  fund_transfers,
+  get_transactions,
+} from "../Endpoints/Endpoints";
 function TransactionsComponent() {
   const [activeIndex, setActiveIndex] = useState(1);
   const [generateInvoice, setGenerateInvoice] = useState(false);
@@ -22,6 +28,7 @@ function TransactionsComponent() {
   const checkActive = (index, className) =>
     activeIndex === index ? className : "";
   const [displayForm, setDisplayForm] = useState(false);
+  const [animate, setAnimate] = useState(false)
 
   const showForm = () => {
     setDisplayForm(true);
@@ -31,6 +38,52 @@ function TransactionsComponent() {
   const hideTransactBal = () => {
     setHidebalance(!hidebalance);
   };
+
+  const [transactionsData, setTransactionsData] = useState([]);
+
+  const getTransactions = async () => {
+    try {
+      setAnimate(true)
+      const req = await axios.get(baseUrl + get_transactions, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      console.log(req.data);
+      if (req.status === 200) {
+        setTransactionsData(req.data.data);
+        setAnimate(false)
+      }
+    } catch (err) {
+      console.log(err);
+      setAnimate(false)
+    }
+  };
+
+  const transferFunds = async () => {
+    try {
+      const req = await axios.post(
+        baseUrl + fund_transfers,
+        {
+          email: "cetis71517@fandsend.com",
+          amount: 2000,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+          },
+        }
+      );
+      console.log(req.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getTransactions();
+    // transferFunds();
+  }, []);
 
   return (
     <>
@@ -53,7 +106,7 @@ function TransactionsComponent() {
         </span>
       </div>
       <div className="col-md-12 transactions-tab">
-        <div className="tabs">
+        {/* <div className="tabs">
           <button
             className={`tab ${checkActive(1, "active2")}`}
             onClick={() => handleClick(1)}
@@ -90,15 +143,16 @@ function TransactionsComponent() {
           >
             Canceled(1)
           </button>{" "}
-        </div>{" "}
+        </div>{" "} */}
         <div className="panels">
           <div className={`panel ${checkActive(1, "active2")}`}>
             <TransactionTable
-              data={allTransactions}
+              data={transactionsData}
               hidebalance={hidebalance}
+              animate={animate}
             />
           </div>
-          <div className={`panel ${checkActive(2, "active2")}`}>
+          {/* <div className={`panel ${checkActive(2, "active2")}`}>
             {" "}
             <TransactionTable
               data={paidTransactions}
@@ -132,7 +186,7 @@ function TransactionsComponent() {
               data={canceledTransactions}
               hidebalance={hidebalance}
             />
-          </div>
+          </div> */}
         </div>
       </div>
       {displayForm && <Form setDisplayForm={setDisplayForm} />}

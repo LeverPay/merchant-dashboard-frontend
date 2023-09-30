@@ -28,4 +28,7 @@ export const paid_invoice = "/api/v1/merchant/get-invoices?status=paid";
 export const pending_invoice = "/api/v1/merchant/get-invoices?status=pending";
 export const cancelled_invoice =
   "/api/v1/merchant/get-invoices?status=cancelled";
-export const get_invoice_by_uuid = "/api/v1/invoice/"
+export const get_invoice_by_uuid = "/api/v1/invoice/";
+export const get_dashboard_data = "/api/v1/user/get-user-profile";
+export const fund_transfers = "/api/v1/user/transfer";
+export const get_transactions = "/api/v1/user/get-user-transactions"

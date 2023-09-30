@@ -34,6 +34,7 @@ export default function GenerateInvoice() {
   const [backBtnClicked, setBackbtnClicked] = useState(false);
   const [cancelBtnClicked, setCancelBtnClicked] = useState(false);
   const [confirmBtnClicked, setConfirmBtnClicked] = useState(false);
+  const [animate, setAnimate] = useState(false);
   const [inputVal, setInputVal] = useState({
     reason: "",
     transactionID: "",
@@ -261,7 +262,7 @@ export default function GenerateInvoice() {
         input.description !== "" &&
         input.price !== "" &&
         input.productName !== "" &&
-        input.customerEmail !== "" 
+        input.customerEmail !== ""
         // &&
         // input.totalPrice !== ""
       ) {
@@ -306,6 +307,7 @@ export default function GenerateInvoice() {
 
   const createInvoice = async () => {
     try {
+      setAnimate(true);
       const req = await axios.post(
         baseUrl + create_invoice,
         {
@@ -324,16 +326,22 @@ export default function GenerateInvoice() {
       );
       if (req.status === 200) {
         const data = req.data;
+        setAnimate(false);
         alert(req.data.message);
         setSuccess(true);
       } else {
       }
     } catch (err) {
       console.error(err.response);
-      if (err.response) {
+      setAnimate(false);
+      if (err.status === 500) {
+        notify(
+          "Oops! our server seems to be down at the moment, please try agin later :("
+        );
+      } else if (err.reponse) {
         notify(err.response.data?.message);
       } else {
-        notify("something went wrong");
+        notify("Something went wrong :(");
       }
     }
   };
@@ -552,6 +560,7 @@ export default function GenerateInvoice() {
                 Padding: "2%",
               }}
               click={handleSubmit}
+              animate={animate}
             >
               Send
             </Button>

@@ -7,7 +7,6 @@ export const HeaderData = [
   "Product Name",
   // "Notification",
   "Details",
-  "Status",
 ];
 
 export const data = [

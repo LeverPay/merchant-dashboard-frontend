@@ -42,6 +42,9 @@ export default function Invoice({ details, closeMe }) {
             Fee: <span className="fw-lighter">{details.fee}</span>
           </p>
           <p>
+            Vat: <span className="fw-lighter">{details.vat}</span>
+          </p>
+          <p>
             Product Description:{" "}
             {details.product_description !== "" ||
             details.product_description !== null ? (

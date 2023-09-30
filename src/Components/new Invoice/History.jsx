@@ -18,6 +18,8 @@ import axios from "axios";
 import Invoice from "./invoice";
 import Button from "../General/Button component/Button";
 import Loading from "../General/loading animation/loading";
+import TokenContext from "../User-Token/TokenContext";
+import { useContext } from "react";
 
 export default function History() {
   const [invoice, setInvoice] = useState(null);
@@ -35,6 +37,7 @@ export default function History() {
   const [invoiceDetails, setInvoiceDetails] = useState([]);
   const [displayItems, setDisplayItems] = useState(7);
   const [animate, setAnimate] = useState(false);
+  const { notify } = useContext(TokenContext);
 
   // Close invoice details container
   const details = () => {
@@ -78,6 +81,7 @@ export default function History() {
       // setTableBody(req.data.data);
     } catch (err) {
       console.log(err);
+      notify("Something Went wrong getting invoices");
     }
   };
 
@@ -96,6 +100,7 @@ export default function History() {
     } catch (err) {
       setAnimate(false);
       console.log(err);
+      notify("Something Went wrong getting paid invoices");
     }
   };
   const getPendingInvoice = async () => {
@@ -114,6 +119,7 @@ export default function History() {
     } catch (err) {
       setAnimate(false);
       console.log(err);
+      notify("Something Went wrong getting pending invoices");
     }
   };
   const getCanceledInvoice = async () => {
@@ -131,6 +137,7 @@ export default function History() {
     } catch (err) {
       setAnimate(false);
       console.log(err);
+      notify("Something Went wrong getting canceled invoices");
     }
   };
   const getSingleInvoice = async (uuid) => {
@@ -146,6 +153,7 @@ export default function History() {
     } catch (err) {
       setAnimate(false);
       console.log(err);
+      notify("Something Went wrong getting invoices data");
     }
   };
 
@@ -218,7 +226,7 @@ export default function History() {
           </tr>
         </table>
 
-        <section className="sub-table d-flex mt-5 px-5 mx-5">
+        <section className="sub-table d-flex mt-5">
           <table className="text-center px-4 mx-5">
             {tableBody && tableBody.length > 0 && (
               <tr>
@@ -246,20 +254,6 @@ export default function History() {
                     >
                       View
                     </NavLink>
-                  </td>
-                  <td
-                    className="text-center px-4 py-2"
-                    style={{
-                      color: `${
-                        el.status === 0
-                          ? "#046A0E"
-                          : el.status === 1
-                          ? "#3A09FF"
-                          : "#FB3105"
-                      }`,
-                    }}
-                  >
-                    {el.status}
                   </td>
                 </tr>
               ))

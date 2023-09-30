@@ -113,11 +113,12 @@
   .invoice-details {
     position: absolute;
     width: 80%;
-    top: 5%;
+    height: 100%;
+    top: 2%;
     left: 10%;
     background-color: #fff;
     box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
-    overflow-y: auto;
+    overflow-y: auto !important;
   }
   .input-section {
     .input-container {
@@ -148,6 +149,10 @@
       :hover {
         text-decoration: none;
       }
+    }
+
+    .sub-table{
+      margin: auto;
     }
   }
 }
@@ -205,7 +210,7 @@
   .history {
     .invoice-details {
       width: 80%;
-      top: 20%;
+      top: 5%;
       left: 10%;
     }
   }

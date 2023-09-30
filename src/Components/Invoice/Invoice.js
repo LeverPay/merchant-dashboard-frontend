@@ -38,6 +38,19 @@ function Invoice({ className, data }) {
   const timeofDay = date.getHours() + ":" + minutes + " " + Morning_Afternoon;
   const time = date.toDateString() + " " + timeofDay;
 
+  const formatDate = (createdAt) => {
+    const options = {
+      weekday: "short",
+      day: "numeric",
+      month: "short",
+      hour: "2-digit",
+      minute: "2-digit",
+    };
+
+    const date = new Date(createdAt);
+    return date.toLocaleDateString("en-US", options);
+  };
+
   useEffect(() => {
     if (stateData !== undefined || stateData !== null) {
       setValue(stateData);
@@ -51,52 +64,53 @@ function Invoice({ className, data }) {
       id="invoice"
       className={`pt-3 px-3 py-4 col-md-4 col-12 ${className}`}
     >
-      <h4 className="text-center">{id}</h4>
+      <h4 className="text-center">{data?.tnx_reference_no}</h4>
       <div className="price_checkout">
         <span className="px-md-3">
-          <h5>$420.89</h5>
+          <h5>{data?.totalUSD}</h5>
           <h5>Total USD</h5>
         </span>
         <span className="px-md-3">
-          <h5>0.45656</h5>
+          <h5>{data?.totalETH}</h5>
           <h5>Total ETH</h5>
         </span>
         <span className="px-md-3">
-          <h5 style={{ color: value ? value.color : "#0EB500" }}>
-            {value ? value.amount : "$420.89"}
+          <h5 style={{ color: data?.type === "credit" ? "green" : "red" }}>
+            {data?.amount}
           </h5>
           <h5 style={{ color: "black" }}>
-            {value && value.status.statusName !== "Successful"
-              ? value.status.statusName
-              : "Paid(ETH)"}
+            {data?.statusName !== "Successful" ? data?.statusName : "Paid(ETH)"}
           </h5>
         </span>
       </div>
       <div className="Invoice_details">
-        <h3>INVOICE DETAILS</h3>
+        <h3>DETAILS</h3>
         <Container fluid>
           <Row>
-            <Col className="h5">Order ID</Col>
-            <Col className="h5 blue-color">
-              {value ? value.name : "Order 1"}
-            </Col>
+            <Col className="h5">Ref No:</Col>
+            <Col className="h5 blue-color">{data?.reference_no}</Col>
           </Row>
           <Row>
-            <Col className="row_details">Status</Col>
+            <Col className="row_details">Type</Col>
             <Col
               className="row_details_information"
-              style={{ color: value ? value.color : "#0EB500" }}
+              style={{ color: data?.type === "credit" ? "green" : "red" }}
             >
-              {value ? value.status.statusName : "Successful"}
+              {data?.type}
             </Col>
           </Row>
           <Row>
-            <Col className="row_details">Confirmations</Col>
-            <Col className="row_details_information blue-color">40</Col>
+            <Col className="row_details">Amount</Col>
+            <Col
+              className="row_details_information blue-color"
+              style={{ color: data?.type === "credit" ? "green" : "red" }}
+            >
+              {data?.amount}
+            </Col>
           </Row>
           <Row>
             <Col className="row_details">Currency</Col>
-            <Col className="row_details_information blue-color">ETH</Col>
+            <Col className="row_details_information blue-color">Naira</Col>
           </Row>
           <Row>
             <Col className="row_details">Created at</Col>
@@ -104,13 +118,13 @@ function Invoice({ className, data }) {
               className="row_details_information blue-color"
               style={{ fontSize: "12px" }}
             >
-              {time}
+              {formatDate(data?.created_at)}
             </Col>
           </Row>
           <Row>
             <Col className="row_details">Items</Col>
             <Col className="row_details_information blue-color">
-              Iphone 13 pro max
+              {data?.items}
             </Col>
           </Row>
         </Container>
@@ -119,34 +133,27 @@ function Invoice({ className, data }) {
       <div className="Buyer_details">
         <h3 className="blue-color">Buyer Information</h3>
         <h5 style={{ color: "#0d0c30" }}>Email</h5>
-        <p style={{ color: "hsl(221, 69%, 55%)" }}>Jamiltextile001@gmail.com</p>
+        <p style={{ color: "hsl(221, 69%, 55%)" }}>wokopi5201@inkiny.com</p>
       </div>
       <hr />
       <div className="Payment_received">
         <p style={{ color: "#0d0c30" }}>
-          Payment Recieved for{" "}
-          <span style={{ color: "#1861ff" }}>4.0245800ETH</span>{" "}
+          Payment Received for{" "}
+          <span style={{ color: "#1861ff" }}>Android Devices</span>
         </p>
-        <p style={{ color: "#0d0c30" }}>
-          TXID: <span style={{ color: "#1861ff" }}>( {id.slice(0, 8)} )</span>
-        </p>
-        <p style={{ color: "#0d0c30" }}>{time}</p>
+        {/* <p style={{ color: "#0d0c30" }}>
+          TXID:{" "}
+          <span style={{ color: "#1861ff" }}>({data.txid.slice(0, 8)})</span>
+        </p> */}
+        <p style={{ color: "#0d0c30" }}>{data?.paymentTime}</p>
         <br />
         <main>
           <div>
             <h6>Invoice Created</h6>
-            <h6>{time}</h6>
+            <h6>{data?.invoiceTime}</h6>
           </div>
-          {/* <div>
-            {qrcode && <img alt="" className="qrcodeCon" src={qrcode} />}
-          </div> */}
         </main>
-        <button
-        className="button"
-          disabled={
-            value && value.status.statusName !== "Successful" ? true : false
-          }
-        >
+        <button className="button" disabled={data?.statusName !== "Successful"}>
           Refund Customer
         </button>
       </div>

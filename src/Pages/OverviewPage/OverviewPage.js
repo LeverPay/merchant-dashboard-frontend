@@ -22,6 +22,13 @@ import NewExpense from "./NewExpense/NewExpense";
 import ExpensesChart from "./Expenses/ExpensesChart";
 import Transactions from "./Expenses/Transactions";
 import TransactionTable from "../../Components/TransactionTable/TransactionTable";
+import axios from "axios";
+import {
+  baseUrl,
+  get_dashboard_data,
+} from "../../Components/Endpoints/Endpoints";
+import TokenContext from "../../Components/User-Token/TokenContext";
+import { useContext } from "react";
 
 const DUMMY_EXPENSES = [
   {
@@ -178,122 +185,46 @@ export const OverviewPage = (props) => {
   };
   useEffect(() => {
     setTimeout(() => {
-      setExpenses(DUMMY_EXPENSES);
+      // update with endpoint data
+      setExpenses([]);
     }, 2000);
   }, []);
   useEffect(() => {
     setTimeout(() => {
-      setTransactions(DUMMY_EXPENSES2);
+      // update with endpoint data
+      setTransactions([]);
     }, 2000);
+  }, []);
+
+  const [data, setData] = useState([]);
+  const { notify } = useContext(TokenContext);
+
+  const getDashboardData = async () => {
+    try {
+      const req = await axios.get(baseUrl + get_dashboard_data, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      console.log(req.data.data);
+      if (req.status === 200) {
+        setData(req.data.data);
+      }
+    } catch (err) {
+      notify("Something went wrong while gettng your data");
+    }
+  };
+
+  useEffect(() => {
+    getDashboardData();
   }, []);
 
   return (
     <>
-      {/* <div className="col-md-12 chart-tab">
-        <div className="tabs">
-          {" "}
-          <button className="overview-btn">Sales Analysis</button>
-          <button className="overview-btn">Transaction Analysis</button>
-          <button className="overview-btn">Trending Coin</button>{" "}
-        </div>{" "}
-        <div className="panels">
-          <div className={`panel ${checkActive(1, "active2")}`}>
-            <div className="col-md-12  chart-section">
-              <div className="col-md-4 ">
-                <div className="col-md-11 chart-container">
-                  {" "}
-                  <Chart
-                    type={"column"}
-                    chartData={chartData}
-                    bgColor="#125cf4"
-                    color="#399cc6"
-                    Legend={false}
-                  />
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="col-md-11  chart-container2">
-                  {" "}
-                  <Chart
-                    type={"doughnut"}
-                    chartData={doughnutChartData}
-                    bgColor="white"
-                    Legend={true}
-                  />
-                </div>
-              </div>
-              <div className="col-md-4">
-                <div className="col-md-11 trending-coin">
-                  <div className="coin-flip">
-                    {" "}
-                    <center>
-                      {" "}
-                      <img src={Coin} alt="smiley" className="col-md-9" />
-                    </center>
-                  </div>
-                  <div className="flexy flexyM">
-                    <ul className="list-unstyled first-coins">
-                      <li>
-                        <span>
-                          {" "}
-                          <img src={USDT} alt="smiley" className="col-md-9" />
-                        </span>
-                        USDT
-                      </li>
-                      <li>
-                        <span>
-                          {" "}
-                          <img src={NAIRA} alt="smiley" className="col-md-9" />
-                        </span>
-                        NAIRA
-                      </li>
-                      <li>
-                        <span>
-                          {" "}
-                          <img src={BUSD} alt="smiley" className="col-md-9" />
-                        </span>
-                        BUSD
-                      </li>
-                    </ul>{" "}
-                    <ul className="list-unstyled">
-                      <li>
-                        <span>
-                          {" "}
-                          <img src={FIAT} alt="smiley" className="col-md-9" />
-                        </span>
-                        FIAT
-                      </li>
-                      <li>
-                        <span>
-                          {" "}
-                          <img src={USDC} alt="smiley" className="col-md-9" />
-                        </span>
-                        USDC
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className={`panel ${checkActive(2, "active2")}`}>2</div>
-          <div className={`panel ${checkActive(3, "active2")}`}>3</div>
-        </div>
-      </div>
-      <div className="col-md-12 table-header">
-        <h5>Transaction History</h5>
-        <div className="col-md-2 select-container">
-          {" "}
-          <UserSelectComponent />
-        </div>
-      </div>
-      <div className="col-md-12">
-        <TransactionsComponent />
-      </div> */}
       <div className="dashboard-container">
         <div className="flexy flexyM">
           <div style={{ flexGrow: 1 }}>
-            <h6>Hi! Patrick</h6>
+            <h6>Hi! {data?.first_name}</h6>
             <h2>Welcome!</h2>
           </div>
           <form className="col-md-2">
@@ -309,11 +240,14 @@ export const OverviewPage = (props) => {
                 <h3>
                   {" "}
                   <CountUp
+                    // update with endpoint data
                     start={0}
-                    end={32000}
+                    // update with endpoint data
+                    end={0}
                     duration={4}
                     decimal=""
-                    prefix=" "
+                    prefix=""
+                    // +Billions(whatever)
                     suffix=""
                     enableScrollSpy={true}
                   />
@@ -339,7 +273,7 @@ export const OverviewPage = (props) => {
                   {" "}
                   <CountUp
                     start={0}
-                    end={2500}
+                    end={0}
                     duration={4}
                     decimal=""
                     prefix=" "
@@ -365,7 +299,7 @@ export const OverviewPage = (props) => {
                   {" "}
                   <CountUp
                     start={0}
-                    end={320000}
+                    end={0}
                     duration={4}
                     decimal=""
                     prefix=" "
@@ -380,12 +314,12 @@ export const OverviewPage = (props) => {
             <div className="summary-item flexy flexyM activity-item glass-bg2">
               <div className="col-md-7">
                 {" "}
-                <h5>Subscriptions</h5>
+                <h5>Wallet Balance</h5>
                 <h3>
                   {" "}
                   <CountUp
                     start={0}
-                    end={540000}
+                    end={data?.wallet?.amount?.ngn}
                     duration={4}
                     decimal=""
                     prefix=" "
@@ -437,18 +371,18 @@ export const OverviewPage = (props) => {
               <div className="flexy flexyM">
                 <div className="col-md-6 report-div">
                   <p>Total users</p>
-                  <h4>450,000</h4>
+                  <h4>0</h4>
                 </div>
                 <div className="col-md-6 report-div">
                   <p>Total returned users</p>
-                  <h4>-405,000</h4>
+                  <h4>0</h4>
                 </div>
               </div>
               <hr />
               <div className="flexy flexyM">
                 <div style={{ flexGrow: "1" }}>
                   <h5 style={{ color: " #1B2559" }}>Performance</h5>
-                  <small style={{ color: "#05CD99" }}>+0.05%</small>
+                  <small style={{ color: "#05CD99" }}>0%</small>
                 </div>
                 <button className="col-md-4">Download</button>
               </div>
@@ -466,15 +400,15 @@ export const OverviewPage = (props) => {
                       {" "}
                       <CountUp
                         start={0}
-                        end={10}
+                        end={0}
                         duration={4}
                         decimal=""
                         prefix=" "
-                        suffix="+billion"
+                        suffix=""
                         enableScrollSpy={true}
                       />
                     </h3>
-                    <small style={{ color: "#05CD99" }}>+2.45%</small>
+                    <small style={{ color: "#05CD99" }}>0%</small>
                   </div>
                 </div>
               </div>{" "}
@@ -487,15 +421,15 @@ export const OverviewPage = (props) => {
                       {" "}
                       <CountUp
                         start={0}
-                        end={10}
+                        end={0}
                         duration={4}
                         decimal=""
                         prefix=" "
-                        suffix="billion+"
+                        suffix="0"
                         enableScrollSpy={true}
                       />
                     </h3>
-                    <small style={{ color: "#E31A1A" }}>+2.45%</small>
+                    <small style={{ color: "#E31A1A" }}>0%</small>
                   </div>
                 </div>
               </div>{" "}
@@ -508,7 +442,7 @@ export const OverviewPage = (props) => {
                       {" "}
                       <CountUp
                         start={0}
-                        end={10000}
+                        end={0}
                         duration={4}
                         decimal=""
                         prefix=" "
@@ -546,7 +480,7 @@ export const OverviewPage = (props) => {
                     {" "}
                     <CountUp
                       start={0}
-                      end={305000}
+                      end={0}
                       duration={4}
                       decimal=""
                       prefix=" "
@@ -561,7 +495,7 @@ export const OverviewPage = (props) => {
                     {" "}
                     <CountUp
                       start={0}
-                      end={350}
+                      end={0}
                       duration={4}
                       decimal=""
                       prefix=" "
