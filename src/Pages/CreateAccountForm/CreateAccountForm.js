@@ -82,11 +82,12 @@ export default function CreateAccountForm({ accType }) {
     //fetch country
     try {
       const req1 = await axios.get(baseUrl + countries);
-      const response1 = req1.data?.data?.map((el) => el);
-      setCountryData(response1);
+      if (req1.status === 200) {
+        const response1 = req1.data?.data?.map((el) => el);
+        setCountryData(response1);
+      }
     } catch (err) {
       errorNotify("something went wrong while getting country");
-      console.log(err);
     }
   };
   useEffect(() => {
@@ -99,11 +100,12 @@ export default function CreateAccountForm({ accType }) {
       const req2 = await axios.post(baseUrl + states, {
         country_id: id,
       });
-      const response = req2.data?.data;
-      setStateData(response);
+      if (req2.status === 200) {
+        const response = req2.data?.data;
+        setStateData(response);
+      }
     } catch (err) {
       errorNotify("Something went wrong while fetching states");
-      console.log(err);
     }
   };
 
@@ -117,9 +119,10 @@ export default function CreateAccountForm({ accType }) {
       const req3 = await axios.post(baseUrl + cities, {
         state_id: id,
       });
-      const response = req3.data?.data;
-      console.log(response);
-      setCityData(response);
+      if (req3.status === 200) {
+        const response = req3.data?.data;
+        setCityData(response);
+      }
     } catch (err) {
       errorNotify("something went wrong while fetching city");
     }
