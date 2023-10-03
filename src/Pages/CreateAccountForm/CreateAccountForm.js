@@ -82,11 +82,12 @@ export default function CreateAccountForm({ accType }) {
     //fetch country
     try {
       const req1 = await axios.get(baseUrl + countries);
-      const response1 = req1.data?.data?.map((el) => el);
-      setCountryData(response1);
+      if (req1.status === 200) {
+        const response1 = req1.data?.data?.map((el) => el);
+        setCountryData(response1);
+      }
     } catch (err) {
       errorNotify("something went wrong while getting country");
-      console.log(err);
     }
   };
   useEffect(() => {
@@ -99,11 +100,12 @@ export default function CreateAccountForm({ accType }) {
       const req2 = await axios.post(baseUrl + states, {
         country_id: id,
       });
-      const response = req2.data?.data;
-      setStateData(response);
+      if (req2.status === 200) {
+        const response = req2.data?.data;
+        setStateData(response);
+      }
     } catch (err) {
       errorNotify("Something went wrong while fetching states");
-      console.log(err);
     }
   };
 
@@ -117,9 +119,10 @@ export default function CreateAccountForm({ accType }) {
       const req3 = await axios.post(baseUrl + cities, {
         state_id: id,
       });
-      const response = req3.data?.data;
-      console.log(response);
-      setCityData(response);
+      if (req3.status === 200) {
+        const response = req3.data?.data;
+        setCityData(response);
+      }
     } catch (err) {
       errorNotify("something went wrong while fetching city");
     }
@@ -127,7 +130,6 @@ export default function CreateAccountForm({ accType }) {
 
   useEffect(() => {
     if (person.state !== "") fetchcity(person.state);
-    console.log(person.state);
   }, [person.state]);
   // console.log(cityData, "is city data");
 
@@ -311,7 +313,6 @@ export default function CreateAccountForm({ accType }) {
         errorNotify("Something went wrong :(");
       }
     } catch (err) {
-      console.log(err);
       setAnimate(false);
       if (err.response?.status === 422) {
         errorNotify(err.response?.data?.message);
@@ -513,12 +514,15 @@ export default function CreateAccountForm({ accType }) {
               </>
             )}
             <div className="mt-5">
-              <label htmlFor="phone number">Phone Number</label>
+              <label htmlFor="phone number" id="phone">
+                Phone Number
+              </label>
               <PhoneInput
                 value={value}
                 onChange={setValue}
                 placeholder="Mobile number"
                 required
+                id="phone"
               />
             </div>
             <label htmlFor="email" id="mail">
@@ -597,6 +601,19 @@ export default function CreateAccountForm({ accType }) {
                 )}
               </span>
             </div>
+            <div className="mt-2">
+              <a
+                href="https://leverpay.io/privacy-policy"
+                target="_blank"
+                style={{
+                  color: "#2962F2",
+                  fontSize: "16px",
+                  textDecoration: "none",
+                }}
+              >
+                Privacy Policy
+              </a>
+            </div>
             <div className="flexy flexyM mt-4 mb-2">
               <input
                 required
@@ -608,12 +625,13 @@ export default function CreateAccountForm({ accType }) {
                   height: "15px",
                   width: "15px",
                 }}
+                id="agree"
               />
-              <span
+              <label
+                htmlFor="Accept"
                 id="agree"
                 style={{
                   fontFamily: "AgrandirBold",
-
                   fontSize: "12px",
                   marginLeft: "15px",
                 }}
@@ -621,7 +639,7 @@ export default function CreateAccountForm({ accType }) {
                 {" "}
                 I agree to the <strong>Terms of Service</strong> and
                 <strong> Privacy Policy.</strong>
-              </span>
+              </label>
             </div>
             <Button
               click={validateForm}
