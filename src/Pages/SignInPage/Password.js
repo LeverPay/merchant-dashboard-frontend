@@ -22,7 +22,7 @@ export const Password = () => {
         type={showPassword ? "text" : "password"}
         value={password}
         onChange={handlePasswordChange}
-        placeholder="password should be at least 12 characters"
+        placeholder=""
         autocomplete="new-password"
       />
 

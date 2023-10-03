@@ -393,13 +393,13 @@ export default function GenerateInvoice() {
         </div>
       </div>
       <form className="form container mx-4 position-relative" action="">
-        <div className="container form-container mt-5">
+        <div className="container form-group mt-5">
           <label htmlFor="Product-name" className="label fw-bolder">
             Product Name
           </label>
           <input
             type="text"
-            className="f-con"
+            className="form-control"
             name="productName"
             value={input.productName}
             onChange={handleChange}
@@ -410,54 +410,55 @@ export default function GenerateInvoice() {
             This field is required
           </small>
         </div>
-        <div className="container d-flex form-container mt-2 d-flex">
+        <div className="container d-flex flex-column form-group mt-2 d-flex">
           <h5>Select Currency</h5>
-          <div className="input-1 d-flex mx-4">
-            <label
-              htmlFor="currency"
-              id="currency"
-              className="label fw-bolder fs-4"
-            >
-              Naira
-            </label>
+
+          <div className="form-check">
             <input
               type="radio"
-              className="f-con mx-2"
+              className="form-check-input"
               name="currency"
               onChange={handleChange}
               value="naira"
               checked={input.currency === "naira"}
               id="currency"
             />
-          </div>
-          <div className="input-2 d-flex mx-2">
             <label
-              htmlFor="currency1"
-              id="currency1"
-              className="label fw-bolder fs-4"
+              htmlFor="currency"
+              id="currency"
+              className="form-check-label"
             >
-              Dollar
+              Naira
             </label>
+          </div>
+          <div className="form-check mt-3">
             <input
               type="radio"
-              className="f-con mx-2"
+              className="form-check-input"
               name="currency"
               value="dollar"
               checked={input.currency === "dollar"}
               onChange={handleChange}
               id="currency1"
             />
+            <label
+              htmlFor="currency1"
+              id="currency1"
+              className="form-check-label"
+            >
+              Dollar
+            </label>
           </div>
         </div>
-        <div className="container form-container mt-2">
+        <div className="container form-group mt-2">
           <label htmlFor="Discount" className="label fw-bolder" id="vat">
-            vat
+            VAT
           </label>
           <input
             type="number"
             pattern="^[0-9]*\.?[0-9]*$"
             placeholder="Enter a positive number (This field is optional)"
-            className="f-con"
+            className="form-control"
             name="vat"
             value={input.vat}
             onChange={handleChange}
@@ -474,7 +475,7 @@ export default function GenerateInvoice() {
               </label>
               <input
                 type="number"
-                className="f-con-1"
+                className="form-control"
                 name="price"
                 value={input.price}
                 onChange={handleChange}
@@ -493,11 +494,11 @@ export default function GenerateInvoice() {
               <input
                 type="text"
                 name=""
-                className="f-con-1"
+                className="form-control"
                 id="Total-price"
                 onChange={handleChange}
                 value={input.totalPrice}
-                readOnly={true}
+                disabled
               />
             </div>
           </div>
@@ -515,7 +516,7 @@ export default function GenerateInvoice() {
             {}
           </p>
         </div>
-        <div className="container form-container mt-2">
+        <div className="container form-group mt-2">
           <label htmlFor="Description" className="label fw-bolder">
             Description
           </label>
@@ -523,7 +524,7 @@ export default function GenerateInvoice() {
             className="f-con"
             name="description"
             id="Description"
-            cols="30"
+            cols="10"
             rows="10"
             value={input.description}
             onChange={handleChange}
@@ -533,13 +534,13 @@ export default function GenerateInvoice() {
             This field is required
           </small>
         </div>
-        <div className="container form-container mt-2">
+        <div className="container form-group mt-2">
           <label htmlFor="Customer-id" className="label fw-bolder">
             Customer's Email
           </label>
           <input
             type="email"
-            className="f-con"
+            className="form-control"
             name="customerEmail"
             value={input.customerEmail}
             onChange={handleChange}
@@ -611,7 +612,7 @@ export default function GenerateInvoice() {
 }
 
 {
-  /* <div className="container form-container mt-2">
+  /* <div className="container form-group mt-2">
 <label htmlFor="Quantity" className="label fw-bolder">
   Quantity
 </label>
@@ -631,7 +632,7 @@ export default function GenerateInvoice() {
 }
 
 {
-  /* <div className="container form-container mt-2">
+  /* <div className="container form-group mt-2">
 <label htmlFor="Discount" className="label fw-bolder">
   Discount in %
 </label>
