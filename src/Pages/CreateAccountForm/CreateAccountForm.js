@@ -130,7 +130,6 @@ export default function CreateAccountForm({ accType }) {
 
   useEffect(() => {
     if (person.state !== "") fetchcity(person.state);
-    console.log(person.state);
   }, [person.state]);
   // console.log(cityData, "is city data");
 
@@ -314,7 +313,6 @@ export default function CreateAccountForm({ accType }) {
         errorNotify("Something went wrong :(");
       }
     } catch (err) {
-      console.log(err);
       setAnimate(false);
       if (err.response?.status === 422) {
         errorNotify(err.response?.data?.message);
@@ -516,12 +514,15 @@ export default function CreateAccountForm({ accType }) {
               </>
             )}
             <div className="mt-5">
-              <label htmlFor="phone number">Phone Number</label>
+              <label htmlFor="phone number" id="phone">
+                Phone Number
+              </label>
               <PhoneInput
                 value={value}
                 onChange={setValue}
                 placeholder="Mobile number"
                 required
+                id="phone"
               />
             </div>
             <label htmlFor="email" id="mail">
@@ -600,6 +601,19 @@ export default function CreateAccountForm({ accType }) {
                 )}
               </span>
             </div>
+            <div className="mt-2">
+              <a
+                href="https://leverpay.io/privacy-policy"
+                target="_blank"
+                style={{
+                  color: "#2962F2",
+                  fontSize: "16px",
+                  textDecoration: "none",
+                }}
+              >
+                Privacy Policy
+              </a>
+            </div>
             <div className="flexy flexyM mt-4 mb-2">
               <input
                 required
@@ -611,12 +625,13 @@ export default function CreateAccountForm({ accType }) {
                   height: "15px",
                   width: "15px",
                 }}
+                id="agree"
               />
-              <span
+              <label
+                htmlFor="Accept"
                 id="agree"
                 style={{
                   fontFamily: "AgrandirBold",
-
                   fontSize: "12px",
                   marginLeft: "15px",
                 }}
@@ -624,7 +639,7 @@ export default function CreateAccountForm({ accType }) {
                 {" "}
                 I agree to the <strong>Terms of Service</strong> and
                 <strong> Privacy Policy.</strong>
-              </span>
+              </label>
             </div>
             <Button
               click={validateForm}
