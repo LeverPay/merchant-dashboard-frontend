@@ -45,7 +45,7 @@ export default function Verify({ mail, renderSignUp }) {
   const successNotify = (message) =>
     toast(message, {
       position: "top-center",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: true,
       theme: "light",
     });

@@ -30,6 +30,7 @@ export default function CreateAccountForm({ accType }) {
   const [cityData, setCityData] = useState(null);
   const [value, setValue] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [showPassword1, setShowPassword1] = useState(false);
   const [v_email, setV_email] = useState("");
   const [renderVerify, setRenderVerify] = useState(false);
   const [animate, setAnimate] = useState(false);
@@ -73,7 +74,7 @@ export default function CreateAccountForm({ accType }) {
   const successNotify = (message) =>
     toast(message, {
       position: "top-center",
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: true,
       theme: "light",
     });
@@ -139,6 +140,9 @@ export default function CreateAccountForm({ accType }) {
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+  const toggleShowPassword1 = () => {
+    setShowPassword1(!showPassword1);
   };
 
   const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -557,15 +561,14 @@ export default function CreateAccountForm({ accType }) {
                     className="image"
                     src={EyeClose}
                     alt="Scholar"
-                    width="5%"
+                    width="4%"
                   />
                 ) : (
                   <img
                     className="image"
                     src={EyeOpen}
                     alt="Scholar"
-                    width="5%"
-                    height="5%"
+                    width="4%"
                   />
                 )}
               </span>
@@ -574,7 +577,7 @@ export default function CreateAccountForm({ accType }) {
               </label>
               <input
                 required
-                type={showPassword ? "text" : "password"}
+                type={showPassword1 ? "text" : "password"}
                 className="form-control"
                 placeholder="Must be same as password"
                 onChange={handleChange}
@@ -582,37 +585,23 @@ export default function CreateAccountForm({ accType }) {
                 value={person.confirmPassword}
                 id="confirm-password"
               />
-              <span onClick={toggleShowPassword} className="eye">
-                {showPassword ? (
+              <span onClick={toggleShowPassword1} className="eye">
+                {showPassword1 ? (
                   <img
                     className="image"
                     src={EyeClose}
                     alt="Scholar"
-                    width="5%"
+                    width="4%"
                   />
                 ) : (
                   <img
                     className="image"
                     src={EyeOpen}
                     alt="Scholar"
-                    width="5%"
-                    height="5%"
+                    width="4%"
                   />
                 )}
               </span>
-            </div>
-            <div className="mt-2">
-              <a
-                href="https://leverpay.io/privacy-policy"
-                target="_blank"
-                style={{
-                  color: "#2962F2",
-                  fontSize: "16px",
-                  textDecoration: "none",
-                }}
-              >
-                Privacy Policy
-              </a>
             </div>
             <div className="flexy flexyM mt-4 mb-2">
               <input
@@ -636,9 +625,21 @@ export default function CreateAccountForm({ accType }) {
                   marginLeft: "15px",
                 }}
               >
-                {" "}
-                I agree to the <strong>Terms of Service</strong> and
-                <strong> Privacy Policy.</strong>
+                I agree to the
+                <strong>
+                  <span>
+                    <a
+                      href="https://leverpay.io/privacy-policy"
+                      target="_blank"
+                      style={{
+                        color: "#2962F2",
+                        textDecoration: "none",
+                      }}
+                    >
+                      Terms of Service and Privacy Policy
+                    </a>
+                  </span>
+                </strong>
               </label>
             </div>
             <Button

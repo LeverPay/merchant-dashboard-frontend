@@ -117,20 +117,20 @@ export default function SidebarNav(props) {
       link: "profile",
       title: "Profile",
     },
-    {
-      icon: <SettingsRoundedIcon htmlColor="white" />,
-      link: "security",
-      title: "Setting",
-    },
+    // {
+    //   icon: <SettingsRoundedIcon htmlColor="white" />,
+    //   link: "security",
+    //   title: "Setting",
+    // },
   ];
 
   const sidebarItemsBottom = [
-    {
-      iconStart: <FileCopyOutlinedIcon htmlColor="white" />,
-      link: "./",
-      title: "Documentation",
-      iconEnd: <OpenInNewOutlinedIcon htmlColor="white" />,
-    },
+    // {
+    //   iconStart: <FileCopyOutlinedIcon htmlColor="white" />,
+    //   link: "./",
+    //   title: "Documentation",
+    //   iconEnd: <OpenInNewOutlinedIcon htmlColor="white" />,
+    // },
     {
       iconStart: <QuizOutlinedIcon htmlColor="white" />,
       link: "Help",

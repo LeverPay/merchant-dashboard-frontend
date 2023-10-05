@@ -28,7 +28,7 @@ function SignInPage() {
   const notify = (message) => {
     toast.error(message, {
       position: "top-center",
-      autoClose: false,
+      autoClose: 5000,
       hideProgressBar: true,
       closeOnClick: true,
       theme: "light",
@@ -38,7 +38,7 @@ function SignInPage() {
   const success = (message) => {
     toast.success(message, {
       position: "top-center",
-      autoClose: false,
+      autoClose: 2000,
       hideProgressBar: true,
       closeOnClick: true,
       theme: "light",
@@ -185,6 +185,7 @@ function SignInPage() {
               backgroundColor: `${
                 submitButtonDisabled ? "#abbce7" : "#0051FF"
               }`,
+              color: `${submitButtonDisabled ? "#000" : "#fff"}`,
             }}
             disable={submitButtonDisabled}
             click={validateForm}
