@@ -634,6 +634,7 @@ export default function CreateAccountForm({ accType }) {
                       style={{
                         color: "#2962F2",
                         textDecoration: "none",
+                        marginLeft: "2px",
                       }}
                     >
                       Terms of Service and Privacy Policy
@@ -662,20 +663,20 @@ export default function CreateAccountForm({ accType }) {
                 to={"/"}
                 style={{
                   color: "#2962F2",
-                  fontSize: "16px",
+                  fontWeight: "bolder",
                   textDecoration: "none",
                 }}
               >
                 Login
               </Link>
             </p>
-            <p style={{ fontSize: "13px", marginTop: "4px", color: "black" }}>
+            <p style={{ fontSize: "13px", marginTop: "2px", color: "black" }}>
               Already Registered?{" "}
               <Link
                 onClick={continue_toVerification}
                 style={{
                   color: "#2962F2",
-                  fontSize: "16px",
+                  fontWeight: "bolder",
                   textDecoration: "none",
                 }}
               >
