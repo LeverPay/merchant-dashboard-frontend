@@ -32,6 +32,14 @@
   font-family: AgrandirTinItalic;
   font-size: 1rem;
 }
+.payment-method .form-container .form .paymentimg .no-data {
+  margin: 5% auto;
+  height: 100%;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .payment-method .form-container .form .paymentimg .table-container {
   height: 90%;
   width: 100%;
