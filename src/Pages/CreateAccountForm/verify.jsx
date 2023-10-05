@@ -12,22 +12,13 @@ import { toast } from "react-toastify";
 import { useLayoutEffect } from "react";
 
 export default function Verify({ mail, renderSignUp }) {
-  console.log(mail);
   let [email, setEmail] = useState("");
-
-  //   useEffect(() => {
-  //     if (mail === "") {
-  //       mail = email
-  //     }
-  //   }, [email]);
 
   console.log(email);
   // Generates an array for for inputs
   const inputs = Array(4).fill(0);
   // adds useRefs to inputs
   const inputRefs = inputs.map(() => useRef());
-
-  const [v_email, setV_email] = useState();
 
   const [animate, setAnimate] = useState(false);
 

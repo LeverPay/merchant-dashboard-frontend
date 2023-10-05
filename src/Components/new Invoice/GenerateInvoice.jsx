@@ -299,9 +299,7 @@ export default function GenerateInvoice() {
           Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
         },
       });
-      console.log(req.data);
     } catch (err) {
-      console.log(err);
     }
   };
 

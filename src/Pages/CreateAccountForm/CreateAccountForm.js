@@ -303,7 +303,6 @@ export default function CreateAccountForm({ accType }) {
       });
       console.log(register);
       if (register.status === 200) {
-        console.log(register);
         successNotify("Signup Success ✔");
         localStorage.setItem("registered", "true");
         setAnimate(false);

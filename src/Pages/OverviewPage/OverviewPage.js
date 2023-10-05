@@ -206,7 +206,6 @@ export const OverviewPage = (props) => {
           Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
         },
       });
-      console.log(req.data.data);
       if (req.status === 200) {
         setData(req.data.data);
       }

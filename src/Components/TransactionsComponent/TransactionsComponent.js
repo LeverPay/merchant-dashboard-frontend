@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useContext } from "react";
 import {
   allTransactions,
   canceledTransactions,
@@ -19,16 +19,16 @@ import {
   fund_transfers,
   get_transactions,
 } from "../Endpoints/Endpoints";
+import TokenContext from "../User-Token/TokenContext";
 function TransactionsComponent() {
   const [activeIndex, setActiveIndex] = useState(1);
-  const [generateInvoice, setGenerateInvoice] = useState(false);
   const [hidebalance, setHidebalance] = useState(false);
-  const btn = useRef();
   const handleClick = (index) => setActiveIndex(index);
   const checkActive = (index, className) =>
     activeIndex === index ? className : "";
   const [displayForm, setDisplayForm] = useState(false);
-  const [animate, setAnimate] = useState(false)
+  const [animate, setAnimate] = useState(false);
+  const { notify } = useContext(TokenContext);
 
   const showForm = () => {
     setDisplayForm(true);
@@ -42,20 +42,19 @@ function TransactionsComponent() {
 
   const getTransactions = async () => {
     try {
-      setAnimate(true)
+      setAnimate(true);
       const req = await axios.get(baseUrl + get_transactions, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
         },
       });
-      console.log(req.data);
       if (req.status === 200) {
         setTransactionsData(req.data.data);
-        setAnimate(false)
+        setAnimate(false);
       }
     } catch (err) {
-      console.log(err);
-      setAnimate(false)
+      setAnimate(false);
+      notify("Couldn't get data :(");
     }
   };
 
