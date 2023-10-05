@@ -16,6 +16,7 @@ export default function Subscription_el() {
   const [tableheader2] = useState(HeaderData);
   const [tableBody] = useState(data);
   const [showDetails, setShowDetails] = useState({});
+  const [noData, setNodata] = useState(false);
 
   // Initialize all subuscription
   const [allSubscriptions, setAllSubscriptions] = useState(null);
@@ -157,31 +158,31 @@ export default function Subscription_el() {
         <Card
           icon={all}
           status="All"
-          count={allSubscriptions?.length}
+          count={0}
           color="#2962F2"
         />
         <Card
           icon={pending}
           status="Pending"
-          count={pendingSubscriptions?.length}
+          count={0}
           color="#F5A31D"
         />
         <Card
           icon={active}
           status="Active"
-          count={activeSubscriptions?.length}
+          count={0}
           color="#0C6904"
         />
         <Card
           icon={failed}
           status="Failed"
-          count={failedSubscriptions?.length}
+          count={0}
           color="#FD3003"
         />
         <Card
           icon={cancel}
           status="Canceled"
-          count={canceledSubscriptions?.length}
+          count={0}
           color="#FF0505"
         />
       </section>
@@ -215,57 +216,60 @@ export default function Subscription_el() {
           </thead>
         </table>
 
-        <table className="table2 mt-5 px-5">
-          <tbody>
-            <tr>
-              {tableheader2.map((el, i) => (
-                <th key={i} className="text-center">
-                  {el}
-                </th>
-              ))}
-            </tr>
-          </tbody>
-
-          {filteredData.map((el, i) => (
-            <React.Fragment key={i}>
-              <tbody className="tbody">
-                <tr key={el.id} className="">
-                  <>
-                    <td className="text-center px-4 py-2">{el.firstname}</td>
-                    <td className="text-center px-4 py-2">{el.email}</td>
-                    <td className="text-center px-4 py-2">{el.date}</td>
-                    <td className="text-center px-4 py-2">{el.Duration}</td>
-                    <td className="text-center px-4 py-2">{el.startDate}</td>
-                    <td className="text-center px-4 py-2">{el.endDate}</td>
-                    <td className="text-center px-4 py-2">{el.paid}</td>
-                    <td
-                      className="text-center d-flex px-4 py-2 table-link"
-                      onClick={() => show_subscriptions_info(el)}
-                    >
-                      {el.link}
-                    </td>
-                     <td className="text-center px-4 py-2">
-                      <ToggleSwitch
-                        color="#0EB500"
-                        checked={checked[el.id]}
-                        handleChange={(event) =>
-                          handleSwitchChange(el.id, event.target.checked)
-                        }
-                      />{" "}
-                    </td>
-                  </>
-                </tr>
-              </tbody>
-              {showDetails[el.id] && (
-                <Show_Details
-                  details={el}
-                  state={() => show_subscriptions_info(el)}
-                  key={el.id}
-                />
-              )}
-            </React.Fragment>
-          ))}
-        </table>
+        {noData ? (
+          <table className="table2 mt-5 px-5">
+            <tbody>
+              <tr>
+                {tableheader2.map((el, i) => (
+                  <th key={i} className="text-center">
+                    {el}
+                  </th>
+                ))}
+              </tr>
+            </tbody>
+            {filteredData.map((el, i) => (
+              <React.Fragment key={i}>
+                <tbody className="tbody">
+                  <tr key={el.id} className="">
+                    <>
+                      <td className="text-center px-4 py-2">{el.firstname}</td>
+                      <td className="text-center px-4 py-2">{el.email}</td>
+                      <td className="text-center px-4 py-2">{el.date}</td>
+                      <td className="text-center px-4 py-2">{el.Duration}</td>
+                      <td className="text-center px-4 py-2">{el.startDate}</td>
+                      <td className="text-center px-4 py-2">{el.endDate}</td>
+                      <td className="text-center px-4 py-2">{el.paid}</td>
+                      <td
+                        className="text-center d-flex px-4 py-2 table-link"
+                        onClick={() => show_subscriptions_info(el)}
+                      >
+                        {el.link}
+                      </td>
+                      <td className="text-center px-4 py-2">
+                        <ToggleSwitch
+                          color="#0EB500"
+                          checked={checked[el.id]}
+                          handleChange={(event) =>
+                            handleSwitchChange(el.id, event.target.checked)
+                          }
+                        />{" "}
+                      </td>
+                    </>
+                  </tr>
+                </tbody>
+                {showDetails[el.id] && (
+                  <Show_Details
+                    details={el}
+                    state={() => show_subscriptions_info(el)}
+                    key={el.id}
+                  />
+                )}
+              </React.Fragment>
+            ))}
+          </table>
+        ) : (
+          <div className="noValue">No data to Display</div>
+        )}
       </section>
     </div>
   );

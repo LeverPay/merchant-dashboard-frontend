@@ -299,9 +299,7 @@ export default function GenerateInvoice() {
           Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
         },
       });
-      console.log(req.data);
     } catch (err) {
-      console.log(err);
     }
   };
 
@@ -346,18 +344,18 @@ export default function GenerateInvoice() {
     }
   };
 
-  // decrypy data on local storage for use
-  const getData = () => {
-    const _key = sessionStorage.getItem("Name");
-    const encryptedData = sessionStorage.getItem("dx");
-    const decrypt = CryptoJS?.AES?.decrypt(encryptedData, _key);
-    const val = decrypt.toString(CryptoJS?.enc?.Utf8);
-    const data = JSON.parse(val);
-    setUserData(data);
-  };
+  // // decrypy data on local storage for use
+  // const getData = () => {
+  //   const _key = sessionStorage.getItem("Name");
+  //   const encryptedData = sessionStorage.getItem("dx");
+  //   const decrypt = CryptoJS?.AES?.decrypt(encryptedData, _key);
+  //   const val = decrypt.toString(CryptoJS?.enc?.Utf8);
+  //   const data = JSON.parse(val);
+  //   setUserData(data);
+  // };
 
   useEffect(() => {
-    getData();
+    // getData();
     getCurrency();
   }, []);
 

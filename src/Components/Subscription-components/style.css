@@ -97,6 +97,10 @@
 .subscription-container .table-section .table2 .subscription-details-container {
   overflow-y: auto;
 }
+.subscription-container .table-section .noValue {
+  margin: 5% auto;
+  font-weight: bold;
+}
 
 .tbody .table-link {
   color: #082e88;

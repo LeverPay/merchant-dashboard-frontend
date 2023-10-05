@@ -27,7 +27,7 @@ export default function Form() {
   const [selectNetwork, setSelectedNetwork] = useState(null);
   const [changeInput, setChangeInput] = useState(false);
 
-  const [showTable, setShowTable] = useState(true);
+  const [showTable, setShowTable] = useState(false);
   const [TableHeader] = useState(TableHead);
   const [SecondHeader, setSecondHeader] = useState(HeaderData);
   const [TableBody] = useState(data);
@@ -85,7 +85,7 @@ export default function Form() {
   const SetAciveHeader = (item) => {
     const activeItem = TableHeader.indexOf(item);
     setActive(activeItem);
-    console.log(active);
+    // console.log(active);
   };
 
   //Renders Table based on data available
@@ -118,14 +118,14 @@ export default function Form() {
       ...prev,
       input1: !changeInput ? selectedOption : "",
     }));
-    console.log(input.input1);
+    // console.log(input.input1);
   };
 
   // Selected interval value
   const handleSelectedInterval = (opt) => {
     setInput((prev) => ({ ...prev, input4: opt }));
     setSelectedInterVal(opt);
-    console.log(input.input4);
+    // console.log(input.input4);
   };
 
   // Display intervals
@@ -151,7 +151,7 @@ export default function Form() {
   const handleSelectedNetwork = (opt) => {
     setInput((prev) => ({ ...prev, input5: opt }));
     setSelectedNetwork(opt);
-    console.log(input.input5);
+    // console.log(input.input5);
   };
 
   //Logic to display bank images on select component
@@ -211,12 +211,11 @@ export default function Form() {
   const getBankLists = async () => {
     try {
       const req = await axios.get(requestUrl);
-      console.log(req);
       if (req.status === 200) {
         setAllBanks(req.data);
       }
     } catch (err) {
-      console.log(`Oh No Something went wrong ${err}`);
+      console.error(err);
     }
   };
 
@@ -447,7 +446,7 @@ export default function Form() {
                   }`}
                   ref={DisplayImg}
                 >
-                  {showTable && (
+                  {showTable === false ? (
                     <div
                       className="table-container d-flex flex-column justify-content-center align-items-center px-4"
                       ref={TableRef}
@@ -520,8 +519,10 @@ export default function Form() {
                         </table>
                       </div>
                     </div>
+                  ) : (
+                    <div className="no-data">No data to display</div>
                   )}
-                  <div className="d-flex px-4 align-items-center">
+                  <div className="d-flex px-4 align-items-end">
                     <img
                       src={require("../../Assets/ep-info-filled.png")}
                       alt=""

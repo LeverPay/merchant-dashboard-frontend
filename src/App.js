@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import PaymentMethod from "./Pages/PaymentMethod";
 import Profile from "./Pages/Profile";
-import Security from "./Pages/Security";
+// import Security from "./Pages/Security";
 import SidebarNav from "./Components/General/SidebarNav";
 import Header from "./Components/General/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -54,7 +54,7 @@ function App(props) {
             <Route path="view" element={<View />} />
             {/* <Route path="portfolio" element={<PortfolioPage />} /> */}
             <Route path="profile" element={<Profile />} />
-            <Route path="security" element={<Security />} />
+            {/* <Route path="security" element={<Security />} /> */}
             <Route path="transactions" element={<TransactionsPage />} />
             <Route path="Help" element={<Help />} />
             <Route path="sign-in" element={<SignInPage />} />

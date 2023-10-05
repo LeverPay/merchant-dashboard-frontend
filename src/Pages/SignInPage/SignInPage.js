@@ -28,7 +28,7 @@ function SignInPage() {
   const notify = (message) => {
     toast.error(message, {
       position: "top-center",
-      autoClose: false,
+      autoClose: 5000,
       hideProgressBar: true,
       closeOnClick: true,
       theme: "light",
@@ -38,7 +38,7 @@ function SignInPage() {
   const success = (message) => {
     toast.success(message, {
       position: "top-center",
-      autoClose: false,
+      autoClose: 2000,
       hideProgressBar: true,
       closeOnClick: true,
       theme: "light",
@@ -52,7 +52,6 @@ function SignInPage() {
   const handleOncange = (e) => {
     const { name, value } = e.target;
     setInputText((prev) => ({ ...prev, [name]: value }));
-    console.log(inputText);
     if (
       emailRegex.test(inputText.email) &&
       passwordRegex.test(inputText.password)
@@ -95,18 +94,10 @@ function SignInPage() {
         email: inputText.email,
         password: inputText.password,
       });
-      console.log(request);
       if (request.status === 200) {
         success("Successful");
         const uniqueId = request.data.data.token;
-        const name = request.data.data.user;
-        const stringify = JSON.stringify(name);
-        const encryptedData = AES.encrypt(stringify, uniqueId).toString();
-        const data = sessionStorage.setItem("dx", encryptedData);
-        // setUserToken(uniqueId);
-        // console.log(userToken);
         window.sessionStorage.setItem("Name", uniqueId);
-        // localStorage.setItem('userData', JSON.stringify(user));
         const cookie = window.sessionStorage.getItem("Name");
         if (cookie) {
           setAnimate(false);
@@ -118,7 +109,6 @@ function SignInPage() {
         }
       }
     } catch (err) {
-      console.log(err);
       setAnimate(false);
       if (err.response !== undefined) {
         notify(err.response.data.message);
@@ -185,6 +175,7 @@ function SignInPage() {
               backgroundColor: `${
                 submitButtonDisabled ? "#abbce7" : "#0051FF"
               }`,
+              color: `${submitButtonDisabled ? "#000" : "#fff"}`,
             }}
             disable={submitButtonDisabled}
             click={validateForm}
