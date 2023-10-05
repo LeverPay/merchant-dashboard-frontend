@@ -1,12 +1,13 @@
 export const TableHead = ["PENDING", "PAID", "CANCELED"];
 
 export const HeaderData = [
-  // "Date/Time",
-  "Sender Email",
-  "Receiver email",
-  "Product Name",
-  // "Notification",
-  "Details",
+  "Date",
+  "Product",
+  "Price",
+  "Email",
+  "Phone",
+  "Status",
+  "View",
 ];
 
 export const data = [

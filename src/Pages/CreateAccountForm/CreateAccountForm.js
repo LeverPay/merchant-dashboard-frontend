@@ -37,10 +37,10 @@ export default function CreateAccountForm({ accType }) {
 
   const [person, setPerson] = useState({
     firstName: "",
-    lastName: "",
+    otherName: "",
     surName: "",
     dob: "",
-    gender: "Male",
+    gender: "Select gender",
     address: "",
     businessName: "",
     rcNumber: "",
@@ -154,13 +154,13 @@ export default function CreateAccountForm({ accType }) {
     // Check if the First Name is an Empty string or not.
 
     if (person.firstName.length == 0) {
-      errorNotify("Invalid Form, First Name can not be empty");
+      errorNotify("Invalid Form, First Name cannot be empty");
       return;
     }
 
     // checks if last name is empty
     if (person.surName.length == 0) {
-      errorNotify("Invalid Form, Sur Name can not be empty");
+      errorNotify("Invalid Form, Surname cannot be empty");
       return;
     }
 
@@ -358,12 +358,12 @@ export default function CreateAccountForm({ accType }) {
               Othername
             </label>
             <input
-              required
+              
               type="text"
               className="form-control"
               onChange={handleChange}
               name="lastName"
-              value={person.lastName}
+              value={person.otherName}
               id="othername"
             />
             <label htmlFor="surname" id="surname">
@@ -390,6 +390,7 @@ export default function CreateAccountForm({ accType }) {
               value={person.gender}
               name="gender"
             >
+              <option value="">Select gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
@@ -523,7 +524,7 @@ export default function CreateAccountForm({ accType }) {
               <PhoneInput
                 value={value}
                 onChange={setValue}
-                placeholder="Mobile number"
+                placeholder="Phone number"
                 required
                 id="phone"
               />
@@ -560,14 +561,14 @@ export default function CreateAccountForm({ accType }) {
                     className="image"
                     src={EyeClose}
                     alt="Scholar"
-                    width="4%"
+                    width="3%"
                   />
                 ) : (
                   <img
                     className="image"
                     src={EyeOpen}
                     alt="Scholar"
-                    width="4%"
+                    width="3%"
                   />
                 )}
               </span>
@@ -590,14 +591,14 @@ export default function CreateAccountForm({ accType }) {
                     className="image"
                     src={EyeClose}
                     alt="Scholar"
-                    width="4%"
+                    width="3%"
                   />
                 ) : (
                   <img
                     className="image"
                     src={EyeOpen}
                     alt="Scholar"
-                    width="4%"
+                    width="3%"
                   />
                 )}
               </span>
@@ -636,7 +637,33 @@ export default function CreateAccountForm({ accType }) {
                         marginLeft: "2px",
                       }}
                     >
-                      Terms of Service and Privacy Policy
+                      Privacy Policy 
+                    </a>
+                  </span>
+                </strong>
+                <strong>
+                  <span style={{
+                        
+                        textDecoration: "none",
+                        marginLeft: "2px",
+                      }}>
+                    
+                      and
+                    
+                  </span>
+                </strong>
+                <strong>
+                  <span>
+                    <a
+                      href="https://leverpay.io/terms-conditions"
+                      target="_blank"
+                      style={{
+                        color: "#2962F2",
+                        textDecoration: "none",
+                        marginLeft: "2px",
+                      }}
+                    >
+                      Terms of Service
                     </a>
                   </span>
                 </strong>

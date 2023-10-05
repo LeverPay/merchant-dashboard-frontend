@@ -373,7 +373,7 @@ export const OverviewPage = (props) => {
                   <h4>0</h4>
                 </div>
                 <div className="col-md-6 report-div">
-                  <p>Total returned users</p>
+                  <p>Returned users</p>
                   <h4>0</h4>
                 </div>
               </div>
@@ -407,7 +407,7 @@ export const OverviewPage = (props) => {
                         enableScrollSpy={true}
                       />
                     </h3>
-                    <small style={{ color: "#05CD99" }}>0%</small>
+                    <small style={{ color: "#05CD99" }}></small>
                   </div>
                 </div>
               </div>{" "}
@@ -428,7 +428,7 @@ export const OverviewPage = (props) => {
                         enableScrollSpy={true}
                       />
                     </h3>
-                    <small style={{ color: "#E31A1A" }}>0%</small>
+                    <small style={{ color: "#E31A1A" }}></small>
                   </div>
                 </div>
               </div>{" "}
