@@ -236,7 +236,7 @@ export const OverviewPage = (props) => {
             <div className="summary-item flexy flexyM glass-bg">
               <div className="col-md-7">
                 {" "}
-                <h5>Monthly transaction </h5>
+                <h5>Mtly trans</h5>
                 <h3>
                   {" "}
                   <CountUp
@@ -268,7 +268,7 @@ export const OverviewPage = (props) => {
               </div>
               <div className="col-md-7 offset-md-3">
                 {" "}
-                <h5>Weekly transaction </h5>
+                <h5>Wkly trans</h5>
                 <h3>
                   {" "}
                   <CountUp
@@ -294,7 +294,7 @@ export const OverviewPage = (props) => {
               </div>
               <div className="col-md-7 offset-md-3">
                 {" "}
-                <h5>Daily transaction</h5>
+                <h5>Daily trans</h5>
                 <h3>
                   {" "}
                   <CountUp
@@ -393,7 +393,7 @@ export const OverviewPage = (props) => {
             <div className="activity-summary row row-cols-1 row-cols-lg-3 g-2 g-lg-3">
               <div className="col">
                 <div className="summary-item bordered-summary">
-                  <h5>Revenue Generated</h5>
+                  <h5>Generated</h5>
                   <div className="col-md-12   flexy flexyM">
                     {" "}
                     <h3 style={{ flexGrow: "1" }}>
@@ -414,7 +414,7 @@ export const OverviewPage = (props) => {
               </div>{" "}
               <div className="col">
                 <div className="summary-item bordered-summary">
-                  <h5>Revenue Remitted</h5>
+                  <h5>Remitted</h5>
                   <div className="col-md-12   flexy flexyM">
                     {" "}
                     <h3 style={{ flexGrow: "1" }}>
@@ -435,7 +435,7 @@ export const OverviewPage = (props) => {
               </div>{" "}
               <div className="col">
                 <div className="summary-item bordered-summary">
-                  <h5>Revenue Unremitted</h5>
+                  <h5>Unremitted</h5>
                   <div className="col-md-12   flexy flexyM">
                     {" "}
                     <h3 style={{ flexGrow: "1" }}>
@@ -465,7 +465,7 @@ export const OverviewPage = (props) => {
           <div className="col-md-4 ">
             {" "}
             <div className="col-md-11 glass-bg users-container">
-              <h5>Monthly Successful Transactions</h5>
+              <h5>Mtly Successful Trans</h5>
               <Expenses items={expenses} />
             </div>
             <div className="transa-div col-md-11  glass-bg">
