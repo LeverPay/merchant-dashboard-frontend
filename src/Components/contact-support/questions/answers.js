@@ -3,11 +3,11 @@ const data = [
     id: 1,
     question: "What is Leverpay?",
     answer:
-      "Leverpay is a cryptocurrency payments solution that allows merchants to accept payments in various cryptocurrencies.",
+      "Leverpay is a Digital payments solution that allows merchants to accept payments in various stablecoin.",
   },
   {
     id: 2,
-    question: "Which cryptocurrencies does Leverpay support?",
+    question: "Which Digital does Leverpay support?",
     answer: "Leverpay supports all stablecoin, USDT, USDC, BUSD",
   },
   {
@@ -25,14 +25,14 @@ const data = [
   {
     id: 5,
     question: "What are the fees for using Leverpay?",
-    answer: "Leverpay charges a flat fee of 1% per transaction.",
+    answer: "Leverpay charges a flat fee of 1.3% and 2.5% for local and interncational transactions respectively.",
   },
   {
     id: 6,
     question:
       "How long does it take for Leverpay transactions to be processed?",
     answer:
-      "Leverpay transactions are processed instantly, allowing for quick and seamless payments.",
+      "Leverpay transactions are processed instantly, allowing for quick and seamless payments experience.",
   },
   {
     id: 7,
