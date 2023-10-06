@@ -323,9 +323,9 @@ export default function Form({ setRenderForm, notify, success }) {
               onInput={toggleErr5}
             >
               <option value="">Find Your Issue</option>
-              <option value="issue 1">Issue 1</option>
-              <option value="issue 2">Issue 2</option>
-              <option value="issue 3">Issue 3</option>
+              <option value="Remittance">Remittance</option>
+              <option value="Failed Transaction">Failed transaction</option>
+              <option value="Others">Others</option>
             </select>
           </div>
 
@@ -396,7 +396,7 @@ export default function Form({ setRenderForm, notify, success }) {
               height="25px"
               alt=""
             />
-            <p className="fs-6 mx-4 my-auto color">+234 7068936389</p>
+            <p className="fs-6 mx-4 my-auto color">+234 9060898687</p>
           </a>
 
           <a
@@ -409,7 +409,7 @@ export default function Form({ setRenderForm, notify, success }) {
               height="25px"
               alt=""
             />
-            <p className="fs-6 mx-4 my-auto color">+234 7068936389</p>
+            <p className="fs-6 mx-4 my-auto color">+234 9060898687</p>
           </a>
           <a
             href=""
@@ -421,7 +421,7 @@ export default function Form({ setRenderForm, notify, success }) {
               height="25px"
               alt=""
             />
-            <p className="fs-6 mx-4 my-auto color">+234 7068936389</p>
+            <p className="fs-6 mx-4 my-auto color">+234 9060898687</p>
           </a>
 
           <a

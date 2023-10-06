@@ -99,7 +99,7 @@ function TransactionsComponent() {
         </div>
         <span className="show-btn eye">
           <p onClick={showForm} className="fw-bold" title="need help ?">
-            ?
+            
           </p>
         </span>
       </div>

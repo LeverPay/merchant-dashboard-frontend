@@ -528,9 +528,8 @@ export default function Form() {
                       alt=""
                     />
                     <small className="text-wrap mx-4 fw-bolder">
-                      Also note that Leverpay allows you to setup more than one
-                      remitance method. in this case, we will to create one of
-                      your preferred options.
+                      Kindly note that Leverpay allows you to setup more than one
+                      remitance method. However, we will remit to any of the options provided.
                     </small>
                   </div>
                 </div>

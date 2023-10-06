@@ -37,7 +37,7 @@ const TransactionTable = (props) => {
     return date.toLocaleDateString("en-US", options);
   };
 
-  const headers = ["Ref Number", "Date", "Status", "Amount", "Details"];
+  const headers = ["Ref No", "Date", "Status", "Amount", "Details"];
 
   useEffect(() => {
     if (showInvoice !== null) {

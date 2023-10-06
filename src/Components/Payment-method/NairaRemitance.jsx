@@ -62,7 +62,7 @@ export default function NairaRemitance({
         <section className="input-section">
           <div className="d-flex flex-column inputs-container mb-3">
             <label htmlFor="bank" id="select-bank">
-              {!changeInput ? "Select Bank" : "Choose Other Bank"}
+              {!changeInput ? "Select Bank" : "Type Other Bank"}
             </label>
             {!changeInput ? (
               <>

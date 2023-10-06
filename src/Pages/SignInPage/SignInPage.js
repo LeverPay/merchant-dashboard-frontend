@@ -28,7 +28,7 @@ function SignInPage() {
   const notify = (message) => {
     toast.error(message, {
       position: "top-center",
-      autoClose: 5000,
+      autoClose: 3000,
       hideProgressBar: true,
       closeOnClick: true,
       theme: "light",
@@ -38,7 +38,7 @@ function SignInPage() {
   const success = (message) => {
     toast.success(message, {
       position: "top-center",
-      autoClose: 2000,
+      autoClose: 1500,
       hideProgressBar: true,
       closeOnClick: true,
       theme: "light",
@@ -145,14 +145,14 @@ function SignInPage() {
           </div>
           <div>
             <label htmlFor="pass-code" className="signin-label">
-              PASSWORD
+              Password
             </label>
             <input
               type={showPassword ? "text" : "password"}
               name="password"
               value={inputText.password}
               onChange={handleOncange}
-              placeholder=""
+              placeholder="***********"
               autoComplete="new-password"
               id="pass-code"
             />
