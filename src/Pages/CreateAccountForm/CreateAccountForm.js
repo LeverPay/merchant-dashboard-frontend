@@ -362,7 +362,7 @@ export default function CreateAccountForm({ accType }) {
               type="text"
               className="form-control"
               onChange={handleChange}
-              name="lastName"
+              name="otherName"
               value={person.otherName}
               id="othername"
             />
