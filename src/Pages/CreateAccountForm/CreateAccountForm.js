@@ -188,7 +188,7 @@ export default function CreateAccountForm({ accType }) {
       }
     }
 
-    if (person.gender.length == 0) {
+    if (person.gender.length == 0 || person.gender === "Select gender") {
       errorNotify("Invalid Form, gender can not be empty");
       return;
     }
@@ -358,7 +358,6 @@ export default function CreateAccountForm({ accType }) {
               Othername
             </label>
             <input
-              
               type="text"
               className="form-control"
               onChange={handleChange}
@@ -637,19 +636,18 @@ export default function CreateAccountForm({ accType }) {
                         marginLeft: "2px",
                       }}
                     >
-                      Privacy Policy 
+                      Privacy Policy
                     </a>
                   </span>
                 </strong>
                 <strong>
-                  <span style={{
-                        
-                        textDecoration: "none",
-                        marginLeft: "2px",
-                      }}>
-                    
-                      and
-                    
+                  <span
+                    style={{
+                      textDecoration: "none",
+                      marginLeft: "2px",
+                    }}
+                  >
+                    and
                   </span>
                 </strong>
                 <strong>

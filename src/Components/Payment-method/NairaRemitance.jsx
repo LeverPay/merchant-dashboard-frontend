@@ -134,38 +134,6 @@ export default function NairaRemitance({
               />
             </div>
           </div>
-
-          <div className="d-flex flex-column mb-3 inputs-container">
-            <label htmlFor="Narration" id="narration">
-              Narration
-            </label>
-            <div className="d-flex inputs-container-2">
-              <input
-                type="text"
-                name="input5"
-                id="narration"
-                className="input"
-                onChange={handleForm}
-                value={formValue.input5}
-              />
-            </div>
-          </div>
-
-          <div className="options-select mb-3 d-flex flex-column inputs-container">
-            <label htmlFor="interval" id="payment-interval">
-              payment interval
-            </label>
-            <Select
-              options={intervals}
-              onChange={(opt) => selectOptions2(opt)}
-              value={selectedInterval}
-              isSearchable={false}
-              components={{
-                Option: CustomOption,
-              }}
-              styles={customSelectStyles}
-            />
-          </div>
         </section>
 
         <div className="mt-4">
@@ -213,3 +181,35 @@ export default function NairaRemitance({
     </form>
   );
 }
+
+{/* <div className="d-flex flex-column mb-3 inputs-container">
+            <label htmlFor="Narration" id="narration">
+              Narration
+            </label>
+            <div className="d-flex inputs-container-2">
+              <input
+                type="text"
+                name="input5"
+                id="narration"
+                className="input"
+                onChange={handleForm}
+                value={formValue.input5}
+              />
+            </div>
+          </div>
+
+          <div className="options-select mb-3 d-flex flex-column inputs-container">
+            <label htmlFor="interval" id="payment-interval">
+              payment interval
+            </label>
+            <Select
+              options={intervals}
+              onChange={(opt) => selectOptions2(opt)}
+              value={selectedInterval}
+              isSearchable={false}
+              components={{
+                Option: CustomOption,
+              }}
+              styles={customSelectStyles}
+            />
+          </div> */}

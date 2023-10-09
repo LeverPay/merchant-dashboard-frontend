@@ -4,16 +4,16 @@ export const HeaderData = [
   "Wallet Address",
   "Exchange",
   "Network",
-  "Narration",
-  "Payment Interval",
+  // "Narration",
+  // "Payment Interval",
 ];
 
 export const NairaHeading = [
   "Account Name",
   "Account Number",
   "Bank Name",
-  "Narration",
-  "Payment Interval",
+  // "Narration",
+  // "Payment Interval",
 ];
 
 export const data = [
