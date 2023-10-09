@@ -381,7 +381,7 @@ export const OverviewPage = (props) => {
               <div className="flexy flexyM">
                 <div style={{ flexGrow: "1" }}>
                   <h5 style={{ color: " #1B2559" }}>Performance</h5>
-                  <small style={{ color: "#05CD99" }}>0%</small>
+                  <small style={{ color: "#05CD99" }}>0</small>
                 </div>
                 <button className="col-md-4">Download</button>
               </div>

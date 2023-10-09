@@ -100,28 +100,6 @@ export default function UsdcRemitance({
             <div className="d-flex inputs-container-2">
               <input
                 type="text"
-                name="input2"
-                id="account-number"
-                className="input"
-                onChange={handleForm}
-                value={formValue.input2}
-              />
-              <span
-                className="value-copy d-flex align-items-center"
-                onClick={copyText}
-              >
-                <img src={require("../../Assets/copy-vector.png")} alt="" />
-              </span>
-            </div>
-          </div>
-
-          <div className="d-flex flex-column mb-3 inputs-container">
-            <label htmlFor="Account-number" id="account-number">
-              Preferred Narration
-            </label>
-            <div className="d-flex inputs-container-2">
-              <input
-                type="text"
                 name="input3"
                 id="account-number"
                 className="input"
@@ -135,22 +113,6 @@ export default function UsdcRemitance({
                 <img src={require("../../Assets/copy-vector.png")} alt="" />
               </span>
             </div>
-          </div>
-
-          <div className="options-select mb-3 d-flex flex-column inputs-container">
-            <label htmlFor="interval" id="payment-interval">
-              payment interval
-            </label>
-            <Select
-              options={intervals}
-              onChange={(opt) => selectOptions2(opt)}
-              value={selectedInterval}
-              isSearchable={false}
-              components={{
-                Option: CustomOption,
-              }}
-              styles={customSelectStyles}
-            />
           </div>
         </section>
 
@@ -199,3 +161,41 @@ export default function UsdcRemitance({
     </form>
   );
 }
+
+{/* <div className="d-flex flex-column mb-3 inputs-container">
+            <label htmlFor="Account-number" id="account-number">
+              Preferred Narration
+            </label>
+            <div className="d-flex inputs-container-2">
+              <input
+                type="text"
+                name="input3"
+                id="account-number"
+                className="input"
+                onChange={handleForm}
+                value={formValue.input4}
+              />
+              <span
+                className="value-copy d-flex align-items-center"
+                onClick={copyText}
+              >
+                <img src={require("../../Assets/copy-vector.png")} alt="" />
+              </span>
+            </div>
+          </div>
+
+          <div className="options-select mb-3 d-flex flex-column inputs-container">
+            <label htmlFor="interval" id="payment-interval">
+              payment interval
+            </label>
+            <Select
+              options={intervals}
+              onChange={(opt) => selectOptions2(opt)}
+              value={selectedInterval}
+              isSearchable={false}
+              components={{
+                Option: CustomOption,
+              }}
+              styles={customSelectStyles}
+            />
+          </div> */}

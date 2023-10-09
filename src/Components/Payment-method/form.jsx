@@ -1,7 +1,13 @@
 import React, { useRef, useState, useContext, useEffect } from "react";
 import Button from "../General/Button component/Button";
 import PaymentImg from "../../Assets/payment-img.png";
-import { baseUrl, update_payment_Method } from "../Endpoints/Endpoints";
+import {
+  baseUrl,
+  update_payment_Method,
+  get_all_banks,
+  add_bank_details,
+  get_user_bank_details,
+} from "../Endpoints/Endpoints";
 import axios from "axios";
 import Notifications from "../General/NotificationContext";
 import TokenContext from "../User-Token/TokenContext";
@@ -11,6 +17,7 @@ import UsdcRemitance from "./UsdcRemitance";
 import TetherRemitance from "./TetherRemitance";
 import { TableHead, HeaderData, data, NairaHeading } from "./TestData";
 import Scroll from "../General/ScrollContext";
+import Loading from "../General/loading animation/loading";
 
 export default function Form() {
   const [initialRender, setInitialRender] = useState(true);
@@ -27,11 +34,17 @@ export default function Form() {
   const [selectNetwork, setSelectedNetwork] = useState(null);
   const [changeInput, setChangeInput] = useState(false);
 
-  const [showTable, setShowTable] = useState(false);
+  const [showTable, setShowTable] = useState(true);
   const [TableHeader] = useState(TableHead);
   const [SecondHeader, setSecondHeader] = useState(HeaderData);
   const [TableBody] = useState(data);
+  const [animate, setAnimate] = useState(true);
+
   const [NairaHeader, setNairaHeader] = useState(true);
+  const [NairaBody, setNairaBody] = useState([]);
+  const [UsdcBody, setUsdcBody] = useState([]);
+  const [BusdBody, setBusdBody] = useState([]);
+  const [UsdTBody, setUsdTBody] = useState([]);
   const [active, setActive] = useState(0);
 
   const [filteredData, setFilteredData] = useState(null);
@@ -49,7 +62,8 @@ export default function Form() {
 
   // Populates with naira data on initial page load
   const initialFilter = () => {
-    const naira = data.filter((el) => el.Type === "Naira");
+    // const naira = data.filter((el) => el.Type === "Naira");
+    const naira = NairaBody?.data?.map((el) => el);
     setFilteredData(naira);
 
     if (active === 0) {
@@ -60,11 +74,32 @@ export default function Form() {
   };
 
   const TrackedClickedHeader = (item) => {
-    const filtered = data.filter(
-      (el) => el.Type.toLowerCase() === item.toLowerCase()
-    );
-    setFilteredData(filtered);
-    SetAciveHeader(item);
+    // const filtered = data.filter(
+    //   (el) => el.Type.toLowerCase() === item.toLowerCase()
+    // );
+    const naira = NairaBody?.data?.map((el) => el);
+    const usdC = UsdcBody?.data?.map((el) => el);
+    const busD = BusdBody?.data?.map((el) => el);
+    const usdT = UsdTBody?.data?.map((el) => el);
+
+    if (item === "UsdC") {
+      setFilteredData([]);
+      setFilteredData(usdC);
+      SetAciveHeader(item);
+    } else if (item === "Busd") {
+      setFilteredData([]);
+      setFilteredData(busD);
+      SetAciveHeader(item);
+    } else if (item === "UsdT") {
+      setFilteredData([]);
+      setFilteredData(usdT);
+      SetAciveHeader(item);
+    } else {
+      if (item === "Naira") {
+        setFilteredData(naira);
+        SetAciveHeader(item);
+      }
+    }
 
     if (item === "Naira") {
       const nairaValue = NairaHeading.map((el) => el);
@@ -149,7 +184,7 @@ export default function Form() {
     : [];
 
   const handleSelectedNetwork = (opt) => {
-    setInput((prev) => ({ ...prev, input5: opt }));
+    setInput((prev) => ({ ...prev, input2: opt }));
     setSelectedNetwork(opt);
     // console.log(input.input5);
   };
@@ -201,28 +236,38 @@ export default function Form() {
   // Fetch banks and set the state...
   const bankOptions = allBanks
     ? allBanks.map((bank) => ({
-        value: bank.name,
+        value: bank.id,
         label: bank.name,
-        logo: bank.logo,
+        logo: bank?.logo,
       }))
     : [];
 
   //Get banks data
   const getBankLists = async () => {
     try {
-      const req = await axios.get(requestUrl);
-      if (req.status === 200) {
-        setAllBanks(req.data);
-      }
+      const req = await axios.get(baseUrl + get_all_banks, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      setAllBanks(req.data?.data);
     } catch (err) {
-      console.error(err);
+      if (err.response) {
+        notify(err.response?.data?.message);
+      } else {
+        notify("Something went wrong :(");
+      }
     }
   };
 
   useEffect(() => {
     getBankLists();
-    initialFilter();
+    getBankDetails();
   }, []);
+
+  useEffect(() => {
+    initialFilter();
+  }, [NairaBody]);
 
   // Empty All input values
   const cancel = () => {
@@ -268,15 +313,15 @@ export default function Form() {
       input.input1 !== "" &&
       input.input1 !== "Choose An Option" &&
       input.input2 !== "" &&
-      input.input3 !== "" &&
-      input.input4 !== "" &&
-      input.input4 !== "Choose An OPtion" &&
-      input.input5 !== "" &&
-      input.input5 !== "Choose An OPtion"
+      input.input3 !== ""
+      // input.input4 !== "" &&
+      // input.input4 !== "Choose An OPtion" &&
+      // input.input5 !== "" &&
+      // input.input5 !== "Choose An OPtion"
     ) {
       //Validate A/c no input once naira state is true
       if (naira && testAccVal.test(input.input2)) {
-        console.log(input);
+        updateBankDetails();
         cancel();
 
         // Automatically Sets page back to default state if user does't close succes icon manually
@@ -292,7 +337,7 @@ export default function Form() {
           }, 3000);
         }
       } else if (busd) {
-        console.log(input);
+        // console.log(input);
         cancel();
 
         // Displays Success icon
@@ -307,7 +352,7 @@ export default function Form() {
           }, 3000);
         }
       } else if (usdc) {
-        console.log(input);
+        // console.log(input);
         cancel();
 
         // Displays success icons
@@ -324,13 +369,13 @@ export default function Form() {
       } else if (naira && !testAccVal.test(input.input2)) {
         notify("Invalid account number");
       } else {
-        console.log(input);
+        // console.log(input);
         // Displays success icon
         setRenderSuccess(true);
         //Empty input fields
         cancel();
 
-        console.log(initialRender, renderSuccess, tether);
+        // console.log(initialRender, renderSuccess, tether);
 
         // Automatically Sets page back to default state if user does't close succes icon manually
         if (!initialRender && !renderSuccess && tether) {
@@ -371,6 +416,54 @@ export default function Form() {
     setTether(!tether);
     if (initialRender) {
       setInitialRender(!initialRender);
+    }
+  };
+
+  const updateBankDetails = async () => {
+    try {
+      const req = await axios.post(
+        baseUrl + add_bank_details,
+        {
+          account_no: input.input2,
+          bank_id: input.input1.value.toString(),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+          },
+        }
+      );
+      if (req.status === 200) {
+        success("Action successful, your details was added!");
+      }
+    } catch (err) {
+      if (err.response) {
+        notify(err.response?.data?.message);
+      } else {
+        notify("Something went wrong :(");
+      }
+    }
+  };
+
+  const getBankDetails = async () => {
+    try {
+      setAnimate(true);
+      const req = await axios.get(baseUrl + get_user_bank_details, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      if (req.status === 200) {
+        setAnimate(false);
+        setNairaBody(req.data);
+      }
+    } catch (err) {
+      setAnimate(false);
+      if (err.response) {
+        notify(err.response?.data?.message);
+      } else {
+        notify("Something went wrong :(");
+      }
     }
   };
 
@@ -446,7 +539,7 @@ export default function Form() {
                   }`}
                   ref={DisplayImg}
                 >
-                  {showTable === false ? (
+                  {showTable ? (
                     <div
                       className="table-container d-flex flex-column justify-content-center align-items-center px-4"
                       ref={TableRef}
@@ -481,41 +574,41 @@ export default function Form() {
                             </tr>
                           </thead>
 
-                          {!NairaHeader
-                            ? filteredData?.map((el) => (
-                                <tr key={el.id}>
+                          {!NairaHeader && filteredData?.length > 0 ? (
+                            <tbody>
+                              {filteredData?.map((el, i) => (
+                                <tr key={i}>
                                   <td className="px-2 py-2 text-break">
                                     {el.WalletAddress}
                                   </td>
                                   <td className="px-2 py-2">{el.Exchange}</td>
                                   <td className="px-2 py-2">{el.Network}</td>
-                                  <td className="px-2 py-2 text-break">
-                                    {el.Narration}
-                                  </td>
-                                  <td className="px-2 py-2">
-                                    {el.PaymentInterval}
-                                  </td>
                                 </tr>
-                              ))
-                            : filteredData?.map((el) => (
-                                <tbody>
-                                  <tr key={el.id}>
-                                    <td className="px-2 py-2 text-break">
-                                      {el.AccountName}
-                                    </td>
-                                    <td className="px-2 py-2">
-                                      {el.AccountNumber}
-                                    </td>
-                                    <td className="px-2 py-2">{el.BankName}</td>
-                                    <td className="px-2 py-2 text-break">
-                                      {el.Narration}
-                                    </td>
-                                    <td className="px-2 py-2">
-                                      {el.PaymentInterval}
-                                    </td>
-                                  </tr>
-                                </tbody>
                               ))}
+                            </tbody>
+                          ) : NairaHeader && filteredData?.length > 0 ? (
+                            <tbody>
+                              {filteredData?.map((el, i) => (
+                                <tr key={i}>
+                                  <td className="px-2 py-2 text-break">
+                                    {el.first_name}
+                                  </td>
+                                  <td className="px-2 py-2">{el.account_no}</td>
+                                  <td className="px-2 py-2">{el.name}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          ) : animate ? (
+                            <div className="d-flex justify-content-center align-items-center">
+                              <Loading />
+                            </div>
+                          ) : (
+                            <tbody className="empty text-center fw-bolder mt-2 fs-4">
+                              <tr>
+                                <td colSpan="3">No Data to display</td>
+                              </tr>
+                            </tbody>
+                          )}
                         </table>
                       </div>
                     </div>
@@ -528,8 +621,9 @@ export default function Form() {
                       alt=""
                     />
                     <small className="text-wrap mx-4 fw-bolder">
-                      Kindly note that Leverpay allows you to setup more than one
-                      remitance method. However, we will remit to any of the options provided.
+                      Kindly note that Leverpay allows you to setup more than
+                      one remitance method. However, we will remit to any of the
+                      options provided.
                     </small>
                   </div>
                 </div>
