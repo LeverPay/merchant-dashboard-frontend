@@ -17,6 +17,7 @@ import UsdcRemitance from "./UsdcRemitance";
 import TetherRemitance from "./TetherRemitance";
 import { TableHead, HeaderData, data, NairaHeading } from "./TestData";
 import Scroll from "../General/ScrollContext";
+import Loading from "../General/loading animation/loading";
 
 export default function Form() {
   const [initialRender, setInitialRender] = useState(true);
@@ -37,6 +38,8 @@ export default function Form() {
   const [TableHeader] = useState(TableHead);
   const [SecondHeader, setSecondHeader] = useState(HeaderData);
   const [TableBody] = useState(data);
+  const [animate, setAnimate] = useState(true);
+
   const [NairaHeader, setNairaHeader] = useState(true);
   const [NairaBody, setNairaBody] = useState([]);
   const [UsdcBody, setUsdcBody] = useState([]);
@@ -444,17 +447,23 @@ export default function Form() {
 
   const getBankDetails = async () => {
     try {
+      setAnimate(true);
       const req = await axios.get(baseUrl + get_user_bank_details, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
         },
       });
       if (req.status === 200) {
+        setAnimate(false);
         setNairaBody(req.data);
-        console.log(req.data);
       }
     } catch (err) {
-      console.log(err);
+      setAnimate(false);
+      if (err.response) {
+        notify(err.response?.data?.message);
+      } else {
+        notify("Something went wrong :(");
+      }
     }
   };
 
@@ -567,8 +576,8 @@ export default function Form() {
 
                           {!NairaHeader && filteredData?.length > 0 ? (
                             <tbody>
-                              {filteredData?.map((el) => (
-                                <tr key={el.id}>
+                              {filteredData?.map((el, i) => (
+                                <tr key={i}>
                                   <td className="px-2 py-2 text-break">
                                     {el.WalletAddress}
                                   </td>
@@ -579,8 +588,8 @@ export default function Form() {
                             </tbody>
                           ) : NairaHeader && filteredData?.length > 0 ? (
                             <tbody>
-                              {filteredData?.map((el) => (
-                                <tr key={el.id}>
+                              {filteredData?.map((el, i) => (
+                                <tr key={i}>
                                   <td className="px-2 py-2 text-break">
                                     {el.first_name}
                                   </td>
@@ -589,6 +598,10 @@ export default function Form() {
                                 </tr>
                               ))}
                             </tbody>
+                          ) : animate ? (
+                            <div className="d-flex justify-content-center align-items-center">
+                              <Loading />
+                            </div>
                           ) : (
                             <tbody className="empty text-center fw-bolder mt-2 fs-4">
                               <tr>
