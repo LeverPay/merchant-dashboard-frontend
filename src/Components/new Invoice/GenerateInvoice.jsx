@@ -40,6 +40,7 @@ export default function GenerateInvoice() {
     transactionID: "",
   });
 
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   const [input, setInput] = useState({
     productName: "",
     qty: "",
@@ -235,6 +236,10 @@ export default function GenerateInvoice() {
       warningMsg5.current?.classList?.remove("hidden");
     }
 
+    if (input.customerEmail !== "" && !emailRegex.test(input.customerEmail)) {
+      notify("Invalid mail format");
+    }
+
     if (vatRegex.test(input.vat)) {
     } else {
       notify("Vat price is invalid");
@@ -262,7 +267,8 @@ export default function GenerateInvoice() {
         input.description !== "" &&
         input.price !== "" &&
         input.productName !== "" &&
-        input.customerEmail !== ""
+        input.customerEmail !== "" &&
+        emailRegex.test(input.customerEmail)
         // &&
         // input.totalPrice !== ""
       ) {
@@ -299,8 +305,7 @@ export default function GenerateInvoice() {
           Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
         },
       });
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   const createInvoice = async () => {
@@ -332,11 +337,7 @@ export default function GenerateInvoice() {
     } catch (err) {
       console.error(err.response);
       setAnimate(false);
-      if (err.status === 500) {
-        notify(
-          "Oops! our server seems to be down at the moment, please try agin later :("
-        );
-      } else if (err.reponse) {
+      if (err.reponse) {
         notify(err.response.data?.message);
       } else {
         notify("Something went wrong :(");
