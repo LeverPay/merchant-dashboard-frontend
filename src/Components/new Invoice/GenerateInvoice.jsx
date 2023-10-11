@@ -157,16 +157,15 @@ export default function GenerateInvoice() {
   };
 
   useEffect(() => {
-    // input.currency === "dollar" ? (vat = 0.095) : (vat = 0.075);
-    // setvatVal(vat);
-    const vat = input.vat / 100;
-    let discount = input.discount === "" ? 0 : parseFloat(input.discount) / 100;
+    const vat = parseFloat(input.vat) / 100;
+    const discount =
+      input.discount === "" ? 0 : parseFloat(input.discount) / 100;
     let final;
 
     if (input.price !== "") {
       const currentPrice = parseFloat(input.price);
       const vatPrice = currentPrice * vat;
-      let finalVatPrice = currentPrice + vatPrice;
+      const finalVatPrice = currentPrice + vatPrice;
       const discountPrice = parseFloat(finalVatPrice * discount);
       final = finalVatPrice - discountPrice;
 
@@ -174,16 +173,13 @@ export default function GenerateInvoice() {
         ...prev,
         totalPrice: final.toFixed(2),
       }));
-
-      if (total.current?.classList?.contains("hidden")) {
-        total.current?.classList?.remove("hidden");
-      }
     } else {
-      if (!total.current?.classList?.contains("hidden")) {
-        total.current?.classList?.add("hidden");
-      }
+      setInput((prev) => ({
+        ...prev,
+        totalPrice: "",
+      }));
     }
-  }, [input.price, input.discount]);
+  }, [input.vat, input.price, input.discount]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

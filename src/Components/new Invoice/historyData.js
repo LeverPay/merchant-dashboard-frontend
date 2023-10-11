@@ -1,11 +1,9 @@
 export const TableHead = ["PENDING", "PAID", "CANCELED"];
 
 export const HeaderData = [
-  "Date",
+  "Email",
   "Product",
   "Price",
-  "Email",
-  "Phone",
   "Status",
   "View",
 ];

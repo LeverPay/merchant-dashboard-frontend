@@ -171,18 +171,19 @@ export default function CreateAccountForm({ accType }) {
 
     // Calculate the minimum allowed date (5 years ago from the current date)
     const minAllowedDate = new Date(
-      currentDate.getFullYear() - 5,
+      currentDate.getFullYear() - 10,
       currentDate.getMonth(),
       currentDate.getDate()
     );
 
     if (person.dob.length == 0) {
       errorNotify("Invalid Form, birth date can not be empty");
-      if (selectedDate >= minAllowedDate) {
+    } else if (person.dob.length > 0) {
+      if (selectedDate < minAllowedDate) {
         // chaecks if date of birth is empty
-      } else if (selectedDate < minAllowedDate) {
+      } else if (selectedDate >= minAllowedDate) {
         errorNotify(
-          "Date of birth is too recent. Must be at least 5 years ago."
+          "Date of birth is too recent. Must be at least 10 years ago."
         );
         return;
       }
@@ -279,7 +280,8 @@ export default function CreateAccountForm({ accType }) {
       person.state !== "" &&
       person.country !== "" &&
       value !== "" &&
-      person.dob !== ""
+      person.dob !== "" &&
+      selectedDate < minAllowedDate
     ) {
       handleSubmit();
     }
