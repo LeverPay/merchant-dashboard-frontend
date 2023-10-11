@@ -77,7 +77,6 @@ export default function History() {
         },
       });
       setInvoice(req.data.data);
-      console.log(req.data.data);
       // setTableBody(req.data.data);
     } catch (err) {
       console.log(err);
@@ -147,7 +146,6 @@ export default function History() {
       const req = await axios.get(baseUrl + get_invoice_by_uuid + uuid);
       if (req.status == 200) {
         setAnimate(false);
-        console.log(req.data.data);
         setInvoiceDetails(req.data.data);
       }
     } catch (err) {
@@ -240,13 +238,14 @@ export default function History() {
               tableBody.slice(0, displayItems).map((el, i) => (
                 <tr key={el.id} className="fw-bolder">
                   <td className="text-center px-4 py-2">{el.email}</td>
-                  <td className="text-center px-4 py-2">{el.merchant_id}</td>
                   <td
                     className="text-center px-4 py-2"
                     style={{ color: "#CB1919" }}
                   >
                     {el.product_name}
                   </td>
+                  <td>{el.price}</td>
+                  <td>{el.status}</td>
                   <td className="text-center px-4 py-2">
                     <NavLink
                       className="link"
