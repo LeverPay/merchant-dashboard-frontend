@@ -29,17 +29,24 @@ export default function Invoice({ details, closeMe }) {
             <span className="fw-lighter">{details.product_name}</span>
           </p>
           <p>
-            Price: <span className="fw-lighter">{details.price}</span>{" "}
+            Price:{" "}
+            <span className="fw-lighter">{details.price ? Math.floor(details.price) : ""}</span>{" "}
           </p>
           <p>
             Product Description:{" "}
             <span className="fw-lighter">{details.product_description}</span>
           </p>
           <p>
-            Product Price: <span className="fw-lighter">{details.price}</span>
+            Product Price:{" "}
+            <span className="fw-lighter">
+              {details.price ? Math.floor(details.price) : ""}
+            </span>
           </p>
           <p>
-            Fee: <span className="fw-lighter">{details.fee}</span>
+            Fee:{" "}
+            <span className="fw-lighter">
+              {details.fee ? Math.floor(details.fee) : ""}
+            </span>
           </p>
           <p>
             Vat: <span className="fw-lighter">{details.vat}</span>
@@ -66,7 +73,8 @@ export default function Invoice({ details, closeMe }) {
             <span className="fw-lighter">{details.user?.phone}</span>
           </p>
           <p>
-            Total price: <span className="fw-lighter">{details.total}</span>
+            Total price:{" "}
+            <span className="fw-lighter">{Math.floor(details.total)}</span>
           </p>
         </div>
       )}
