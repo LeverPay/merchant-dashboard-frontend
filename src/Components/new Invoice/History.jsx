@@ -225,7 +225,7 @@ export default function History() {
         </table>
 
         <section className="sub-table d-flex mt-5">
-          <table className="text-center px-4 mx-5">
+          <table className="text-left px-5">
             {tableBody && tableBody.length > 0 && (
               <tr>
                 {tableSubHeader1.map((el, i) => (
@@ -237,16 +237,15 @@ export default function History() {
             {tableBody && tableBody.length > 0 ? (
               tableBody.slice(0, displayItems).map((el, i) => (
                 <tr key={el.id} className="fw-bolder">
-                  <td className="text-center px-4 py-2">{el.email}</td>
+                  <td className="text-left px-2 py-2">{el.email}</td>
                   <td
-                    className="text-center px-4 py-2"
+                    className="text-left px-2 py-2"
                     style={{ color: "#CB1919" }}
                   >
                     {el.product_name}
                   </td>
-                  <td>{el.price}</td>
-                  <td>{el.status}</td>
-                  <td className="text-center px-4 py-2">
+                  <td>{Math.floor(el.price)}</td>
+                  <td className="text-left px-2 py-2">
                     <NavLink
                       className="link"
                       onClick={() => getSingleInvoice(el.uuid)}

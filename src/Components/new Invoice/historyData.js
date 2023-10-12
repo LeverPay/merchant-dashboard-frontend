@@ -4,7 +4,6 @@ export const HeaderData = [
   "Email",
   "Product",
   "Price",
-  "Status",
   "View",
 ];
 

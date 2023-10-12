@@ -169,17 +169,28 @@ export default function GenerateInvoice() {
       const discountPrice = parseFloat(finalVatPrice * discount);
       final = finalVatPrice - discountPrice;
 
+      // Display message
+      if (total.current?.classList?.contains("hidden")) {
+        total.current?.classList?.remove("hidden");
+      }
       setInput((prev) => ({
         ...prev,
-        totalPrice: final.toFixed(2),
+        totalPrice:
+          input.vat === "" || input.vat < 0
+            ? "invalid price"
+            : final.toFixed(2),
       }));
     } else {
       setInput((prev) => ({
         ...prev,
         totalPrice: "",
       }));
+
+      if (!total.current?.classList?.contains("hidden")) {
+        total.current?.classList?.add("hidden");
+      }
     }
-  }, [input.vat, input.price, input.discount]);
+  }, [input.vat, input.price]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -206,6 +217,13 @@ export default function GenerateInvoice() {
       }
     } else {
       warningMsg2.current?.classList?.remove("hidden");
+    }
+
+    if (input.vat === "") {
+      notify("Vat cannot be empty add 0 instead");
+    } else if (input.vat < 0) {
+      notify("invalid vat field! use a positive value");
+    } else {
     }
 
     if (input.price !== "") {
@@ -264,7 +282,9 @@ export default function GenerateInvoice() {
         input.price !== "" &&
         input.productName !== "" &&
         input.customerEmail !== "" &&
-        emailRegex.test(input.customerEmail)
+        emailRegex.test(input.customerEmail) &&
+        input.vat !== "" &&
+        input.vat >= 0
         // &&
         // input.totalPrice !== ""
       ) {
