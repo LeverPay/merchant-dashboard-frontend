@@ -426,6 +426,7 @@ export default function Form() {
         {
           account_no: input.input2,
           bank_id: input.input1.value.toString(),
+          account_name: input.input3,
         },
         {
           headers: {
