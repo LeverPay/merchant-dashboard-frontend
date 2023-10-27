@@ -35,3 +35,5 @@ export const get_transactions = "/api/v1/user/get-user-transactions";
 export const get_all_banks = "/api/v1/user/get-all-banks";
 export const add_bank_details = "/api/v1/user/add-bank-account";
 export const get_user_bank_details = "/api/v1/user/get-user-bank-account";
+export const add_kyc_details = "/api/v1/merchant/add-merchant-kyc";
+export const get_document_types = "/api/v1/user/get-document-type";

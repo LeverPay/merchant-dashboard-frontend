@@ -18,13 +18,16 @@ import {
   states,
   cities,
   update_Merchant_Profile,
+  add_kyc_details,
+  get_document_types,
 } from "../Endpoints";
 import axios from "axios";
 import { CountrySelect } from "../CountrySelect";
 import ImageContext from "../General/ImageContext";
 import { FaCamera } from "react-icons/fa";
+import Select from "react-select";
 
-export default function Form() {
+export default function Form({ addKyc, setAddKyc }) {
   const { userToken, userData, setUserData, notify, success } =
     useContext(TokenContext);
   const { vectorImage, setVectorImage } = useContext(ImageContext);
@@ -43,6 +46,13 @@ export default function Form() {
     address: "",
     password: "",
     email: "",
+    bvn: "",
+    nin: "",
+    country: "",
+    IDfront: null,
+    IDback: null,
+    businessLogo: null,
+    kycBusinessAddress: "",
   });
   const [countryData, setCountryData] = useState([]);
   const [stateData, setStateData] = useState([]);
@@ -56,6 +66,15 @@ export default function Form() {
   const [selectCity, setSelectCity] = useState();
   const [countryString, setCountryString] = useState();
   const [businessCertification, setBusinessCertification] = useState(null);
+
+  // for KYC upload
+  const [docTypeData, setDocTypeData] = useState([]);
+  const [selectedDocOption, setSelectedDocOption] = useState("");
+  const [businessCountry, setBusinessCountry] = useState(null);
+  const [businessStateData, setBusinessStateData] = useState([]);
+  const [businessState, setBusinessState] = useState(null);
+  const [docTypeValue, setDocTypeValue] = useState(null);
+  const [animate, setAnimate] = useState(false);
 
   // const [Image, setImage] = useState(null);
 
@@ -96,7 +115,6 @@ export default function Form() {
         data.passport && data.passport !== null ? setImage(data.passport) : "";
       }
     } catch (err) {
-      console.log(err);
       if (
         err.response.status === 400 ||
         err.response.status === 401 ||
@@ -128,7 +146,6 @@ export default function Form() {
         const list = countryData.data;
         const country_Value = list?.filter((el, i) => country === el.id);
         setCountryValue(country_Value);
-        console.log(country_Value, list);
       }
     } catch (err) {
       console.log(err);
@@ -154,7 +171,6 @@ export default function Form() {
       const request = await axios.post(baseUrl + states, {
         country_id: country_id,
       });
-      console.log(request);
       if (request.status === 200) {
         setStateData(request.data);
       }
@@ -183,7 +199,6 @@ export default function Form() {
       const request = await axios.post(baseUrl + cities, {
         state_id: states_id,
       });
-      console.log(request);
       if (request.status === 200) {
         setCityData(request.data);
         // setCity_id(states_id);
@@ -218,20 +233,17 @@ export default function Form() {
   const formCountry = (country_id) => {
     if (countryData !== undefined) {
       setSelectCountry(country_id);
-      console.log(`id: ${country_id}`);
     }
   };
 
   // Callback for state
   const formState = (state_id) => {
     setSelectState(state_id);
-    console.log(`State id: ${state_id}`);
   };
 
   // Callback for city
   const formCity = (city_id) => {
     setSelectCity(city_id);
-    console.log(`City id: ${city_id}`);
   };
   // Make request run once on page load
   useLayoutEffect(() => {
@@ -474,7 +486,6 @@ export default function Form() {
         success("Action Successful");
       } else {
         // Handle other response statuses if needed
-        console.log("Unexpected response status:", response.status);
       }
     } catch (err) {
       if (err.response) {
@@ -487,15 +498,10 @@ export default function Form() {
           notify(err.response.data.message);
         } else {
           // Handle other response status codes and errors
-          console.error(
-            "Request failed with status code:",
-            err.response.status
-          );
           notify("Something went wrong :(");
         }
       } else if (err.request) {
         // The request was made, but no response was received
-        console.error("Request error:", err.request);
         notify("Something went wrong with the request :(");
       } else {
         // Something else went wrong
@@ -504,319 +510,761 @@ export default function Form() {
       }
     }
   };
+
+  // start of Kyc functionality logic
+  const uploadKyc = () => {
+    setAddKyc(!addKyc);
+  };
+
+  const switchOption = (opt) => {
+    setSelectedDocOption(opt);
+    setDocTypeValue(opt.value);
+  };
+
+  const businessCountryfunc = (opt) => {
+    setBusinessCountry(opt);
+  };
+
+  const businessStatefunc = (opt) => {
+    setBusinessState(opt);
+  };
+
+  const handleLogo = (e) => {
+    const selectedFiles = e.target.files[0];
+    setInput((prev) => ({ ...prev, businessLogo: selectedFiles }));
+  };
+
+  const handleIdCardFront = (e) => {
+    const selectedFiles = e.target.files[0];
+    setInput((prev) => ({ ...prev, IDfront: selectedFiles }));
+  };
+
+  const handleCardBAck = (e) => {
+    const selectedFiles = e.target.files[0];
+    setInput((prev) => ({ ...prev, IDback: selectedFiles }));
+  };
+
+  const validateKycInputs = () => {
+    const validationErrors = [];
+
+    if (businessCertification === null) {
+      validationErrors.push("Upload business certificate");
+    }
+
+    if (Input.kycBusinessAddress === "") {
+      validationErrors.push("Business address cannot be empty");
+    }
+
+    if (Input.bvn === "") {
+      validationErrors.push("Provide BVN");
+    }
+
+    if (businessCountry === 1 && Input.nin === "") {
+      validationErrors.push("Update your National identity number");
+    }
+
+    if (businessCountry === null) {
+      validationErrors.push("Business Country cannot be empty");
+    }
+
+    if (
+      businessState === null ||
+      businessState === undefined ||
+      businessState === ""
+    ) {
+      validationErrors.push(
+        "Please provide the state your business is located"
+      );
+    }
+
+    if (
+      Input.IDback === null ||
+      Input.IDback === undefined ||
+      Input.IDback === ""
+    ) {
+      validationErrors.push("Upload document backview");
+    }
+
+    if (
+      Input.IDfront === null ||
+      Input.IDfront === undefined ||
+      Input.IDfront === ""
+    ) {
+      validationErrors.push("Upload document frontview");
+    }
+
+    // Display all validation errors
+    if (validationErrors.length > 0) {
+      validationErrors.forEach((error) => {
+        notify(error);
+      });
+    }
+  };
+
+  const uploadDocuments = (e) => {
+    e.preventDefault();
+    validateKycInputs();
+
+    // Validate for Nin if user businness is situated in Nigeria
+    if (businessCountry === 1) {
+      if (
+        Input.kycBusinessAddress !== "" &&
+        businessCertification !== null &&
+        Input.IDfront !== null &&
+        Input.IDback !== null &&
+        Input.nin !== "" &&
+        Input.bvn !== "" &&
+        businessCountry === 1 &&
+        businessState !== null &&
+        businessState !== undefined &&
+        businessState !== ""
+      ) {
+        updateKycStatus();
+      }
+    } else {
+      if (
+        businessCertification !== null &&
+        Input.IDfront !== null &&
+        Input.IDback !== null &&
+        Input.bvn !== "" &&
+        businessCountry !== null &&
+        businessCountry !== 1 &&
+        Input.kycBusinessAddress &&
+        businessState !== null &&
+        businessState !== undefined &&
+        businessState !== ""
+      ) {
+        updateKycStatus();
+      }
+    }
+  };
+
+  // documents upload for Kyc
+  const getDocumentTypes = async () => {
+    try {
+      const req = await axios.get(baseUrl + get_document_types, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      if (req.status === 200) {
+        const data = req.data;
+        setDocTypeData(data);
+      }
+    } catch (err) {}
+  };
+
+  useEffect(() => {
+    getDocumentTypes();
+  }, []);
+
+  const updateKycStatus = async () => {
+    try {
+      const formData = new FormData();
+
+      formData.append("document_type_id", docTypeValue);
+      formData.append("id_card_front", Input.IDfront);
+      formData.append("id_card_back", Input.IDback);
+      formData.append("country_id", businessCountry);
+      formData.append("state_id", businessState);
+      formData.append("bvn", Input.bvn);
+      formData.append("nin", Input.nin);
+      formData.append("business_address", Input.kycBusinessAddress);
+      formData.append("business_certificate", businessCertification);
+      formData.append("rc_number", Input.businessRegisteration);
+      setAnimate(true);
+
+      const req = await axios.post(baseUrl + add_kyc_details, formData, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      if (req.status === 200) {
+        success(
+          "Your data has been uploaded successfully, we will review and get back to you"
+        );
+        setAnimate(false);
+      }
+    } catch (err) {
+      if (err.response) {
+        notify(err.response?.data?.message);
+        setAnimate(false);
+      } else {
+        notify("Something went wrong :(");
+        setAnimate(false);
+      }
+    }
+  };
+
+  const getBusinessState = async (country_id) => {
+    try {
+      const request = await axios.post(baseUrl + states, {
+        country_id: country_id,
+      });
+      if (request.status === 200) {
+        setBusinessStateData(request.data);
+      }
+    } catch (err) {
+      if (
+        err.response.status === 400 ||
+        err.response.status === 401 ||
+        err.response.status === 403 ||
+        err.response.status === 404
+      ) {
+        notify(err.response.data.message);
+      } else {
+        if (err.response !== undefined) {
+          notify(err.response.data.message);
+        } else {
+          notify("Something went wrong :(");
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    getBusinessState(businessCountry);
+  }, [businessCountry]);
+
   return (
     <>
-      <section className="profile-edit d-flex justify-content-around align-items-center">
-        <div className="profile-pic-wrapper">
-          <div className="pic-holder">
-            <img
-              id="profilePic"
-              className="pic"
-              src={
-                !vectorImage ? require("../../Assets/edit.png") : vectorImage
-              }
-            />
-            <input
-              className="uploadProfileInput"
-              type="file"
-              name="profile_pic"
-              id="newProfilePhoto"
-              accept="image/*"
-              style={{ opacity: 0 }}
-              onChange={changeImage}
-            />
-            <label htmlFor="newProfilePhoto" className="upload-file-block">
-              <div className="text-center">
-                <div className="mb-2">
-                  <i className="fs-2">
-                    <FaCamera />
-                  </i>
-                </div>
-                <div className="text-uppercase">
-                  Update <br /> Company's Logo
+      {!addKyc ? (
+        <div>
+          <section className="profile-edit d-flex justify-content-around align-items-center">
+            <div className="profile-pic-wrapper">
+              <div className="pic-holder">
+                <img
+                  id="profilePic"
+                  className="pic"
+                  src={
+                    !vectorImage
+                      ? require("../../Assets/edit.png")
+                      : vectorImage
+                  }
+                />
+                <input
+                  className="uploadProfileInput"
+                  type="file"
+                  name="profile_pic"
+                  id="newProfilePhoto"
+                  accept="image/*"
+                  style={{ opacity: 0 }}
+                  onChange={changeImage}
+                />
+                <label htmlFor="newProfilePhoto" className="upload-file-block">
+                  <div className="text-center">
+                    <div className="mb-2">
+                      <i className="fs-2">
+                        <FaCamera />
+                      </i>
+                    </div>
+                    <div className="text-uppercase">
+                      Update <br /> Company's Logo
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+
+            {/* Allows user to change information on the database  */}
+            <Button
+              style={{ backgroundColor: "#2962f2", color: "#ffffff" }}
+              click={editInfo}
+            >
+              Change
+              <img
+                className="mx-2"
+                src={require("../../Assets/Edit-btn.svg").default}
+                alt=""
+              />
+            </Button>
+
+            <Button
+              style={{ backgroundColor: "#ebebeb", color: "#2962f2" }}
+              click={removeImage}
+            >
+              Remove
+              <img
+                className="mx-2"
+                src={require("../../Assets/Delete-btn.svg").default}
+                alt=""
+              />
+            </Button>
+          </section>
+
+          <form action="" className="profile-form">
+            <div className="mt-2 py-2 d-flex flex-column">
+              <label htmlFor="Firstname">First Name</label>
+
+              <div className="">
+                <input
+                  className="rounded-1 text-input"
+                  type="text"
+                  name="firstName"
+                  value={Input.firstName}
+                  onChange={handleChange}
+                  readOnly={disabled}
+                  id="Firstname"
+                />
+              </div>
+            </div>
+
+            <div className="mt-1 py-2 d-flex flex-column">
+              <label htmlFor="Lastname">Last Name</label>
+
+              <div className="">
+                <input
+                  className="rounded-1 text-input"
+                  type="text"
+                  name="lastName"
+                  value={Input.lastName}
+                  onChange={handleChange}
+                  readOnly={disabled}
+                  id="Lastname"
+                />
+              </div>
+            </div>
+
+            <div className="mt-1 py-2 d-flex flex-column">
+              <label htmlFor="Business-name">Businuess Name</label>
+
+              <div className="">
+                <input
+                  className="rounded-1 text-input"
+                  type="text"
+                  name="businuessName"
+                  value={Input.businuessName}
+                  onChange={handleChange}
+                  readOnly={ReadOnly}
+                  id="Business-name"
+                />
+              </div>
+            </div>
+
+            <div className="mt-1 py-2 d-flex flex-column">
+              <label htmlFor="Businuess-address">Businuess Address</label>
+
+              <div className="">
+                <input
+                  className="rounded-1 text-input"
+                  type="text"
+                  name="businuessAddress"
+                  value={Input.businuessAddress}
+                  onChange={handleChange}
+                  readOnly={ReadOnly}
+                  id="Business-address"
+                />
+              </div>
+            </div>
+
+            <div className="mt-1 py-2 d-flex flex-column">
+              <label htmlFor="address">Address</label>
+
+              <div className="">
+                <input
+                  className="rounded-1 text-input"
+                  type="text"
+                  name="address"
+                  value={Input.address}
+                  onChange={handleChange}
+                  readOnly={ReadOnly}
+                  id="address"
+                />
+              </div>
+            </div>
+
+            <div className="mt-1 py-2 d-flex flex-column">
+              <label htmlFor="email">E-mail</label>
+
+              <div className="">
+                <input
+                  className="rounded-1 text-input"
+                  type="email"
+                  name="email"
+                  value={Input.email}
+                  onChange={handleChange}
+                  readOnly={ReadOnly}
+                  id="email"
+                />
+              </div>
+            </div>
+
+            <div className="mt-1 py-2 d-flex flex-column" id="options">
+              <label htmlFor="Country" className="rounded-1">
+                Country
+              </label>
+
+              <div className="items text-input rounded-1">
+                <CountrySelect
+                  countyList={countryData}
+                  selector="country_name"
+                  callback={formCountry}
+                  value={
+                    selectCountry === ""
+                      ? null
+                      : {
+                          label: selectCountry,
+                          value: selectCountry,
+                        }
+                  }
+                  placeholder={
+                    countryString ? countryString : "Choose an option"
+                  }
+                  disabled={ReadOnly}
+                />
+              </div>
+            </div>
+
+            <div className="mt-1 py-2 d-flex flex-column" id="options">
+              <label htmlFor="State" className="rounded-1">
+                State
+              </label>
+
+              <div className="items text-input rounded-1">
+                <CountrySelect
+                  countyList={stateData}
+                  selector="state_name"
+                  callback={formState}
+                  value={
+                    selectState === ""
+                      ? null
+                      : {
+                          label: selectState,
+                          value: selectState,
+                        }
+                  }
+                  placeholder={countryString ? stateString : "Choose an option"}
+                  disabled={ReadOnly}
+                />
+              </div>
+            </div>
+
+            <div className="mt-1 py-2 d-flex flex-column" id="options">
+              <label htmlFor="city" className="rounded-1">
+                City
+              </label>
+
+              <div className="items text-input rounded-1">
+                <CountrySelect
+                  countyList={cityData}
+                  selector="city_name"
+                  callback={formCity}
+                  value={
+                    selectCity === ""
+                      ? null
+                      : {
+                          label: selectCity,
+                          value: selectCity,
+                        }
+                  }
+                  placeholder={
+                    countryString ? countryString : "Choose an option"
+                  }
+                  disabled={ReadOnly}
+                />
+              </div>
+            </div>
+
+            <div className="mt-2 py-2 d-flex flex-column">
+              <label htmlFor="business-reg">Rc-Number</label>
+
+              <div className="">
+                <input
+                  className="rounded-1 text-input"
+                  type="text"
+                  name="businessRegisteration"
+                  value={Input.businessRegisteration}
+                  onChange={handleChange}
+                  disabled={ReadOnly}
+                  id="business-reg"
+                />
+              </div>
+            </div>
+
+            <div className="mt-1 py-2 d-flex flex-column" id="options">
+              <label htmlFor="Country" className="rounded-1">
+                Phone Number
+              </label>
+
+              <div className="items">
+                <PhoneInput
+                  international
+                  value={phone}
+                  onChange={(val) => setPhone(val)}
+                  className="select-btn rounded-1"
+                  disabled={ReadOnly}
+                />
+              </div>
+            </div>
+
+            <div className="mt-1 py-2 d-flex flex-column" id="options">
+              <label htmlFor="Country" className="rounded-1">
+                Business Phone
+              </label>
+
+              <div className="items">
+                <PhoneInput
+                  international
+                  value={BusinessPhone}
+                  onChange={(val) => setBusinessPhone(val)}
+                  className="select-btn rounded-1"
+                  disabled={ReadOnly}
+                />
+              </div>
+            </div>
+
+            <div className="mt-2 py-2 d-flex flex-column">
+              <label htmlFor="business-certificate">CAC Certificate</label>
+
+              <div className="">
+                <input
+                  className="rounded-1 text-input"
+                  type="file"
+                  name="BusinessCertification"
+                  onChange={handleBusinessFileChange}
+                  disabled={ReadOnly}
+                  id="business-certificate"
+                />
+              </div>
+
+              <div className="mt-2">
+                <small
+                  style={{ color: "#2962f2", cursor: "pointer" }}
+                  className="fs-5 fw-bolder"
+                  onClick={uploadKyc}
+                >
+                  upload KYC documents
+                </small>
+              </div>
+            </div>
+
+            <div className="d-flex mt-5 justify-content-center align-items-center">
+              {/* Discard changes, fetch information from database and make forms on page readOnly */}
+
+              <Button
+                style={{ backgroundColor: "#ebebeb", color: "#2962f2" }}
+                click={discardChanges}
+              >
+                Discard Changes
+              </Button>
+
+              {/* performs a post and get request on the database to update database and render information on the client */}
+              <Button
+                style={{ backgroundColor: "#2962f2", color: "#ffffff" }}
+                click={handleSubmit}
+              >
+                Save Changes
+              </Button>
+            </div>
+          </form>
+        </div>
+      ) : (
+        <div>
+          <form action="" className="profile-form">
+            <div className="mt-2 py-2 d-flex flex-column">
+              <label htmlFor="business-Logo">Business Logo (Optional)</label>
+              <div className="">
+                <input
+                  className="rounded-1 text-input"
+                  type="file"
+                  accept="image/*"
+                  name="businessLogo"
+                  onChange={handleLogo}
+                  id="business-Logo"
+                />
+              </div>
+            </div>
+
+            <div className="mt-2 py-2 d-flex flex-column">
+              <label htmlFor="country">Business Country</label>
+              <div className="items text-input rounded-1">
+                <CountrySelect
+                  countyList={countryData}
+                  selector="country_name"
+                  callback={businessCountryfunc}
+                  value={
+                    businessCountry === ""
+                      ? null
+                      : {
+                          label: businessCountry,
+                          value: businessCountry,
+                        }
+                  }
+                  placeholder={
+                    countryString ? countryString : "Choose an option"
+                  }
+                />
+              </div>
+            </div>
+
+            <div className="mt-2 py-2 d-flex flex-column">
+              <label htmlFor="state">Business State</label>
+              <div className="items text-input rounded-1">
+                <CountrySelect
+                  countyList={businessStateData}
+                  selector="state_name"
+                  callback={businessStatefunc}
+                  value={
+                    businessState === ""
+                      ? null
+                      : {
+                          label: businessState,
+                          value: businessState,
+                        }
+                  }
+                  placeholder={
+                    countryString ? countryString : "Choose an option"
+                  }
+                />
+              </div>
+            </div>
+
+            {businessCountry === 1 && (
+              <div className="mt-2 py-2 d-flex flex-column">
+                <label htmlFor="nin-id">National Identity Number(NIN)</label>
+                <div className="">
+                  <input
+                    className="rounded-1 text-input"
+                    type="text"
+                    name="nin"
+                    value={Input.nin}
+                    onChange={handleChange}
+                    id="nin-id"
+                  />
                 </div>
               </div>
-            </label>
-          </div>
+            )}
+
+            <div className="mt-2 py-2 d-flex flex-column">
+              <label htmlFor="business-address">Business Address</label>
+              <div className="">
+                <input
+                  className="rounded-1 text-input"
+                  type="text"
+                  name="kycBusinessAddress"
+                  value={Input.kycBusinessAddress}
+                  onChange={handleChange}
+                  id="business-address"
+                />
+              </div>
+            </div>
+
+            <div className="mt-2 py-2 d-flex flex-column">
+              <label htmlFor="bank-verification">
+                Bank Verification Number (BVN)
+              </label>
+              <div className="">
+                <input
+                  className="rounded-1 text-input"
+                  type="number"
+                  name="bvn"
+                  value={Input.bvn}
+                  onChange={handleChange}
+                  id="bank-verification"
+                />
+              </div>
+            </div>
+
+            <div className="mt-2 py-2 d-flex flex-column">
+              <label htmlFor="business-certification">
+                Business Certification (CAC)
+              </label>
+              <div className="">
+                <input
+                  className="rounded-1 text-input"
+                  type="file"
+                  name="businessCertification"
+                  onChange={handleBusinessFileChange}
+                  id="business-certification"
+                />
+              </div>
+            </div>
+
+            <div className="mt-2 py-2 d-flex flex-column">
+              <label htmlFor="business-registeration">
+                Rc Number (Optional)
+              </label>
+              <div className="">
+                <input
+                  className="rounded-1 text-input"
+                  type="number"
+                  name="businessRegisteration"
+                  value={Input.businessRegisteration}
+                  onChange={handleChange}
+                  id="business-registeration"
+                />
+              </div>
+            </div>
+
+            <div className="mt-2 py-2 d-flex flex-column">
+              <label htmlFor="document-options">Upload Document</label>
+              <div className="items text-input rounded-1">
+                <Select
+                  value={selectedDocOption}
+                  options={docTypeData?.data?.map((el) => ({
+                    value: el.id,
+                    label: el.name,
+                  }))}
+                  onChange={switchOption}
+                />
+              </div>
+            </div>
+
+            {selectedDocOption !== "" && (
+              <>
+                <div className="mt-2 py-2 d-flex flex-column">
+                  <label htmlFor="front">
+                    {selectedDocOption?.label} front view
+                  </label>
+                  <div className="">
+                    <input
+                      className="rounded-1 text-input"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleIdCardFront}
+                      id="front"
+                    />
+                  </div>
+                </div>
+                <div className="mt-2 py-2 d-flex flex-column">
+                  <label htmlFor="back">
+                    {selectedDocOption?.label} back view
+                  </label>
+                  <div className="">
+                    <input
+                      className="rounded-1 text-input"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleCardBAck}
+                      id="back"
+                    />
+                  </div>
+                </div>
+              </>
+            )}
+
+            <div className="d-flex mt-5 justify-content-center align-items-center">
+              <Button
+                style={{ backgroundColor: "#2962f2", color: "#ffffff" }}
+                click={uploadDocuments}
+                animate={animate}
+              >
+                Upload Documents
+              </Button>
+            </div>
+
+            <div className="mt-2">
+              <small
+                style={{ color: "#2962f2", cursor: "pointer" }}
+                className="fs-5 fw-bolder"
+                onClick={uploadKyc}
+              >
+                Go back
+              </small>
+            </div>
+          </form>
         </div>
-
-        {/* Allows user to change information on the database  */}
-        <Button
-          style={{ backgroundColor: "#2962f2", color: "#ffffff" }}
-          click={editInfo}
-        >
-          Change
-          <img
-            className="mx-2"
-            src={require("../../Assets/Edit-btn.svg").default}
-            alt=""
-          />
-        </Button>
-
-        <Button
-          style={{ backgroundColor: "#ebebeb", color: "#2962f2" }}
-          click={removeImage}
-        >
-          Remove
-          <img
-            className="mx-2"
-            src={require("../../Assets/Delete-btn.svg").default}
-            alt=""
-          />
-        </Button>
-      </section>
-
-      <form action="" className="profile-form">
-        <div className="mt-2 py-2 d-flex flex-column">
-          <label htmlFor="Firstname">First Name</label>
-
-          <div className="">
-            <input
-              className="rounded-1 text-input"
-              type="text"
-              name="firstName"
-              value={Input.firstName}
-              onChange={handleChange}
-              readOnly={disabled}
-              id="Firstname"
-            />
-          </div>
-        </div>
-
-        <div className="mt-1 py-2 d-flex flex-column">
-          <label htmlFor="Lastname">Last Name</label>
-
-          <div className="">
-            <input
-              className="rounded-1 text-input"
-              type="text"
-              name="lastName"
-              value={Input.lastName}
-              onChange={handleChange}
-              readOnly={disabled}
-              id="Lastname"
-            />
-          </div>
-        </div>
-
-        <div className="mt-1 py-2 d-flex flex-column">
-          <label htmlFor="Business-name">Businuess Name</label>
-
-          <div className="">
-            <input
-              className="rounded-1 text-input"
-              type="text"
-              name="businuessName"
-              value={Input.businuessName}
-              onChange={handleChange}
-              readOnly={ReadOnly}
-              id="Business-name"
-            />
-          </div>
-        </div>
-
-        <div className="mt-1 py-2 d-flex flex-column">
-          <label htmlFor="Businuess-address">Businuess Address</label>
-
-          <div className="">
-            <input
-              className="rounded-1 text-input"
-              type="text"
-              name="businuessAddress"
-              value={Input.businuessAddress}
-              onChange={handleChange}
-              readOnly={ReadOnly}
-              id="Business-address"
-            />
-          </div>
-        </div>
-
-        <div className="mt-1 py-2 d-flex flex-column">
-          <label htmlFor="address">Address</label>
-
-          <div className="">
-            <input
-              className="rounded-1 text-input"
-              type="text"
-              name="address"
-              value={Input.address}
-              onChange={handleChange}
-              readOnly={ReadOnly}
-              id="address"
-            />
-          </div>
-        </div>
-
-        <div className="mt-1 py-2 d-flex flex-column">
-          <label htmlFor="email">E-mail</label>
-
-          <div className="">
-            <input
-              className="rounded-1 text-input"
-              type="email"
-              name="email"
-              value={Input.email}
-              onChange={handleChange}
-              readOnly={ReadOnly}
-              id="email"
-            />
-          </div>
-        </div>
-
-        <div className="mt-1 py-2 d-flex flex-column" id="options">
-          <label htmlFor="Country" className="rounded-1">
-            Country
-          </label>
-
-          <div className="items text-input rounded-1">
-            <CountrySelect
-              countyList={countryData}
-              selector="country_name"
-              callback={formCountry}
-              value={
-                selectCountry === ""
-                  ? null
-                  : {
-                      label: selectCountry,
-                      value: selectCountry,
-                    }
-              }
-              placeholder={countryString ? countryString : "Choose an option"}
-              disabled={ReadOnly}
-            />
-          </div>
-        </div>
-
-        <div className="mt-1 py-2 d-flex flex-column" id="options">
-          <label htmlFor="State" className="rounded-1">
-            State
-          </label>
-
-          <div className="items text-input rounded-1">
-            <CountrySelect
-              countyList={stateData}
-              selector="state_name"
-              callback={formState}
-              value={
-                selectState === ""
-                  ? null
-                  : {
-                      label: selectState,
-                      value: selectState,
-                    }
-              }
-              placeholder={countryString ? stateString : "Choose an option"}
-              disabled={ReadOnly}
-            />
-          </div>
-        </div>
-
-        <div className="mt-1 py-2 d-flex flex-column" id="options">
-          <label htmlFor="city" className="rounded-1">
-            City
-          </label>
-
-          <div className="items text-input rounded-1">
-            <CountrySelect
-              countyList={cityData}
-              selector="city_name"
-              callback={formCity}
-              value={
-                selectCity === ""
-                  ? null
-                  : {
-                      label: selectCity,
-                      value: selectCity,
-                    }
-              }
-              placeholder={countryString ? countryString : "Choose an option"}
-              disabled={ReadOnly}
-            />
-          </div>
-        </div>
-
-        <div className="mt-2 py-2 d-flex flex-column">
-          <label htmlFor="business-reg">Rc-Number</label>
-
-          <div className="">
-            <input
-              className="rounded-1 text-input"
-              type="text"
-              name="businessRegisteration"
-              value={Input.businessRegisteration}
-              onChange={handleChange}
-              disabled={ReadOnly}
-              id="business-reg"
-            />
-          </div>
-        </div>
-
-        <div className="mt-1 py-2 d-flex flex-column" id="options">
-          <label htmlFor="Country" className="rounded-1">
-            Phone Number
-          </label>
-
-          <div className="items">
-            <PhoneInput
-              international
-              value={phone}
-              onChange={(val) => setPhone(val)}
-              className="select-btn rounded-1"
-              disabled={ReadOnly}
-            />
-          </div>
-        </div>
-
-        <div className="mt-1 py-2 d-flex flex-column" id="options">
-          <label htmlFor="Country" className="rounded-1">
-            Business Phone
-          </label>
-
-          <div className="items">
-            <PhoneInput
-              international
-              value={BusinessPhone}
-              onChange={(val) => setBusinessPhone(val)}
-              className="select-btn rounded-1"
-              disabled={ReadOnly}
-            />
-          </div>
-        </div>
-
-        <div className="mt-2 py-2 d-flex flex-column">
-          <label htmlFor="business-certificate">CAC Certificate</label>
-
-          <div className="">
-            <input
-              className="rounded-1 text-input"
-              type="file"
-              name="BusinessCertification"
-              onChange={handleBusinessFileChange}
-              disabled={ReadOnly}
-              id="business-certificate"
-            />
-          </div>
-        </div>
-
-        <div className="d-flex mt-5 justify-content-center align-items-center">
-          {/* Discard changes, fetch information from database and make forms on page readOnly */}
-
-          <Button
-            style={{ backgroundColor: "#ebebeb", color: "#2962f2" }}
-            click={discardChanges}
-          >
-            Discard Changes
-          </Button>
-
-          {/* performs a post and get request on the database to update database and render information on the client */}
-          <Button
-            style={{ backgroundColor: "#2962f2", color: "#ffffff" }}
-            click={handleSubmit}
-          >
-            Save Changes
-          </Button>
-        </div>
-      </form>
+      )}
     </>
   );
 }
