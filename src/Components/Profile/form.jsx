@@ -19,6 +19,7 @@ import {
   cities,
   update_Merchant_Profile,
   add_kyc_details,
+  get_document_types,
 } from "../Endpoints";
 import axios from "axios";
 import { CountrySelect } from "../CountrySelect";
@@ -67,10 +68,13 @@ export default function Form({ addKyc, setAddKyc }) {
   const [businessCertification, setBusinessCertification] = useState(null);
 
   // for KYC upload
+  const [docTypeData, setDocTypeData] = useState([]);
   const [selectedDocOption, setSelectedDocOption] = useState("");
   const [businessCountry, setBusinessCountry] = useState(null);
   const [businessStateData, setBusinessStateData] = useState([]);
   const [businessState, setBusinessState] = useState(null);
+  const [docTypeValue, setDocTypeValue] = useState(null);
+  const [animate, setAnimate] = useState(false);
 
   // const [Image, setImage] = useState(null);
 
@@ -111,7 +115,6 @@ export default function Form({ addKyc, setAddKyc }) {
         data.passport && data.passport !== null ? setImage(data.passport) : "";
       }
     } catch (err) {
-      console.log(err);
       if (
         err.response.status === 400 ||
         err.response.status === 401 ||
@@ -143,7 +146,6 @@ export default function Form({ addKyc, setAddKyc }) {
         const list = countryData.data;
         const country_Value = list?.filter((el, i) => country === el.id);
         setCountryValue(country_Value);
-        console.log(country_Value, list);
       }
     } catch (err) {
       console.log(err);
@@ -169,7 +171,6 @@ export default function Form({ addKyc, setAddKyc }) {
       const request = await axios.post(baseUrl + states, {
         country_id: country_id,
       });
-      console.log(request);
       if (request.status === 200) {
         setStateData(request.data);
       }
@@ -198,7 +199,6 @@ export default function Form({ addKyc, setAddKyc }) {
       const request = await axios.post(baseUrl + cities, {
         state_id: states_id,
       });
-      console.log(request);
       if (request.status === 200) {
         setCityData(request.data);
         // setCity_id(states_id);
@@ -233,20 +233,17 @@ export default function Form({ addKyc, setAddKyc }) {
   const formCountry = (country_id) => {
     if (countryData !== undefined) {
       setSelectCountry(country_id);
-      console.log(`id: ${country_id}`);
     }
   };
 
   // Callback for state
   const formState = (state_id) => {
     setSelectState(state_id);
-    console.log(`State id: ${state_id}`);
   };
 
   // Callback for city
   const formCity = (city_id) => {
     setSelectCity(city_id);
-    console.log(`City id: ${city_id}`);
   };
   // Make request run once on page load
   useLayoutEffect(() => {
@@ -489,7 +486,6 @@ export default function Form({ addKyc, setAddKyc }) {
         success("Action Successful");
       } else {
         // Handle other response statuses if needed
-        console.log("Unexpected response status:", response.status);
       }
     } catch (err) {
       if (err.response) {
@@ -502,15 +498,10 @@ export default function Form({ addKyc, setAddKyc }) {
           notify(err.response.data.message);
         } else {
           // Handle other response status codes and errors
-          console.error(
-            "Request failed with status code:",
-            err.response.status
-          );
           notify("Something went wrong :(");
         }
       } else if (err.request) {
         // The request was made, but no response was received
-        console.error("Request error:", err.request);
         notify("Something went wrong with the request :(");
       } else {
         // Something else went wrong
@@ -520,20 +511,14 @@ export default function Form({ addKyc, setAddKyc }) {
     }
   };
 
-  // Kyc functionality logic
+  // start of Kyc functionality logic
   const uploadKyc = () => {
     setAddKyc(!addKyc);
   };
 
-  const documentOptions = [
-    { value: "national id card", label: "national id card" },
-    { value: "driver's license", label: "driver's license" },
-    { value: "international passport", label: "international passport" },
-    { value: "voter's card", label: "voter's card" },
-  ];
-
   const switchOption = (opt) => {
     setSelectedDocOption(opt);
+    setDocTypeValue(opt.value);
   };
 
   const businessCountryfunc = (opt) => {
@@ -542,7 +527,6 @@ export default function Form({ addKyc, setAddKyc }) {
 
   const businessStatefunc = (opt) => {
     setBusinessState(opt);
-    console.log(opt);
   };
 
   const handleLogo = (e) => {
@@ -621,10 +605,11 @@ export default function Form({ addKyc, setAddKyc }) {
     e.preventDefault();
     validateKycInputs();
 
+    // Validate for Nin if user businness is situated in Nigeria
     if (businessCountry === 1) {
       if (
         Input.kycBusinessAddress !== "" &&
-        Input.businessCertification !== null &&
+        businessCertification !== null &&
         Input.IDfront !== null &&
         Input.IDback !== null &&
         Input.nin !== "" &&
@@ -634,20 +619,11 @@ export default function Form({ addKyc, setAddKyc }) {
         businessState !== undefined &&
         businessState !== ""
       ) {
-        console.log(Input.businessRegisteration);
-        console.log(Input.kycBusinessAddress);
-        console.log(Input.bvn);
-        console.log(Input.nin);
-        console.log(Input.businessLogo);
-        console.log(Input.IDback);
-        console.log(Input.IDfront);
-        console.log(businessCertification);
-        console.log(businessCountry);
-        console.log(businessState);
+        updateKycStatus();
       }
     } else {
       if (
-        Input.businessCertification !== null &&
+        businessCertification !== null &&
         Input.IDfront !== null &&
         Input.IDback !== null &&
         Input.bvn !== "" &&
@@ -658,14 +634,64 @@ export default function Form({ addKyc, setAddKyc }) {
         businessState !== undefined &&
         businessState !== ""
       ) {
-        console.log(Input.businessRegisteration);
-        console.log(Input.kycBusinessAddress);
-        console.log(Input.bvn);
-        console.log(Input.businessLogo);
-        console.log(Input.IDback);
-        console.log(Input.IDfront);
-        console.log(businessCertification);
-        console.log(businessCountry);
+        updateKycStatus();
+      }
+    }
+  };
+
+  // documents upload for Kyc
+  const getDocumentTypes = async () => {
+    try {
+      const req = await axios.get(baseUrl + get_document_types, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      if (req.status === 200) {
+        const data = req.data;
+        setDocTypeData(data);
+      }
+    } catch (err) {}
+  };
+
+  useEffect(() => {
+    getDocumentTypes();
+  }, []);
+
+  const updateKycStatus = async () => {
+    try {
+      const formData = new FormData();
+
+      formData.append("document_type_id", docTypeValue);
+      formData.append("id_card_front", Input.IDfront);
+      formData.append("id_card_back", Input.IDback);
+      formData.append("country_id", businessCountry);
+      formData.append("state_id", businessState);
+      formData.append("bvn", Input.bvn);
+      formData.append("nin", Input.nin);
+      formData.append("business_address", Input.kycBusinessAddress);
+      formData.append("business_certificate", businessCertification);
+      formData.append("rc_number", Input.businessRegisteration);
+      setAnimate(true);
+
+      const req = await axios.post(baseUrl + add_kyc_details, formData, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      if (req.status === 200) {
+        success(
+          "Your data has been uploaded successfully, we will review and get back to you"
+        );
+        setAnimate(false);
+      }
+    } catch (err) {
+      if (err.response) {
+        notify(err.response?.data?.message);
+        setAnimate(false);
+      } else {
+        notify("Something went wrong :(");
+        setAnimate(false);
       }
     }
   };
@@ -675,12 +701,10 @@ export default function Form({ addKyc, setAddKyc }) {
       const request = await axios.post(baseUrl + states, {
         country_id: country_id,
       });
-      console.log(request);
       if (request.status === 200) {
         setBusinessStateData(request.data);
       }
     } catch (err) {
-      console.log(err);
       if (
         err.response.status === 400 ||
         err.response.status === 401 ||
@@ -1172,20 +1196,21 @@ export default function Form({ addKyc, setAddKyc }) {
               </div>
             </div>
 
-            {selectedDocOption === "" ? (
-              <>
-                <div className="mt-2 py-2 d-flex flex-column">
-                  <label htmlFor="document-options">Upload Document</label>
-                  <div className="items text-input rounded-1">
-                    <Select
-                      value={selectedDocOption}
-                      options={documentOptions}
-                      onChange={switchOption}
-                    />
-                  </div>
-                </div>
-              </>
-            ) : (
+            <div className="mt-2 py-2 d-flex flex-column">
+              <label htmlFor="document-options">Upload Document</label>
+              <div className="items text-input rounded-1">
+                <Select
+                  value={selectedDocOption}
+                  options={docTypeData?.data?.map((el) => ({
+                    value: el.id,
+                    label: el.name,
+                  }))}
+                  onChange={switchOption}
+                />
+              </div>
+            </div>
+
+            {selectedDocOption !== "" && (
               <>
                 <div className="mt-2 py-2 d-flex flex-column">
                   <label htmlFor="front">
@@ -1222,6 +1247,7 @@ export default function Form({ addKyc, setAddKyc }) {
               <Button
                 style={{ backgroundColor: "#2962f2", color: "#ffffff" }}
                 click={uploadDocuments}
+                animate={animate}
               >
                 Upload Documents
               </Button>
