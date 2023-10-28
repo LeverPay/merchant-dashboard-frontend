@@ -26,7 +26,13 @@ export default function ProfileElements() {
               Welcome to your profile <span>{name}</span>
             </p>
           ) : (
-            <p style={{ color: "#2962f2" }}>Add Kyc Documents</p>
+            <>
+              <p style={{ color: "#2962f2" }}>Add Kyc Documents</p>
+              <p>
+                Ensure documents files are image or pdf format and not too large.
+                Recomended size max(1.2mb) per file
+              </p>
+            </>
           )}
 
           <section className="form-container mt-4 ">

@@ -547,15 +547,11 @@ export default function Form({ addKyc, setAddKyc }) {
   const validateKycInputs = () => {
     const validationErrors = [];
 
-    if (businessCertification === null) {
-      validationErrors.push("Upload business certificate");
-    }
-
     if (Input.kycBusinessAddress === "") {
       validationErrors.push("Business address cannot be empty");
     }
 
-    if (Input.bvn === "") {
+    if (businessCountry === 1 && Input.bvn === "") {
       validationErrors.push("Provide BVN");
     }
 
@@ -577,12 +573,14 @@ export default function Form({ addKyc, setAddKyc }) {
       );
     }
 
-    if (
-      Input.IDback === null ||
-      Input.IDback === undefined ||
-      Input.IDback === ""
-    ) {
-      validationErrors.push("Upload document backview");
+    if (docTypeValue !== 2) {
+      if (
+        Input.IDback === null ||
+        Input.IDback === undefined ||
+        Input.IDback === ""
+      ) {
+        validationErrors.push("Upload document backview");
+      }
     }
 
     if (
@@ -609,9 +607,7 @@ export default function Form({ addKyc, setAddKyc }) {
     if (businessCountry === 1) {
       if (
         Input.kycBusinessAddress !== "" &&
-        businessCertification !== null &&
         Input.IDfront !== null &&
-        Input.IDback !== null &&
         Input.nin !== "" &&
         Input.bvn !== "" &&
         businessCountry === 1 &&
@@ -623,13 +619,10 @@ export default function Form({ addKyc, setAddKyc }) {
       }
     } else {
       if (
-        businessCertification !== null &&
         Input.IDfront !== null &&
-        Input.IDback !== null &&
-        Input.bvn !== "" &&
         businessCountry !== null &&
         businessCountry !== 1 &&
-        Input.kycBusinessAddress &&
+        Input.kycBusinessAddress !== "" &&
         businessState !== null &&
         businessState !== undefined &&
         businessState !== ""
@@ -858,7 +851,7 @@ export default function Form({ addKyc, setAddKyc }) {
             </div>
 
             <div className="mt-1 py-2 d-flex flex-column">
-              <label htmlFor="address">Address</label>
+              <label htmlFor="address">Residential Address</label>
 
               <div className="">
                 <input
@@ -1033,7 +1026,7 @@ export default function Form({ addKyc, setAddKyc }) {
                   className="fs-5 fw-bolder"
                   onClick={uploadKyc}
                 >
-                  upload KYC documents
+                  click here to verify your business identity
                 </small>
               </div>
             </div>
@@ -1067,7 +1060,7 @@ export default function Form({ addKyc, setAddKyc }) {
                 <input
                   className="rounded-1 text-input"
                   type="file"
-                  accept="image/*"
+                  accept=".jpg, .jpeg, .png, .pdf"
                   name="businessLogo"
                   onChange={handleLogo}
                   id="business-Logo"
@@ -1149,30 +1142,33 @@ export default function Form({ addKyc, setAddKyc }) {
               </div>
             </div>
 
-            <div className="mt-2 py-2 d-flex flex-column">
-              <label htmlFor="bank-verification">
-                Bank Verification Number (BVN)
-              </label>
-              <div className="">
-                <input
-                  className="rounded-1 text-input"
-                  type="number"
-                  name="bvn"
-                  value={Input.bvn}
-                  onChange={handleChange}
-                  id="bank-verification"
-                />
+            {businessCountry === 1 && (
+              <div className="mt-2 py-2 d-flex flex-column">
+                <label htmlFor="bank-verification">
+                  Bank Verification Number (BVN)
+                </label>
+                <div className="">
+                  <input
+                    className="rounded-1 text-input"
+                    type="number"
+                    name="bvn"
+                    value={Input.bvn}
+                    onChange={handleChange}
+                    id="bank-verification"
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
             <div className="mt-2 py-2 d-flex flex-column">
               <label htmlFor="business-certification">
-                Business Certification (CAC)
+                Business Certification (Optional)
               </label>
               <div className="">
                 <input
                   className="rounded-1 text-input"
                   type="file"
+                  accept=".jpg, .jpeg, .png, .pdf"
                   name="businessCertification"
                   onChange={handleBusinessFileChange}
                   id="business-certification"
@@ -1220,26 +1216,28 @@ export default function Form({ addKyc, setAddKyc }) {
                     <input
                       className="rounded-1 text-input"
                       type="file"
-                      accept="image/*"
+                      accept=".jpg, .jpeg, .png, .pdf"
                       onChange={handleIdCardFront}
                       id="front"
                     />
                   </div>
                 </div>
-                <div className="mt-2 py-2 d-flex flex-column">
-                  <label htmlFor="back">
-                    {selectedDocOption?.label} back view
-                  </label>
-                  <div className="">
-                    <input
-                      className="rounded-1 text-input"
-                      type="file"
-                      accept="image/*"
-                      onChange={handleCardBAck}
-                      id="back"
-                    />
+                {docTypeValue !== 2 && (
+                  <div className="mt-2 py-2 d-flex flex-column">
+                    <label htmlFor="back">
+                      {selectedDocOption?.label} back view
+                    </label>
+                    <div className="">
+                      <input
+                        className="rounded-1 text-input"
+                        type="file"
+                        accept=".jpg, .jpeg, .png, .pdf"
+                        onChange={handleCardBAck}
+                        id="back"
+                      />
+                    </div>
                   </div>
-                </div>
+                )}
               </>
             )}
 
