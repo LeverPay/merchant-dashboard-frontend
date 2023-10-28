@@ -622,7 +622,7 @@ export default function Form({ addKyc, setAddKyc }) {
         Input.IDfront !== null &&
         businessCountry !== null &&
         businessCountry !== 1 &&
-        Input.kycBusinessAddress &&
+        Input.kycBusinessAddress !== "" &&
         businessState !== null &&
         businessState !== undefined &&
         businessState !== ""
