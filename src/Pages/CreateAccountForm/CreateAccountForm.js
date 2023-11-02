@@ -38,7 +38,7 @@ export default function CreateAccountForm({ accType }) {
   const [person, setPerson] = useState({
     firstName: "",
     otherName: "",
-    surName: "",
+    lastName: "",
     dob: "",
     gender: "Select gender",
     address: "",
@@ -159,8 +159,8 @@ export default function CreateAccountForm({ accType }) {
     }
 
     // checks if last name is empty
-    if (person.surName.length == 0) {
-      errorNotify("Invalid Form, Surname cannot be empty");
+    if (person.lastName.length == 0) {
+      errorNotify("Invalid Form, Lastname cannot be empty");
       return;
     }
 
@@ -367,17 +367,17 @@ export default function CreateAccountForm({ accType }) {
               value={person.otherName}
               id="othername"
             />
-            <label htmlFor="surname" id="surname">
-              Surname
+            <label htmlFor="lastname" id="lastname">
+              Lastname
             </label>
             <input
               required
               type="text"
               className="form-control"
               onChange={handleChange}
-              name="surName"
-              value={person.surName}
-              id="surname"
+              name="lastName"
+              value={person.lastName}
+              id="lastname"
             />
             <label htmlFor="gender" id="gender">
               Gender
