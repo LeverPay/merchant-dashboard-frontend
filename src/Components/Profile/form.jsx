@@ -1026,7 +1026,7 @@ export default function Form({ addKyc, setAddKyc }) {
                   className="fs-5 fw-bolder"
                   onClick={uploadKyc}
                 >
-                  click here to verify your business identity
+                  Click here to complete your KYC verification
                 </small>
               </div>
             </div>
