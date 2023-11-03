@@ -37,7 +37,7 @@ const TransactionTable = (props) => {
     return date.toLocaleDateString("en-US", options);
   };
 
-  const headers = ["Ref No", "Date", "Status", "Amount", "Details"];
+  const headers = ["Date", "Amount", "Status", "More"];
 
   useEffect(() => {
     if (showInvoice !== null) {
@@ -61,22 +61,14 @@ const TransactionTable = (props) => {
             <tbody>
               {props.data.map((item, index) => (
                 <tr key={index}>
-                  <td
-                    style={{
-                      fontWeight: "bold",
-                      whiteSpace: "wrap", // Prevent text from wrapping
-                      overflow: "hidden", // Hide overflowing text
-                      textOverflow: "ellipsis",
-                    }}
-                  >
-                    {item.reference_no}
-                  </td>
+                  
                   <td>{formatDate(item.created_at)}</td>
+                  
+                  <td>{!props.hidebalance ? "---" : parseFloat(item.amount).toFixed(2)}</td>
                   <td style={{ color: "green" }}>
                     <img src={success} alt="smiley" className="col-md-" />
-                    Successful
+                     {item.status===1 ?'Successful': 'Pending'}                 
                   </td>
-                  <td>{!props.hidebalance ? "---" : item.amount}</td>
                   <td
                     onClick={() => {
                       click(item);
