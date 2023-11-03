@@ -68,18 +68,18 @@ function Invoice({ className, data }) {
       <div className="price_checkout">
         <span className="px-md-3">
           <h5>{data?.totalUSD}</h5>
-          <h5>Total USD</h5>
+          <h5>Total USDT</h5>
         </span>
         <span className="px-md-3">
-          <h5>{data?.totalETH}</h5>
-          <h5>Total ETH</h5>
+          <h5>{data?.totalNGN}</h5>
+          <h5>Total</h5>
         </span>
         <span className="px-md-3">
           <h5 style={{ color: data?.type === "credit" ? "green" : "red" }}>
-            {data?.amount}
+            {parseFloat(data?.amount).toFixed(2)}
           </h5>
           <h5 style={{ color: "black" }}>
-            {data?.statusName !== "Successful" ? data?.statusName : "Paid(ETH)"}
+            {data?.statusName !== "Successful" ? data?.statusName : "Paid"}
           </h5>
         </span>
       </div>
@@ -105,12 +105,12 @@ function Invoice({ className, data }) {
               className="row_details_information blue-color"
               style={{ color: data?.type === "credit" ? "green" : "red" }}
             >
-              {data?.amount}
+              {parseFloat(data?.amount).toFixed(2)}
             </Col>
           </Row>
           <Row>
             <Col className="row_details">Currency</Col>
-            <Col className="row_details_information blue-color">Naira</Col>
+            <Col className="row_details_information blue-color">Naira{data?.currency}</Col>
           </Row>
           <Row>
             <Col className="row_details">Created at</Col>
@@ -133,13 +133,13 @@ function Invoice({ className, data }) {
       <div className="Buyer_details">
         <h3 className="blue-color">Buyer Information</h3>
         <h5 style={{ color: "#0d0c30" }}>Email</h5>
-        <p style={{ color: "hsl(221, 69%, 55%)" }}>wokopi5201@inkiny.com</p>
+        <p style={{ color: "hsl(221, 69%, 55%)" }}>{data?.cus_email}</p>
       </div>
       <hr />
       <div className="Payment_received">
         <p style={{ color: "#0d0c30" }}>
-          Payment Received for{" "}
-          <span style={{ color: "#1861ff" }}>Android Devices</span>
+          Payment Received for 
+          <span style={{ color: "#1861ff" }}> {data?.product_name} Android Devices</span>
         </p>
         {/* <p style={{ color: "#0d0c30" }}>
           TXID:{" "}
@@ -149,13 +149,11 @@ function Invoice({ className, data }) {
         <br />
         <main>
           <div>
-            <h6>Invoice Created</h6>
+            <h6>Invoice Paid at</h6>
             <h6>{data?.invoiceTime}</h6>
           </div>
         </main>
-        <button className="button" disabled={data?.statusName !== "Successful"}>
-          Refund Customer
-        </button>
+        
       </div>
       <hr />
     </Container>
