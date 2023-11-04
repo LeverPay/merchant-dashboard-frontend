@@ -150,7 +150,7 @@ function Invoice({ className, data }) {
         <main>
           <div>
             <h6>Invoice Paid at</h6>
-            <h6>{data?.invoiceTime}</h6>
+            <h6>{data?.invoiceTime} </h6>
           </div>
         </main>
         

@@ -563,7 +563,7 @@ export default function Form({ addKyc, setAddKyc }) {
       validationErrors.push("Business Country cannot be empty");
     }
 
-    if (
+    /*if (
       businessState === null ||
       businessState === undefined ||
       businessState === ""
@@ -571,7 +571,7 @@ export default function Form({ addKyc, setAddKyc }) {
       validationErrors.push(
         "Please provide the state your business is located"
       );
-    }
+    }*/
 
     if (docTypeValue !== 2) {
       if (
