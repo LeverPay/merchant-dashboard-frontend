@@ -1,6 +1,17 @@
 .generate-invoice-container {
   width: 100%;
 }
+.fieldset {
+  background-color: #f6f6f6;
+}
+
+.legend {
+  background-color: rgb(4, 15, 160);
+  color: white;
+  padding: 5px 10px;
+}
+
+
 .generate-invoice-container .invoice {
   box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
   background-color: #fff;
