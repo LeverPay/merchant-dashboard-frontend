@@ -115,7 +115,7 @@ export default function SidebarNav(props) {
     {
       icon: <AccountCircleTwoToneIcon htmlColor="white" />,
       link: "profile",
-      title: "Profile",
+      title: "Profile | KYC",
     },
     // {
     //   icon: <SettingsRoundedIcon htmlColor="white" />,

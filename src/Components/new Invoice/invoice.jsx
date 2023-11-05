@@ -1,6 +1,9 @@
+import { color } from "framer-motion";
 import React from "react";
 import { useEffect } from "react";
 import { AiOutlineCloseCircle } from "react-icons/ai";
+
+
 
 export default function Invoice({ details, closeMe }) {
   const close = () => {
@@ -21,35 +24,15 @@ export default function Invoice({ details, closeMe }) {
 
       {details && (
         <div className="px-5 mt-5 py-4 fw-bolder fs-5">
+
           <p>
             Invoice Id: <span className="fw-lighter">{details.uuid}</span>
           </p>
+          <fieldset className="fieldset">
+            <legend className="legend"> Product Details</legend>
           <p>
             Product Name:{" "}
             <span className="fw-lighter">{details.product_name}</span>
-          </p>
-          <p>
-            Price:{" "}
-            <span className="fw-lighter">{details.price ? Math.floor(details.price) : ""}</span>{" "}
-          </p>
-          <p>
-            Product Description:{" "}
-            <span className="fw-lighter">{details.product_description}</span>
-          </p>
-          <p>
-            Product Price:{" "}
-            <span className="fw-lighter">
-              {details.price ? Math.floor(details.price) : ""}
-            </span>
-          </p>
-          <p>
-            Fee:{" "}
-            <span className="fw-lighter">
-              {details.fee ? Math.floor(details.fee) : ""}
-            </span>
-          </p>
-          <p>
-            Vat: <span className="fw-lighter">{details.vat}</span>
           </p>
           <p>
             Product Description:{" "}
@@ -60,6 +43,9 @@ export default function Invoice({ details, closeMe }) {
               <span className="fw-lighter">N/A</span>
             )}
           </p>
+          </fieldset>
+          <fieldset className="fieldset">
+          <legend className="legend">Customer Details</legend>
           <p>
             Customer First Name:{" "}
             <span className="fw-lighter">{details.user?.first_name}</span>
@@ -72,12 +58,51 @@ export default function Invoice({ details, closeMe }) {
             Customer Phone:{" "}
             <span className="fw-lighter">{details.user?.phone}</span>
           </p>
+          </fieldset>
+          <fieldset className="fieldset">
+            <legend className="legend">Product Amount</legend>
+         
+          <p>
+            Product Price:{" "}
+            <span className="fw-lighter">
+              {details.price ? Math.floor(details.price) : ""}
+            </span>
+          </p>
+          <p>
+            Transaction Fee:{" "}
+            <span className="fw-lighter">
+              {parseFloat(details?.fee).toFixed(3)}
+            </span>
+          </p>
+          <p>
+            Vat: <span className="fw-lighter">{parseFloat(details?.vat).toFixed(3)}</span>
+          </p>
+          
+          
           <p>
             Total price:{" "}
-            <span className="fw-lighter">{Math.floor(details.total)}</span>
+            <span className="fw-lighter">{parseFloat(details?.total).toFixed(3)} {details.currency}</span>
           </p>
+          </fieldset>
         </div>
+        
       )}
+      <div className="footer-section d-flex justify-content-around px-2">
+          <div className="d-flex justify-content-center">
+            <div className="mx-2">
+              <img src={require("../../Assets/sec-padlock.png")} alt="lock" />
+            </div>
+
+            <div>
+              <p>
+                Secured by{" "}
+                <span style={{ color: "#0051FF" }} className="fw-bolder">
+                  Leverpay
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
     </div>
   );
 }
