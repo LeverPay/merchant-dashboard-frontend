@@ -26,10 +26,10 @@ import axios from "axios";
 import {
   baseUrl,
   get_dashboard_data,
+  dashboard_metrics,
 } from "../../Components/Endpoints/Endpoints";
 import TokenContext from "../../Components/User-Token/TokenContext";
 import { useContext } from "react";
-
 const DUMMY_EXPENSES = [
   {
     id: "e1",
@@ -177,6 +177,27 @@ const DUMMY_EXPENSES2 = [
 export const OverviewPage = (props) => {
   const [expenses, setExpenses] = useState([]);
   const [transactions, setTransactions] = useState([]);
+  const [metrics, setMetrics] = useState([]);
+  const [dashboardData, setDashboardData] = useState({
+    monthlyTrans: 0,
+    weeklyTrans: 0,
+    dailyTrans: 0,
+  });
+
+  const calculateTrans = () => {
+    //update monthly transaction data
+    const totalMonthlyTrans =
+      metrics?.dollar?.monthly + metrics?.naira?.monthly;
+    setDashboardData((prev) => ({ ...prev, monthlyTrans: totalMonthlyTrans }));
+
+    //update daily transaction data
+    const totalDailyTrans = metrics?.dollar?.daily + metrics?.naira?.daily;
+    setDashboardData((prev) => ({ ...prev, dailyTrans: totalDailyTrans }));
+
+    //update weekly transactions data
+    const totalWeeklyTrans = metrics?.dollar?.weekly + metrics?.naira?.weekly;
+    setDashboardData((prev) => ({ ...prev, weeklyTrans: totalWeeklyTrans }));
+  };
 
   const addExpenseHandler = (expense) => {
     setExpenses((prevExpenses) => {
@@ -214,9 +235,28 @@ export const OverviewPage = (props) => {
     }
   };
 
+  // merchant transactions
+  const getDashboardMetrics = async () => {
+    try {
+      const req = await axios.get(baseUrl + dashboard_metrics, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      if (req.status === 200) {
+        setMetrics(req.data.data);
+      }
+    } catch (err) {}
+  };
+
   useEffect(() => {
     getDashboardData();
+    getDashboardMetrics();
   }, []);
+
+  useEffect(() => {
+    calculateTrans();
+  }, [metrics]);
 
   return (
     <>
@@ -242,7 +282,7 @@ export const OverviewPage = (props) => {
                     // update with endpoint data
                     start={0}
                     // update with endpoint data
-                    end={0}
+                    end={dashboardData?.monthlyTrans}
                     duration={4}
                     decimal=""
                     prefix=""
@@ -272,7 +312,7 @@ export const OverviewPage = (props) => {
                   {" "}
                   <CountUp
                     start={0}
-                    end={0}
+                    end={dashboardData?.weeklyTrans}
                     duration={4}
                     decimal=""
                     prefix=" "
@@ -298,7 +338,7 @@ export const OverviewPage = (props) => {
                   {" "}
                   <CountUp
                     start={0}
-                    end={0}
+                    end={dashboardData?.dailyTrans}
                     duration={4}
                     decimal=""
                     prefix=" "
