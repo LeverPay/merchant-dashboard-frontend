@@ -218,17 +218,21 @@ export default function CreateAccountForm({ accType }) {
     }
 
     // chacks if state value is empty
-    if (person.state === "") {
-      errorNotify(
-        "state value cannot be empty, please select a state to get city"
-      );
-      return;
+    if (person.country === "1") {
+      if (person.state === "") {
+        errorNotify(
+          "state value cannot be empty, please select a state to get city"
+        );
+        return;
+      }
     }
 
     // checks if city value is empty
-    if (person.city === "") {
-      errorNotify("city value cannot be empty");
-      return;
+    if (person.country === "1") {
+      if (person.city === "") {
+        errorNotify("city value cannot be empty");
+        return;
+      }
     }
 
     if (value === "") {
@@ -268,22 +272,40 @@ export default function CreateAccountForm({ accType }) {
       return;
     }
 
-    if (
-      person.agree &&
-      person.password === person.confirmPassword &&
-      person.email.length > 0 &&
-      emailRegex.test(person.email) &&
-      passwordRegex.test(person.password) &&
-      person.address.length > 0 &&
-      person.businessName.length > 0 &&
-      person.city !== "" &&
-      person.state !== "" &&
-      person.country !== "" &&
-      value !== "" &&
-      person.dob !== "" &&
-      selectedDate < minAllowedDate
-    ) {
-      handleSubmit();
+    if (person.country === 1) {
+      if (
+        person.agree &&
+        person.password === person.confirmPassword &&
+        person.email.length > 0 &&
+        emailRegex.test(person.email) &&
+        passwordRegex.test(person.password) &&
+        person.address.length > 0 &&
+        person.businessName.length > 0 &&
+        person.city !== "" &&
+        person.state !== "" &&
+        person.country !== "" &&
+        value !== "" &&
+        person.dob !== "" &&
+        selectedDate < minAllowedDate
+      ) {
+        handleSubmit();
+      }
+    } else {
+      if (
+        person.agree &&
+        person.password === person.confirmPassword &&
+        person.email.length > 0 &&
+        emailRegex.test(person.email) &&
+        passwordRegex.test(person.password) &&
+        person.address.length > 0 &&
+        person.businessName.length > 0 &&
+        person.country !== "" &&
+        value !== "" &&
+        person.dob !== "" &&
+        selectedDate < minAllowedDate
+      ) {
+        handleSubmit();
+      }
     }
   }
 
@@ -394,6 +416,8 @@ export default function CreateAccountForm({ accType }) {
               <option value="">Select gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
+              <option value="Homosexual">Homosexual</option>
+              <option value="Bisexual">Bisexual</option>
             </select>
             <div>
               <label htmlFor="date of birth" id="dob">

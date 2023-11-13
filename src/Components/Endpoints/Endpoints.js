@@ -37,3 +37,4 @@ export const add_bank_details = "/api/v1/user/add-bank-account";
 export const get_user_bank_details = "/api/v1/user/get-user-bank-account";
 export const add_kyc_details = "/api/v1/merchant/add-merchant-kyc";
 export const get_document_types = "/api/v1/user/get-document-type";
+export const dashboard_metrics = "/api/v1/merchant/get-merchant-total-transactions"
