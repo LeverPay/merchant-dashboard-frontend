@@ -730,7 +730,7 @@ export default function CreateAccountForm({ accType }) {
                   textDecoration: "none",
                 }}
               >
-                continue your to verification
+                continue to email verification
               </Link>
             </p>
           </div>
