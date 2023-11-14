@@ -6,7 +6,7 @@ import Col from "react-bootstrap/esm/Col";
 import "./invoice.css";
 import { nanoid } from "nanoid";
 import QRCode from "qrcode";
-import { blue } from "@mui/material/colors";
+import { blue, yellow } from "@mui/material/colors";
 
 function Invoice({ className, data }) {
   const [id] = useState(nanoid);
@@ -108,7 +108,9 @@ function Invoice({ className, data }) {
           </Row>
           <Row>
             <Col className="row_details">Currency</Col>
-            <Col className="row_details_information blue-color">{data?.currency}</Col>
+            <Col className="row_details_information blue-color">
+              {data?.currency}
+            </Col>
           </Row>
           <Row>
             <Col className="row_details">Created at</Col>
@@ -122,7 +124,7 @@ function Invoice({ className, data }) {
           <Row>
             <Col className="row_details">Items</Col>
             <Col className="row_details_information blue-color">
-              {data?.items}
+              {data?.items ? data?.items : "sample items"}
             </Col>
           </Row>
         </Container>
@@ -131,13 +133,17 @@ function Invoice({ className, data }) {
       <div className="Buyer_details">
         <h3 className="blue-color">Buyer Information</h3>
         <h5 style={{ color: "#0d0c30" }}>Email</h5>
-        <p style={{ color: "hsl(221, 69%, 55%)" }}>{data?.cus_email}</p>
+        <p style={{ color: "hsl(221, 69%, 55%)" }}>
+          {data?.cus_email ? data?.cus_email : "sample@mail.com"}
+        </p>
       </div>
       <hr />
       <div className="Payment_received">
         <p style={{ color: "#0d0c30" }}>
-          Payment Received for 
-          <span style={{ color: "#1861ff" }}> {data?.product_name} Android Devices</span>
+          Payment Received for
+          <span style={{ color: "#1861ff", marginLeft: "12px" }}>
+            {data?.product_name ? data?.product_name : "sample products"}
+          </span>
         </p>
         {/* <p style={{ color: "#0d0c30" }}>
           TXID:{" "}
@@ -148,10 +154,11 @@ function Invoice({ className, data }) {
         <main>
           <div>
             <h6>Invoice Paid at</h6>
-            <h6>{data?.invoiceTime} </h6>
+            <h6 style={{ color: data.status === 1 ? "green" : "yellow" }}>
+              {formatDate(data?.created_at)}
+            </h6>
           </div>
         </main>
-        
       </div>
       <hr />
     </Container>
