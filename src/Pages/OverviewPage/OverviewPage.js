@@ -27,157 +27,17 @@ import {
   baseUrl,
   get_dashboard_data,
   dashboard_metrics,
+  get_successful_failed_Transactions,
+  get_merchant_users_count,
 } from "../../Components/Endpoints/Endpoints";
 import TokenContext from "../../Components/User-Token/TokenContext";
 import { useContext } from "react";
-const DUMMY_EXPENSES = [
-  {
-    id: "e1",
-    title: "car insurance",
-    amount: "40053",
-    date: new Date(2023, 6, 28),
-  },
-  {
-    id: "e2",
-    title: "toilet paper",
-    amount: "20053",
-    date: new Date(2023, 5, 28),
-  },
-  {
-    id: "e3",
-    title: "Shopping",
-    amount: "70053",
-    date: new Date(2023, 4, 28),
-  },
 
-  {
-    id: "e4",
-    title: "picnic",
-    amount: "50053",
-    date: new Date(2023, 3, 28),
-  },
-  {
-    id: "e5",
-    title: "charity",
-    amount: "1253",
-    date: new Date(2023, 2, 28),
-  },
-  {
-    id: "e6",
-    title: "vacation",
-    amount: "20053",
-    date: new Date(2023, 0, 28),
-  },
-  {
-    id: "e7",
-    title: "vacation",
-    amount: "20053",
-    date: new Date(2022, 0, 28),
-  },
-  {
-    id: "e8",
-    title: "vacation",
-    amount: "46553",
-    date: new Date(2022, 1, 28),
-  },
-  {
-    id: "e10",
-    title: "vacation",
-    amount: "89553",
-    date: new Date(2022, 2, 28),
-  },
-  {
-    id: "e11",
-    title: "vacation",
-    amount: "19553",
-    date: new Date(2022, 3, 28),
-  },
-  {
-    id: "e12",
-    title: "vacation",
-    amount: "2553",
-    date: new Date(2022, 4, 28),
-  },
-  {
-    id: "e13",
-    title: "vacation",
-    amount: "89553",
-    date: new Date(2022, 5, 28),
-  },
-  {
-    id: "e14",
-    title: "vacation",
-    amount: "89553",
-    date: new Date(2022, 6, 28),
-  },
-  {
-    id: "e15",
-    title: "vacation",
-    amount: "9553",
-    date: new Date(2022, 7, 28),
-  },
-  {
-    id: "e16",
-    title: "vacation",
-    amount: "109553",
-    date: new Date(2022, 8, 28),
-  },
-  {
-    id: "e17",
-    title: "vacation",
-    amount: "3553",
-    date: new Date(2022, 9, 28),
-  },
-  {
-    id: "e18",
-    title: "vacation",
-    amount: "23553",
-    date: new Date(2022, 10, 28),
-  },
-  {
-    id: "e19",
-    title: "vacation",
-    amount: "133553",
-    date: new Date(2022, 11, 28),
-  },
-];
-
-const DUMMY_EXPENSES2 = [
-  {
-    id: "e1",
-    title: "car insurance",
-    amount: "40053",
-    date: new Date(2023, 0, 28),
-  },
-  {
-    id: "e2",
-    title: "car insurance",
-    amount: "140053",
-    date: new Date(2023, 1, 28),
-  },
-  {
-    id: "e3",
-    title: "car insurance",
-    amount: "140053",
-    date: new Date(2023, 2, 28),
-  },
-  {
-    id: "e4",
-    title: "car insurance",
-    amount: "33053",
-    date: new Date(2023, 3, 28),
-  },
-  {
-    id: "e5",
-    title: "car insurance",
-    amount: "98053",
-    date: new Date(2023, 4, 28),
-  },
-];
 export const OverviewPage = (props) => {
   const [expenses, setExpenses] = useState([]);
   const [transactions, setTransactions] = useState([]);
   const [metrics, setMetrics] = useState([]);
+  const [users, setUsers] = useState([]);
   const [dashboardData, setDashboardData] = useState({
     monthlyTrans: 0,
     weeklyTrans: 0,
@@ -249,9 +109,45 @@ export const OverviewPage = (props) => {
     } catch (err) {}
   };
 
+  const getAllMerchantTransactions = async () => {
+    try {
+      const req = await axios.get(
+        baseUrl + get_successful_failed_Transactions,
+        {
+          headers: {
+            Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+          },
+        }
+      );
+      // console.log(req);
+      if (req.status === 200) {
+        setUsers(req.data.data);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getAllMerchantUsers = async () => {
+    try {
+      const req = await axios.get(baseUrl + get_merchant_users_count, {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
+        },
+      });
+      if (req.status === 200) {
+        setUsers(req.data.data);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     getDashboardData();
     getDashboardMetrics();
+    getAllMerchantTransactions();
+    getAllMerchantUsers();
   }, []);
 
   useEffect(() => {
@@ -378,9 +274,9 @@ export const OverviewPage = (props) => {
                   <path
                     d="M2.5 41.5C2.5 41.5 8.77975 -6.00537 24.5 16C40.2203 38.0054 46.5 36.9946 52.5 20C59.9168 -1.0075 87.258 17.0806 90 2"
                     stroke="url(#paint0_linear_5710_195)"
-                    stroke-width="4"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <defs>
                     <linearGradient
@@ -391,8 +287,8 @@ export const OverviewPage = (props) => {
                       y2="-16.9144"
                       gradientUnits="userSpaceOnUse"
                     >
-                      <stop stop-color="white" />
-                      <stop offset="1" stop-color="white" stop-opacity="0" />
+                      <stop stopColor="white" />
+                      <stop offset="1" stopColor="white" stopOpacity="0" />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -410,11 +306,11 @@ export const OverviewPage = (props) => {
               <div className="flexy flexyM">
                 <div className="col-md-6 report-div">
                   <p>Total users</p>
-                  <h4>0</h4>
+                  <h4>{users?.total_active_users}</h4>
                 </div>
                 <div className="col-md-6 report-div">
-                  <p>Returned users</p>
-                  <h4>0</h4>
+                  <p>Inactive users</p>
+                  <h4>{users?.total_inactive_users}</h4>
                 </div>
               </div>
               <hr />

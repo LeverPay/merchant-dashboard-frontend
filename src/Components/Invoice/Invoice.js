@@ -57,8 +57,6 @@ function Invoice({ className, data }) {
     }
   }, [stateData]);
 
-  console.log(value);
-
   return (
     <Container
       id="invoice"
@@ -110,7 +108,7 @@ function Invoice({ className, data }) {
           </Row>
           <Row>
             <Col className="row_details">Currency</Col>
-            <Col className="row_details_information blue-color">Naira{data?.currency}</Col>
+            <Col className="row_details_information blue-color">{data?.currency}</Col>
           </Row>
           <Row>
             <Col className="row_details">Created at</Col>

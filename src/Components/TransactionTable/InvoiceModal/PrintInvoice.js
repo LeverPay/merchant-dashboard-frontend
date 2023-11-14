@@ -1,36 +1,27 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import Invoice from "../../Invoice/Invoice";
 
-class PrintInvoice extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      item: null,
-    };
-  }
+const PrintInvoice = forwardRef((props, ref) => {
+  const [item, setItem] = React.useState(null);
 
-  componentDidMount() {
+  React.useEffect(() => {
     // Fetch the invoice data from localStorage
-    let item = localStorage.getItem("currentInvoice");
-    if (item !== undefined || item !== "undefined") {
-      item = JSON.parse(item);
-      this.setState({ item });
+    let invoiceData = localStorage.getItem("currentInvoice");
+    if (invoiceData !== null) {
+      invoiceData = JSON.parse(invoiceData);
+      setItem(invoiceData);
     }
-  }
+  }, []);
 
-  render() {
-    const { item } = this.state;
-
-    return (
-      <div>
-        {item ? (
-          <Invoice className="className" invoice={item} />
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div ref={ref}>
+      {item ? (
+        <Invoice className="className" data={item} />
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
+});
 
 export default PrintInvoice;
