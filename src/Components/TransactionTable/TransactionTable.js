@@ -40,10 +40,10 @@ const TransactionTable = (props) => {
   const headers = ["Date", "Amount", "Status", "More"];
 
   useEffect(() => {
-    if (showInvoice !== null) {
+    if (showInvoice !== null || showInvoice !== undefined) {
       localStorage.setItem("currentInvoice", JSON.stringify(showInvoice));
     } else {
-      localStorage.setItem("currentInvoice", undefined);
+      localStorage.setItem("currentInvoice", null);
     }
   }, [showInvoice]);
   return (
@@ -61,13 +61,16 @@ const TransactionTable = (props) => {
             <tbody>
               {props.data.map((item, index) => (
                 <tr key={index}>
-                  
                   <td>{formatDate(item.created_at)}</td>
-                  
-                  <td>{!props.hidebalance ? "---" : parseFloat(item.amount).toFixed(2)}</td>
+
+                  <td>
+                    {!props.hidebalance
+                      ? "---"
+                      : parseFloat(item.amount).toFixed(2)}
+                  </td>
                   <td style={{ color: "green" }}>
                     <img src={success} alt="smiley" className="col-md-" />
-                     {item.status===1 ?'Successful': 'Pending'}                 
+                    {item.status === 1 ? "Successful" : "Pending"}
                   </td>
                   <td
                     onClick={() => {
