@@ -41,10 +41,12 @@
   .table-title {
     padding-right: 0px !important;
   }
+
   .transactions-table-container td {
     padding: 10px 5px !important;
     font-size: 10px;
   }
+
   .transactions-table-container th {
     padding: 12px 5px !important;
     font-size: 15px;
@@ -85,4 +87,18 @@
 .show-btn {
   z-index: 10;
   cursor: pointer;
+}
+
+.btn-container{
+  position: relative;
+}
+
+.table-btn {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: transparent;
+  color: #fff;
+  border: none;
+  outline: none;
 }

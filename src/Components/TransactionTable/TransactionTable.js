@@ -9,12 +9,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import success from "../../Assets/success.png";
 import Loading from "../General/loading animation/loading";
+import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 
 const TransactionTable = (props) => {
   const [showInvoice, setShowInvoice] = useState(null);
-  const [transactionId, setTransactionId] = useState();
   const [clickedItem, setClickedItem] = useState(null);
-  const helpRef = useRef();
+  const [itemsToShow, setItemsToShow] = useState(5);
+  const [showMore, setShowMore] = useState(true);
   const displayInvoice = (item) => {
     setShowInvoice(item);
   };
@@ -22,6 +23,21 @@ const TransactionTable = (props) => {
   const click = (item) => {
     setClickedItem(item);
     displayInvoice(item);
+  };
+
+  const toggleShowMore = () => {
+    if (itemsToShow + 5 >= props?.data?.length) {
+      setItemsToShow(props?.data?.length);
+      setShowMore(false);
+    } else {
+      setItemsToShow(itemsToShow + 5);
+      setShowMore(true);
+    }
+  };
+
+  const toggleShowLess = () => {
+    setItemsToShow(5);
+    setShowMore(true);
   };
 
   const formatDate = (createdAt) => {
@@ -59,31 +75,62 @@ const TransactionTable = (props) => {
               </tr>
             </thead>
             <tbody>
-              {props.data.map((item, index) => (
-                <tr key={index}>
-                  <td>{formatDate(item.created_at)}</td>
-
-                  <td>
-                    {!props.hidebalance
-                      ? "---"
-                      : parseFloat(item.amount).toFixed(2)}
-                  </td>
-                  <td style={{ color: "green" }}>
-                    <img src={success} alt="smiley" className="col-md-" />
-                    {item.status === 1 ? "Successful" : "Pending"}
-                  </td>
-                  <td
-                    onClick={() => {
-                      click(item);
-                    }}
-                    className="invoice-td"
-                  >
-                    View
-                  </td>
-                </tr>
-              ))}
+              {props.data
+                .slice(0, itemsToShow)
+                .sort((a, b) => b.created_at - a.created_at)
+                .map((item, index) => (
+                  <tr key={index}>
+                    <td>{formatDate(item.created_at)}</td>
+                    <td>
+                      {!props.hidebalance
+                        ? "---"
+                        : parseFloat(item.amount).toFixed(2)}
+                    </td>
+                    <td style={{ color: "green" }}>
+                      <img src={success} alt="smiley" className="col-md-" />
+                      {item.status === 1 ? "Successful" : "Pending"}
+                    </td>
+                    <td
+                      onClick={() => {
+                        click(item);
+                      }}
+                      className="invoice-td"
+                    >
+                      View
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
+          {props.data.length > itemsToShow ? (
+            <div className="btn-container mt-5">
+              <button
+                type=""
+                className="table-btn px-2 py-2 d-flex"
+                onClick={toggleShowMore}
+              >
+                View More
+                <span>
+                  <IoMdArrowDropdown size="20px" />
+                </span>
+              </button>
+            </div>
+          ) : (
+            props?.data?.length > 5 && (
+              <div className="btn-container mt-5">
+                <button
+                  type=""
+                  className="table-btn px-2 py-2 d-flex"
+                  onClick={toggleShowLess}
+                >
+                  Show Less
+                  <span>
+                    <IoMdArrowDropup size="20px" />
+                  </span>
+                </button>
+              </div>
+            )
+          )}
         </div>
       ) : (
         <div className="d-flex align-items-center justify-content-center mt-5">

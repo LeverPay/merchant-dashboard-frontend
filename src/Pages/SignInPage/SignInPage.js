@@ -49,7 +49,42 @@ function SignInPage() {
   const passwordRegex =
     /^(?=.*[!@#$%^&*()\-_=+{};:,<.>?])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*()\-_=+{};:,<.>?]{10,}$/;
 
+  const handlePasswordOnPaste = (e) => {
+    e.preventDefault();
+    // Access the clipboard data
+    const clipboardData = e.clipboardData || window.clipboardData;
+    const pastedText = clipboardData.getData("text");
+
+    // Update inputText state with pasted text
+    setInputText((prev) => ({ ...prev, password: pastedText }));
+
+    // Check if criteria are met for enabling the submit button
+    if (emailRegex.test(inputText.email) && passwordRegex.test(pastedText)) {
+      setSubmitButtonDisabled(false);
+    } else {
+      setSubmitButtonDisabled(true);
+    }
+  };
+
+  const handleEmailOnPaste = (e) => {
+    e.preventDefault();
+    // Access the clipboard data
+    const clipboardData = e.clipboardData || window.clipboardData;
+    const pastedText = clipboardData.getData("text");
+
+    // Update inputText state with pasted text
+    setInputText((prev) => ({ ...prev, email: pastedText }));
+
+    // Check if criteria are met for enabling the submit button
+    if (emailRegex.test(inputText.email) && passwordRegex.test(pastedText)) {
+      setSubmitButtonDisabled(false);
+    } else {
+      setSubmitButtonDisabled(true);
+    }
+  };
+
   const handleOncange = (e) => {
+    e.preventDefault()
     const { name, value } = e.target;
     setInputText((prev) => ({ ...prev, [name]: value }));
     if (
@@ -139,6 +174,7 @@ function SignInPage() {
               required
               value={inputText.email}
               onChange={handleOncange}
+              onPaste={handleEmailOnPaste}
               placeholder="E-mail"
               id="mail"
             />
@@ -152,6 +188,7 @@ function SignInPage() {
               name="password"
               value={inputText.password}
               onChange={handleOncange}
+              onPaste={handlePasswordOnPaste}
               placeholder="***********"
               autoComplete="new-password"
               id="pass-code"
