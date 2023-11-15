@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
+import { useLocation } from "react-router-dom";
 import "./general.css";
 import Logo from "./Header-components/Logo";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
@@ -17,7 +18,11 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { baseUrl, logout } from "../Endpoints/Endpoints";
 import TokenContext from "../User-Token/TokenContext";
 import { MdReceiptLong } from "react-icons/md";
-import { MdSubscriptions, MdOutlineCreateNewFolder, MdMonetizationOn } from "react-icons/md";
+import {
+  MdSubscriptions,
+  MdOutlineCreateNewFolder,
+  MdMonetizationOn,
+} from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { FaHandsHelping } from "react-icons/fa";
 import { HiOutlineViewGridAdd } from "react-icons/hi";
@@ -30,6 +35,7 @@ export default function SidebarNav(props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [trackNavClicked, setTrackedNavClicked] = useState(false);
+  const location = useLocation();
 
   const closeMobileMenu = () => {
     if (window.innerWidth <= 768) setSidebarOpen(!isMobile);
@@ -63,9 +69,9 @@ export default function SidebarNav(props) {
   const handleNavClick = (idx) => {
     if (sidebarItemsTop[idx].sub) {
       setActiveSubItem(null);
-      setActive((prevActive) => (prevActive === idx ? null : idx));
+      // setActive((prevActive) => (prevActive === idx ? null : idx));
     } else {
-      setActive((prevActive) => (prevActive === idx ? null : idx));
+      // setActive((prevActive) => (prevActive === idx ? null : idx));
       setActiveSubItem(null);
       if (window.innerWidth <= 768) {
         closeSidebar();
@@ -73,18 +79,18 @@ export default function SidebarNav(props) {
     }
   };
 
-  const [activeSubItem, setActiveSubItem] = useState(null);
+  useEffect(() => {
+    setActive(location.pathname);
+  }, []);
 
-  const showdropDowns = (idx) => {
-    setTrackedNavClicked(!trackNavClicked);
-    setActive((prevActive) => (prevActive === idx ? null : idx));
-    setActiveSubItem((prevActive) => (prevActive === idx ? null : idx));
-  };
+  useEffect(() => {
+    setActive(location.pathname);
+  }, [location.pathname]);
 
   const sidebarItemsTop = [
     {
       icon: <DashboardRoundedIcon htmlColor="white" />,
-      link: "./dashboard",
+      link: "dashboard",
       title: "Dashboard",
     },
     {
@@ -152,6 +158,23 @@ export default function SidebarNav(props) {
       iconEnd: <OpenInNewOutlinedIcon htmlColor="white" />,
     },
   ];
+
+  const [activeSubItem, setActiveSubItem] = useState(null);
+
+  const showdropDowns = (idx) => {
+    setTrackedNavClicked(!trackNavClicked);
+
+    if (sidebarItemsTop[idx].sub) {
+      setActive((prevActive) => (prevActive === idx ? null : idx));
+      setActiveSubItem((prevActive) => (prevActive === idx ? null : idx));
+    } else {
+      setActiveSubItem(null);
+      setActive((prevActive) => (prevActive === idx ? null : idx));
+      if (window.innerWidth <= 768) {
+        closeSidebar();
+      }
+    }
+  };
 
   const navigate = useNavigate();
   const logOut = async () => {
@@ -280,7 +303,7 @@ export default function SidebarNav(props) {
                       <NavLink
                         to={item.link}
                         className={`d-flex align-items-center ${
-                          active === idx ? "custom-active" : ""
+                          active === `/${item.link}` ? "custom-active" : ""
                         }`}
                         // activeClassName="custom-active"
                         onClick={() => handleNavClick(idx)}
