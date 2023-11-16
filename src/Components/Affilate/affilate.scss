@@ -18,8 +18,10 @@
         .input {
           width: 100%;
           padding: 1.5% 2%;
-        //   border: none;
           outline: none;
+          &:focus:invalid {
+            border: 1px solid #fd3003;
+          }
         }
       }
     }

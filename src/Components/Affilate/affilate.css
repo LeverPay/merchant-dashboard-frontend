@@ -16,6 +16,9 @@
   padding: 1.5% 2%;
   outline: none;
 }
+.affilate-reg-container .registeration-content .affilate-reg-inputs-container .inputs-container .input:focus:invalid {
+  border: 1px solid #fd3003;
+}
 
 @media screen and (max-width: 1023px) {
   .affilate-reg-container {
