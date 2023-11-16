@@ -21,6 +21,7 @@ import History from "./Components/new Invoice/History";
 import { ScrollContext } from "./Components/General/ScrollContext";
 import CreateAccountForm from "./Pages/CreateAccountForm/CreateAccountForm";
 import Verify from "./Pages/CreateAccountForm/verify";
+import MerchantRevenueOverview from "./Pages/AffliatePage/Merchant-revenue-Overview";
 
 function App(props) {
   const [showNav, setShowNav] = useState(true);
@@ -64,6 +65,8 @@ function App(props) {
             <Route path="new" element={<Generate_Invoice_Page />} />
             <Route path="history" element={<History />} />
             <Route path="subscriptions" element={<Subscription />} />
+            <Route path="Merchant-Revenue-Overview" element={<MerchantRevenueOverview />} />
+
           </Routes>
         </div>
       </div>
