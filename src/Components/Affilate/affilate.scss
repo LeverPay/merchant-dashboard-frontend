@@ -5,6 +5,7 @@
 
   .registeration-content {
     box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+    width: 60%;
     .affilate-reg-header {
       h1 {
         color: #2962f2;
@@ -32,11 +33,17 @@
 @media screen and (max-width: 1023px) {
   .affilate-reg-container {
     width: 90vw;
+    .registeration-content {
+      width: 80%;
+    }
   }
 }
 
 @media screen and (max-width: 767px) {
   .affilate-reg-container {
     width: 95vw;
+    .registeration-content {
+      width:auto;
+    }
   }
 }
