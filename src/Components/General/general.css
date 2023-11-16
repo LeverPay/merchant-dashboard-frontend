@@ -183,7 +183,10 @@
 
 .sub-links {
   top: -20%;
-  left: 70%;
+  left: 50%;
+  transform: translate(-25%, 25%);
+  background-color: #000000d2;
+  z-index: 5;
 }
 
 .sub-link-items-container {
@@ -196,4 +199,10 @@
 
 .sub-links a {
   color: #fff !important;
+}
+
+.sub-links a:hover {
+  color: #fff;
+  background-color: #e4b42fb0;
+  border-radius: 1em;
 }
