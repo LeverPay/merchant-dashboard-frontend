@@ -120,7 +120,7 @@
 
   .table-body{
     /* background-color: red; */
-    height: calc(80vh - 350px);
+    max-height: calc(80vh - 350px);
     overflow: auto;
   }
 
