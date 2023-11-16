@@ -29,6 +29,7 @@ import { HiOutlineViewGridAdd } from "react-icons/hi";
 import { GiArchiveRegister } from "react-icons/gi";
 import axios from "axios";
 import { FaHistory } from "react-icons/fa";
+import {BsTools} from "react-icons/bs"
 
 export default function SidebarNav(props) {
   const { notify, success } = useContext(TokenContext);
@@ -136,6 +137,11 @@ export default function SidebarNav(props) {
       icon: <AccountCircleTwoToneIcon htmlColor="white" />,
       link: "profile",
       title: "Profile | KYC",
+    },
+    {
+      icon: <BsTools htmlColor="white" />,
+      link: "developer",
+      title: "Developer",
     },
     // {
     //   icon: <SettingsRoundedIcon htmlColor="white" />,

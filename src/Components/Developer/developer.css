@@ -1,0 +1,44 @@
+.dev-page-container {
+  width: 70vw;
+  font-family: Montserrat-Regular;
+}
+.dev-page-container .dev-content {
+  box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+  width: 60%;
+}
+.dev-page-container .dev-content .dev-header h1 {
+  color: #2962f2;
+}
+.dev-page-container .dev-content .dev-header p {
+  color: #fd3003;
+}
+.dev-page-container .dev-content .dev-inputs-container .inputs-container .input {
+  width: 100%;
+  padding: 1.5% 2%;
+  outline: none;
+}
+.dev-page-container .dev-content .dev-inputs-container .inputs-container .input:focus:invalid {
+  border: 1px solid #fd3003;
+}
+.dev-page-container .dev-content .dev-inputs-container .inputs-container .copy-icon {
+  z-index: 5;
+  cursor: pointer;
+  margin: 0 0 2% -10%;
+}
+
+@media screen and (max-width: 1023px) {
+  .dev-page-container {
+    width: 90vw;
+  }
+  .dev-page-container .dev-content {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 767px) {
+  .dev-page-container {
+    width: 95vw;
+  }
+  .dev-page-container .dev-content {
+    width: auto;
+  }
+}/*# sourceMappingURL=developer.css.map */
