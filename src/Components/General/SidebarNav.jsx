@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
+import { useLocation } from "react-router-dom";
 import "./general.css";
 import Logo from "./Header-components/Logo";
 import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
@@ -17,8 +18,15 @@ import { AiOutlineLogout } from "react-icons/ai";
 import { baseUrl, logout } from "../Endpoints/Endpoints";
 import TokenContext from "../User-Token/TokenContext";
 import { MdReceiptLong } from "react-icons/md";
-import { MdSubscriptions, MdOutlineCreateNewFolder } from "react-icons/md";
+import {
+  MdSubscriptions,
+  MdOutlineCreateNewFolder,
+  MdMonetizationOn,
+} from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
+import { FaHandsHelping } from "react-icons/fa";
+import { HiOutlineViewGridAdd } from "react-icons/hi";
+import { GiArchiveRegister } from "react-icons/gi";
 import axios from "axios";
 import { FaHistory } from "react-icons/fa";
 
@@ -27,6 +35,7 @@ export default function SidebarNav(props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [trackNavClicked, setTrackedNavClicked] = useState(false);
+  const location = useLocation();
 
   const closeMobileMenu = () => {
     if (window.innerWidth <= 768) setSidebarOpen(!isMobile);
@@ -60,9 +69,9 @@ export default function SidebarNav(props) {
   const handleNavClick = (idx) => {
     if (sidebarItemsTop[idx].sub) {
       setActiveSubItem(null);
-      setActive((prevActive) => (prevActive === idx ? null : idx));
+      // setActive((prevActive) => (prevActive === idx ? null : idx));
     } else {
-      setActive((prevActive) => (prevActive === idx ? null : idx));
+      // setActive((prevActive) => (prevActive === idx ? null : idx));
       setActiveSubItem(null);
       if (window.innerWidth <= 768) {
         closeSidebar();
@@ -70,17 +79,18 @@ export default function SidebarNav(props) {
     }
   };
 
-  const [activeSubItem, setActiveSubItem] = useState(null);
-  const showdropDowns = (idx) => {
-    setTrackedNavClicked(!trackNavClicked);
-    setActive(idx);
-    setActiveSubItem(null);
-  };
+  useEffect(() => {
+    setActive(location.pathname);
+  }, []);
+
+  useEffect(() => {
+    setActive(location.pathname);
+  }, [location.pathname]);
 
   const sidebarItemsTop = [
     {
       icon: <DashboardRoundedIcon htmlColor="white" />,
-      link: "./dashboard",
+      link: "dashboard",
       title: "Dashboard",
     },
     {
@@ -95,6 +105,16 @@ export default function SidebarNav(props) {
       icons: [
         <MdOutlineCreateNewFolder color="white" size="25px" />,
         <FaHistory color="white" size="25px" />,
+      ],
+    },
+    {
+      icon: <FaHandsHelping color="white" size="25px" />,
+      title: "Affilate",
+      sub: ["registration", "overview", "income"],
+      icons: [
+        <GiArchiveRegister color="white" size="25px" />,
+        <HiOutlineViewGridAdd color="white" size="25px" />,
+        <MdMonetizationOn color="white" size="25px" />,
       ],
     },
     {
@@ -139,6 +159,23 @@ export default function SidebarNav(props) {
     },
   ];
 
+  const [activeSubItem, setActiveSubItem] = useState(null);
+
+  const showdropDowns = (idx) => {
+    setTrackedNavClicked(!trackNavClicked);
+
+    if (sidebarItemsTop[idx].sub) {
+      setActive((prevActive) => (prevActive === idx ? null : idx));
+      setActiveSubItem((prevActive) => (prevActive === idx ? null : idx));
+    } else {
+      setActiveSubItem(null);
+      setActive((prevActive) => (prevActive === idx ? null : idx));
+      if (window.innerWidth <= 768) {
+        closeSidebar();
+      }
+    }
+  };
+
   const navigate = useNavigate();
   const logOut = async () => {
     try {
@@ -149,7 +186,6 @@ export default function SidebarNav(props) {
       });
       console.log(req);
       if (req.status === 200) {
-        console.log("loggedOut");
         window.localStorage.clear();
         window.sessionStorage.clear();
         if (!window.sessionStorage.getItem("Name")) {
@@ -234,42 +270,40 @@ export default function SidebarNav(props) {
                           className={`d-flex align-items-start justify-content-between position-relative`}
                         >
                           {item.title}{" "}
-                          <span className="sub-links d-flex flex-column position-absolute">
-                            <span>
-                              <IoMdArrowDropdown />
-                            </span>
-                            {trackNavClicked && (
-                              <span className="sub-link-items-container d-flex flex-column">
-                                {item.sub.map((el, subIdx) => (
-                                  <React.Fragment key={subIdx}>
-                                    <NavLink
-                                      to={`${el}`}
-                                      className={`mt-2 text-center ${
-                                        activeSubItem === subIdx
-                                          ? "custom-active"
-                                          : ""
-                                      }`}
-                                      onClick={closeMobileMenu}
-                                    >
-                                      <div className="d-flex align-items-center justify-content-start fs-6 fw-lighter">
-                                        {/* Add the icon from the icons array */}
-                                        {item.icons[subIdx]}
-                                        <span className="mx-1">{el}</span>
-                                      </div>
-                                    </NavLink>
-                                    <Outlet />
-                                  </React.Fragment>
-                                ))}
+                          {trackNavClicked && active === idx && (
+                            <span className="sub-links rounded d-flex flex-column position-absolute">
+                              <span>
+                                <IoMdArrowDropdown />
                               </span>
-                            )}
-                          </span>
+                              {item.sub.map((el, subIdx) => (
+                                <NavLink
+                                  key={subIdx}
+                                  to={`${el}`}
+                                  className={`mt-2 text-center ${
+                                    activeSubItem === subIdx
+                                      ? "custom-active"
+                                      : ""
+                                  }`}
+                                  onClick={() => {
+                                    closeMobileMenu();
+                                    setActiveSubItem(subIdx);
+                                  }}
+                                >
+                                  <div className="d-flex align-items-center justify-content-start fs-6 fw-lighter">
+                                    {item.icons[subIdx]}
+                                    <span className="mx-1">{el}</span>
+                                  </div>
+                                </NavLink>
+                              ))}
+                            </span>
+                          )}
                         </span>
                       </NavLink>
                     ) : (
                       <NavLink
                         to={item.link}
                         className={`d-flex align-items-center ${
-                          active === idx ? "custom-active" : ""
+                          active === `/${item.link}` ? "custom-active" : ""
                         }`}
                         // activeClassName="custom-active"
                         onClick={() => handleNavClick(idx)}

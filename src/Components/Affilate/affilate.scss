@@ -1,0 +1,42 @@
+.affilate-reg-container {
+  width: 70vw;
+  height: auto;
+  font-family: Montserrat-Regular;
+
+  .registeration-content {
+    box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+    .affilate-reg-header {
+      h1 {
+        color: #2962f2;
+      }
+      p {
+        color: #fd3003;
+      }
+    }
+
+    .affilate-reg-inputs-container {
+      .inputs-container {
+        .input {
+          width: 100%;
+          padding: 1.5% 2%;
+          outline: none;
+          &:focus:invalid {
+            border: 1px solid #fd3003;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .affilate-reg-container {
+    width: 90vw;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .affilate-reg-container {
+    width: 95vw;
+  }
+}
