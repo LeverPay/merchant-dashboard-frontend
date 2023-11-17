@@ -1,27 +1,27 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import logo from "../../Assets/vector.png";
 import lock from "../../Assets/sec-padlock.png";
 import copyIcon from "../../Assets/copy-vector.png";
-import { useState } from "react";
 import TokenContext from "../User-Token/TokenContext";
-import { useContext } from "react";
+import { baseUrl, get_merchant_keys } from "../Endpoints/Endpoints";
+import axios from "axios";
 
 export default function Developer() {
   const { notify, success } = useContext(TokenContext);
   const [keys, setKeys] = useState({
-    test_secret_key: "",
-    test_public_key: "",
-    live_secret_key: "",
-    live_public_key: "",
+    test_secret_key: "No key to display",
+    test_public_key: "No key to display",
+    live_secret_key: "No key to display",
+    live_public_key: "No key to display",
   });
 
   const copyData = (e) => {
-    const parent = e.target.parentElement.previousElementSibling.value;
+    const value = e.target.parentElement.previousElementSibling.value;
 
-    if (parent !== "") {
+    if (value !== "No key to display" && value !== "") {
       if (navigator.clipboard) {
         navigator.clipboard
-          .write(parent)
+          .writeText(value)
           .then(() => success("data successfully copied ✔"))
           .catch(() => notify("Something went wrong! :("));
       } else if (!navigator.clipboard) {
@@ -31,6 +31,33 @@ export default function Developer() {
       notify("no data to copy, contact us to know more");
     }
   };
+
+  const getMerchantKeys = async () => {
+    try {
+      const req = await axios.post(baseUrl + get_merchant_keys, null, {
+        headers: { Authorization: `Bearer ${sessionStorage.getItem("Name")}` },
+      });
+      if (req.status === 200) {
+        setKeys((prev) => ({
+          ...prev,
+          test_secret_key: req.data?.data?.test_secret_key,
+          test_public_key: req.data?.data?.test_public_key,
+          live_secret_key: req.data?.data?.live_secret_key,
+          live_public_key: req.data?.data?.live_public_key,
+        }));
+      }
+    } catch (err) {
+      if (err.response) {
+        notify(err.response?.data?.message);
+      } else {
+        notify("Something went wrong while getting data :(");
+      }
+    }
+  };
+
+  useEffect(() => {
+    getMerchantKeys();
+  }, []);
 
   return (
     <>
@@ -44,7 +71,7 @@ export default function Developer() {
         <div className="dev-header">
           <h1 className="fw-bolder text-center fs-5 mb-2">Developer Keys</h1>
           <p className="text-center">
-            Please Copy your developer keys and paste them wherever needed
+            Please Copy your developer keys and use them wherever needed
           </p>
         </div>
 

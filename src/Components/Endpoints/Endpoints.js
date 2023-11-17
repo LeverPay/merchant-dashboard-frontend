@@ -43,3 +43,4 @@ export const get_successful_failed_Transactions =
   "/api/v1/merchant/merchant-total-successfull-failed-transactions";
 export const get_merchant_users_count =
   "/api/v1/merchant/get-merchant-users-count";
+export const get_merchant_keys = "/api/v1/merchant/get-merchant-keys";

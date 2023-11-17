@@ -20,6 +20,9 @@
           width: 100%;
           padding: 1.5% 2%;
           outline: none;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
           &:focus:invalid {
             border: 1px solid #fd3003;
           }
@@ -27,7 +30,7 @@
         .copy-icon {
           z-index: 5;
           cursor: pointer;
-          margin: 0 0 2% -10%;
+          margin: 0 0 2% 2%;
         }
       }
     }
