@@ -29,7 +29,7 @@ import { HiOutlineViewGridAdd } from "react-icons/hi";
 import { GiArchiveRegister } from "react-icons/gi";
 import axios from "axios";
 import { FaHistory } from "react-icons/fa";
-import {BsTools} from "react-icons/bs"
+import { BsTools } from "react-icons/bs";
 
 export default function SidebarNav(props) {
   const { notify, success } = useContext(TokenContext);
@@ -190,29 +190,18 @@ export default function SidebarNav(props) {
           Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
         },
       });
-      console.log(req);
       if (req.status === 200) {
         window.localStorage.clear();
         window.sessionStorage.clear();
         if (!window.sessionStorage.getItem("Name")) {
-          setTimeout(() => navigate("/"), 3000);
+          navigate("/");
         }
       }
     } catch (err) {
-      console.log(err);
-      if (
-        err.response?.status === 400 ||
-        err.response?.status === 401 ||
-        err.response?.status === 403 ||
-        err.response?.status === 404
-      ) {
+      if (err.response) {
         notify(err.response.data.message);
       } else {
-        if (err.response !== undefined) {
-          notify(err.response.data.message);
-        } else {
-          notify("Something went wrong :(");
-        }
+        notify("Something went wrong :(");
       }
     }
   };
