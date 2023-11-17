@@ -82,7 +82,7 @@ export default function Registeration() {
   };
 
   return (
-    <div className="affilate-reg-container px-5 py-5 d-flex flex-column justify-content-center">
+    <div className="affilate-reg-container px-5 py-5 d-flex flex-column justify-content-center align-items-center">
       <div className="registeration-content px-5 py-5 rounded">
         <div className="images-section d-flex justify-content-between mb-3">
           <div>
@@ -142,7 +142,7 @@ export default function Registeration() {
           </div>
 
           <div className="inputs-container mb-3">
-            <label htmlFor="phone-number">phone</label>
+            <label htmlFor="phone-number">Phone</label>
             <input
               type="tel"
               name="phone"
@@ -169,14 +169,14 @@ export default function Registeration() {
           </div>
         </div>
 
-        <div className="affilate-btn-container mb-3">
+        <div className="affilate-btn-container mb-3 px-5">
           <div className="d-flex justify-content-center mb-2">
             <Button
               click={handleSubmit}
               style={{
                 backgroundColor: "#2962f2",
                 color: "#fff",
-                width: "50%",
+                width: "100%",
                 padding: "5px",
               }}
             >
@@ -190,7 +190,7 @@ export default function Registeration() {
               style={{
                 backgroundColor: "#fd3003",
                 color: "#fff",
-                width: "50%",
+                width: "100%",
                 padding: "5px",
               }}
             >

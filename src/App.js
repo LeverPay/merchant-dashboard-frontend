@@ -26,6 +26,7 @@ import { ScrollContext } from "./Components/General/ScrollContext";
 import CreateAccountForm from "./Pages/CreateAccountForm/CreateAccountForm";
 import Verify from "./Pages/CreateAccountForm/verify";
 import MerchantRevenueOverview from "./Pages/AffliatePage/Merchant-revenue-Overview";
+import Developer_Page from "./Pages/DeveloperTools/Developer_Page";
 
 function App(props) {
   const [showNav, setShowNav] = useState(true);
@@ -74,6 +75,7 @@ function App(props) {
             <Route path="registration" element={<Registeration />} />
             <Route path="overview" element={<Overview />} />
             <Route path="income" element={<IncomeEarned />} />
+            <Route path="developer" element={<Developer_Page />} />
           </Routes>
         </div>
       </div>
