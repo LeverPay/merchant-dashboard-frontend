@@ -1,0 +1,187 @@
+.page-container{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.merchant-revenue-container{
+    width: 100%;
+    border-radius: 5px;
+    height: 80vh;
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.10);
+    display: flex;
+    flex-direction: column;
+}
+
+.search-box-container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: 39px;
+    margin-right: 81px;
+
+}
+
+.input{
+    border: 1px solid darkgray;
+    outline: none;
+}
+
+ 
+.input-icon {
+    margin-left: -90%;
+  }
+
+
+  .merchant-cards-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+.table-section{
+    margin-top: 60px;
+    
+}
+  #merchant-revenue-table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+  
+    width: 100%;
+  }
+
+  #merchant-revenue-table thead {
+    
+    border: 1px solid #000;
+  
+  }
+  
+  #merchant-revenue-table td, #merchant-revenue-table th {
+    /* border: 1px solid #ddd; */
+    padding: 10px;
+  }
+  
+  /* #merchant-revenue-table tr:nth-child(even){background-color: #f2f2f2;} */
+  
+  /* #merchant-revenue-table tr:hover {background-color: #ddd;} */
+  
+  #merchant-revenue-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+  
+    background: #F7F7F8;
+  
+  }
+
+.table-text{
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 12.442px; /* 88.872% */
+    letter-spacing: 0.346px;
+
+}
+.color-zero{
+    color: black;
+    font-size: 14px;
+}
+.color-zeroB{
+    color: black;
+    font-size: 12.442px;
+}
+  .table-color-one{
+    color: #0F3EE5;
+    font-size: 14px;
+  }
+  .table-color-two{
+    color: #137902;
+    font-size: 14px;
+  }
+  .table-color-three{
+    color: #AA0202;;
+    font-size: 14px;
+  }
+
+  .table-color-four{
+    color: #084B9A;
+    font-size: 12.442px;
+  }
+  .table-color-five{
+    color: #089A0E;
+    font-size: 12.442px;
+  }
+  .table-color-six{
+    color: #9A0808;
+    font-size: 12.442px;
+  }
+
+  .table-body{
+    /* background-color: red; */
+    max-height: calc(80vh - 350px);
+    overflow: auto;
+  }
+
+
+  .previous-page{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 30px;
+    margin-top: 20px;
+  }
+
+  .button-div{
+    display: flex;
+    justify-content: flex-end;
+    gap: 40px;
+  }
+
+  .singleButton{
+    color: #000;
+
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; 
+    cursor: pointer;
+  }
+  @media screen and  (max-width: 767px) {
+
+    .merchant-revenue-container{
+        width: 100%;
+        border-radius: 5px;
+        height: 100vh;
+        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.10);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .search-box-container{
+      display: flex;
+      justify-content:  center;
+      align-items:  center;
+      margin-top: 0px;
+      margin-right: 0px;
+      
+  
+  }
+  
+  .input{
+      border: 1px solid darkgray;
+      outline: none;
+      height: 40px;
+      width: 280px;
+  }
+  
+   
+  .input-icon {
+      margin-left: -92%;
+    }
+  
+  
+    
+     
+  }

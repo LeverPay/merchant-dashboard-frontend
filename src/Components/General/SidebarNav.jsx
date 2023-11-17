@@ -138,6 +138,12 @@ export default function SidebarNav(props) {
       link: "profile",
       title: "Profile | KYC",
     },
+
+    {
+      icon: <AccountCircleTwoToneIcon htmlColor="white" />,
+      link: "Merchant-Revenue-Overview",
+      title: "Affiliate",
+    },
     {
       icon: <BsTools htmlColor="white" />,
       link: "developer",
