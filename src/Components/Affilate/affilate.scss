@@ -32,6 +32,7 @@
 
 .affilate-overview-container {
   width: 70vw;
+  font-family: Inter-Regular;
 
   .overview-contents {
     width: 100%;
@@ -48,11 +49,14 @@
 
     .overview-table-section {
       overflow-x: auto;
-      .table-1{
-        .table{
-          thead{
-            tr{
-              .pointer{
+      .active-header {
+        color: #5fce2f;
+      }
+      .table-1 {
+        .table-1-contents {
+          thead {
+            tr {
+              .pointer {
                 cursor: pointer;
               }
             }
@@ -79,9 +83,14 @@
             text-align: left;
             color: #000;
             background-color: #f7f7f8;
+            font-family: Inter-Bold;
           }
         }
       }
+    }
+
+    .buttons {
+      width: 100%;
     }
   }
 }

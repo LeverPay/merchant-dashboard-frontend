@@ -1,12 +1,39 @@
 import React from "react";
 import "./affilate.css";
-import Card from "../cards/pages-cards/Card";
+import Card from "../cards/affiliate-cards/Card";
 import all from "../../Assets/all2.png";
-import active from "../../Assets/active.png";
+import activeImg from "../../Assets/active.png";
 import failed from "../../Assets/ep-failed.png";
 import { header1, header2, Tbody } from "./affilateTable/tableData";
+import { useState } from "react";
+import { useEffect } from "react";
 
 export default function Overview() {
+  const [active, setActive] = useState(false);
+  const [filtered, setFiltered] = useState([]);
+  const [activeNumber, setActiveNumber] = useState(null);
+  const [canceledNumber, setCanceledNumber] = useState(null);
+
+  const toggleActiveHeader = (item) => {
+    setActive(item);
+    if (item !== "All") {
+      const filteredData = Tbody.filter((el) => el.status === item);
+      setFiltered(filteredData);
+    } else {
+      setFiltered(Tbody);
+    }
+    console.log(filtered);
+  };
+
+  useEffect(() => {
+    const active = Tbody.filter((el) => el.status === "Active");
+    const canceled = Tbody.filter((el) => el.status === "Suspended");
+    setActiveNumber(active.length);
+    setCanceledNumber(canceled.length);
+    setActive(0);
+    setFiltered(Tbody);
+  }, []);
+
   return (
     <div className="affilate-overview-container">
       <div className="overview-contents px-5 py-2">
@@ -28,13 +55,18 @@ export default function Overview() {
             </span>
           </div>
 
-          <section className="affilate-card-section d-flex justify-content-evenly mt-4">
-            <Card icon={all} status="All" count={0} color="#0B0230" />
-            <Card icon={active} status="Active" count={0} color="#0C6904" />
+          <section className="affilate-card-section d-flex flex-wrap justify-content-evenly mt-4">
+            <Card icon={all} status="All" count={Tbody.length} color="#0B0230" />
+            <Card
+              icon={activeImg}
+              status="Active"
+              count={activeNumber}
+              color="#0C6904"
+            />
             <Card
               icon={failed}
               status="Suspended"
-              count={0}
+              count={canceledNumber}
               color="#F40909EB"
             />
           </section>
@@ -42,11 +74,17 @@ export default function Overview() {
 
         <section className="overview-table-section mt-5">
           <div className="table-1">
-            <table className="table">
-              <thead className="d-flex px-4 py-2">
+            <table className="table-1-contents">
+              <thead className="d-flex px-5 py-4">
                 <tr className="px-5 py-2">
                   {header1.map((item, index) => (
-                    <th key={index} className="mx-4 pointer">
+                    <th
+                      key={index}
+                      className={`mx-4 pointer ${
+                        active === item ? "active-header" : ""
+                      }`}
+                      onClick={() => toggleActiveHeader(item)}
+                    >
                       {item}
                     </th>
                   ))}
@@ -69,7 +107,7 @@ export default function Overview() {
                 ))}
               </tr>
 
-              {Tbody.map((el, i) => (
+              {filtered.map((el, i) => (
                 <tr key={el.id} className="fw-bolder">
                   <td className="text-left px-2 py-4">{el.date}</td>
                   <td className="text-left px-2 py-4 text-truncate">
@@ -92,6 +130,16 @@ export default function Overview() {
             </table>
           </div>
         </section>
+
+        <div className="buttons d-flex align-items-end justify-content-end mt-5">
+          <div className="prev-btn mx-4">
+            <button className="btn rounded-4 fw-bolder">Previous</button>
+          </div>
+
+          <div className="next-btn">
+            <button className="btn rounded-4 fw-bolder">Next</button>
+          </div>
+        </div>
       </div>
     </div>
   );

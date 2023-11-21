@@ -24,6 +24,7 @@
 
 .affilate-overview-container {
   width: 70vw;
+  font-family: Inter-Regular;
 }
 .affilate-overview-container .overview-contents {
   width: 100%;
@@ -35,7 +36,10 @@
 .affilate-overview-container .overview-contents .overview-table-section {
   overflow-x: auto;
 }
-.affilate-overview-container .overview-contents .overview-table-section .table-1 .table thead tr .pointer {
+.affilate-overview-container .overview-contents .overview-table-section .active-header {
+  color: #5fce2f;
+}
+.affilate-overview-container .overview-contents .overview-table-section .table-1 .table-1-contents thead tr .pointer {
   cursor: pointer;
 }
 .affilate-overview-container .overview-contents .overview-table-section .table-2 .info {
@@ -55,6 +59,10 @@
   text-align: left;
   color: #000;
   background-color: #f7f7f8;
+  font-family: Inter-Bold;
+}
+.affilate-overview-container .overview-contents .buttons {
+  width: 100%;
 }
 
 @media screen and (max-width: 1023px) {

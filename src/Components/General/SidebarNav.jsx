@@ -22,6 +22,7 @@ import {
   MdSubscriptions,
   MdOutlineCreateNewFolder,
   MdMonetizationOn,
+  MdOutlineAttachMoney,
 } from "react-icons/md";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { FaHandsHelping } from "react-icons/fa";
@@ -140,9 +141,9 @@ export default function SidebarNav(props) {
     },
 
     {
-      icon: <AccountCircleTwoToneIcon htmlColor="white" />,
-      link: "Merchant-Revenue-Overview",
-      title: "Affiliate",
+      icon: <MdOutlineAttachMoney htmlColor="white" size="25px" />,
+      link: "Revenue",
+      title: "Revenue",
     },
     {
       icon: <BsTools htmlColor="white" />,

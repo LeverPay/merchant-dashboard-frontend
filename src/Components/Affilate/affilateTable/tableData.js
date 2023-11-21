@@ -1,4 +1,4 @@
-export const header1 = ["All", "Sent", "Canceled"];
+export const header1 = ["All", "Active", "Suspended"];
 
 export const header2 = [
   "Date | Time",
@@ -19,6 +19,7 @@ export const Tbody = [
     code: "gt80ts",
     split: "10",
     income: "$30000",
+    status: "Active",
   },
   {
     date: "23/10/20 10:12",
@@ -28,6 +29,7 @@ export const Tbody = [
     code: "gt80ts",
     split: "10",
     income: "$30000",
+    status: "Active",
   },
   {
     date: "23/10/20 10:12",
@@ -37,6 +39,7 @@ export const Tbody = [
     code: "gt80ts",
     split: "10",
     income: "$30000",
+    status: "Suspended",
   },
   {
     date: "23/10/20 10:12",
@@ -46,6 +49,7 @@ export const Tbody = [
     code: "gt80ts",
     split: "10",
     income: "$30000",
+    status: "Active",
   },
   {
     date: "23/10/20 10:12",
@@ -55,5 +59,6 @@ export const Tbody = [
     code: "gt80ts",
     split: "10",
     income: "$30000",
+    status: "Active",
   },
 ];

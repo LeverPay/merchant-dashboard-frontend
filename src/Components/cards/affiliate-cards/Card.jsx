@@ -4,7 +4,7 @@ import "./card.css";
 export default function Card({ icon, status, count, color }) {
   return (
     <div
-      className="cards rounded-4"
+      className="affilate-cards rounded-4"
       style={{ backgroundColor: color, color: "white" }}
     >
       <div className="card-left-side">
