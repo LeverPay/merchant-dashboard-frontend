@@ -1,18 +1,18 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./affilate.css";
 import Card from "../cards/affiliate-cards/Card";
 import all from "../../Assets/all2.png";
 import activeImg from "../../Assets/active.png";
 import failed from "../../Assets/ep-failed.png";
 import { header1, header2, Tbody } from "./affilateTable/tableData";
-import { useState } from "react";
-import { useEffect } from "react";
+import TokenContext from "../User-Token/TokenContext";
 
 export default function Overview() {
   const [active, setActive] = useState(false);
   const [filtered, setFiltered] = useState([]);
   const [activeNumber, setActiveNumber] = useState(null);
   const [canceledNumber, setCanceledNumber] = useState(null);
+  const { notify } = useContext(TokenContext);
 
   const toggleActiveHeader = (item) => {
     setActive(item);
@@ -32,6 +32,7 @@ export default function Overview() {
     setCanceledNumber(canceled.length);
     setActive(0);
     setFiltered(Tbody);
+    notify("NOTE: This page core features still in works");
   }, []);
 
   return (
@@ -56,7 +57,12 @@ export default function Overview() {
           </div>
 
           <section className="affilate-card-section d-flex flex-wrap justify-content-evenly mt-4">
-            <Card icon={all} status="All" count={Tbody.length} color="#0B0230" />
+            <Card
+              icon={all}
+              status="All"
+              count={Tbody.length}
+              color="#0B0230"
+            />
             <Card
               icon={activeImg}
               status="Active"
@@ -75,12 +81,12 @@ export default function Overview() {
         <section className="overview-table-section mt-5">
           <div className="table-1">
             <table className="table-1-contents">
-              <thead className="d-flex px-5 py-4">
-                <tr className="px-5 py-2">
+              <thead className="d-flex mb-3">
+                <tr>
                   {header1.map((item, index) => (
                     <th
                       key={index}
-                      className={`mx-4 pointer ${
+                      className={`px-2 py-2 pointer ${
                         active === item ? "active-header" : ""
                       }`}
                       onClick={() => toggleActiveHeader(item)}
