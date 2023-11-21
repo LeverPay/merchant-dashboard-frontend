@@ -3,7 +3,7 @@ import "./style.css";
 import sent from "../../Assets/all2.png";
 import paid from "../../Assets/active.png";
 import failed from "../../Assets/ep-failed.png";
-import Card from "../cards/subscription-cards/Card";
+import Card from "../cards/pages-cards/Card";
 import { TableHead, HeaderData, data } from "./historyData";
 import { NavLink } from "react-router-dom";
 import {
