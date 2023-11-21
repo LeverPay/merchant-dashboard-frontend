@@ -40,28 +40,55 @@ export default function Overview() {
           </section>
         </section>
 
-        <section className="table-section d-flex flex-column mt-5">
+        <section className="overview-table-section mt-5">
           <div className="table-1">
-            <table>
+            <table className="table">
               <thead className="d-flex px-4 py-2">
-                {header1.map((item, index) => (
-                  <tr key={index} className="mx-4">
-                    <th>{item}</th>
-                  </tr>
-                ))}
+                <tr className="px-5 py-2">
+                  {header1.map((item, index) => (
+                    <th key={index} className="mx-4 pointer">
+                      {item}
+                    </th>
+                  ))}
+                </tr>
               </thead>
             </table>
           </div>
 
           <div className="table-2 mt-2">
-            <table>
-              <thead className="d-flex align-items-center px-4 py-2">
-                {header2.map((item, index) => (
-                  <tr key={index} className="mx-4">
-                    <th>{item}</th>
-                  </tr>
+            <table className="info">
+              <tr>
+                {header2.map((el, i) => (
+                  <th
+                    className="mx-4"
+                    key={i}
+                    style={{ color: `${el === "Income" ? "#089A0E" : ""}` }}
+                  >
+                    {el}
+                  </th>
                 ))}
-              </thead>
+              </tr>
+
+              {Tbody.map((el, i) => (
+                <tr key={el.id} className="fw-bolder">
+                  <td className="text-left px-2 py-4">{el.date}</td>
+                  <td className="text-left px-2 py-4 text-truncate">
+                    {el.name}
+                  </td>
+                  <td className="text-left px-2 py-4 text-truncate">
+                    {el.email}
+                  </td>
+                  <td className="text-left px-2 py-4">{el.phone}</td>
+                  <td className="text-left px-2 py-4">{el.code}</td>
+                  <td className="text-left px-2 py-4">{el.split}</td>
+                  <td
+                    className="text-left px-2 py-4"
+                    style={{ color: "#089A0E" }}
+                  >
+                    {el.income}
+                  </td>
+                </tr>
+              ))}
             </table>
           </div>
         </section>
