@@ -25,6 +25,7 @@ import IncomeEarned from "./Components/Affilate/IncomeEarned";
 import { ScrollContext } from "./Components/General/ScrollContext";
 import CreateAccountForm from "./Pages/CreateAccountForm/CreateAccountForm";
 import Verify from "./Pages/CreateAccountForm/verify";
+import MerchantRevenueOverview from "./Pages/AffliatePage/Merchant-revenue-Overview";
 import Developer_Page from "./Pages/DeveloperTools/Developer_Page";
 
 function App(props) {
@@ -69,6 +70,8 @@ function App(props) {
             <Route path="new" element={<Generate_Invoice_Page />} />
             <Route path="history" element={<History />} />
             <Route path="subscriptions" element={<Subscription />} />
+            <Route path="Merchant-Revenue-Overview" element={<MerchantRevenueOverview />} />
+
             <Route path="registration" element={<Registeration />} />
             <Route path="overview" element={<Overview />} />
             <Route path="income" element={<IncomeEarned />} />
