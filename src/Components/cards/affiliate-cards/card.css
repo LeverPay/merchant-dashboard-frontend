@@ -1,4 +1,4 @@
-.cards {
+.affilate-cards {
     width: 200px;
     display: flex;
     justify-content: flex-start;
@@ -29,18 +29,18 @@
     line-height: 24px; /* 133.333% */
   }
   @media screen and (min-width: 1024px) {
-    .cards {
+    .affilate-cards {
       width: 200px;
       margin-right: 4%;
     }
   }
   @media screen and (max-width: 1023px) {
-    .cards {
+    .affilate-cards {
       width: 200px;
     }
   }
   @media screen and (max-width: 767px) {
-    .cards {
+    .affilate-cards {
       width: 320px;
       margin-top: 2%;
     }

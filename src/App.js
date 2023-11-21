@@ -70,7 +70,7 @@ function App(props) {
             <Route path="new" element={<Generate_Invoice_Page />} />
             <Route path="history" element={<History />} />
             <Route path="subscriptions" element={<Subscription />} />
-            <Route path="Merchant-Revenue-Overview" element={<MerchantRevenueOverview />} />
+            <Route path="Revenue" element={<MerchantRevenueOverview />} />
 
             <Route path="registration" element={<Registeration />} />
             <Route path="overview" element={<Overview />} />
