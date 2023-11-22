@@ -342,7 +342,6 @@ export default function CreateAccountForm({ accType }) {
     } catch (err) {
       setAnimate(false);
       if (err.response) {
-        console.log(err);
         if (
           err.response?.data?.data?.business_name ||
           err.response?.data?.data?.email ||

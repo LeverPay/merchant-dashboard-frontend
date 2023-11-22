@@ -351,7 +351,6 @@ export default function GenerateInvoice() {
       } else {
       }
     } catch (err) {
-      console.error(err.response);
       setAnimate(false);
       if (err.response) {
         console.log(err);
