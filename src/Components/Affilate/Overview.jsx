@@ -22,7 +22,6 @@ export default function Overview() {
     } else {
       setFiltered(Tbody);
     }
-    console.log(filtered);
   };
 
   useEffect(() => {
