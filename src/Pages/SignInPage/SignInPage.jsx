@@ -70,11 +70,7 @@ function SignInPage() {
     setInputText((prev) => ({ ...prev, password: pastedText }));
 
     // Check if criteria are met for enabling the submit button
-    if (emailRegex.test(inputText.email) && passwordRegex.test(pastedText)) {
-      setSubmitButtonDisabled(false);
-    } else {
-      setSubmitButtonDisabled(true);
-    }
+   
   };
 
   const handleEmailOnPaste = (e) => {
@@ -171,7 +167,11 @@ function SignInPage() {
   };
 
   return (
+     
     <div className="main-container">
+   
+
+ 
       <span className="main-icon-web">
         <img src={LeverpayLogo} alt="" height={'20px'} />
       </span>
@@ -260,7 +260,7 @@ function SignInPage() {
 
           </div>
 
-   
+ 
     </div>
    
  

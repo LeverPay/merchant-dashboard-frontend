@@ -121,13 +121,13 @@ export default function ReferralPageOverview() {
                 </div>
 
 
-                <div className="revenue-link">
+                {/* <div className="revenue-link">
                     <span className="revenue-text">Referral Link:</span>
                     <div className="revenue-right-side"  onClick={()=>copyToClipBoard("merchant.leverpay.io/referral_link")}>
                     <span className="revenue-text">merchant.leverpay.io/referral_link</span>
                     <span><img src={CopyIcon} alt="" /></span>
                     </div>
-                </div>
+                </div> */}
             </section>
 
 
