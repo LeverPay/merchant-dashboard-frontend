@@ -20,7 +20,8 @@ import PasswordEye from "../../Assets/eyes1.svg"
 import LeverpayLogo from "../../Assets/iconWeb.svg"
 import HelpIcon from "../../Assets/material-symbols_help.svg"
 import SecuredIcon from "../../Assets/securedBy.svg"
-import CryptoIcon from "../../Assets/cryptocurrency-color_chat.svg"
+import CryptoIcon from "../../Assets/cryptocurrency-color_chat.svg";
+import BackgroundPosterIcon from "../../Assets/man working on tablet and sitting on floor.svg"
 
 function SignInPage() {
   const [inputText, setInputText] = useState({
@@ -169,96 +170,105 @@ function SignInPage() {
         <img src={LeverpayLogo} alt="" height={'20px'} />
       </span>
 
-      <div className="signin-div">
+    <div className="signin-div">
 
-    <div className="signin-main-card">
-    <span className="imageICon"><img src={UserIcon} alt=""  height={'100px'}/></span>
-
-    <div className="login-form">
-
-      <span className="login-form-title">
-        LOGIN
-      </span>
-
-      <div className="login-form-input">
-
-
-        <span className="username-input">
-          <img src={usernameIcon} alt=""  height={'20px'}/>
-          <input type="email"  id="" className="userInput" placeholder="Username"   
-              name="email"
-              required
-              value={inputText.email}
-              onChange={handleOncange}
-              onPaste={handleEmailOnPaste}  />
-        </span>
-
-        <span className="username-input">
-          <img src={PasswordLock} alt="" height={'20px'}/>
-          <input id="" className="userInput" type={showPassword ? "text" : "password"}
-              name="password"
-              value={inputText.password}
-              onChange={handleOncange}
-              onPaste={handlePasswordOnPaste}
-              placeholder="***********"
-              autoComplete="new-password"  />
-                <span onClick={toggleShowPassword}>
-              {showPassword ? (
-                <img className="" src={EyeOpen} alt="Scholar" height={'20px'} />
-              ) : (
-                <img
-                  className=""
-                  src={ PasswordEye}
-                  alt="Scholar"
-                  height={'20px'}
-                />
-              )}
-            </span>
-          {/* <img src={EyeOpen} alt="" /> */}
-        </span>
-
-        <div className="forgot-password-div">
-          <span className="remember-input-span">
-            <input type="checkbox"  />
-            <span className="remember-text">Remember me </span>
-          </span>
-          <Link   to={"/forget-password"} className="remember-text">Forgot Password</Link>
-        </div>
-
-        <button className="login-button"  
-        
-            onClick={validateForm}
-            animate={animate}>
-          LOGIN
-        </button>
-        {errorMessage && <div className="error"> {errorMessage} </div>}
-        <p className="account-creation remember-text"> 
-              Don’t have an Account? &nbsp; 
-
-              <Link to={"/welcome"} className="remember-text">
-                Sign Up
-              </Link>
-            </p>
+      <div className="signin-right-side">
+          <img src={BackgroundPosterIcon} alt="" className="signin-poster-icon" />
+          <div className="signin-right-side-footer">
+            <div className="footer-top">
+              <span className="form-text-four">Hi! Mechant,</span>
+              <span className="form-text-four">Stay <span className="form-text-five">  Connected  </span>with Leverpay</span>
+            </div>
+            <div className="footer-down">
+              <img src={SecuredIcon} alt=""  height={'15px'}/>
+            </div>
+          </div>
       </div>
-      
-    </div>
-    </div>
+    <div className="signin-left-side">
+
+
+          <div className="signin-main-card">
+ 
+
+          
+
+            <span className="login-form-title">
+              LOGIN
+            
+            </span>
+              <span className="form-text-three">login to your account</span>
+
+            <div className="login-form-input">
+
+              <span className="login-form-label">Username</span>
+              <span className="username-input">
+                <img src={usernameIcon} alt=""  height={'20px'}/>
+                <input type="email"  id="" className="userInput" placeholder="Username"   
+                    name="email"
+                    required
+                    value={inputText.email}
+                    onChange={handleOncange}
+                    onPaste={handleEmailOnPaste}  />
+              </span>
+              <span className="login-form-label">Password</span>
+              <span className="username-input">
+                <img src={PasswordLock} alt="" height={'20px'}/>
+                <input id="" className="userInput" type={showPassword ? "text" : "password"}
+                    name="password"
+                    value={inputText.password}
+                    onChange={handleOncange}
+                    onPaste={handlePasswordOnPaste}
+                    placeholder="***********"
+                    autoComplete="new-password"  />
+                      <span onClick={toggleShowPassword}>
+                    {showPassword ? (
+                      <img className="" src={EyeOpen} alt="Scholar" height={'20px'} />
+                    ) : (
+                      <img
+                        className=""
+                        src={ PasswordEye}
+                        alt="Scholar"
+                        height={'20px'}
+                      />
+                    )}
+                  </span>
+                {/* <img src={EyeOpen} alt="" /> */}
+              </span>
+
+              <div className="forgot-password-div">
+                
+                <Link   to={"/forget-password"} className="remember-text">Forgot Password</Link>
+              </div>
+
+              <button className="login-button"  
+              
+                  onClick={validateForm}
+                  animate={animate}>
+                LOGIN
+              </button>
+              {errorMessage && <div className="error"> {errorMessage} </div>}
+              <p className="account-creation form-text-one"> 
+                    stay  &nbsp; <span className="form-text-two">Connected</span>
+                  </p>
+       
+            <div className="login-form-footer">
+              <span className="form-text-one">© Leverpay</span>
+              <div className="form-text-two">Privacy & Terms   &nbsp;&nbsp;&nbsp;<img src={CryptoIcon} alt="" height={'40px'} /> </div>
+            </div>
+          </div>
+          </div>
+
+          </div>
 
    
     </div>
-    <span className="help-web">
-      <img src={HelpIcon} alt=""  height={'20px'} /> <span className="help-text">Help</span>
-    </span>
+   
+ 
 
 
-    <div className="secure-box">
-      <span>
-        <img src={SecuredIcon} alt="" height={'20px'} />
-      </span>
-      <span>
-        <img src={CryptoIcon} alt="" height={'30px'} />
-      </span>
-    </div>
+
+
+
       {/* <form className="col-md-4 formmy-container offset-md-4">
         <div className="col-md-12 form-heading">
           {" "}

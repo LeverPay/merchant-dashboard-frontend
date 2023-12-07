@@ -9,6 +9,7 @@ import { baseUrl, fetchInfo, get_all_referral_code, get_all_referrals } from "..
 import { TokenContext } from "../../Components/User-Token/TokenContext";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import lock from "../../Assets/sec-padlock.png"
 import { data } from "../../Components/Payment-method/TestData";
 
 export default function ReferralPageOverview() {
@@ -144,9 +145,9 @@ export default function ReferralPageOverview() {
                         {
                             listOfReferrals.map((data)=>{
                                 <tr >
-                                <td className="table-text color-zeroB">{data.date}</td>
-                                <td className="table-text table-color-four">{data.name}</td>
-                                <td className="table-text table-color-five">{data.email}</td>
+                                <td className="table-text color-zeroB">{data?.created_at.split('T'[0])}</td>
+                                <td className="table-text table-color-four">{`${data?.first_name} ${data?.last_name}`}</td>
+                                <td className="table-text table-color-five">{data?.email}</td>
                              
                             </tr>
                             })
@@ -175,6 +176,16 @@ export default function ReferralPageOverview() {
                 </div>
 
             </div>
+
+            <div className="affiliate-reg-footer">
+          <img src={lock} alt="secured" className="mx-2" />
+          <p className="m-0">
+            Secured by{" "}
+            <span className="fw-bolder" style={{ color: "#2962f2" }}>
+              Leverpay
+            </span>
+          </p>
+        </div>
 
         </div>
     )
