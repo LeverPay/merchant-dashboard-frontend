@@ -246,7 +246,14 @@ function SignInPage() {
                   animate={animate}>
               {  submitButtonDisabled? 'LOGIN' : <img src={LoadingGif} height={'20px'} />}
               </button>
-              {errorMessage && <div className="error"> {errorMessage} </div>}
+              <p className="account-creation form-text-one"> 
+              Don’t have an Account?{" "}
+              &nbsp;
+              <Link to={"/welcome"} className="form-text-two">
+                Sign Up
+                </Link>
+                  </p>
+              
               <p className="account-creation form-text-one"> 
                     stay  &nbsp; <span className="form-text-two">Connected</span>
                   </p>
