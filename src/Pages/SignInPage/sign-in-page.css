@@ -149,6 +149,7 @@ margin-top: 40px;
   font-style: italic;
   font-weight: 600;
   line-height: 10px; /* 218.75% */
+  text-decoration: none;
 }
 .form-text-one{
   color: #FFF;
@@ -164,6 +165,7 @@ margin-top: 40px;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
+  text-decoration: none;
  
 }
 .login-button{

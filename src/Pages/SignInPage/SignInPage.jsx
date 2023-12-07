@@ -253,7 +253,7 @@ function SignInPage() {
        
             <div className="login-form-footer">
               <span className="form-text-one">© Leverpay</span>
-              <div className="form-text-two">Privacy & Terms   &nbsp;&nbsp;&nbsp;<img src={CryptoIcon} alt="" height={'40px'} /> </div>
+              <div className="form-text-two"> <Link to={"https://leverpay.io/privacy-policy"} className="form-text-two" target="_blank"> Privacy </Link> &  <Link to={"https://leverpay.io/terms-conditions"} className="form-text-two" target="_blank">Terms</Link>  &nbsp;&nbsp;&nbsp;<img src={CryptoIcon} alt="" height={'40px'} /> </div>
             </div>
           </div>
           </div>
