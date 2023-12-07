@@ -44,3 +44,6 @@ export const get_successful_failed_Transactions =
 export const get_merchant_users_count =
   "/api/v1/merchant/get-merchant-users-count";
 export const get_merchant_keys = "/api/v1/merchant/get-merchant-keys";
+
+export const get_all_referrals = "/api/v1/user/get-referrals";
+export const get_all_referral_code = "/api/v1/user/get-referral-code";

@@ -13,6 +13,15 @@ import Loading from "../../Components/General/loading animation/loading";
 import { AES } from "crypto-js";
 import Button from "../../Components/General/Button component/Button";
 
+import UserIcon from "../../Assets/male user.svg"
+import usernameIcon from "../../Assets/ph_user.svg"
+import PasswordLock from "../../Assets/Vector 2.svg"
+import PasswordEye from "../../Assets/eyes1.svg"
+import LeverpayLogo from "../../Assets/iconWeb.svg"
+import HelpIcon from "../../Assets/material-symbols_help.svg"
+import SecuredIcon from "../../Assets/securedBy.svg"
+import CryptoIcon from "../../Assets/cryptocurrency-color_chat.svg"
+
 function SignInPage() {
   const [inputText, setInputText] = useState({
     email: "",
@@ -102,6 +111,7 @@ function SignInPage() {
   };
 
   function validateForm(e) {
+    console.log('...her');
     e.preventDefault();
     // Check if the Email matches the user
 
@@ -154,8 +164,102 @@ function SignInPage() {
   };
 
   return (
-    <div className="col-md-12 signin-div">
-      <form className="col-md-4 formmy-container offset-md-4">
+    <div className="col-md-12 main-container">
+      <span className="main-icon-web">
+        <img src={LeverpayLogo} alt="" height={'20px'} />
+      </span>
+
+      <div className="signin-div">
+
+    <div className="signin-main-card">
+    <span className="imageICon"><img src={UserIcon} alt=""  height={'100px'}/></span>
+
+    <div className="login-form">
+
+      <span className="login-form-title">
+        LOGIN
+      </span>
+
+      <div className="login-form-input">
+
+
+        <span className="username-input">
+          <img src={usernameIcon} alt=""  height={'20px'}/>
+          <input type="email"  id="" className="userInput" placeholder="Username"   
+              name="email"
+              required
+              value={inputText.email}
+              onChange={handleOncange}
+              onPaste={handleEmailOnPaste}  />
+        </span>
+
+        <span className="username-input">
+          <img src={PasswordLock} alt="" height={'20px'}/>
+          <input id="" className="userInput" type={showPassword ? "text" : "password"}
+              name="password"
+              value={inputText.password}
+              onChange={handleOncange}
+              onPaste={handlePasswordOnPaste}
+              placeholder="***********"
+              autoComplete="new-password"  />
+                <span onClick={toggleShowPassword}>
+              {showPassword ? (
+                <img className="" src={EyeOpen} alt="Scholar" height={'20px'} />
+              ) : (
+                <img
+                  className=""
+                  src={ PasswordEye}
+                  alt="Scholar"
+                  height={'20px'}
+                />
+              )}
+            </span>
+          {/* <img src={EyeOpen} alt="" /> */}
+        </span>
+
+        <div className="forgot-password-div">
+          <span className="remember-input-span">
+            <input type="checkbox"  />
+            <span className="remember-text">Remember me </span>
+          </span>
+          <Link   to={"/forget-password"} className="remember-text">Forgot Password</Link>
+        </div>
+
+        <button className="login-button"  
+        
+            onClick={validateForm}
+            animate={animate}>
+          LOGIN
+        </button>
+        {errorMessage && <div className="error"> {errorMessage} </div>}
+        <p className="account-creation remember-text"> 
+              Don’t have an Account? &nbsp; 
+
+              <Link to={"/welcome"} className="remember-text">
+                Sign Up
+              </Link>
+            </p>
+      </div>
+      
+    </div>
+    </div>
+
+   
+    </div>
+    <span className="help-web">
+      <img src={HelpIcon} alt=""  height={'20px'} /> <span className="help-text">Help</span>
+    </span>
+
+
+    <div className="secure-box">
+      <span>
+        <img src={SecuredIcon} alt="" height={'20px'} />
+      </span>
+      <span>
+        <img src={CryptoIcon} alt="" height={'30px'} />
+      </span>
+    </div>
+      {/* <form className="col-md-4 formmy-container offset-md-4">
         <div className="col-md-12 form-heading">
           {" "}
           <center>
@@ -237,8 +341,8 @@ function SignInPage() {
             </p>
           </center>
         </div>
-        {/* </form> */}
-      </form>
+    
+      </form> */}
     </div>
   );
 }
