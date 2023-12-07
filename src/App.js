@@ -27,6 +27,7 @@ import CreateAccountForm from "./Pages/CreateAccountForm/CreateAccountForm";
 import Verify from "./Pages/CreateAccountForm/verify";
 import MerchantRevenueOverview from "./Pages/AffliatePage/Merchant-revenue-Overview";
 import Developer_Page from "./Pages/DeveloperTools/Developer_Page";
+import ReferralPageOverview from "./Pages/ReferralOverview/ReferralPage";
 
 function App(props) {
   const [showNav, setShowNav] = useState(true);
@@ -53,7 +54,7 @@ function App(props) {
     <ScrollContext>
       <div id={NavId} className="general-container">
         {showNav && <Header />}
-        <div className="contents-container">
+      
           <Routes>
             <Route index element={<SignInPage />} />
             <Route path="dashboard" element={<OverviewPage />} />
@@ -70,6 +71,7 @@ function App(props) {
             <Route path="new" element={<Generate_Invoice_Page />} />
             <Route path="history" element={<History />} />
             <Route path="subscriptions" element={<Subscription />} />
+            <Route path="Referral-Overview" element={<ReferralPageOverview />} />
             <Route path="Revenue" element={<MerchantRevenueOverview />} />
 
             <Route path="registration" element={<Registeration />} />
@@ -78,7 +80,7 @@ function App(props) {
             <Route path="developer" element={<Developer_Page />} />
           </Routes>
         </div>
-      </div>
+       
     </ScrollContext>
   );
 }

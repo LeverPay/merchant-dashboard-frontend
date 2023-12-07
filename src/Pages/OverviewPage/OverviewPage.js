@@ -91,7 +91,7 @@ export const OverviewPage = (props) => {
         setData(req.data.data);
       }
     } catch (err) {
-      notify("Something went wrong while gettng your data");
+      notify("Something went wrong while getting your data");
     }
   };
 

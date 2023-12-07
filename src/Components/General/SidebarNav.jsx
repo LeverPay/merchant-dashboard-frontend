@@ -149,7 +149,12 @@ export default function SidebarNav(props) {
       icon: <BsTools htmlColor="white" />,
       link: "developer",
       title: "Developer",
-    },
+    }, 
+    {
+      icon: <FaHandsHelping color="white" size="25px" />,
+      link: "Referral-Overview",
+      title: "Referral Overview",
+    }
     // {
     //   icon: <SettingsRoundedIcon htmlColor="white" />,
     //   link: "security",

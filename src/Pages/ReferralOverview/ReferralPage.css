@@ -1,0 +1,229 @@
+.page-container{
+    display: flex;
+     justify-content: center;
+     align-items: center;
+     min-height: 100vh;
+     overflow: auto;
+
+    
+}
+
+.revenue-revenue-container{
+  
+    border-radius: 5px;
+    height: 90vh;
+    box-shadow: 0px 3px 10px 5px rgba(0, 0, 0, 0.25);
+  width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+ 
+
+ .revenue-link-div{
+  display: flex;
+  flex-direction: column;
+   align-items: flex-start;
+    width: 100%;
+    gap: 12px;
+    margin-top: 30px;
+ }
+
+ .revenue-link{
+    display: flex; justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+    margin-left: 2%;
+    flex-wrap: wrap;
+     
+ }
+
+ .revenue-text{
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    flex-wrap: wrap;
+ }
+
+ .revenue-right-side{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 8px;
+    width: 30%;
+    cursor: pointer;
+   
+ }
+  .revenue-cards-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+  }
+
+.table-section{
+    margin-top: 60px;
+    
+}
+  #revenue-revenue-table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+  
+    width: 100%;
+  }
+
+  #revenue-revenue-table thead {
+    
+    border: 1px solid #000;
+  
+  }
+  
+  #revenue-revenue-table td, #revenue-revenue-table th {
+    /* border: 1px solid #ddd; */
+    padding: 10px;
+  }
+  
+  /* #revenue-revenue-table tr:nth-child(even){background-color: #f2f2f2;} */
+  
+  /* #revenue-revenue-table tr:hover {background-color: #ddd;} */
+  
+  #revenue-revenue-table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+  
+    background: #F7F7F8;
+  
+  }
+
+.table-text{
+    font-family: Inter;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 12.442px; /* 88.872% */
+    letter-spacing: 0.346px;
+
+}
+.color-zero{
+    color: black;
+    font-size: 14px;
+}
+.color-zeroB{
+    color: black;
+    font-size: 12.442px;
+}
+  .table-color-one{
+    color: #0F3EE5;
+    font-size: 14px;
+  }
+  .table-color-two{
+    color: #137902;
+    font-size: 14px;
+  }
+  .table-color-three{
+    color: #AA0202;;
+    font-size: 14px;
+  }
+
+  .table-color-four{
+    color: #084B9A;
+    font-size: 12.442px;
+  }
+  .table-color-five{
+    color: #089A0E;
+    font-size: 12.442px;
+  }
+  .table-color-six{
+    color: #9A0808;
+    font-size: 12.442px;
+  }
+
+  .table-body{
+    /* background-color: red; */
+    max-height: calc(80vh - 350px);
+    overflow: auto;
+  }
+
+
+  .previous-page{
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 30px;
+    margin-top: 20px;
+  }
+
+  .button-div{
+    display: flex;
+    justify-content: flex-end;
+    gap: 40px;
+  }
+
+  .singleButton{
+    color: #000;
+
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; 
+    cursor: pointer;
+  }
+
+  .NoReferralMessage{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #084B9A;
+  }
+
+  .affiliate-reg-footer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin-top: 20px;
+  }
+  @media screen and  (max-width: 767px) {
+
+    .revenue-revenue-container{
+        width: 100%;
+        border-radius: 5px;
+        height: 100vh;
+        box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.10);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .revenue-link-div{
+        display: flex;
+       flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        width: 100%;
+        margin-top: 30px;
+     
+     }
+    
+     .revenue-link{
+        display: flex; justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+       
+     }
+     .revenue-text{
+        font-size: 15px;
+     }
+      
+    
+  
+    
+     
+  }
