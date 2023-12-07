@@ -341,14 +341,18 @@ export default function CreateAccountForm({ accType }) {
       }
     } catch (err) {
       setAnimate(false);
-      if (err.response?.status === 422) {
-        errorNotify(err.response?.data?.message);
-      } else {
-        if (err.response !== undefined) {
-          errorNotify(err.response.data.message);
-        } else {
-          errorNotify("Something went wrong :(");
+      if (err.response) {
+        if (
+          err.response?.data?.data?.business_name ||
+          err.response?.data?.data?.email ||
+          err.response?.data?.data?.phone
+        ) {
+          err.response?.data?.data?.business_name.map((el) => errorNotify(el));
+          err.response?.data?.data?.email.map((el) => errorNotify(el));
+          err.response?.data?.data?.phone.map((el) => errorNotify(el));
         }
+      } else {
+        errorNotify("Something went wrong :(");
       }
     }
   }
@@ -416,8 +420,6 @@ export default function CreateAccountForm({ accType }) {
               <option value="">Select gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
-              <option value="Homosexual">Homosexual</option>
-              <option value="Bisexual">Bisexual</option>
             </select>
             <div>
               <label htmlFor="date of birth" id="dob">

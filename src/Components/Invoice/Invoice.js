@@ -6,7 +6,6 @@ import Col from "react-bootstrap/esm/Col";
 import "./invoice.css";
 import { nanoid } from "nanoid";
 import QRCode from "qrcode";
-import { blue, yellow } from "@mui/material/colors";
 
 function Invoice({ className, data }) {
   const [id] = useState(nanoid);
@@ -124,7 +123,9 @@ function Invoice({ className, data }) {
           <Row>
             <Col className="row_details">Items</Col>
             <Col className="row_details_information blue-color">
-              {data?.items ? data?.items : "sample items"}
+              {data?.transaction_details?.product_name
+                ? data.transaction_details?.product_name
+                : "item not found"}
             </Col>
           </Row>
         </Container>
@@ -134,7 +135,11 @@ function Invoice({ className, data }) {
         <h3 className="blue-color">Buyer Information</h3>
         <h5 style={{ color: "#0d0c30" }}>Email</h5>
         <p style={{ color: "hsl(221, 69%, 55%)" }}>
-          {data?.cus_email ? data?.cus_email : "sample@mail.com"}
+          {data?.transaction_details?.user?.email
+            ? data.transaction_details?.user?.email
+            : data?.transaction_details?.email
+            ? data.transaction_details?.email
+            : "Buyer's email not found"}
         </p>
       </div>
       <hr />
@@ -142,7 +147,9 @@ function Invoice({ className, data }) {
         <p style={{ color: "#0d0c30" }}>
           Payment Received for
           <span style={{ color: "#1861ff", marginLeft: "12px" }}>
-            {data?.product_name ? data?.product_name : "sample products"}
+            {data?.transaction_details?.product_name
+              ? data.transaction_details?.product_name
+              : "item not found"}
           </span>
         </p>
         {/* <p style={{ color: "#0d0c30" }}>

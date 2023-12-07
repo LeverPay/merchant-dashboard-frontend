@@ -351,10 +351,12 @@ export default function GenerateInvoice() {
       } else {
       }
     } catch (err) {
-      console.error(err.response);
       setAnimate(false);
-      if (err.reponse) {
+      if (err.response) {
+        console.log(err);
         notify(err.response.data?.message);
+      } else if (err.data) {
+        notify(err.data.message);
       } else {
         notify("Something went wrong :(");
       }

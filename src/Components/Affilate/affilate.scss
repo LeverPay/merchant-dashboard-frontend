@@ -30,11 +30,84 @@
   }
 }
 
+.affilate-overview-container {
+  width: 70vw;
+  font-family: Inter-Regular;
+
+  .overview-contents {
+    width: 100%;
+    .overview-header-section {
+      .overview-header-input {
+        .header-input-search {
+          .search-icon {
+            margin-right: -8%;
+            z-index: 3;
+          }
+        }
+      }
+    }
+
+    .overview-table-section {
+      overflow-x: auto;
+      .active-header {
+        color: #5fce2f;
+      }
+      .table-1 {
+        .table-1-contents {
+          thead {
+            tr {
+              .pointer {
+                cursor: pointer;
+              }
+            }
+          }
+        }
+      }
+
+      .table-2 {
+        .info {
+          border-collapse: collapse;
+          width: 100%;
+          overflow-x: auto;
+          padding: 12% 0;
+
+          td,
+          th {
+            border: none;
+            padding: 8px;
+          }
+
+          th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            color: #000;
+            background-color: #f7f7f8;
+            font-family: Inter-Bold;
+          }
+        }
+      }
+    }
+
+    .buttons {
+      width: 100%;
+    }
+  }
+}
+
 @media screen and (max-width: 1023px) {
   .affilate-reg-container {
     width: 90vw;
     .registeration-content {
       width: 80%;
+    }
+  }
+
+  .affilate-overview-container {
+    width: 90vw;
+
+    .overview-contents {
+      width: 100%;
     }
   }
 }
@@ -43,7 +116,15 @@
   .affilate-reg-container {
     width: 95vw;
     .registeration-content {
-      width:auto;
+      width: auto;
+    }
+  }
+
+  .affilate-overview-container {
+    width: 95vw;
+
+    .overview-contents {
+      width: 100%;
     }
   }
 }
