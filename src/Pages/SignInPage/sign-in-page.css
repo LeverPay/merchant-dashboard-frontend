@@ -1,13 +1,14 @@
 .main-container{
    
   height: 100vh;
-  width: 100;
+  width: 100vw;
   background: url("../../Assets/merchant\ backround.png");
   background-size:cover;
   display: flex;
   flex-direction:column ;
   padding-left: 25px;
   padding-right: 25px;
+  border-radius: 0px;
  
 }
 

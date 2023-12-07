@@ -54,7 +54,7 @@ function App(props) {
     <ScrollContext>
       <div id={NavId} className="general-container">
         {showNav && <Header />}
-        <div className="contents-container">
+      
           <Routes>
             <Route index element={<SignInPage />} />
             <Route path="dashboard" element={<OverviewPage />} />
@@ -80,7 +80,7 @@ function App(props) {
             <Route path="developer" element={<Developer_Page />} />
           </Routes>
         </div>
-      </div>
+       
     </ScrollContext>
   );
 }

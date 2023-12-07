@@ -22,6 +22,7 @@ import HelpIcon from "../../Assets/material-symbols_help.svg"
 import SecuredIcon from "../../Assets/securedBy.svg"
 import CryptoIcon from "../../Assets/cryptocurrency-color_chat.svg";
 import BackgroundPosterIcon from "../../Assets/man working on tablet and sitting on floor.svg"
+import LoadingGif from "../../Assets/loadinggif.gif"
 
 function SignInPage() {
   const [inputText, setInputText] = useState({
@@ -112,7 +113,7 @@ function SignInPage() {
   };
 
   function validateForm(e) {
-    console.log('...her');
+ 
     e.preventDefault();
     // Check if the Email matches the user
 
@@ -129,11 +130,13 @@ function SignInPage() {
       emailRegex.test(inputText.email) &&
       passwordRegex.test(inputText.password)
     ) {
+      setSubmitButtonDisabled(false)
       handleLogin();
     }
   }
 
   const handleLogin = async () => {
+    notify("Loading,please wait!");
     try {
       setAnimate(true);
       const request = await axios.post(baseUrl + login, {
@@ -142,6 +145,7 @@ function SignInPage() {
       });
       if (request.status === 200) {
         success("Successful");
+        setSubmitButtonDisabled(true)
         const uniqueId = request.data.data.token;
         window.sessionStorage.setItem("Name", uniqueId);
         const cookie = window.sessionStorage.getItem("Name");
@@ -149,12 +153,14 @@ function SignInPage() {
           setAnimate(false);
           setTimeout(() => {
             navigate("/dashboard");
-          }, 3000);
+          }, 1000);
         } else {
+          setSubmitButtonDisabled(true)
           navigate("/");
         }
       }
     } catch (err) {
+      setSubmitButtonDisabled(true)
       setAnimate(false);
       if (err.response !== undefined) {
         notify(err.response.data.message);
@@ -165,7 +171,7 @@ function SignInPage() {
   };
 
   return (
-    <div className="col-md-12 main-container">
+    <div className="main-container">
       <span className="main-icon-web">
         <img src={LeverpayLogo} alt="" height={'20px'} />
       </span>
@@ -185,13 +191,7 @@ function SignInPage() {
           </div>
       </div>
     <div className="signin-left-side">
-
-
           <div className="signin-main-card">
- 
-
-          
-
             <span className="login-form-title">
               LOGIN
             
@@ -244,7 +244,7 @@ function SignInPage() {
               
                   onClick={validateForm}
                   animate={animate}>
-                LOGIN
+              {  submitButtonDisabled? 'LOGIN' : <img src={LoadingGif} height={'20px'} />}
               </button>
               {errorMessage && <div className="error"> {errorMessage} </div>}
               <p className="account-creation form-text-one"> 

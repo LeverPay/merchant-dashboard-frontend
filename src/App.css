@@ -2,13 +2,7 @@
   background-color: #0b0230;
   /* padding-block: 2rem; */
 }
-
-@media screen and (max-width: 620px) {
-  body {
-    padding: 0 5px;
-  }
-}
-
+ 
 @font-face {
   font-family: AgrandirBold;
   src: url(./Assets/fonts/Agrandir-Font/Agrandir-TextBold.otf);
