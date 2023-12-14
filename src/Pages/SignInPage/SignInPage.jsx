@@ -132,7 +132,6 @@ function SignInPage() {
   }
 
   const handleLogin = async () => {
-    notify("Loading,please wait!");
     try {
       setAnimate(true);
       const request = await axios.post(baseUrl + login, {
