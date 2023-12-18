@@ -220,8 +220,10 @@ export default function SidebarNav(props) {
 
   return (
     <>
-      <div className="open-close-icons flexy menu" style={{ display: "flex" }}>
-        <div className="col-8">&nbsp;</div>
+      <div className="open-close-icons flexy menu" style={{ display: "flex" } } >
+
+        <div className="col-8 "    onClick={openSidebar}><img className="img-fluid" style={{marginLeft:"10px"}} src={MenuIcon} alt="" width="16px" />&nbsp;</div>
+
         <span
           className="mobile-controls open"
           onClick={openSidebar}
@@ -243,6 +245,7 @@ export default function SidebarNav(props) {
           <div
             className="d-flex align-items-center bg-light px-3 logo-container"
             style={{ height: "130%", borderTopRightRadius: "20px" }}
+            onClick={closeSidebar}
           >
             <Logo />
             <span
@@ -255,6 +258,7 @@ export default function SidebarNav(props) {
           </div>
         </section>
         <section
+          onClick={openSidebar}
           className="d-flex flex-column justify-content-between contents"
           style={{ height: `calc(100% - ${props.fixedTopHeight}px)` }}
         >
