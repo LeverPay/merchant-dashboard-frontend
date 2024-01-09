@@ -14,10 +14,10 @@
  
  
 .welcome-signin-right-side{
-  background: url("../../Assets/dashboard-five.jpeg");
+  background: url("../../Assets/full-shot-woman-online-shopping.jpg");
   background-size:cover;
   height: 100%;
-width: 50%;
+  width: 50%;
   display: flex;
   flex-direction: column;
  align-items: center;
@@ -68,7 +68,7 @@ width: 50%;
 }
 .welcome-signin-main-card{
  
-  height: 600px;
+  height: calc(100vh - 220px);
   width: 80%;
   overflow: auto;
   display: flex;
@@ -263,7 +263,7 @@ margin-top: 10px;
  
   display: flex;
  flex-direction: column;
-   margin-top: 75%;
+   margin-top: calc(100vh - 250px);
    
   
 
@@ -380,6 +380,7 @@ margin-top: 10px;
  
  
     width: 100%;
+    overflow:visible;
  
   
   }
