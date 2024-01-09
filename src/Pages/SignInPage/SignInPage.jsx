@@ -168,9 +168,6 @@ function SignInPage() {
   return (
      
     <div className="main-container">
-   
-
- 
       <span className="main-icon-web">
         <img src={LeverpayLogo} alt="" height={'20px'} />
       </span>
