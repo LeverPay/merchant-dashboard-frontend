@@ -768,7 +768,7 @@ export default function CreateAccountForm({ accType }) {
             </div>
           }
         <p className="welcome-account-creation welcome-form-text-one"> 
-        Don’t have an Account?{" "}
+        Already Signed-up?{" "}
         &nbsp;
         <Link to={"/"} className="welcome-form-text-two welcome-color-one">
           Sign in
