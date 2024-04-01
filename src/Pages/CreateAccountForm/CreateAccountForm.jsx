@@ -41,6 +41,7 @@ export default function CreateAccountForm({ accType }) {
     otherName: "",
     lastName: "",
     dob: "",
+    bvn: "",
     gender: "Select gender",
     address: "",
     businessName: "",
@@ -191,6 +192,12 @@ export default function CreateAccountForm({ accType }) {
       }
     }
 
+    //Check BVN and Ensure lenght is up to eleven characters
+    if (person.bvn === "" || person.bvn.length < 11 || person.bvn.length > 11) {
+      errorNotify("Invalid Form: BVN cannot be empty and must be 11 digits long");
+      return;
+    }
+
     if (person.gender.length == 0 || person.gender === "Select gender") {
       errorNotify("Invalid Form, gender can not be empty");
       return;
@@ -282,6 +289,7 @@ export default function CreateAccountForm({ accType }) {
         emailRegex.test(person.email) &&
         passwordRegex.test(person.password) &&
         person.address.length > 0 &&
+        person.bvn.length === 11 &&
         person.businessName.length > 0 &&
         person.city !== "" &&
         person.state !== "" &&
@@ -303,6 +311,7 @@ export default function CreateAccountForm({ accType }) {
         person.businessName.length > 0 &&
         person.country !== "" &&
         value !== "" &&
+        person.bvn !== "" &&
         person.dob !== "" &&
         selectedDate < minAllowedDate
       ) {
@@ -319,6 +328,7 @@ export default function CreateAccountForm({ accType }) {
         first_name: person.firstName,
         last_name: person.lastName,
         address: person.address,
+        bvn: person.bvn,
         password: person.password,
         email: person.email,
         business_name: person.businessName,
@@ -490,6 +500,22 @@ export default function CreateAccountForm({ accType }) {
                   id="dob"
                     />
           </span>
+
+          <span className="welcome-login-form-label">BVN</span>
+            <span className="welcome-username-input">
+              <input 
+                type="text"  
+                className="welcome-userInput" 
+                placeholder="Enter BVN"   
+                name="bvn"
+                required
+                onChange={handleChange}
+                value={person.bvn}
+                id="bvn"
+                pattern="[0-9]*"  // Only accept numeric characters
+              />
+          </span>
+
       
      
 
@@ -753,7 +779,7 @@ export default function CreateAccountForm({ accType }) {
                     }}
                     id="agree"
                     />
-                <span className="welcome-form-text-six">I agree to Leverpay Terms & Privacy Policy</span>
+                <span className="welcome-form-text-six">I agree to Leverpay <Link to={"https://leverpay.io/terms-conditions"} className="form-text-two" target="_blank">Terms</Link> & <Link to={"https://leverpay.io/privacy-policy"} className="form-text-two" target="_blank"> Privacy Policy </Link></span>
               </div>
 
 
