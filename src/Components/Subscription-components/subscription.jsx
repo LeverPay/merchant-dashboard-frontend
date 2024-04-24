@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import Card from "../cards/subscription-cards/Card";
+import Card from "../cards/pages-cards/Card";
 import all from "../../Assets/all.png";
 import pending from "../../Assets/pending1.png";
 import active from "../../Assets/active.png";

@@ -563,14 +563,16 @@ export default function Form({ addKyc, setAddKyc }) {
       validationErrors.push("Business Country cannot be empty");
     }
 
-    if (
-      businessState === null ||
-      businessState === undefined ||
-      businessState === ""
-    ) {
-      validationErrors.push(
-        "Please provide the state your business is located"
-      );
+    if (businessCountry === 1) {
+      if (
+        businessState === null ||
+        businessState === undefined ||
+        businessState === ""
+      ) {
+        validationErrors.push(
+          "Please provide the state your business is located"
+        );
+      }
     }
 
     if (docTypeValue !== 2) {
@@ -622,10 +624,7 @@ export default function Form({ addKyc, setAddKyc }) {
         Input.IDfront !== null &&
         businessCountry !== null &&
         businessCountry !== 1 &&
-        Input.kycBusinessAddress !== "" &&
-        businessState !== null &&
-        businessState !== undefined &&
-        businessState !== ""
+        Input.kycBusinessAddress !== ""
       ) {
         updateKycStatus();
       }
@@ -672,6 +671,7 @@ export default function Form({ addKyc, setAddKyc }) {
           Authorization: `Bearer ${sessionStorage.getItem("Name")}`,
         },
       });
+      console.log(req);
       if (req.status === 200) {
         success(
           "Your data has been uploaded successfully, we will review and get back to you"
@@ -680,6 +680,7 @@ export default function Form({ addKyc, setAddKyc }) {
       }
     } catch (err) {
       if (err.response) {
+        console.log(err);
         notify(err.response?.data?.message);
         setAnimate(false);
       } else {

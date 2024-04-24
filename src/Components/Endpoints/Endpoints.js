@@ -37,3 +37,13 @@ export const add_bank_details = "/api/v1/user/add-bank-account";
 export const get_user_bank_details = "/api/v1/user/get-user-bank-account";
 export const add_kyc_details = "/api/v1/merchant/add-merchant-kyc";
 export const get_document_types = "/api/v1/user/get-document-type";
+export const dashboard_metrics =
+  "/api/v1/merchant/get-merchant-total-transactions";
+export const get_successful_failed_Transactions =
+  "/api/v1/merchant/merchant-total-successfull-failed-transactions";
+export const get_merchant_users_count =
+  "/api/v1/merchant/get-merchant-users-count";
+export const get_merchant_keys = "/api/v1/merchant/get-merchant-keys";
+
+export const get_all_referrals = "/api/v1/user/get-referrals";
+export const get_all_referral_code = "/api/v1/user/get-referral-code";

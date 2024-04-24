@@ -16,11 +16,18 @@ import WelcomePage from "./Pages/WelcomePage/WelcomePage";
 import { useLocation } from "react-router-dom";
 import ForgetPassword from "./Pages/SignInPage/ForgotPassword/ForgetPassword";
 import Generate_Invoice_Page from "./Pages/Generate Invoice/Generate_Invoice_Page";
+import AffilatePage from "./Pages/Affilate/AffilatePage";
 import Subscription from "./Pages/SubscriptionPage/Subscription";
 import History from "./Components/new Invoice/History";
+import Overview from "./Components/Affilate/Overview";
+import Registeration from "./Components/Affilate/Registeration";
+import IncomeEarned from "./Components/Affilate/IncomeEarned";
 import { ScrollContext } from "./Components/General/ScrollContext";
 import CreateAccountForm from "./Pages/CreateAccountForm/CreateAccountForm";
 import Verify from "./Pages/CreateAccountForm/verify";
+import MerchantRevenueOverview from "./Pages/AffliatePage/Merchant-revenue-Overview";
+import Developer_Page from "./Pages/DeveloperTools/Developer_Page";
+import ReferralPageOverview from "./Pages/ReferralOverview/ReferralPage";
 
 function App(props) {
   const [showNav, setShowNav] = useState(true);
@@ -47,7 +54,7 @@ function App(props) {
     <ScrollContext>
       <div id={NavId} className="general-container">
         {showNav && <Header />}
-        <div className="contents-container">
+      
           <Routes>
             <Route index element={<SignInPage />} />
             <Route path="dashboard" element={<OverviewPage />} />
@@ -64,9 +71,16 @@ function App(props) {
             <Route path="new" element={<Generate_Invoice_Page />} />
             <Route path="history" element={<History />} />
             <Route path="subscriptions" element={<Subscription />} />
+            <Route path="Referral-Overview" element={<ReferralPageOverview />} />
+            <Route path="Revenue" element={<MerchantRevenueOverview />} />
+
+            <Route path="registration" element={<Registeration />} />
+            <Route path="overview" element={<Overview />} />
+            <Route path="income" element={<IncomeEarned />} />
+            <Route path="developer" element={<Developer_Page />} />
           </Routes>
         </div>
-      </div>
+       
     </ScrollContext>
   );
 }

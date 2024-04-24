@@ -246,17 +246,19 @@
 .dashboard-container {
   background: url("../../Assets/merchant-bg.jpg");
   /* background: #fff; */
+  width: 100%;
   background-size: cover;
   background-repeat: no-repeat;
   margin-top: -58px !important;
   margin-bottom: 0px !important;
   height: 100%;
-  padding-top: 30px;
+  padding: 2rem;
+  /* padding-top: 30px;
   padding-bottom: 50px;
   padding-left: 44px;
-  padding-right: 10px;
-  margin-left: -61px;
-  margin-right: -13px;
+  padding-right: 10px; */
+  /* margin-left: -61px; */
+  /* margin-right: -13px; */
 }
 
 .summary-item {

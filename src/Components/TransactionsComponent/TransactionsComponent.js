@@ -1,12 +1,4 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
-import {
-  allTransactions,
-  canceledTransactions,
-  failedTransactions,
-  paidTransactions,
-  pendingTransactions,
-  refundTransactions,
-} from "../../TestData/TransactionsData";
 import SearchBar from "../SearchBar/SearchBar";
 import TransactionTable from "../TransactionTable/TransactionTable";
 import "./transactionsComponent.css";
