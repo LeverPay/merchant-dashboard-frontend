@@ -33,6 +33,7 @@ export default function ResetPassword() {
     e.preventDefault();
 
     if (
+      Input.email !== "" &&
       Input.token !== "" &&
       Input.newpassword !== "" &&
       Input.repeatPassword === Input.newpassword
@@ -44,7 +45,7 @@ export default function ResetPassword() {
         resetPassword();
       } else {
         notify(
-          "Invalid Format: password field must be 10characters long and must include a special character and number"
+          "Invalid Format: password field must be 10 characters long and must include a special character and number"
         );
       }
     } else {
@@ -56,6 +57,7 @@ export default function ResetPassword() {
   const resetPassword = async () => {
     try {
       const req = await axios.post(baseUrl + Reset_password, {
+        email: Input.email,
         token: Input.token,
         new_password: Input.newpassword,
       });
@@ -94,6 +96,14 @@ export default function ResetPassword() {
       <h1>Reset Password</h1>
       <div className="col-md-3 forget-password-form">
         <form onSubmit={handleSubmit}>
+        <h6>Email</h6>
+          <input
+            type="text"
+            onChange={handleChange}
+            value={Input.email}
+            name="email"
+            className="form-control"
+          />
           <h6>Token</h6>
           <input
             type="text"
