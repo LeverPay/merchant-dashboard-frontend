@@ -34,7 +34,7 @@ export default function Developer() {
 
   const getMerchantKeys = async () => {
     try {
-      const req = await axios.post(baseUrl + get_merchant_keys, null, {
+      const req = await axios.get(baseUrl + get_merchant_keys, null, {
         headers: { Authorization: `Bearer ${sessionStorage.getItem("Name")}` },
       });
       if (req.status === 200) {
